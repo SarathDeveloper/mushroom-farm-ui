@@ -1,0 +1,18 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-forest-green: #2E7D32;
+  --color-leaf-green: #4CAF50;
+  --color-earth-brown: #8D6E63;
+  --color-soft-beige: #F5F5DC;
+  --color-light-cream: #FFFDD0;
+  --color-warm-gray: #F3F4F6;
+  --color-dark-gray: #9CA3AF;
+  
+  --font-sans: var(--font-geist-sans), "Inter", "Manrope", "Poppins", sans-serif;
+}
+
+body {
+  @apply bg-zinc-50 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-50;
+}
+
