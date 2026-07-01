@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowRight, ShieldCheck, Clock, Truck, CheckCircle2, Quote, Send, PlayCircle, Star } from "lucide-react";
 import { FadeIn } from "@/components/FadeIn";
+import { HomeHero } from "@/components/HomeHero";
 import { ParallaxImage } from "@/components/ParallaxImage";
 import { SafeImage } from "@/components/SafeImage";
 import { ProductCard } from "@/components/ProductCard";
@@ -18,51 +19,7 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
 
-      {/* 1. HERO SECTION */}
-      <section className="relative h-[80vh] min-h-[600px] flex items-center bg-[var(--color-primary-dark)] overflow-hidden">
-        <ParallaxImage
-          src="https://images.unsplash.com/photo-1605810230434-7631ac76ec81?q=80&w=2070&auto=format&fit=crop"
-          alt="Mushroom farming background"
-          priority
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-[var(--color-primary-dark)]/92 via-[var(--color-primary-dark)]/55 to-[var(--color-primary-dark)]/15 z-[1]"></div>
-
-        <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-          <div className="max-w-2xl space-y-6">
-            <FadeIn direction="up">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-sm font-medium">
-                <ShieldCheck size={16} className="text-secondary" />
-                <span>Farm-Fresh from Kalvarayan Hills</span>
-              </div>
-            </FadeIn>
-
-            <FadeIn direction="up" delay={0.1}>
-              <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-white leading-[1.1] font-heading">
-                Premium Organic <br /> Mushrooms.
-              </h1>
-            </FadeIn>
-
-            <FadeIn direction="up" delay={0.2}>
-              <p className="text-lg md:text-xl text-white/80 leading-relaxed max-w-xl">
-                Experience the unmatched taste of naturally grown mushrooms from Vellimalai. Cultivated with care, delivered fresh.
-              </p>
-            </FadeIn>
-
-            <FadeIn direction="up" delay={0.3} className="flex flex-col sm:flex-row gap-4 pt-4">
-              <Button asChild size="lg" className="rounded-full bg-white text-[var(--color-primary-dark)] hover:bg-secondary hover:scale-[1.02] px-8 h-14 text-lg">
-                <Link href="/shop">
-                  Shop Fresh <ArrowRight className="ml-2" size={20} />
-                </Link>
-              </Button>
-              <Button asChild size="lg" variant="outline" className="rounded-full bg-white/10 hover:bg-white/20 text-white border-white/30 backdrop-blur-sm h-14 px-8 text-lg">
-                <Link href="/bulk-orders">
-                  Bulk B2B Orders
-                </Link>
-              </Button>
-            </FadeIn>
-          </div>
-        </div>
-      </section>
+      <HomeHero />
 
       {/* 2. WHY CHOOSE US */}
       <section className="py-20 bg-secondary">
