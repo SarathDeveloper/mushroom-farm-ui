@@ -1,22 +1,27 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import Providers from "@/components/Providers";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
   subsets: ["latin"],
+  variable: "--font-sans",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const poppins = Poppins({
   subsets: ["latin"],
+  weight: ["500", "600", "700"],
+  variable: "--font-heading",
 });
 
 export const metadata: Metadata = {
-  title: "Kalvarayan Farms | Fresh Organic Mushrooms in Chennai",
-  description: "Premium, organic mushrooms grown in the pristine Kalvarayan Hills. Delivered farm-fresh across Chennai within 12 hours of harvest.",
+  title: {
+    default: "Vellimalai Mushroom Farm | Premium Organic Mushrooms",
+    template: "%s | Vellimalai Farms",
+  },
+  description: "Fresh, premium mushrooms grown in the pristine Kalvarayan Hills. We offer bulk orders, farm-fresh delivery, and mushroom farming training.",
 };
 
 export default function RootLayout({
@@ -27,13 +32,17 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      data-scroll-behavior="smooth"
+      className={`${inter.variable} ${poppins.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col font-sans">
-        <Navbar />
-        <main className="flex-1">{children}</main>
-        <Footer />
+        <Providers>
+          <Navbar />
+          <main className="flex-1">{children}</main>
+          <Footer />
+        </Providers>
       </body>
     </html>
   );
 }
+

@@ -1,18 +1,136 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
 @theme inline {
-  --color-forest-green: #2E7D32;
-  --color-leaf-green: #4CAF50;
-  --color-earth-brown: #8D6E63;
-  --color-soft-beige: #F5F5DC;
-  --color-light-cream: #FFFDD0;
-  --color-warm-gray: #F3F4F6;
-  --color-dark-gray: #9CA3AF;
-  
-  --font-sans: var(--font-geist-sans), "Inter", "Manrope", "Poppins", sans-serif;
+  /* Organic design-system palette */
+  --color-primary-dark: #2f5a34;
+  --color-body: #5b5b5b;
+  --color-heading: #2e2e2e;
+  --color-success: #4caf50;
+  --color-warning: #d98c2b;
+  --color-error: #c94b4b;
+
+  --font-sans: var(--font-sans);
+  --font-heading: var(--font-heading);
+
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-body {
-  @apply bg-zinc-50 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-50;
+:root {
+  /* Warm white background / white cards */
+  --background: #fcfbf7;
+  --foreground: #2e2e2e;
+  --card: #ffffff;
+  --card-foreground: #2e2e2e;
+  --popover: #ffffff;
+  --popover-foreground: #2e2e2e;
+
+  /* Primary green (links, icons, highlights, prices, headings) */
+  --primary: #4c7a4f;
+  --primary-foreground: #ffffff;
+
+  /* Secondary beige (light cards, feature/category backgrounds) */
+  --secondary: #e9e1d5;
+  --secondary-foreground: #2f5a34;
+
+  --muted: #f2efe8;
+  --muted-foreground: #777777;
+
+  /* Accent terracotta (sale/offer/limited-stock, decorative only) */
+  --accent: #b56b45;
+  --accent-foreground: #ffffff;
+
+  --destructive: #c94b4b;
+
+  --border: #ddd7cf;
+  --input: #ddd7cf;
+  --ring: #4c7a4f;
+
+  --chart-1: #4c7a4f;
+  --chart-2: #2f5a34;
+  --chart-3: #b56b45;
+  --chart-4: #d98c2b;
+  --chart-5: #e9e1d5;
+
+  --radius: 0.75rem;
+
+  --sidebar: #ffffff;
+  --sidebar-foreground: #2e2e2e;
+  --sidebar-primary: #2f5a34;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #e9e1d5;
+  --sidebar-accent-foreground: #2f5a34;
+  --sidebar-border: #ddd7cf;
+  --sidebar-ring: #4c7a4f;
 }
 
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans scroll-smooth;
+  }
+}
+
+::selection {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background-color: var(--color-border);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-primary);
+}

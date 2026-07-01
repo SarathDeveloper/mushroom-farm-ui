@@ -1,143 +1,286 @@
-import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Leaf, ShieldCheck, Clock, Truck, Star, Heart } from "lucide-react";
+import { ArrowRight, ShieldCheck, Clock, Truck, CheckCircle2, Quote, Send, PlayCircle, Star } from "lucide-react";
+import { FadeIn } from "@/components/FadeIn";
+import { ParallaxImage } from "@/components/ParallaxImage";
+import { SafeImage } from "@/components/SafeImage";
+import { ProductCard } from "@/components/ProductCard";
+import { StatsCounter } from "@/components/StatsCounter";
+import { Certifications } from "@/components/Certifications";
+import { NewsletterForm } from "@/components/NewsletterForm";
+import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { products, testimonials } from "@/lib/data";
 
 export default function Home() {
+  const featuredProducts = products.slice(0, 4);
+
   return (
     <div className="flex flex-col min-h-screen">
-      {/* Hero Section */}
-      <section className="relative h-[600px] md:h-[700px] flex items-center bg-zinc-900 overflow-hidden">
-        {/* We'll use a placeholder image URL for the background */}
-        <div className="absolute inset-0 z-0">
-          <Image 
-            src="https://images.unsplash.com/photo-1605810230434-7631ac76ec81?q=80&w=2070&auto=format&fit=crop" 
-            alt="Mushroom farming background"
-            fill
-            className="object-cover opacity-60"
-            priority
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/80 to-transparent"></div>
-        </div>
-        
+
+      {/* 1. HERO SECTION */}
+      <section className="relative h-[80vh] min-h-[600px] flex items-center bg-[var(--color-primary-dark)] overflow-hidden">
+        <ParallaxImage
+          src="https://images.unsplash.com/photo-1605810230434-7631ac76ec81?q=80&w=2070&auto=format&fit=crop"
+          alt="Mushroom farming background"
+          priority
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-[var(--color-primary-dark)]/92 via-[var(--color-primary-dark)]/55 to-[var(--color-primary-dark)]/15 z-[1]"></div>
+
         <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
           <div className="max-w-2xl space-y-6">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-sm font-medium">
-              <Leaf size={16} className="text-[var(--color-leaf-green)]" />
-              <span>Kalvarayan Hills to Chennai within 12 Hours</span>
-            </div>
-            <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-white leading-tight">
-              Premium Organic <br /> Mushrooms, Delivered Fresh.
-            </h1>
-            <p className="text-lg md:text-xl text-white/90 leading-relaxed max-w-xl">
-              Experience the unmatched taste of naturally grown mushrooms from the pristine Kalvarayan Hills. Hygienically packed and delivered directly to your doorstep across Chennai.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 pt-4">
-              <Link href="/shop" className="inline-flex items-center justify-center gap-2 bg-[var(--color-leaf-green)] hover:bg-[var(--color-forest-green)] text-white px-8 py-4 rounded-full font-semibold transition-all">
-                Shop Now <ArrowRight size={20} />
-              </Link>
-              <Link href="/bulk-orders" className="inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white backdrop-blur-sm border border-white/30 px-8 py-4 rounded-full font-semibold transition-all">
-                Bulk Orders (Chennai B2B)
-              </Link>
-            </div>
+            <FadeIn direction="up">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-sm font-medium">
+                <ShieldCheck size={16} className="text-secondary" />
+                <span>Farm-Fresh from Kalvarayan Hills</span>
+              </div>
+            </FadeIn>
+
+            <FadeIn direction="up" delay={0.1}>
+              <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-white leading-[1.1] font-heading">
+                Premium Organic <br /> Mushrooms.
+              </h1>
+            </FadeIn>
+
+            <FadeIn direction="up" delay={0.2}>
+              <p className="text-lg md:text-xl text-white/80 leading-relaxed max-w-xl">
+                Experience the unmatched taste of naturally grown mushrooms from Vellimalai. Cultivated with care, delivered fresh.
+              </p>
+            </FadeIn>
+
+            <FadeIn direction="up" delay={0.3} className="flex flex-col sm:flex-row gap-4 pt-4">
+              <Button asChild size="lg" className="rounded-full bg-white text-[var(--color-primary-dark)] hover:bg-secondary hover:scale-[1.02] px-8 h-14 text-lg">
+                <Link href="/shop">
+                  Shop Fresh <ArrowRight className="ml-2" size={20} />
+                </Link>
+              </Button>
+              <Button asChild size="lg" variant="outline" className="rounded-full bg-white/10 hover:bg-white/20 text-white border-white/30 backdrop-blur-sm h-14 px-8 text-lg">
+                <Link href="/bulk-orders">
+                  Bulk B2B Orders
+                </Link>
+              </Button>
+            </FadeIn>
           </div>
         </div>
       </section>
 
-      {/* Trust Cards Section */}
-      <section className="relative z-20 -mt-16 container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {[
-            { icon: Leaf, title: "100% Organic", desc: "Naturally grown without chemicals" },
-            { icon: Clock, title: "Daily Harvest", desc: "Picked fresh every morning" },
-            { icon: Truck, title: "Same Day Chennai Delivery", desc: "For all orders placed before 10 AM" },
-          ].map((item, i) => (
-            <div key={i} className="bg-white rounded-2xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.08)] flex items-start gap-4">
-              <div className="flex-shrink-0 w-12 h-12 rounded-full bg-[var(--color-soft-beige)] text-[var(--color-forest-green)] flex items-center justify-center">
-                <item.icon size={24} />
-              </div>
-              <div>
-                <h3 className="font-bold text-lg text-zinc-900">{item.title}</h3>
-                <p className="text-zinc-600 text-sm mt-1">{item.desc}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Why Choose Us */}
-      <section className="py-24 bg-zinc-50">
+      {/* 2. WHY CHOOSE US */}
+      <section className="py-20 bg-secondary">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl text-center">
-          <h2 className="text-3xl font-bold text-zinc-900 mb-4">The Kalvarayan Difference</h2>
-          <p className="text-zinc-600 max-w-2xl mx-auto mb-16">
-            We bridge the gap between traditional organic farming and modern convenience. Our mushrooms are cultivated in the cool climate of Kalvarayan Hills and brought to Chennai's warm homes with ultimate care.
-          </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <FadeIn>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 font-heading">The Vellimalai Promise</h2>
+            <p className="text-[var(--color-body)] max-w-2xl mx-auto mb-16 text-lg">
+              We bridge the gap between traditional organic farming and modern quality standards. Our mushrooms are cultivated in the pristine climate of Kalvarayan Hills.
+            </p>
+          </FadeIn>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
             {[
-              { icon: ShieldCheck, title: "Premium Quality", desc: "Hand-picked and sorted to ensure only the best reaches you." },
-              { icon: Leaf, title: "Sustainable Farming", desc: "Eco-friendly practices that protect our environment." },
-              { icon: Star, title: "Hygienically Packed", desc: "Vacuum sealed to lock in freshness and nutrients." }
+              { icon: ShieldCheck, title: "100% Organic", desc: "Naturally grown without any harmful chemicals or synthetic fertilizers." },
+              { icon: Clock, title: "Daily Harvest", desc: "Hand-picked fresh every single morning at the peak of perfection." },
+              { icon: Truck, title: "Farm to Doorstep", desc: "Packed hygienically and delivered fresh to maintain maximum nutritional value." }
             ].map((feature, i) => (
-              <div key={i} className="flex flex-col items-center text-center p-6 bg-white rounded-3xl border border-zinc-100 hover:shadow-lg transition-shadow">
-                <div className="w-16 h-16 rounded-2xl bg-[var(--color-forest-green)] text-white flex items-center justify-center mb-6">
+              <FadeIn key={i} delay={i * 0.1} direction="up" className="flex flex-col items-center text-center p-8 bg-card rounded-2xl shadow-[0_4px_12px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_20px_rgba(0,0,0,0.06)] hover:-translate-y-1 transition-all duration-300 ease-out border border-border">
+                <div className="w-16 h-16 rounded-2xl bg-primary/10 text-primary flex items-center justify-center mb-6">
                   <feature.icon size={32} strokeWidth={1.5} />
                 </div>
-                <h3 className="text-xl font-bold text-zinc-900 mb-3">{feature.title}</h3>
-                <p className="text-zinc-600 leading-relaxed">{feature.desc}</p>
-              </div>
+                <h3 className="text-xl font-bold text-foreground mb-3 font-heading">{feature.title}</h3>
+                <p className="text-[var(--color-body)] leading-relaxed">{feature.desc}</p>
+              </FadeIn>
+            ))}
+          </div>
+
+          <Certifications />
+        </div>
+      </section>
+
+      {/* 3. FEATURED PRODUCTS */}
+      <section className="py-20 bg-background">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+          <FadeIn className="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
+            <div>
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-2 font-heading">Fresh Harvest</h2>
+              <p className="text-[var(--color-body)] text-lg">Explore our premium selection, harvested today.</p>
+            </div>
+            <Link href="/shop" className="group inline-flex items-center gap-2 text-primary font-semibold text-lg">
+              View All Products <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </FadeIn>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {featuredProducts.map((product, i) => (
+              <FadeIn key={product.id} delay={i * 0.1}>
+                <ProductCard product={product} priority={i === 0} />
+              </FadeIn>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Featured Products */}
-      <section className="py-24 bg-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-          <div className="flex justify-between items-end mb-12">
-            <div>
-              <h2 className="text-3xl font-bold text-zinc-900 mb-2">Fresh Harvest Arrivals</h2>
-              <p className="text-zinc-600">Explore our premium selection available for Chennai delivery.</p>
-            </div>
-            <Link href="/shop" className="hidden md:flex items-center gap-2 text-[var(--color-forest-green)] font-semibold hover:gap-3 transition-all">
-              View All Products <ArrowRight size={20} />
-            </Link>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              { name: "Premium Oyster Mushrooms", price: "₹150", weight: "250g", img: "https://images.unsplash.com/photo-1590740924976-15ff4eb430d8?q=80&w=1000&auto=format&fit=crop" },
-              { name: "Fresh Milky Mushrooms", price: "₹180", weight: "250g", img: "https://images.unsplash.com/photo-1508216127116-43b98c56cc19?q=80&w=1000&auto=format&fit=crop" },
-              { name: "Organic Button Mushrooms", price: "₹120", weight: "200g", img: "https://images.unsplash.com/photo-1611105637889-3fa70db2b271?q=80&w=1000&auto=format&fit=crop" }
-            ].map((product, i) => (
-              <div key={i} className="group flex flex-col bg-zinc-50 rounded-3xl overflow-hidden border border-zinc-100 hover:shadow-xl transition-all">
-                <div className="relative h-64 overflow-hidden">
-                  <Image src={product.img} alt={product.name} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
-                  <button className="absolute top-4 right-4 w-10 h-10 bg-white/80 backdrop-blur-sm rounded-full flex items-center justify-center text-zinc-400 hover:text-red-500 hover:bg-white transition-colors">
-                    <Heart size={20} />
-                  </button>
-                </div>
-                <div className="p-6 flex-1 flex flex-col">
-                  <div className="flex justify-between items-start mb-2">
-                    <h3 className="font-bold text-lg text-zinc-900 line-clamp-1">{product.name}</h3>
-                  </div>
-                  <div className="flex items-center gap-1 mb-4">
-                    {[1,2,3,4,5].map(star => <Star key={star} size={14} className="fill-amber-400 text-amber-400" />)}
-                    <span className="text-xs text-zinc-500 ml-1">(4.9)</span>
-                  </div>
-                  <div className="mt-auto flex items-end justify-between">
-                    <div>
-                      <span className="text-sm text-zinc-500 block">{product.weight}</span>
-                      <span className="text-xl font-bold text-[var(--color-forest-green)]">{product.price}</span>
-                    </div>
-                    <button className="bg-zinc-900 hover:bg-[var(--color-forest-green)] text-white px-5 py-2.5 rounded-full text-sm font-medium transition-colors">
-                      Add to Cart
-                    </button>
+      {/* 4. ABOUT FARM (PARALLAX) */}
+      <section className="py-20 bg-[var(--color-primary-dark)] relative overflow-hidden">
+        <ParallaxImage
+          src="https://images.unsplash.com/photo-1596704017254-9b121068fb31?q=80&w=2000&auto=format&fit=crop"
+          alt="Farm texture"
+          className="opacity-20"
+        />
+        <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-20">
+            <FadeIn direction="right">
+              <div className="relative h-[500px] rounded-[3rem] overflow-hidden border-4 border-white/10">
+                <SafeImage src="https://images.unsplash.com/photo-1605810230434-7631ac76ec81?q=80&w=1000&auto=format&fit=crop" fill sizes="(max-width: 1024px) 100vw, 50vw" alt="Our Farm" className="object-cover" />
+                <div className="absolute inset-0 flex items-center justify-center bg-black/30 group cursor-pointer hover:bg-black/10 transition-colors">
+                  <div className="w-20 h-20 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center text-white group-hover:scale-110 transition-transform">
+                    <PlayCircle size={40} className="ml-2" />
                   </div>
                 </div>
               </div>
+            </FadeIn>
+            <FadeIn direction="left" className="space-y-6">
+              <h2 className="text-3xl md:text-5xl font-bold text-white font-heading">Rooted in Nature. <br/><span className="text-secondary">Cultivated with Love.</span></h2>
+              <p className="text-white/80 text-lg leading-relaxed">
+                Vellimalai Mushroom Farm was born out of a passion for sustainable agriculture and healthy living. Located in the serene Kalvarayan Hills, our farm utilizes pristine air and spring water to grow mushrooms that are rich in flavor and nutrients.
+              </p>
+              <ul className="space-y-4 pt-4">
+                {["Zero Pesticides Used", "Empowering Local Farmers", "Sustainable Water Management"].map((item, i) => (
+                  <li key={i} className="flex items-center gap-3 text-white/90 font-medium">
+                    <CheckCircle2 className="text-secondary" size={24} /> {item}
+                  </li>
+                ))}
+              </ul>
+              <div className="pt-6">
+                <Button asChild size="lg" className="rounded-full bg-white text-[var(--color-primary-dark)] hover:bg-secondary hover:scale-[1.02] px-8">
+                  <Link href="/about">Discover Our Story</Link>
+                </Button>
+              </div>
+            </FadeIn>
+          </div>
+
+          <StatsCounter />
+        </div>
+      </section>
+
+      {/* 5 & 6. TRAINING & BULK ORDERS (SPLIT) */}
+      <section className="py-20 bg-background">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+            {/* Training */}
+            <FadeIn delay={0.1}>
+              <div className="relative rounded-2xl overflow-hidden bg-secondary/40 h-[400px] flex flex-col justify-end p-10 group">
+                <div className="absolute inset-0">
+                  <SafeImage src="https://images.unsplash.com/photo-1574316071802-0d684efa7ea5?q=80&w=1000&auto=format&fit=crop" fill sizes="(max-width: 1024px) 100vw, 50vw" alt="Training" className="object-cover group-hover:scale-105 transition-transform duration-700" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-primary-dark)]/95 via-[var(--color-primary-dark)]/45 to-transparent"></div>
+                </div>
+                <div className="relative z-10 text-white space-y-3">
+                  <div className="inline-block px-3 py-1 bg-accent text-white text-xs font-bold rounded-full uppercase tracking-wider mb-2">Learn</div>
+                  <h3 className="text-3xl font-bold font-heading">Mushroom Farming Training</h3>
+                  <p className="text-white/80 max-w-sm">Join our hands-on workshops and master the art of commercial mushroom cultivation.</p>
+                  <Link href="/training" className="inline-flex items-center gap-2 text-white font-bold hover:gap-3 transition-all pt-4">
+                    View Programs <ArrowRight size={20} />
+                  </Link>
+                </div>
+              </div>
+            </FadeIn>
+
+            {/* Bulk */}
+            <FadeIn delay={0.2}>
+              <div className="relative rounded-2xl overflow-hidden bg-secondary/40 h-[400px] flex flex-col justify-end p-10 group">
+                <div className="absolute inset-0">
+                  <SafeImage src="https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?q=80&w=1000&auto=format&fit=crop" fill sizes="(max-width: 1024px) 100vw, 50vw" alt="Bulk Orders" className="object-cover group-hover:scale-105 transition-transform duration-700" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-primary-dark)]/95 via-[var(--color-primary-dark)]/45 to-transparent"></div>
+                </div>
+                <div className="relative z-10 text-white space-y-3">
+                  <div className="inline-block px-3 py-1 bg-primary text-white text-xs font-bold rounded-full uppercase tracking-wider mb-2">B2B</div>
+                  <h3 className="text-3xl font-bold font-heading">Wholesale & Bulk Orders</h3>
+                  <p className="text-white/80 max-w-sm">Consistent supply of premium mushrooms for restaurants, hotels, and supermarkets.</p>
+                  <Link href="/bulk-orders" className="inline-flex items-center gap-2 text-white font-bold hover:gap-3 transition-all pt-4">
+                    Request a Quote <ArrowRight size={20} />
+                  </Link>
+                </div>
+              </div>
+            </FadeIn>
+
+          </div>
+        </div>
+      </section>
+
+      {/* 7. TESTIMONIALS */}
+      <section className="py-20 bg-secondary">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl text-center">
+          <FadeIn>
+             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-12 font-heading">What Our Customers Say</h2>
+          </FadeIn>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {testimonials.map((t, i) => (
+              <FadeIn key={i} delay={i * 0.1} direction="up" className="bg-card p-8 rounded-2xl border border-border shadow-[0_4px_12px_rgba(0,0,0,0.04)] relative text-left">
+                <Quote className="absolute top-6 right-6 text-secondary" size={48} />
+                <div className="flex gap-1 text-amber-400 mb-6">
+                  {[1,2,3,4,5].map(star => (
+                    <Star key={star} size={16} className={star <= t.rating ? "fill-amber-400" : "fill-border text-border"} />
+                  ))}
+                </div>
+                <p className="text-[var(--color-body)] italic mb-6 leading-relaxed">&ldquo;{t.review}&rdquo;</p>
+                <div className="flex items-center gap-3">
+                  <Avatar size="lg">
+                    <AvatarImage src={t.avatar} alt={t.name} />
+                    <AvatarFallback>{t.name.charAt(0)}</AvatarFallback>
+                  </Avatar>
+                  <div>
+                    <h4 className="font-bold text-foreground">{t.name}</h4>
+                    <span className="text-sm text-muted-foreground">{t.role}</span>
+                  </div>
+                </div>
+              </FadeIn>
             ))}
           </div>
         </div>
       </section>
+
+      {/* 9. FAQ & 10. NEWSLETTER */}
+      <section className="py-20 bg-background">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+
+            <FadeIn direction="right">
+              <h2 className="text-3xl font-bold text-foreground mb-8 font-heading">Frequently Asked Questions</h2>
+              <Accordion className="w-full">
+                <AccordionItem value="item-1">
+                  <AccordionTrigger className="text-lg font-medium">How do you ensure freshness?</AccordionTrigger>
+                  <AccordionContent className="text-[var(--color-body)] text-base">
+                    We harvest early morning and dispatch immediately using temperature-controlled packaging to ensure the mushrooms reach you as fresh as possible.
+                  </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-2">
+                  <AccordionTrigger className="text-lg font-medium">Do you use pesticides?</AccordionTrigger>
+                  <AccordionContent className="text-[var(--color-body)] text-base">
+                    Absolutely not. Our farming methods are 100% organic and natural, utilizing clean agricultural practices without any synthetic chemicals.
+                  </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-3">
+                  <AccordionTrigger className="text-lg font-medium">How long is the training program?</AccordionTrigger>
+                  <AccordionContent className="text-[var(--color-body)] text-base">
+                    We offer both 1-day crash courses and comprehensive 2-week programs depending on your needs. Check our Training page for details.
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+            </FadeIn>
+
+            <FadeIn direction="left" className="bg-[var(--color-primary-dark)] rounded-2xl p-10 text-white text-center">
+              <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Send size={32} />
+              </div>
+              <h2 className="text-3xl font-bold mb-4 font-heading">Stay Freshly Updated</h2>
+              <p className="text-white/80 mb-8 max-w-sm mx-auto">
+                Subscribe to our newsletter for exclusive offers, recipes, and farm updates.
+              </p>
+              <NewsletterForm />
+            </FadeIn>
+
+          </div>
+        </div>
+      </section>
+
     </div>
   );
 }

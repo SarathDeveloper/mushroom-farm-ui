@@ -1,0 +1,328 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// =======================
+// Enums
+// =======================
+enum Role {
+  USER
+  ADMIN
+}
+
+enum OrderStatus {
+  PENDING
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  REFUNDED
+}
+
+enum TrainingStatus {
+  UPCOMING
+  ONGOING
+  COMPLETED
+}
+
+// =======================
+// Models
+// =======================
+
+model User {
+  id            String    @id @default(uuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  password      String?
+  image         String?
+  role          Role      @default(USER)
+  phone         String?
+  
+  // Relations
+  accounts              Account[]
+  sessions              Session[]
+  addresses             Address[]
+  orders                Order[]
+  reviews               Review[]
+  cartItems             CartItem[]
+  wishlist              Wishlist[]
+  trainingRegistrations TrainingRegistration[]
+  notifications         Notification[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Account {
+  id                 String  @id @default(uuid())
+  userId             String
+  type               String
+  provider           String
+  providerAccountId  String
+  refresh_token      String?  @db.Text
+  access_token       String?  @db.Text
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String?  @db.Text
+  session_state      String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(uuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Address {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type      String   @default("HOME") // e.g., HOME, WORK
+  street    String
+  city      String
+  state     String
+  country   String   @default("India")
+  pincode   String
+  isDefault Boolean  @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Category {
+  id          String    @id @default(uuid())
+  name        String    @unique
+  slug        String    @unique
+  description String?
+  image       String?
+  
+  products    Product[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Product {
+  id          String   @id @default(uuid())
+  name        String
+  slug        String   @unique
+  description String
+  price       Float
+  stock       Int      @default(0)
+  images      String[]
+  isFeatured  Boolean  @default(false)
+  
+  categoryId  String
+  category    Category @relation(fields: [categoryId], references: [id])
+
+  orderItems  OrderItem[]
+  reviews     Review[]
+  cartItems   CartItem[]
+  wishlist    Wishlist[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Order {
+  id            String        @id @default(uuid())
+  userId        String
+  user          User          @relation(fields: [userId], references: [id])
+  totalAmount   Float
+  status        OrderStatus   @default(PENDING)
+  paymentStatus PaymentStatus @default(PENDING)
+  paymentId     String?       // Razorpay payment ID
+  
+  shippingAddress String      // Stored as JSON or formatted string
+  
+  orderItems    OrderItem[]
+  couponCode    String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model OrderItem {
+  id        String  @id @default(uuid())
+  orderId   String
+  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+  quantity  Int
+  price     Float   // Price at the time of purchase
+
+  createdAt DateTime @default(now())
+}
+
+model CartItem {
+  id        String  @id @default(uuid())
+  userId    String
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  quantity  Int     @default(1)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, productId])
+}
+
+model Wishlist {
+  id        String  @id @default(uuid())
+  userId    String
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@unique([userId, productId])
+}
+
+model Review {
+  id        String  @id @default(uuid())
+  userId    String
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  rating    Int     // 1 to 5
+  comment   String?
+  isApproved Boolean @default(true) // Admin approval for reviews
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Blog {
+  id          String   @id @default(uuid())
+  title       String
+  slug        String   @unique
+  content     String
+  image       String?
+  authorId    String?
+  tags        String[]
+  isPublished Boolean  @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Gallery {
+  id          String   @id @default(uuid())
+  title       String
+  url         String
+  type        String   @default("IMAGE") // IMAGE, VIDEO
+  category    String?  // e.g., Farm, Training
+  
+  createdAt DateTime @default(now())
+}
+
+model Training {
+  id          String         @id @default(uuid())
+  title       String
+  slug        String         @unique
+  description String
+  modules     String[]
+  fees        Float
+  duration    String
+  trainer     String
+  startDate   DateTime
+  status      TrainingStatus @default(UPCOMING)
+  image       String?
+  maxCapacity Int
+  
+  registrations TrainingRegistration[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model TrainingRegistration {
+  id          String        @id @default(uuid())
+  trainingId  String
+  training    Training      @relation(fields: [trainingId], references: [id])
+  userId      String
+  user        User          @relation(fields: [userId], references: [id])
+  paymentId   String?       // Razorpay payment ID
+  status      PaymentStatus @default(PENDING)
+
+  createdAt DateTime @default(now())
+  
+  @@unique([trainingId, userId])
+}
+
+model BulkOrder {
+  id            String   @id @default(uuid())
+  businessName  String
+  contactName   String
+  phone         String
+  email         String
+  location      String
+  product       String
+  quantity      String
+  frequency     String
+  requirements  String?
+  isHandled     Boolean  @default(false)
+
+  createdAt DateTime @default(now())
+}
+
+model Coupon {
+  id            String   @id @default(uuid())
+  code          String   @unique
+  discountValue Float    // Percentage or Fixed amount
+  isPercentage  Boolean  @default(true)
+  maxDiscount   Float?
+  minOrderValue Float?
+  expiryDate    DateTime
+  isActive      Boolean  @default(true)
+  
+  createdAt DateTime @default(now())
+}
+
+model Setting {
+  id    String @id @default(uuid())
+  key   String @unique
+  value String
+
+  updatedAt DateTime @updatedAt
+}
+
+model Notification {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title     String
+  message   String
+  isRead    Boolean  @default(false)
+  link      String?
+
+  createdAt DateTime @default(now())
+}
