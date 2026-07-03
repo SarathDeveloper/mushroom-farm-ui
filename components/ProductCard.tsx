@@ -24,7 +24,7 @@ function StarRow({ rating, size = 14 }: { rating: number; size?: number }) {
           size={size}
           className={
             star <= Math.round(rating)
-              ? "fill-amber-400 text-amber-400"
+              ? "fill-[#c4a96a] text-[#c4a96a]"
               : "fill-border text-border"
           }
         />
@@ -71,13 +71,18 @@ export function ProductCard({ product, priority = false }: { product: Product; p
               {product.tag}
             </span>
           )}
+          {/* Freshness badge */}
+          <span className="absolute bottom-4 left-4 px-2.5 py-1 rounded-full bg-[var(--color-success)]/90 backdrop-blur-sm text-white text-[10px] font-bold flex items-center gap-1">
+            <span className="h-1.5 w-1.5 rounded-full bg-white animate-pulse" />
+            Harvested Today
+          </span>
           <button
             onClick={handleWishlist}
             aria-label={wished ? `Remove ${product.name} from wishlist` : `Add ${product.name} to wishlist`}
             aria-pressed={wished}
-            className="absolute top-4 right-4 w-10 h-10 bg-white/85 backdrop-blur-sm rounded-full flex items-center justify-center text-muted-foreground hover:text-accent hover:bg-white transition-colors"
+            className="absolute top-4 right-4 w-10 h-10 bg-white/85 backdrop-blur-sm rounded-full flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-white transition-colors"
           >
-            <Heart size={20} className={cn(wished && "fill-accent text-accent")} />
+            <Heart size={20} className={cn(wished && "fill-primary text-primary")} />
           </button>
           <button
             onClick={() => setQuickViewOpen(true)}
@@ -93,10 +98,16 @@ export function ProductCard({ product, priority = false }: { product: Product; p
               {product.name}
             </h3>
           </Link>
-          <div className="flex items-center gap-2 mb-4">
+          <div className="flex items-center gap-2 mb-2">
             <StarRow rating={product.rating} />
             <span className="text-xs text-muted-foreground">({product.reviewCount})</span>
           </div>
+          {/* Stock urgency */}
+          {product.stock <= 20 && (
+            <p className="text-[11px] font-semibold text-[var(--color-warning)] mb-2">
+              Only {product.stock} left — order soon!
+            </p>
+          )}
           <div className="mt-auto flex items-end justify-between">
             <div>
               <span className="text-sm text-[var(--color-body)] block mb-1">{product.weight}</span>

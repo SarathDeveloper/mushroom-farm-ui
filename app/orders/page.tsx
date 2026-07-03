@@ -62,7 +62,7 @@ export default async function OrdersPage() {
             </FadeIn>
           ) : (
             <div className="space-y-4">
-              {orders.map((order) => (
+              {orders.map((order: any) => (
                 <FadeIn key={order.id} className="flex items-center justify-between p-5 rounded-2xl border border-border bg-card">
                   <div>
                     <p className="font-semibold text-foreground">#{order.id.slice(0, 8).toUpperCase()}</p>

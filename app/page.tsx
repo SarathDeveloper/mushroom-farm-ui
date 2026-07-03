@@ -2,6 +2,11 @@ import Link from "next/link";
 import { ArrowRight, ShieldCheck, Clock, Truck, CheckCircle2, Quote, Send, PlayCircle, Star } from "lucide-react";
 import { FadeIn } from "@/components/FadeIn";
 import { HomeHero } from "@/components/HomeHero";
+import { FarmToTable } from "@/components/FarmToTable";
+import { TrustBar } from "@/components/TrustBar";
+import { SeasonalAvailability } from "@/components/SeasonalAvailability";
+import { SuccessStories } from "@/components/SuccessStories";
+import { LoyaltySection } from "@/components/LoyaltySection";
 import { ParallaxImage } from "@/components/ParallaxImage";
 import { SafeImage } from "@/components/SafeImage";
 import { ProductCard } from "@/components/ProductCard";
@@ -21,7 +26,13 @@ export default function Home() {
 
       <HomeHero />
 
-      {/* 2. WHY CHOOSE US */}
+      {/* Trust Bar */}
+      <TrustBar />
+
+      {/* Farm to Table Journey */}
+      <FarmToTable />
+
+      {/* WHY CHOOSE US */}
       <section className="py-20 bg-secondary">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl text-center">
           <FadeIn>
@@ -51,7 +62,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 3. FEATURED PRODUCTS */}
+      {/* FEATURED PRODUCTS */}
       <section className="py-20 bg-background">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
           <FadeIn className="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
@@ -71,21 +82,33 @@ export default function Home() {
               </FadeIn>
             ))}
           </div>
+
+          <FadeIn className="mt-10 text-center">
+            <Link
+              href="/compare"
+              className="inline-flex items-center gap-2 text-sm font-medium text-[var(--color-body)] hover:text-primary transition-colors"
+            >
+              Not sure which to pick? <span className="text-primary font-semibold">Compare Mushrooms →</span>
+            </Link>
+          </FadeIn>
         </div>
       </section>
 
-      {/* 4. ABOUT FARM (PARALLAX) */}
+      {/* SEASONAL AVAILABILITY */}
+      <SeasonalAvailability />
+
+      {/* ABOUT FARM (PARALLAX) */}
       <section className="py-20 bg-[var(--color-primary-dark)] relative overflow-hidden">
         <ParallaxImage
-          src="https://images.unsplash.com/photo-1596704017254-9b121068fb31?q=80&w=2000&auto=format&fit=crop"
-          alt="Farm texture"
+          src="/gallery/farm/growing-shed-interior.png"
+          alt="Inside our mushroom growing shed"
           className="opacity-20"
         />
         <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-20">
             <FadeIn direction="right">
               <div className="relative h-[500px] rounded-[3rem] overflow-hidden border-4 border-white/10">
-                <SafeImage src="https://images.unsplash.com/photo-1605810230434-7631ac76ec81?q=80&w=1000&auto=format&fit=crop" fill sizes="(max-width: 1024px) 100vw, 50vw" alt="Our Farm" className="object-cover" />
+                <SafeImage src="/gallery/farm/oyster-mushroom-growing.png" fill sizes="(max-width: 1024px) 100vw, 50vw" alt="Fresh oyster mushrooms growing at our farm" className="object-cover" />
                 <div className="absolute inset-0 flex items-center justify-center bg-black/30 group cursor-pointer hover:bg-black/10 transition-colors">
                   <div className="w-20 h-20 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center text-white group-hover:scale-110 transition-transform">
                     <PlayCircle size={40} className="ml-2" />
@@ -117,7 +140,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 5 & 6. TRAINING & BULK ORDERS (SPLIT) */}
+      {/* TRAINING & BULK ORDERS (SPLIT) */}
       <section className="py-20 bg-background">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -130,7 +153,7 @@ export default function Home() {
                   <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-primary-dark)]/95 via-[var(--color-primary-dark)]/45 to-transparent"></div>
                 </div>
                 <div className="relative z-10 text-white space-y-3">
-                  <div className="inline-block px-3 py-1 bg-accent text-white text-xs font-bold rounded-full uppercase tracking-wider mb-2">Learn</div>
+                  <div className="inline-block px-3 py-1 bg-primary text-white text-xs font-bold rounded-full uppercase tracking-wider mb-2">Learn</div>
                   <h3 className="text-3xl font-bold font-heading">Mushroom Farming Training</h3>
                   <p className="text-white/80 max-w-sm">Join our hands-on workshops and master the art of commercial mushroom cultivation.</p>
                   <Link href="/training" className="inline-flex items-center gap-2 text-white font-bold hover:gap-3 transition-all pt-4">
@@ -162,7 +185,10 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 7. TESTIMONIALS */}
+      {/* SUCCESS STORIES */}
+      <SuccessStories />
+
+      {/* TESTIMONIALS */}
       <section className="py-20 bg-secondary">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl text-center">
           <FadeIn>
@@ -172,9 +198,9 @@ export default function Home() {
             {testimonials.map((t, i) => (
               <FadeIn key={i} delay={i * 0.1} direction="up" className="bg-card p-8 rounded-2xl border border-border shadow-[0_4px_12px_rgba(0,0,0,0.04)] relative text-left">
                 <Quote className="absolute top-6 right-6 text-secondary" size={48} />
-                <div className="flex gap-1 text-amber-400 mb-6">
+                <div className="flex gap-1 text-[#c4a96a] mb-6">
                   {[1,2,3,4,5].map(star => (
-                    <Star key={star} size={16} className={star <= t.rating ? "fill-amber-400" : "fill-border text-border"} />
+                    <Star key={star} size={16} className={star <= t.rating ? "fill-[#c4a96a]" : "fill-border text-border"} />
                   ))}
                 </div>
                 <p className="text-[var(--color-body)] italic mb-6 leading-relaxed">&ldquo;{t.review}&rdquo;</p>
@@ -194,8 +220,49 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 9. FAQ & 10. NEWSLETTER */}
-      <section className="py-20 bg-background">
+      {/* LOYALTY PROGRAM */}
+      <LoyaltySection />
+
+      {/* RECIPES CTA */}
+      <section className="py-16 bg-background">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+          <FadeIn>
+            <div className="relative rounded-2xl overflow-hidden bg-secondary p-10 md:p-14 flex flex-col md:flex-row items-center gap-8">
+              <div className="flex-1">
+                <span className="text-sm font-semibold text-primary uppercase tracking-wider">Recipe Hub</span>
+                <h2 className="text-2xl md:text-3xl font-bold text-foreground mt-2 font-heading">
+                  Don&apos;t Know What to Cook?
+                </h2>
+                <p className="text-[var(--color-body)] mt-2 max-w-lg">
+                  Explore our curated collection of mushroom recipes — from 15-minute weeknight meals to restaurant-worthy dishes. Each recipe links directly to the mushrooms you need.
+                </p>
+                <div className="flex flex-wrap gap-3 mt-6">
+                  <Button asChild className="rounded-full px-6">
+                    <Link href="/recipes">Browse Recipes</Link>
+                  </Button>
+                  <Button asChild variant="outline" className="rounded-full px-6">
+                    <Link href="/compare">Nutrition Guide</Link>
+                  </Button>
+                </div>
+              </div>
+              <div className="grid grid-cols-3 gap-2 w-full md:w-auto md:shrink-0">
+                {[
+                  "https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=200&auto=format&fit=crop",
+                  "https://images.unsplash.com/photo-1565557623262-b51c2513a641?q=80&w=200&auto=format&fit=crop",
+                  "https://images.unsplash.com/photo-1547592166-23ac45744acd?q=80&w=200&auto=format&fit=crop",
+                ].map((src, i) => (
+                  <div key={i} className="relative h-24 md:h-32 w-full md:w-28 rounded-xl overflow-hidden">
+                    <SafeImage src={src} alt="Recipe" fill sizes="100px" className="object-cover" />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </FadeIn>
+        </div>
+      </section>
+
+      {/* FAQ & NEWSLETTER */}
+      <section className="py-20 bg-secondary">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
@@ -218,6 +285,18 @@ export default function Home() {
                   <AccordionTrigger className="text-lg font-medium">How long is the training program?</AccordionTrigger>
                   <AccordionContent className="text-[var(--color-body)] text-base">
                     We offer both 1-day crash courses and comprehensive 2-week programs depending on your needs. Check our Training page for details.
+                  </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-4">
+                  <AccordionTrigger className="text-lg font-medium">What areas do you deliver to?</AccordionTrigger>
+                  <AccordionContent className="text-[var(--color-body)] text-base">
+                    We deliver across Salem, Namakkal, Erode, Coimbatore, Trichy, Madurai, Chennai, and Bangalore. Use our pincode checker on product pages to confirm delivery to your area.
+                  </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-5">
+                  <AccordionTrigger className="text-lg font-medium">Do you offer subscriptions?</AccordionTrigger>
+                  <AccordionContent className="text-[var(--color-body)] text-base">
+                    Yes! Subscribe for weekly, bi-weekly, or monthly deliveries and save up to 15%. You can cancel anytime with no commitment.
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>

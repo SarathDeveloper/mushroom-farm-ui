@@ -18,7 +18,7 @@ import {
 
 const levelColor: Record<TrainingProgram["level"], string> = {
   Beginner: "bg-[var(--color-success)]",
-  Intermediate: "bg-accent",
+  Intermediate: "bg-primary",
   Advanced: "bg-[var(--color-primary-dark)]",
 };
 

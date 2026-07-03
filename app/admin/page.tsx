@@ -11,7 +11,7 @@ async function getStats() {
       prisma.user.count(),
       prisma.order.findMany({ select: { totalAmount: true } }),
     ]);
-    const revenue = orders.reduce((sum, o) => sum + o.totalAmount, 0);
+    const revenue = orders.reduce((sum: number, o: { totalAmount: number }) => sum + o.totalAmount, 0);
     return { orderCount, userCount, revenue };
   } catch {
     return { orderCount: 0, userCount: 0, revenue: 0 };
@@ -93,7 +93,7 @@ export default async function AdminOverviewPage() {
           </p>
         ) : (
           <div className="divide-y divide-border">
-            {recentOrders.map((order) => (
+            {recentOrders.map((order: any) => (
               <div key={order.id} className="flex items-center justify-between gap-4 p-6">
                 <div className="min-w-0">
                   <p className="font-semibold text-foreground">#{order.id.slice(0, 8).toUpperCase()}</p>

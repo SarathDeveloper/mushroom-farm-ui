@@ -22,6 +22,8 @@ import { cn } from "@/lib/utils";
 const navLinks = [
   { href: "/", label: "Home" },
   { href: "/shop", label: "Shop" },
+  { href: "/gallery", label: "Gallery" },
+  { href: "/recipes", label: "Recipes" },
   { href: "/bulk-orders", label: "Bulk Orders" },
   { href: "/training", label: "Training" },
   { href: "/blog", label: "Blog" },
@@ -45,7 +47,7 @@ export default function Navbar() {
               <Leaf size={24} />
             </div>
             <span className="text-xl font-bold text-[var(--color-primary-dark)] tracking-tight font-heading">
-              Vellimalai<span className="text-accent">Farms</span>
+              Vellimalai<span className="text-primary">Farms</span>
             </span>
           </Link>
 
@@ -136,6 +138,8 @@ export default function Navbar() {
                         {link.label}
                       </Link>
                     ))}
+                    <Link href="/track-order" className="text-lg font-medium hover:text-primary">Track Order</Link>
+                    <Link href="/compare" className="text-lg font-medium hover:text-primary">Compare</Link>
                     <Link href="/wishlist" className="text-lg font-medium hover:text-primary">Wishlist</Link>
                     <Link href="/cart" className="text-lg font-medium hover:text-primary">Cart</Link>
                     <div className="mt-4 border-t pt-4">

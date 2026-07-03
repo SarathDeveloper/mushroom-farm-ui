@@ -3,12 +3,12 @@
 @import "shadcn/tailwind.css";
 
 @theme inline {
-  /* Organic design-system palette */
-  --color-primary-dark: #2f5a34;
-  --color-body: #5b5b5b;
-  --color-heading: #2e2e2e;
-  --color-success: #4caf50;
-  --color-warning: #d98c2b;
+  /* Premium silver-white + light green design system */
+  --color-primary-dark: #4a8560;
+  --color-body: #5c6370;
+  --color-heading: #1a1d21;
+  --color-success: #5a9a6e;
+  --color-warning: #b8956a;
   --color-error: #c94b4b;
 
   --font-sans: var(--font-sans);
@@ -56,51 +56,51 @@
 }
 
 :root {
-  /* Warm white background / white cards */
-  --background: #fcfbf7;
-  --foreground: #2e2e2e;
+  /* Cool silver-white background / white cards */
+  --background: #f8f9fa;
+  --foreground: #1a1d21;
   --card: #ffffff;
-  --card-foreground: #2e2e2e;
+  --card-foreground: #1a1d21;
   --popover: #ffffff;
-  --popover-foreground: #2e2e2e;
+  --popover-foreground: #1a1d21;
 
-  /* Primary green (links, icons, highlights, prices, headings) */
-  --primary: #4c7a4f;
+  /* Primary sage green (links, icons, highlights, prices, headings) */
+  --primary: #5a9a6e;
   --primary-foreground: #ffffff;
 
-  /* Secondary beige (light cards, feature/category backgrounds) */
-  --secondary: #e9e1d5;
-  --secondary-foreground: #2f5a34;
+  /* Secondary silver (light cards, feature/category backgrounds) */
+  --secondary: #f0f2f4;
+  --secondary-foreground: #3d7a52;
 
-  --muted: #f2efe8;
-  --muted-foreground: #777777;
+  --muted: #eef0f2;
+  --muted-foreground: #8a919a;
 
-  /* Accent terracotta (sale/offer/limited-stock, decorative only) */
-  --accent: #b56b45;
+  /* Accent — unified soft green (no catchy colors) */
+  --accent: #5a9a6e;
   --accent-foreground: #ffffff;
 
   --destructive: #c94b4b;
 
-  --border: #ddd7cf;
-  --input: #ddd7cf;
-  --ring: #4c7a4f;
+  --border: #dfe2e6;
+  --input: #dfe2e6;
+  --ring: #5a9a6e;
 
-  --chart-1: #4c7a4f;
-  --chart-2: #2f5a34;
-  --chart-3: #b56b45;
-  --chart-4: #d98c2b;
-  --chart-5: #e9e1d5;
+  --chart-1: #5a9a6e;
+  --chart-2: #4a8560;
+  --chart-3: #7ab88d;
+  --chart-4: #b8956a;
+  --chart-5: #f0f2f4;
 
   --radius: 0.75rem;
 
   --sidebar: #ffffff;
-  --sidebar-foreground: #2e2e2e;
-  --sidebar-primary: #2f5a34;
+  --sidebar-foreground: #1a1d21;
+  --sidebar-primary: #4a8560;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #e9e1d5;
-  --sidebar-accent-foreground: #2f5a34;
-  --sidebar-border: #ddd7cf;
-  --sidebar-ring: #4c7a4f;
+  --sidebar-accent: #f0f2f4;
+  --sidebar-accent-foreground: #3d7a52;
+  --sidebar-border: #dfe2e6;
+  --sidebar-ring: #5a9a6e;
 }
 
 @layer base {
@@ -133,4 +133,8 @@
 }
 ::-webkit-scrollbar-thumb:hover {
   background-color: var(--color-primary);
+}
+
+.safe-area-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
 }

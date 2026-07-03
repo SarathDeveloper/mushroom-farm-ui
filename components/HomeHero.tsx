@@ -42,8 +42,8 @@ export function HomeHero() {
             <div className="relative rounded-2xl overflow-hidden bg-[var(--color-primary-dark)] min-h-[380px] sm:min-h-[420px] lg:min-h-[520px]">
               <div className="absolute right-0 bottom-0 top-0 w-full sm:w-[58%] lg:w-[52%] pointer-events-none">
                 <SafeImage
-                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/20210628_Pleurotus_djamor_3.jpg/1280px-20210628_Pleurotus_djamor_3.jpg"
-                  alt="Fresh organic mushrooms growing on substrate at the farm"
+                  src="/gallery/farm/oyster-mushroom-growing.png"
+                  alt="Fresh organic oyster mushrooms growing on substrate at our farm"
                   fill
                   priority
                   sizes="(max-width: 1024px) 100vw, 55vw"
@@ -52,25 +52,47 @@ export function HomeHero() {
               </div>
 
               <div className="relative z-10 flex flex-col justify-center h-full p-8 sm:p-10 lg:p-12 max-w-full sm:max-w-[55%]">
-                <span className="inline-flex w-fit items-center px-3 py-1.5 rounded-md bg-[#f59e0b] text-white text-xs sm:text-sm font-bold mb-4 sm:mb-5">
-                  Sale up to 30% OFF
+                <span className="inline-flex w-fit items-center px-3 py-1.5 rounded-md bg-primary text-white text-xs sm:text-sm font-bold mb-4 sm:mb-5">
+                  Sale up to 30% OFF — This Week Only
                 </span>
 
                 <h1 className="text-3xl sm:text-4xl lg:text-[2.75rem] xl:text-5xl font-bold text-white leading-[1.15] font-heading mb-3 sm:mb-4">
                   Fresh &amp; Healthy Organic Mushrooms
                 </h1>
 
-                <p className="text-white/75 text-sm sm:text-base mb-6 sm:mb-8">
-                  Free shipping on all your order.
+                <p className="text-white/75 text-sm sm:text-base mb-4 sm:mb-5">
+                  Harvested at 5 AM, at your door by evening. Free shipping on orders above ₹500.
                 </p>
 
-                <Link
-                  href="/shop"
-                  className="inline-flex w-fit items-center gap-2 rounded-full bg-[#f5f3ef] text-primary font-semibold px-6 py-3 text-sm sm:text-base hover:bg-white hover:scale-[1.02] transition-all duration-300"
-                >
-                  Shop now
-                  <ArrowRight size={18} className="text-primary" />
-                </Link>
+                {/* Social proof */}
+                <div className="flex items-center gap-3 mb-6 sm:mb-8">
+                  <div className="flex -space-x-2">
+                    {[47, 12, 32, 20].map((img) => (
+                      <div key={img} className="w-7 h-7 rounded-full border-2 border-white overflow-hidden bg-white/20">
+                        <img src={`https://i.pravatar.cc/56?img=${img}`} alt="" className="w-full h-full object-cover" />
+                      </div>
+                    ))}
+                  </div>
+                  <span className="text-white/80 text-xs sm:text-sm">
+                    <strong className="text-white">1,247</strong> orders this month
+                  </span>
+                </div>
+
+                <div className="flex flex-wrap items-center gap-3">
+                  <Link
+                    href="/shop"
+                    className="inline-flex w-fit items-center gap-2 rounded-full bg-white text-primary font-semibold px-6 py-3 text-sm sm:text-base hover:bg-secondary hover:scale-[1.02] transition-all duration-300"
+                  >
+                    Shop now
+                    <ArrowRight size={18} className="text-primary" />
+                  </Link>
+                  <Link
+                    href="/track-order"
+                    className="inline-flex w-fit items-center gap-2 rounded-full border border-white/30 text-white font-medium px-5 py-3 text-sm hover:bg-white/10 transition-all"
+                  >
+                    Track Order
+                  </Link>
+                </div>
               </div>
             </div>
           </FadeIn>
@@ -103,7 +125,7 @@ export function HomeHero() {
             <FadeIn direction="up" delay={0.15} className="flex-1 min-h-0">
               <Link
                 href="/shop"
-                className="group relative flex h-full w-full rounded-2xl overflow-hidden bg-[#1a1a1a]"
+                className="group relative flex h-full w-full rounded-2xl overflow-hidden bg-[#2b2f33]"
               >
                 <div className="relative z-10 flex flex-col justify-center h-full p-6 sm:p-8 max-w-[55%]">
                   <span className="text-white/60 text-[10px] sm:text-xs font-bold uppercase tracking-[0.15em] mb-2">
