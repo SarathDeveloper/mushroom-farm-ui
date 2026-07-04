@@ -3,7 +3,7 @@ import { MapPin, Phone, Mail, Clock, Leaf } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="bg-[var(--color-primary-dark)] text-white pt-16 pb-8">
+    <footer className="bg-[#0b0b0b] text-[#f2efec] pt-16 pb-8">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-5 lg:gap-8">
           

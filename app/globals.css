@@ -3,13 +3,13 @@
 @import "shadcn/tailwind.css";
 
 @theme inline {
-  /* Premium silver-white + light green design system */
-  --color-primary-dark: #4a8560;
-  --color-body: #5c6370;
-  --color-heading: #1a1d21;
-  --color-success: #5a9a6e;
-  --color-warning: #b8956a;
-  --color-error: #c94b4b;
+  /* Get Diety Theme - Vibrant Green & Clean White/Black */
+  --color-primary-dark: #3ca841; /* Darker green for hovers */
+  --color-body: #0b0b0b;
+  --color-heading: #000000;
+  --color-success: #52c057;
+  --color-warning: #e5b06d;
+  --color-error: #e56d6d;
 
   --font-sans: var(--font-sans);
   --font-heading: var(--font-heading);
@@ -56,51 +56,51 @@
 }
 
 :root {
-  /* Cool silver-white background / white cards */
-  --background: #f8f9fa;
-  --foreground: #1a1d21;
+  /* Clean White/Off-White Backgrounds */
+  --background: #ffffff;
+  --foreground: #0b0b0b;
   --card: #ffffff;
-  --card-foreground: #1a1d21;
+  --card-foreground: #0b0b0b;
   --popover: #ffffff;
-  --popover-foreground: #1a1d21;
+  --popover-foreground: #0b0b0b;
 
-  /* Primary sage green (links, icons, highlights, prices, headings) */
-  --primary: #5a9a6e;
+  /* Primary Vibrant Green */
+  --primary: #52c057;
   --primary-foreground: #ffffff;
 
-  /* Secondary silver (light cards, feature/category backgrounds) */
-  --secondary: #f0f2f4;
-  --secondary-foreground: #3d7a52;
+  /* Secondary / Alternate Backgrounds */
+  --secondary: #f2f2f2;
+  --secondary-foreground: #0b0b0b;
 
-  --muted: #eef0f2;
-  --muted-foreground: #8a919a;
+  --muted: #f2f2f2;
+  --muted-foreground: #5c6370;
 
-  /* Accent — unified soft green (no catchy colors) */
-  --accent: #5a9a6e;
+  /* Accent */
+  --accent: #52c057;
   --accent-foreground: #ffffff;
 
-  --destructive: #c94b4b;
+  --destructive: #e56d6d;
 
-  --border: #dfe2e6;
-  --input: #dfe2e6;
-  --ring: #5a9a6e;
+  --border: #e0e0e0;
+  --input: #e0e0e0;
+  --ring: #52c057;
 
-  --chart-1: #5a9a6e;
-  --chart-2: #4a8560;
-  --chart-3: #7ab88d;
-  --chart-4: #b8956a;
-  --chart-5: #f0f2f4;
+  --chart-1: #52c057;
+  --chart-2: #3ca841;
+  --chart-3: #7dd681;
+  --chart-4: #e5b06d;
+  --chart-5: #f2f2f2;
 
   --radius: 0.75rem;
 
-  --sidebar: #ffffff;
-  --sidebar-foreground: #1a1d21;
-  --sidebar-primary: #4a8560;
+  --sidebar: #0b0b0b;
+  --sidebar-foreground: #f2efec;
+  --sidebar-primary: #52c057;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #f0f2f4;
-  --sidebar-accent-foreground: #3d7a52;
-  --sidebar-border: #dfe2e6;
-  --sidebar-ring: #5a9a6e;
+  --sidebar-accent: #303030;
+  --sidebar-accent-foreground: #f2efec;
+  --sidebar-border: rgba(242, 239, 236, 0.15);
+  --sidebar-ring: #52c057;
 }
 
 @layer base {

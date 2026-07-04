@@ -1,180 +1,132 @@
 import Link from "next/link";
 import {
   ArrowRight,
-  Truck,
-  Headphones,
-  ShoppingBag,
+  Trophy,
+  MapPin,
   Package,
+  Leaf,
+  ChefHat,
+  Truck
 } from "lucide-react";
 import { FadeIn } from "@/components/FadeIn";
 import { SafeImage } from "@/components/SafeImage";
 
-const features = [
-  {
-    icon: Truck,
-    title: "Free Shipping",
-    desc: "Free shipping on all your order",
-  },
-  {
-    icon: Headphones,
-    title: "Customer Support 24/7",
-    desc: "Instant access to Support",
-  },
-  {
-    icon: ShoppingBag,
-    title: "100% Secure Payment",
-    desc: "We ensure your money is safe",
-  },
-  {
-    icon: Package,
-    title: "Money-Back Guarantee",
-    desc: "30 Days Money-Back Guarantee",
-  },
-];
-
 export function HomeHero() {
   return (
-    <section className="bg-background">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl pt-6 lg:pt-8 pb-0">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-5">
-          {/* Main banner */}
-          <FadeIn direction="up" className="lg:col-span-8">
-            <div className="relative rounded-2xl overflow-hidden bg-[var(--color-primary-dark)] min-h-[380px] sm:min-h-[420px] lg:min-h-[520px]">
-              <div className="absolute right-0 bottom-0 top-0 w-full sm:w-[58%] lg:w-[52%] pointer-events-none">
-                <SafeImage
-                  src="/gallery/farm/oyster-mushroom-growing.png"
-                  alt="Fresh organic oyster mushrooms growing on substrate at our farm"
-                  fill
-                  priority
-                  sizes="(max-width: 1024px) 100vw, 55vw"
-                  className="object-cover object-center"
-                />
+    <section className="bg-[#FCFAF5] pt-12 lg:pt-20">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center">
+          
+          {/* Left Column - Text */}
+          <FadeIn direction="up" className="max-w-[540px]">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#E8F2EC] text-[#2B7A5D] text-[10px] font-bold uppercase tracking-wider mb-6">
+              <span>Organic Certified</span>
+              <span className="w-1 h-1 rounded-full bg-[#2B7A5D]/50"></span>
+              <span>Daily Harvest</span>
+            </div>
+
+            <h1 className="text-5xl sm:text-5xl lg:text-[4rem] font-extrabold text-[#0B0B0B] leading-[1.05] font-heading mb-6 tracking-tight">
+              Healthy mushrooms,<br />
+              <span className="text-[#1A4938]">grown for your wellness.</span>
+            </h1>
+
+            <p className="text-[#5C6370] text-lg mb-8 leading-relaxed max-w-[480px]">
+              Fresh, organic mushrooms — hand-picked by experts and delivered to your door daily. Elevate your meals and hit your nutrition goals with premium quality fungi.
+            </p>
+
+            <div className="flex flex-wrap items-center gap-4 mb-12">
+              <Link
+                href="/shop"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-[#F76B46] text-white font-semibold px-8 py-4 text-base hover:bg-[#E05A35] hover:scale-[1.02] shadow-[0_8px_20px_rgba(247,107,70,0.25)] transition-all duration-300"
+              >
+                Shop Fresh Harvest
+                <ArrowRight size={18} />
+              </Link>
+              <Link
+                href="/about"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-white border border-[#E0E0E0] text-[#0B0B0B] font-semibold px-8 py-4 text-base hover:bg-gray-50 transition-all shadow-sm"
+              >
+                Explore Our Farm
+              </Link>
+            </div>
+
+            {/* Trust Badges */}
+            <div className="grid grid-cols-3 gap-2 sm:gap-4 pt-2">
+              <div className="flex flex-col gap-1">
+                <Trophy size={20} className="text-[#F76B46] mb-1.5" />
+                <span className="text-xs sm:text-sm font-bold text-[#0B0B0B] leading-tight">Best Farm Award</span>
+                <span className="text-[10px] sm:text-xs text-[#5C6370]">Tamil Nadu 2023</span>
               </div>
-
-              <div className="relative z-10 flex flex-col justify-center h-full p-8 sm:p-10 lg:p-12 max-w-full sm:max-w-[55%]">
-                <span className="inline-flex w-fit items-center px-3 py-1.5 rounded-md bg-primary text-white text-xs sm:text-sm font-bold mb-4 sm:mb-5">
-                  Sale up to 30% OFF — This Week Only
-                </span>
-
-                <h1 className="text-3xl sm:text-4xl lg:text-[2.75rem] xl:text-5xl font-bold text-white leading-[1.15] font-heading mb-3 sm:mb-4">
-                  Fresh &amp; Healthy Organic Mushrooms
-                </h1>
-
-                <p className="text-white/75 text-sm sm:text-base mb-4 sm:mb-5">
-                  Harvested at 5 AM, at your door by evening. Free shipping on orders above ₹500.
-                </p>
-
-                {/* Social proof */}
-                <div className="flex items-center gap-3 mb-6 sm:mb-8">
-                  <div className="flex -space-x-2">
-                    {[47, 12, 32, 20].map((img) => (
-                      <div key={img} className="w-7 h-7 rounded-full border-2 border-white overflow-hidden bg-white/20">
-                        <img src={`https://i.pravatar.cc/56?img=${img}`} alt="" className="w-full h-full object-cover" />
-                      </div>
-                    ))}
-                  </div>
-                  <span className="text-white/80 text-xs sm:text-sm">
-                    <strong className="text-white">1,247</strong> orders this month
-                  </span>
-                </div>
-
-                <div className="flex flex-wrap items-center gap-3">
-                  <Link
-                    href="/shop"
-                    className="inline-flex w-fit items-center gap-2 rounded-full bg-white text-primary font-semibold px-6 py-3 text-sm sm:text-base hover:bg-secondary hover:scale-[1.02] transition-all duration-300"
-                  >
-                    Shop now
-                    <ArrowRight size={18} className="text-primary" />
-                  </Link>
-                  <Link
-                    href="/track-order"
-                    className="inline-flex w-fit items-center gap-2 rounded-full border border-white/30 text-white font-medium px-5 py-3 text-sm hover:bg-white/10 transition-all"
-                  >
-                    Track Order
-                  </Link>
-                </div>
+              <div className="flex flex-col gap-1">
+                <MapPin size={20} className="text-[#E56D6D] mb-1.5" />
+                <span className="text-xs sm:text-sm font-bold text-[#0B0B0B] leading-tight">Trusted by Chefs</span>
+                <span className="text-[10px] sm:text-xs text-[#5C6370]">Top Restaurants</span>
+              </div>
+              <div className="flex flex-col gap-1">
+                <Package size={20} className="text-[#6D5DD3] mb-1.5" />
+                <span className="text-xs sm:text-sm font-bold text-[#0B0B0B] leading-tight">10,000+ orders</span>
+                <span className="text-[10px] sm:text-xs text-[#5C6370]">delivered since 2021</span>
               </div>
             </div>
           </FadeIn>
 
-          {/* Side banners — split exactly 50/50, matching the main banner's total height */}
-          <div className="lg:col-span-4 flex flex-col gap-4 lg:gap-5 min-h-[380px] sm:min-h-[420px] lg:min-h-[520px]">
-            {/* Top half — light promo */}
-            <FadeIn direction="up" delay={0.1} className="flex-1 min-h-0">
-              <Link
-                href="/shop"
-                className="group relative flex h-full w-full rounded-2xl overflow-hidden bg-secondary"
-              >
-                <span className="absolute top-5 left-5 z-10 inline-flex items-center gap-1.5 text-primary font-semibold text-sm group-hover:gap-2.5 transition-all">
-                  Shop Now
-                  <ArrowRight size={16} />
-                </span>
-                <div className="absolute inset-0">
-                  <SafeImage
-                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/20210628_Pleurotus_djamor_1.jpg/1280px-20210628_Pleurotus_djamor_1.jpg"
-                    alt="Vivid pink oyster mushroom cluster"
-                    fill
-                    sizes="(max-width: 1024px) 100vw, 33vw"
-                    className="object-cover object-center group-hover:scale-105 transition-transform duration-700"
-                  />
-                </div>
-              </Link>
-            </FadeIn>
+          {/* Right Column - Image */}
+          <FadeIn direction="left" delay={0.2} className="relative lg:ml-auto w-full max-w-[600px] mt-8 lg:mt-0">
+            <div className="relative aspect-square rounded-[2.5rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.08)] bg-white border-8 border-white">
+              <SafeImage
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/2025-10-26_D500-1200_Achim-Lammerts_Pleurotus-ostreatus.jpg/1280px-2025-10-26_D500-1200_Achim-Lammerts_Pleurotus-ostreatus.jpg"
+                alt="Fresh organic mushrooms harvested daily"
+                fill
+                priority
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="object-cover"
+              />
+            </div>
+            
+            {/* Floating Badge Top Left */}
+            <div className="absolute top-10 -left-2 sm:-left-8 bg-white rounded-full p-2.5 pr-5 flex items-center gap-3 shadow-[0_8px_30px_rgb(0,0,0,0.12)] z-10 animate-in slide-in-from-bottom-4 fade-in duration-700 delay-300 fill-mode-both">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-[#E8F2EC] flex items-center justify-center text-[#2B7A5D]">
+                <Leaf size={18} />
+              </div>
+              <span className="text-xs sm:text-sm font-bold text-[#0B0B0B]">Fresh, organic harvest</span>
+            </div>
 
-            {/* Bottom half — dark promo */}
-            <FadeIn direction="up" delay={0.15} className="flex-1 min-h-0">
-              <Link
-                href="/shop"
-                className="group relative flex h-full w-full rounded-2xl overflow-hidden bg-[#2b2f33]"
-              >
-                <div className="relative z-10 flex flex-col justify-center h-full p-6 sm:p-8 max-w-[55%]">
-                  <span className="text-white/60 text-[10px] sm:text-xs font-bold uppercase tracking-[0.15em] mb-2">
-                    Best Deal
-                  </span>
-                  <h2 className="text-xl sm:text-2xl lg:text-[1.65rem] font-bold text-white font-heading leading-tight mb-4">
-                    Premium Oyster Mushrooms
-                  </h2>
-                  <span className="inline-flex items-center gap-1.5 text-primary font-semibold text-sm group-hover:gap-2.5 transition-all">
-                    Shop Now
-                    <ArrowRight size={16} />
-                  </span>
-                </div>
-                <div className="absolute right-0 bottom-0 top-0 w-[50%] sm:w-[45%]">
-                  <SafeImage
-                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/2025-10-26_D500-1200_Achim-Lammerts_Pleurotus-ostreatus.jpg/1280px-2025-10-26_D500-1200_Achim-Lammerts_Pleurotus-ostreatus.jpg"
-                    alt="Premium grey oyster mushroom cluster harvest"
-                    fill
-                    sizes="(max-width: 1024px) 50vw, 20vw"
-                    className="object-cover object-center group-hover:scale-105 transition-transform duration-700"
-                  />
-                </div>
-              </Link>
-            </FadeIn>
-          </div>
+            {/* Floating Badge Bottom Right */}
+            <div className="absolute bottom-16 -right-2 sm:-right-8 bg-white rounded-full p-2.5 pr-5 flex items-center gap-3 shadow-[0_8px_30px_rgb(0,0,0,0.12)] z-10 animate-in slide-in-from-bottom-4 fade-in duration-700 delay-500 fill-mode-both">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-[#FFF0ED] flex items-center justify-center text-[#F76B46]">
+                <Truck size={18} />
+              </div>
+              <span className="text-xs sm:text-sm font-bold text-[#0B0B0B]">Delivered daily <span className="font-normal text-[#5C6370]">to you</span></span>
+            </div>
+          </FadeIn>
         </div>
       </div>
 
-      {/* Features bar */}
-      <div className="mt-6 lg:mt-8 border-y border-border bg-muted/60">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-6 lg:py-7">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-            {features.map((feature, i) => (
-              <FadeIn key={feature.title} delay={i * 0.05} direction="up">
-                <div className="flex items-start gap-4">
-                  <div className="shrink-0 w-12 h-12 rounded-full border-2 border-primary/30 flex items-center justify-center text-primary">
-                    <feature.icon size={22} strokeWidth={1.5} />
-                  </div>
-                  <div className="min-w-0">
-                    <h3 className="font-bold text-foreground text-sm sm:text-base font-heading leading-snug mb-1">
-                      {feature.title}
-                    </h3>
-                    <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed">
-                      {feature.desc}
-                    </p>
-                  </div>
-                </div>
-              </FadeIn>
-            ))}
+      {/* Bottom Dark Green Info Bar */}
+      <div className="bg-[#1A4938] mt-20 lg:mt-28">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-8 sm:py-10">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 divide-y sm:divide-y-0 sm:divide-x divide-white/10">
+            <div className="flex items-center gap-4 sm:justify-center pt-4 sm:pt-0 first:pt-0">
+              <Leaf className="text-[#7DD681] shrink-0" size={32} strokeWidth={1.5} />
+              <div>
+                <h3 className="font-bold text-white text-sm sm:text-base">100% Chemical-Free</h3>
+                <p className="text-[#A2C7B8] text-xs sm:text-sm mt-0.5">grown naturally & safely</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-4 sm:justify-center pt-4 sm:pt-0">
+              <ChefHat className="text-[#7DD681] shrink-0" size={32} strokeWidth={1.5} />
+              <div>
+                <h3 className="font-bold text-white text-sm sm:text-base">Expert-Cultivated</h3>
+                <p className="text-[#A2C7B8] text-xs sm:text-sm mt-0.5">FSSAI-approved farm</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-4 sm:justify-center pt-4 sm:pt-0">
+              <Truck className="text-[#7DD681] shrink-0" size={32} strokeWidth={1.5} />
+              <div>
+                <h3 className="font-bold text-white text-sm sm:text-base">Free doorstep delivery</h3>
+                <p className="text-[#A2C7B8] text-xs sm:text-sm mt-0.5">every single day</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>

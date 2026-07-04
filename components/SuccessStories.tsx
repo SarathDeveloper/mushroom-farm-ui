@@ -41,11 +41,11 @@ export function SuccessStories() {
     <section className="py-20 bg-background">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         <FadeIn className="text-center mb-14">
-          <span className="text-sm font-semibold text-primary uppercase tracking-wider">Real Results</span>
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mt-2 font-heading">
+          <span className="text-xs font-bold text-[#2B7A5D] uppercase tracking-wider bg-[#E8F2EC] px-3.5 py-1.5 rounded-full">Real Results</span>
+          <h2 className="text-3xl md:text-4xl font-extrabold text-foreground mt-4 font-heading">
             Success Stories
           </h2>
-          <p className="text-[var(--color-body)] max-w-2xl mx-auto mt-3">
+          <p className="text-[var(--color-body)] max-w-2xl mx-auto mt-4 text-base">
             From restaurant owners to first-time farmers — see how Vellimalai Farms creates real impact.
           </p>
         </FadeIn>
@@ -58,35 +58,35 @@ export function SuccessStories() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.1 }}
-              className="bg-card rounded-2xl border border-border p-6 flex flex-col hover:shadow-[0_8px_24px_rgba(0,0,0,0.06)] transition-shadow"
+              className="bg-card rounded-3xl border border-border p-8 flex flex-col hover:shadow-[0_12px_30px_rgba(0,0,0,0.04)] transition-all duration-300 hover:-translate-y-1"
             >
               <div className="flex items-center justify-between mb-5">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-primary bg-primary/10 px-2.5 py-1 rounded-full">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-[#2B7A5D] bg-[#E8F2EC] px-3.5 py-1 rounded-full">
                   {story.type}
                 </span>
-                <Quote size={28} className="text-secondary" />
+                <Quote size={28} className="text-[#F4F0E6]" />
               </div>
 
               <p className="text-[var(--color-body)] text-sm leading-relaxed italic flex-1 mb-6">
                 &ldquo;{story.story}&rdquo;
               </p>
 
-              <div className="rounded-xl bg-primary/5 border border-primary/10 p-3 mb-5 flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center">
+              <div className="rounded-2xl bg-[#E8F2EC]/40 border border-[#E8F2EC] p-4 mb-6 flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-[#E8F2EC] text-[#2B7A5D] flex items-center justify-center">
                   <TrendingUp size={18} />
                 </div>
                 <div>
-                  <p className="font-bold text-foreground text-sm">{story.metric}</p>
-                  <p className="text-[11px] text-muted-foreground">{story.metricLabel}</p>
+                  <p className="font-extrabold text-foreground text-sm">{story.metric}</p>
+                  <p className="text-[11px] text-[#5C6370]">{story.metricLabel}</p>
                 </div>
               </div>
 
-              <div className="flex items-center gap-3 pt-4 border-t border-border">
+              <div className="flex items-center gap-3 pt-5 border-t border-border">
                 <div className="relative w-11 h-11 rounded-full overflow-hidden">
                   <SafeImage src={story.image} alt={story.name} fill sizes="44px" className="object-cover" />
                 </div>
                 <div>
-                  <h4 className="font-bold text-foreground text-sm">{story.name}</h4>
+                  <h4 className="font-bold text-[#0B0B0B] text-sm">{story.name}</h4>
                   <p className="text-xs text-muted-foreground">{story.role}</p>
                 </div>
               </div>
@@ -97,7 +97,7 @@ export function SuccessStories() {
         <FadeIn className="text-center mt-12">
           <Link
             href="/training"
-            className="inline-flex items-center gap-2 text-primary font-semibold hover:gap-3 transition-all"
+            className="inline-flex items-center gap-2 text-[#2B7A5D] font-bold hover:gap-3 transition-all"
           >
             See more stories & start your journey <ArrowRight size={18} />
           </Link>

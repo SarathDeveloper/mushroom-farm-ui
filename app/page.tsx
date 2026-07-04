@@ -3,7 +3,6 @@ import { ArrowRight, ShieldCheck, Clock, Truck, CheckCircle2, Quote, Send, PlayC
 import { FadeIn } from "@/components/FadeIn";
 import { HomeHero } from "@/components/HomeHero";
 import { FarmToTable } from "@/components/FarmToTable";
-import { TrustBar } from "@/components/TrustBar";
 import { SeasonalAvailability } from "@/components/SeasonalAvailability";
 import { SuccessStories } from "@/components/SuccessStories";
 import { LoyaltySection } from "@/components/LoyaltySection";
@@ -25,9 +24,6 @@ export default function Home() {
     <div className="flex flex-col min-h-screen">
 
       <HomeHero />
-
-      {/* Trust Bar */}
-      <TrustBar />
 
       {/* Farm to Table Journey */}
       <FarmToTable />

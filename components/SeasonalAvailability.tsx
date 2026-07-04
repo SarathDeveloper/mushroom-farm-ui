@@ -42,9 +42,9 @@ const seasonalItems = [
 ];
 
 const statusStyles = {
-  peak: "bg-[var(--color-success)]/10 text-[var(--color-success)] border-[var(--color-success)]/20",
+  peak: "bg-[#E8F2EC] text-[#2B7A5D] border-[#E8F2EC]/20",
   available: "bg-primary/10 text-primary border-primary/20",
-  limited: "bg-[var(--color-warning)]/10 text-[var(--color-warning)] border-[var(--color-warning)]/20",
+  limited: "bg-[#FFF0ED] text-[#F76B46] border-[#FFF0ED]/20",
 };
 
 export function SeasonalAvailability() {
@@ -54,13 +54,13 @@ export function SeasonalAvailability() {
     <section className="py-20 bg-secondary">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         <FadeIn className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-semibold mb-4">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#E8F2EC] text-[#2B7A5D] text-xs font-bold uppercase tracking-wider mb-4">
             <Calendar size={16} /> {currentMonth} Harvest Status
           </div>
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground font-heading">
+          <h2 className="text-3xl md:text-4xl font-extrabold text-foreground font-heading">
             What&apos;s Fresh Right Now
           </h2>
-          <p className="text-[var(--color-body)] max-w-2xl mx-auto mt-3">
+          <p className="text-[var(--color-body)] max-w-2xl mx-auto mt-4 text-base">
             Our seasonal availability — order what&apos;s at its peak for the best flavor and nutrition.
           </p>
         </FadeIn>
@@ -75,23 +75,23 @@ export function SeasonalAvailability() {
               transition={{ duration: 0.4, delay: i * 0.1 }}
             >
               <Link href={`/shop/${item.slug}`} className="group block">
-                <div className="bg-card rounded-2xl overflow-hidden border border-border hover:shadow-[0_8px_24px_rgba(0,0,0,0.06)] transition-all">
-                  <div className="relative h-40 overflow-hidden">
+                <div className="bg-card rounded-3xl overflow-hidden border border-border hover:shadow-[0_12px_30px_rgba(0,0,0,0.04)] transition-all duration-300 hover:-translate-y-1">
+                  <div className="relative h-48 overflow-hidden">
                     <SafeImage
                       src={item.image}
                       alt={item.name}
                       fill
                       sizes="(max-width: 640px) 100vw, 25vw"
-                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                      className="object-cover group-hover:scale-105 transition-transform duration-700"
                     />
                     <span className={`absolute top-3 left-3 px-2.5 py-1 rounded-full text-[11px] font-bold border ${statusStyles[item.status]}`}>
                       {item.badge}
                     </span>
                   </div>
-                  <div className="p-4">
-                    <h3 className="font-bold text-foreground font-heading group-hover:text-primary transition-colors">{item.name}</h3>
-                    <p className="text-xs text-[var(--color-body)] mt-1 flex items-center gap-1.5">
-                      {item.status === "limited" ? <AlertCircle size={12} /> : <TrendingUp size={12} />}
+                  <div className="p-5">
+                    <h3 className="font-bold text-foreground font-heading group-hover:text-primary transition-colors text-base">{item.name}</h3>
+                    <p className="text-xs text-[var(--color-body)] mt-2 flex items-center gap-1.5">
+                      {item.status === "limited" ? <AlertCircle size={12} className="text-[#F76B46]" /> : <TrendingUp size={12} className="text-[#2B7A5D]" />}
                       {item.note}
                     </p>
                   </div>

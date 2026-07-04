@@ -54,8 +54,8 @@ export function ProductCard({ product, priority = false }: { product: Product; p
 
   return (
     <>
-      <div className="group flex flex-col bg-card rounded-2xl overflow-hidden border border-border hover:shadow-[0_8px_20px_rgba(0,0,0,0.06)] hover:-translate-y-1 transition-all duration-300 ease-out">
-        <div className="relative h-56 overflow-hidden">
+      <div className="group flex flex-col bg-card rounded-3xl overflow-hidden border border-border hover:shadow-[0_12px_30px_rgba(0,0,0,0.04)] hover:-translate-y-1 transition-all duration-300 ease-out">
+        <div className="relative h-60 overflow-hidden">
           <Link href={`/shop/${product.slug}`} className="relative block h-full w-full">
             <SafeImage
               src={product.image}
@@ -67,13 +67,13 @@ export function ProductCard({ product, priority = false }: { product: Product; p
             />
           </Link>
           {product.tag && (
-            <span className="absolute top-4 left-4 px-3 py-1 rounded-full bg-accent text-white text-xs font-bold uppercase tracking-wide">
+            <span className="absolute top-4 left-4 px-3 py-1 rounded-full bg-[#F76B46] text-white text-xs font-bold uppercase tracking-wide">
               {product.tag}
             </span>
           )}
           {/* Freshness badge */}
-          <span className="absolute bottom-4 left-4 px-2.5 py-1 rounded-full bg-[var(--color-success)]/90 backdrop-blur-sm text-white text-[10px] font-bold flex items-center gap-1">
-            <span className="h-1.5 w-1.5 rounded-full bg-white animate-pulse" />
+          <span className="absolute bottom-4 left-4 px-3 py-1 rounded-full bg-[#E8F2EC]/90 backdrop-blur-sm text-[#2B7A5D] text-[10px] font-bold flex items-center gap-1.5 border border-[#2B7A5D]/10">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#2B7A5D] animate-pulse" />
             Harvested Today
           </span>
           <button
@@ -82,46 +82,39 @@ export function ProductCard({ product, priority = false }: { product: Product; p
             aria-pressed={wished}
             className="absolute top-4 right-4 w-10 h-10 bg-white/85 backdrop-blur-sm rounded-full flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-white transition-colors"
           >
-            <Heart size={20} className={cn(wished && "fill-primary text-primary")} />
-          </button>
-          <button
-            onClick={() => setQuickViewOpen(true)}
-            aria-label={`Quick view ${product.name}`}
-            className="absolute bottom-4 right-4 w-10 h-10 bg-white/85 backdrop-blur-sm rounded-full flex items-center justify-center text-[var(--color-body)] opacity-0 group-hover:opacity-100 hover:text-primary hover:bg-white transition-all translate-y-2 group-hover:translate-y-0"
-          >
-            <Eye size={18} />
+            <Heart size={20} className={cn(wished && "fill-[#2B7A5D] text-[#2B7A5D]")} />
           </button>
         </div>
         <div className="p-6 flex-1 flex flex-col">
           <Link href={`/shop/${product.slug}`}>
-            <h3 className="font-bold text-lg text-foreground line-clamp-1 mb-1 font-heading hover:text-primary transition-colors">
+            <h3 className="font-extrabold text-base text-foreground line-clamp-1 mb-1 font-heading hover:text-primary transition-colors">
               {product.name}
             </h3>
           </Link>
-          <div className="flex items-center gap-2 mb-2">
+          <div className="flex items-center gap-2 mb-3">
             <StarRow rating={product.rating} />
             <span className="text-xs text-muted-foreground">({product.reviewCount})</span>
           </div>
           {/* Stock urgency */}
           {product.stock <= 20 && (
-            <p className="text-[11px] font-semibold text-[var(--color-warning)] mb-2">
+            <p className="text-[11px] font-bold text-[#F76B46] mb-3">
               Only {product.stock} left — order soon!
             </p>
           )}
-          <div className="mt-auto flex items-end justify-between">
+          <div className="mt-auto flex items-end justify-between pt-2">
             <div>
-              <span className="text-sm text-[var(--color-body)] block mb-1">{product.weight}</span>
+              <span className="text-xs text-[#5C6370] block mb-1">{product.weight}</span>
               <div className="flex items-center gap-2">
-                <span className="text-xl font-bold text-primary">₹{product.price}</span>
+                <span className="text-lg font-extrabold text-[#2B7A5D]">₹{product.price}</span>
                 {product.compareAtPrice && (
-                  <span className="text-sm text-muted-foreground line-through">₹{product.compareAtPrice}</span>
+                  <span className="text-xs text-muted-foreground line-through">₹{product.compareAtPrice}</span>
                 )}
               </div>
             </div>
             <Button
               onClick={() => handleAddToCart(1)}
               aria-label={`Add ${product.name} to cart`}
-              className="px-4 h-10"
+              className="px-5 h-10 rounded-full bg-[#2B7A5D] hover:bg-[#1A4938] text-white text-sm font-bold"
             >
               Add
             </Button>
