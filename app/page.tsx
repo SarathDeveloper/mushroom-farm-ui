@@ -190,16 +190,17 @@ export default function Home() {
       {/* TESTIMONIALS */}
       <section className="py-20 bg-secondary">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl text-center">
-          <FadeIn>
-             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-12 font-heading">What Our Customers Say</h2>
+          <FadeIn className="mb-12">
+             <span className="text-xs font-bold text-[#2B7A5D] uppercase tracking-wider bg-[#E8F2EC] px-3.5 py-1.5 rounded-full">Testimonials</span>
+             <h2 className="text-3xl md:text-4xl font-extrabold text-foreground mt-4 font-heading">What Our Customers Say</h2>
           </FadeIn>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {testimonials.map((t, i) => (
-              <FadeIn key={i} delay={i * 0.1} direction="up" className="bg-card p-8 rounded-2xl border border-border shadow-[0_4px_12px_rgba(0,0,0,0.04)] relative text-left">
-                <Quote className="absolute top-6 right-6 text-secondary" size={48} />
-                <div className="flex gap-1 text-[#c4a96a] mb-6">
+              <FadeIn key={i} delay={i * 0.1} direction="up" className="bg-card p-8 rounded-3xl border border-border shadow-[0_12px_30px_rgba(0,0,0,0.02)] relative text-left hover:shadow-[0_12px_30px_rgba(0,0,0,0.05)] transition-all duration-300">
+                <Quote className="absolute top-6 right-6 text-[#F4F0E6]" size={48} />
+                <div className="flex gap-1 text-[#F76B46] mb-6">
                   {[1,2,3,4,5].map(star => (
-                    <Star key={star} size={16} className={star <= t.rating ? "fill-[#c4a96a]" : "fill-border text-border"} />
+                    <Star key={star} size={16} className={star <= t.rating ? "fill-[#F76B46] text-[#F76B46]" : "fill-border text-border"} />
                   ))}
                 </div>
                 <p className="text-[var(--color-body)] italic mb-6 leading-relaxed">&ldquo;{t.review}&rdquo;</p>
@@ -209,8 +210,8 @@ export default function Home() {
                     <AvatarFallback>{t.name.charAt(0)}</AvatarFallback>
                   </Avatar>
                   <div>
-                    <h4 className="font-bold text-foreground">{t.name}</h4>
-                    <span className="text-sm text-muted-foreground">{t.role}</span>
+                    <h4 className="font-bold text-[#0B0B0B]">{t.name}</h4>
+                    <span className="text-xs text-muted-foreground">{t.role}</span>
                   </div>
                 </div>
               </FadeIn>
@@ -222,43 +223,6 @@ export default function Home() {
       {/* LOYALTY PROGRAM */}
       <LoyaltySection />
 
-      {/* RECIPES CTA */}
-      <section className="py-16 bg-background">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-          <FadeIn>
-            <div className="relative rounded-2xl overflow-hidden bg-secondary p-10 md:p-14 flex flex-col md:flex-row items-center gap-8">
-              <div className="flex-1">
-                <span className="text-sm font-semibold text-primary uppercase tracking-wider">Recipe Hub</span>
-                <h2 className="text-2xl md:text-3xl font-bold text-foreground mt-2 font-heading">
-                  Don&apos;t Know What to Cook?
-                </h2>
-                <p className="text-[var(--color-body)] mt-2 max-w-lg">
-                  Explore our curated collection of mushroom recipes — from 15-minute weeknight meals to restaurant-worthy dishes. Each recipe links directly to the mushrooms you need.
-                </p>
-                <div className="flex flex-wrap gap-3 mt-6">
-                  <Button asChild className="rounded-full px-6">
-                    <Link href="/recipes">Browse Recipes</Link>
-                  </Button>
-                  <Button asChild variant="outline" className="rounded-full px-6">
-                    <Link href="/compare">Nutrition Guide</Link>
-                  </Button>
-                </div>
-              </div>
-              <div className="grid grid-cols-3 gap-2 w-full md:w-auto md:shrink-0">
-                {[
-                  "https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=200&auto=format&fit=crop",
-                  "https://images.unsplash.com/photo-1565557623262-b51c2513a641?q=80&w=200&auto=format&fit=crop",
-                  "https://images.unsplash.com/photo-1547592166-23ac45744acd?q=80&w=200&auto=format&fit=crop",
-                ].map((src, i) => (
-                  <div key={i} className="relative h-24 md:h-32 w-full md:w-28 rounded-xl overflow-hidden">
-                    <SafeImage src={src} alt="Recipe" fill sizes="100px" className="object-cover" />
-                  </div>
-                ))}
-              </div>
-            </div>
-          </FadeIn>
-        </div>
-      </section>
 
       {/* FAQ & NEWSLETTER */}
       <section className="py-20 bg-secondary">
@@ -266,47 +230,48 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
             <FadeIn direction="right">
-              <h2 className="text-3xl font-bold text-foreground mb-8 font-heading">Frequently Asked Questions</h2>
+              <span className="text-xs font-bold text-[#2B7A5D] uppercase tracking-wider bg-[#E8F2EC] px-3.5 py-1.5 rounded-full">Help & Support</span>
+              <h2 className="text-3xl font-extrabold text-foreground mt-4 mb-8 font-heading">Frequently Asked Questions</h2>
               <Accordion className="w-full">
                 <AccordionItem value="item-1">
-                  <AccordionTrigger className="text-lg font-medium">How do you ensure freshness?</AccordionTrigger>
-                  <AccordionContent className="text-[var(--color-body)] text-base">
+                  <AccordionTrigger className="text-lg font-medium hover:text-[#2B7A5D]">How do you ensure freshness?</AccordionTrigger>
+                  <AccordionContent className="text-[var(--color-body)] text-base leading-relaxed">
                     We harvest early morning and dispatch immediately using temperature-controlled packaging to ensure the mushrooms reach you as fresh as possible.
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="item-2">
-                  <AccordionTrigger className="text-lg font-medium">Do you use pesticides?</AccordionTrigger>
-                  <AccordionContent className="text-[var(--color-body)] text-base">
+                  <AccordionTrigger className="text-lg font-medium hover:text-[#2B7A5D]">Do you use pesticides?</AccordionTrigger>
+                  <AccordionContent className="text-[var(--color-body)] text-base leading-relaxed">
                     Absolutely not. Our farming methods are 100% organic and natural, utilizing clean agricultural practices without any synthetic chemicals.
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="item-3">
-                  <AccordionTrigger className="text-lg font-medium">How long is the training program?</AccordionTrigger>
-                  <AccordionContent className="text-[var(--color-body)] text-base">
+                  <AccordionTrigger className="text-lg font-medium hover:text-[#2B7A5D]">How long is the training program?</AccordionTrigger>
+                  <AccordionContent className="text-[var(--color-body)] text-base leading-relaxed">
                     We offer both 1-day crash courses and comprehensive 2-week programs depending on your needs. Check our Training page for details.
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="item-4">
-                  <AccordionTrigger className="text-lg font-medium">What areas do you deliver to?</AccordionTrigger>
-                  <AccordionContent className="text-[var(--color-body)] text-base">
+                  <AccordionTrigger className="text-lg font-medium hover:text-[#2B7A5D]">What areas do you deliver to?</AccordionTrigger>
+                  <AccordionContent className="text-[var(--color-body)] text-base leading-relaxed">
                     We deliver across Salem, Namakkal, Erode, Coimbatore, Trichy, Madurai, Chennai, and Bangalore. Use our pincode checker on product pages to confirm delivery to your area.
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="item-5">
-                  <AccordionTrigger className="text-lg font-medium">Do you offer subscriptions?</AccordionTrigger>
-                  <AccordionContent className="text-[var(--color-body)] text-base">
+                  <AccordionTrigger className="text-lg font-medium hover:text-[#2B7A5D]">Do you offer subscriptions?</AccordionTrigger>
+                  <AccordionContent className="text-[var(--color-body)] text-base leading-relaxed">
                     Yes! Subscribe for weekly, bi-weekly, or monthly deliveries and save up to 15%. You can cancel anytime with no commitment.
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>
             </FadeIn>
 
-            <FadeIn direction="left" className="bg-[var(--color-primary-dark)] rounded-2xl p-10 text-white text-center">
-              <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-6">
+            <FadeIn direction="left" className="bg-[#1A4938] rounded-[2.5rem] p-10 md:p-12 text-white text-center shadow-[0_20px_50px_rgba(26,73,56,0.15)] border border-[#2B7A5D]/20">
+              <div className="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-6 text-[#7DD681]">
                 <Send size={32} />
               </div>
-              <h2 className="text-3xl font-bold mb-4 font-heading">Stay Freshly Updated</h2>
-              <p className="text-white/80 mb-8 max-w-sm mx-auto">
+              <h2 className="text-3xl font-extrabold mb-4 font-heading">Stay Freshly Updated</h2>
+              <p className="text-[#A2C7B8] mb-8 max-w-sm mx-auto leading-relaxed">
                 Subscribe to our newsletter for exclusive offers, recipes, and farm updates.
               </p>
               <NewsletterForm />

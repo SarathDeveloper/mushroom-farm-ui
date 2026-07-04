@@ -1,11 +1,14 @@
 export type GalleryCategory = "all" | "farm" | "products" | "media" | "recognition";
 
+export type GallerySpan = "large" | "tall" | "wide" | "normal";
+
 export interface GalleryItem {
   id: string;
   src: string;
   title: string;
   description: string;
   category: Exclude<GalleryCategory, "all">;
+  span?: GallerySpan;
 }
 
 export const galleryCategories: { value: GalleryCategory; label: string }[] = [
@@ -23,6 +26,7 @@ export const galleryItems: GalleryItem[] = [
     title: "Fresh Oyster Mushrooms",
     description: "Pleurotus ostreatus fruiting beautifully on paddy straw substrate in our climate-controlled growing unit.",
     category: "farm",
+    span: "large",
   },
   {
     id: "farm-growing-shed",
@@ -30,6 +34,7 @@ export const galleryItems: GalleryItem[] = [
     title: "Growing Shed Interior",
     description: "Inside our traditional thatched-roof mushroom growing shed with hundreds of spawn bags hanging from bamboo rafters.",
     category: "farm",
+    span: "tall",
   },
   {
     id: "product-oyster-label",
@@ -58,6 +63,7 @@ export const galleryItems: GalleryItem[] = [
     title: "Daily Thanthi Coverage",
     description: "Featured in Daily Thanthi (March 2025) — 'Young man from Kalvarayanmalai excelling in mushroom production.'",
     category: "media",
+    span: "wide",
   },
   {
     id: "media-makkal-velicham",
@@ -79,6 +85,7 @@ export const galleryItems: GalleryItem[] = [
     title: "District Collector's Visit",
     description: "Kallakkurichi District Collector Mr. M.S. Prasanth, IAS, inspecting our mushroom growing facility on 14.08.2024, reviewing cultivation methods.",
     category: "recognition",
+    span: "large",
   },
   {
     id: "recognition-officials-walking",
@@ -107,6 +114,7 @@ export const galleryItems: GalleryItem[] = [
     title: "Sri Amman Oyster Mushroom Farm",
     description: "Our promotional banner showcasing both button mushrooms (Agaricus) and oyster mushrooms (Pleurotus), along with training programs offered.",
     category: "products",
+    span: "wide",
   },
   {
     id: "promo-recipes-list",

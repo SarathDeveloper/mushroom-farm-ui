@@ -35,7 +35,6 @@ export default function Footer() {
             <ul className="space-y-3 text-sm text-secondary">
               <li><Link href="/shop" className="hover:text-white transition-colors">All Products</Link></li>
               <li><Link href="/compare" className="hover:text-white transition-colors">Compare Mushrooms</Link></li>
-              <li><Link href="/recipes" className="hover:text-white transition-colors">Recipes</Link></li>
               <li><Link href="/bulk-orders" className="hover:text-white transition-colors">Bulk Orders</Link></li>
               <li><Link href="/track-order" className="hover:text-white transition-colors">Track Order</Link></li>
             </ul>
@@ -48,7 +47,6 @@ export default function Footer() {
               <li><Link href="/about" className="hover:text-white transition-colors">About Us</Link></li>
               <li><Link href="/gallery" className="hover:text-white transition-colors">Gallery</Link></li>
               <li><Link href="/training" className="hover:text-white transition-colors">Training Programs</Link></li>
-              <li><Link href="/blog" className="hover:text-white transition-colors">Blog</Link></li>
               <li><Link href="/contact" className="hover:text-white transition-colors">Contact Us</Link></li>
             </ul>
           </div>

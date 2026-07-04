@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, Droplets, HeartHandshake, Leaf, Newspaper, Users } from "lucide-react";
+import { ArrowRight, Award, Droplets, HeartHandshake, Leaf, Newspaper, Quote, Users } from "lucide-react";
 import { PageHero } from "@/components/PageHero";
 import { FadeIn } from "@/components/FadeIn";
 import { SafeImage } from "@/components/SafeImage";
@@ -21,7 +21,6 @@ const values = [
 ];
 
 const team = [
-  { name: "Murugan Selvam", role: "Founder & Head Farmer", avatar: "https://i.pravatar.cc/200?img=12" },
   { name: "Dr. Kavitha Raman", role: "Agricultural Scientist", avatar: "https://i.pravatar.cc/200?img=32" },
   { name: "Lakshmi Narayanan", role: "Operations & Training Lead", avatar: "https://i.pravatar.cc/200?img=47" },
 ];
@@ -57,6 +56,16 @@ const recognitionPhotos = [
     src: "/gallery/recognition/government-award.png",
     title: "Government Recognition",
     desc: "Receiving recognition at a Special Development Programme under the Horticulture Department's tribal welfare initiative.",
+  },
+  {
+    src: "/gallery/recognition/community-meeting.png",
+    title: "Community Engagement",
+    desc: "Conducting outreach meetings with local farmers to share mushroom cultivation techniques and government support programmes.",
+  },
+  {
+    src: "/gallery/recognition/officials-walking.png",
+    title: "Official Farm Tour",
+    desc: "Senior government officials touring the Vellimalai mushroom growing facility to evaluate sustainable farming practices.",
   },
 ];
 
@@ -99,6 +108,50 @@ export default function AboutPage() {
                 <Link href="/shop">Taste the Difference <ArrowRight className="ml-2" size={18} /></Link>
               </Button>
             </FadeIn>
+          </div>
+
+          {/* Founder Spotlight */}
+          <div className="relative rounded-3xl bg-secondary overflow-hidden mb-24">
+            <div className="grid grid-cols-1 lg:grid-cols-5 gap-0">
+              <FadeIn direction="right" className="lg:col-span-2 relative min-h-[400px] lg:min-h-[520px]">
+                <SafeImage
+                  src="https://i.pravatar.cc/600?img=12"
+                  alt="Murugan Selvam — Founder & Head Farmer"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 40vw"
+                  className="object-cover"
+                />
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6 lg:hidden">
+                  <span className="text-white/80 text-sm font-medium uppercase tracking-wider">Founder</span>
+                  <h3 className="text-2xl font-bold text-white font-heading">Murugan Selvam</h3>
+                </div>
+              </FadeIn>
+              <FadeIn direction="left" className="lg:col-span-3 p-8 md:p-12 flex flex-col justify-center">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center">
+                    <Award size={20} strokeWidth={1.75} />
+                  </div>
+                  <span className="text-sm font-semibold text-primary uppercase tracking-wider">Meet Our Founder</span>
+                </div>
+                <h2 className="text-3xl md:text-4xl font-bold font-heading text-foreground mb-2">
+                  Murugan Selvam
+                </h2>
+                <p className="text-muted-foreground font-medium mb-6">Founder &amp; Head Farmer</p>
+                <p className="text-[var(--color-body)] leading-relaxed mb-4">
+                  Growing up in the Kalvarayan Hills of Tamil Nadu, Murugan witnessed firsthand how tribal farming communities struggled with limited income options. In 2017, with little more than determination and a single bamboo shed, he began experimenting with oyster mushroom cultivation — a crop uniquely suited to the region&apos;s cool, misty climate.
+                </p>
+                <p className="text-[var(--color-body)] leading-relaxed mb-6">
+                  What started as a modest side project has since grown into Sari Amman Oyster Mushroom Farm, a thriving enterprise that supplies fresh and dried mushrooms to restaurants and retailers across Tamil Nadu. More importantly, Murugan has trained hundreds of local farmers, empowering them to build their own mushroom-growing businesses and create sustainable livelihoods in the hills.
+                </p>
+                <div className="relative bg-card rounded-2xl p-6 border border-border">
+                  <Quote size={32} className="text-primary/20 absolute top-4 left-4" />
+                  <p className="text-foreground font-medium italic pl-8 leading-relaxed">
+                    &ldquo;I didn&apos;t start with a business plan — I started with a belief that the hills could give our people more. The mushrooms proved me right.&rdquo;
+                  </p>
+                  <p className="text-sm text-muted-foreground mt-3 pl-8">— Murugan Selvam</p>
+                </div>
+              </FadeIn>
+            </div>
           </div>
 
           <FadeIn className="text-center mb-12">
@@ -167,16 +220,16 @@ export default function AboutPage() {
               Endorsed by district administration and supported by the Tamil Nadu Horticulture Department.
             </p>
           </FadeIn>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-24">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-24">
             {recognitionPhotos.map((photo, i) => (
               <FadeIn key={photo.title} delay={i * 0.1}>
-                <div className="rounded-2xl overflow-hidden bg-card border border-border shadow-[0_4px_12px_rgba(0,0,0,0.04)]">
+                <div className="rounded-2xl overflow-hidden bg-card border border-border shadow-[0_4px_12px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_20px_rgba(0,0,0,0.06)] transition-shadow duration-300">
                   <div className="relative aspect-[16/10] overflow-hidden">
                     <SafeImage
                       src={photo.src}
                       alt={photo.title}
                       fill
-                      sizes="(max-width: 768px) 100vw, 50vw"
+                      sizes="(max-width: 640px) 100vw, 50vw"
                       className="object-cover"
                     />
                   </div>
@@ -192,10 +245,10 @@ export default function AboutPage() {
           <FadeIn className="text-center mb-12">
             <h2 className="text-3xl font-bold font-heading text-foreground mb-4">Meet the Team</h2>
             <p className="text-[var(--color-body)] max-w-2xl mx-auto">
-              The people behind every harvest.
+              Led by our founder Murugan Selvam, our team brings together agricultural expertise and community spirit.
             </p>
           </FadeIn>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-2xl mx-auto">
             {team.map((member, i) => (
               <FadeIn key={member.name} delay={i * 0.1} className="text-center">
                 <Avatar className="size-28 mx-auto mb-4">

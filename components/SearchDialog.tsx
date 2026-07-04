@@ -7,13 +7,11 @@ import { Search, ArrowRight, TrendingUp, Clock } from "lucide-react";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { products } from "@/lib/data";
-import { recipes } from "@/lib/recipes";
 
 const popularSearches = ["Oyster", "Milky Mushroom", "Shiitake", "Combo Pack", "Organic"];
 
 const quickLinks = [
   { label: "Compare Nutrition", href: "/compare" },
-  { label: "Recipes", href: "/recipes" },
   { label: "Track Order", href: "/track-order" },
   { label: "Training Programs", href: "/training" },
 ];
@@ -50,17 +48,6 @@ export function SearchDialog() {
     );
   }, [query]);
 
-  const recipeResults = useMemo(() => {
-    if (!query.trim()) return [];
-    const q = query.toLowerCase();
-    return recipes.filter(
-      (r) =>
-        r.title.toLowerCase().includes(q) ||
-        r.category.toLowerCase().includes(q) ||
-        r.mushroomType.toLowerCase().includes(q)
-    ).slice(0, 3);
-  }, [query]);
-
   const goTo = (path: string) => {
     setOpen(false);
     router.push(path);
@@ -75,7 +62,7 @@ export function SearchDialog() {
       <button
         onClick={() => setOpen(true)}
         aria-label="Search products (Ctrl+K)"
-        className="text-[var(--color-body)] hover:text-primary transition-colors"
+        className="text-[#5C6370] hover:text-[#2B7A5D] transition-colors"
       >
         <Search size={20} />
       </button>
@@ -111,7 +98,7 @@ export function SearchDialog() {
                       <button
                         key={term}
                         onClick={() => handlePopularSearch(term)}
-                        className="px-3 py-1.5 rounded-full bg-secondary text-sm font-medium text-foreground hover:bg-primary/10 hover:text-primary transition-colors"
+                        className="px-3 py-1.5 rounded-full bg-secondary text-sm font-medium text-foreground hover:bg-[#E8F2EC] hover:text-[#2B7A5D] transition-colors"
                       >
                         {term}
                       </button>
@@ -132,7 +119,7 @@ export function SearchDialog() {
                         className="w-full flex items-center justify-between p-2.5 rounded-xl hover:bg-secondary/50 text-left transition-colors group"
                       >
                         <span className="text-sm font-medium text-foreground">{link.label}</span>
-                        <ArrowRight size={14} className="text-border group-hover:text-primary transition-colors" />
+                        <ArrowRight size={14} className="text-border group-hover:text-[#2B7A5D] transition-colors" />
                       </button>
                     ))}
                   </div>
@@ -157,48 +144,23 @@ export function SearchDialog() {
                         </div>
                         <div className="flex-1 min-w-0">
                           <p className="font-semibold text-sm text-foreground truncate">{product.name}</p>
-                          <p className="text-xs text-[var(--color-body)]">
+                          <p className="text-xs text-[#5C6370]">
                             {product.category} · ₹{product.price} · {product.weight}
                           </p>
                         </div>
-                        <span className="text-xs font-semibold text-primary shrink-0">₹{product.price}</span>
+                        <span className="text-xs font-semibold text-[#2B7A5D] shrink-0">₹{product.price}</span>
                       </button>
                     ))}
                   </div>
                 )}
 
-                {/* Recipe Results */}
-                {recipeResults.length > 0 && (
-                  <div className="mb-2">
-                    <h4 className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider px-2.5 py-1.5">
-                      Recipes ({recipeResults.length})
-                    </h4>
-                    {recipeResults.map((recipe) => (
-                      <button
-                        key={recipe.id}
-                        onClick={() => goTo(`/recipes/${recipe.slug}`)}
-                        className="w-full flex items-center gap-3 p-2.5 rounded-xl hover:bg-secondary/50 text-left transition-colors group"
-                      >
-                        <div className="relative h-12 w-12 rounded-lg overflow-hidden shrink-0 bg-secondary">
-                          <SafeImage src={recipe.image} alt={recipe.title} fill sizes="48px" className="object-cover" />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <p className="font-semibold text-sm text-foreground truncate">{recipe.title}</p>
-                          <p className="text-xs text-[var(--color-body)]">{recipe.category} · {recipe.difficulty}</p>
-                        </div>
-                        <ArrowRight size={14} className="text-border group-hover:text-primary transition-colors shrink-0" />
-                      </button>
-                    ))}
-                  </div>
-                )}
-
-                {productResults.length === 0 && recipeResults.length === 0 && (
+                {productResults.length === 0 && (
                   <div className="text-center py-10">
-                    <p className="text-sm text-[var(--color-body)]">
+                    <p className="text-sm text-[#5C6370]">
                       No results for &ldquo;{query}&rdquo;
                     </p>
                     <p className="text-xs text-muted-foreground mt-1">
-                      Try searching for &ldquo;oyster&rdquo;, &ldquo;curry recipe&rdquo;, or &ldquo;shiitake&rdquo;
+                      Try searching for &ldquo;oyster&rdquo;, &ldquo;milky&rdquo;, or &ldquo;shiitake&rdquo;
                     </p>
                   </div>
                 )}
