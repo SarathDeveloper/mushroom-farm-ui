@@ -45,7 +45,7 @@ export function CustomersTable({ customers }: { customers: Customer[] }) {
   return (
     <>
       {/* Search */}
-      <div className="relative mb-6 max-w-sm">
+      <div className="relative mb-4 sm:mb-6 max-w-sm">
         <Search
           size={18}
           className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none"
@@ -58,7 +58,59 @@ export function CustomersTable({ customers }: { customers: Customer[] }) {
         />
       </div>
 
-      <div className="bg-card rounded-2xl border border-border shadow-[0_4px_12px_rgba(0,0,0,0.04)] overflow-hidden">
+      {/* Mobile card view */}
+      <div className="space-y-3 md:hidden">
+        {filtered.map((customer) => (
+          <div key={customer.id} className="bg-card rounded-xl border border-border p-4 shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
+            <div className="flex items-center gap-3 mb-3">
+              {customer.image ? (
+                <div className="relative h-10 w-10 rounded-full overflow-hidden shrink-0 bg-secondary">
+                  <SafeImage
+                    src={customer.image}
+                    alt={customer.name || ""}
+                    fill
+                    sizes="40px"
+                    className="object-cover"
+                  />
+                </div>
+              ) : (
+                <div className="h-10 w-10 rounded-full bg-primary flex items-center justify-center text-white font-semibold text-sm shrink-0">
+                  {getInitials(customer.name, customer.email)}
+                </div>
+              )}
+              <div className="min-w-0 flex-1">
+                <p className="font-semibold text-foreground text-sm truncate">
+                  {customer.name || "—"}
+                </p>
+                <p className="text-xs text-muted-foreground truncate">{customer.email}</p>
+              </div>
+              <Badge variant={customer.orderCount > 0 ? "default" : "secondary"} className="shrink-0">
+                {customer.orderCount} orders
+              </Badge>
+            </div>
+            <div className="flex items-center justify-between text-xs text-muted-foreground pt-3 border-t border-border">
+              <div className="flex items-center gap-3">
+                {customer.phone && (
+                  <a href={`tel:${customer.phone}`} className="flex items-center gap-1 hover:text-primary">
+                    <Phone size={11} /> {customer.phone}
+                  </a>
+                )}
+                <a href={`mailto:${customer.email}`} className="flex items-center gap-1 hover:text-primary">
+                  <Mail size={11} /> Email
+                </a>
+              </div>
+              {customer.lastOrder && (
+                <span className="font-medium text-foreground">
+                  ₹{customer.lastOrder.totalAmount.toLocaleString("en-IN")}
+                </span>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Desktop table view */}
+      <div className="hidden md:block bg-card rounded-2xl border border-border shadow-[0_4px_12px_rgba(0,0,0,0.04)] overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm">
             <thead>

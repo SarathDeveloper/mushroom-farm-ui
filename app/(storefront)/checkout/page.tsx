@@ -1,17 +1,20 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import Script from "next/script";
 import {
+  Banknote,
   CheckCircle2,
+  CreditCard,
   Loader2,
+  LocateFixed,
+  MapPin,
   PartyPopper,
   ShoppingBag,
   Tag,
-  Clock,
   ShieldCheck,
 } from "lucide-react";
 import { PageHero } from "@/components/PageHero";
@@ -19,6 +22,11 @@ import { FadeIn } from "@/components/FadeIn";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  indianMobileError,
+  isValidIndianMobile,
+  normalizeIndianMobile,
+} from "@/lib/phone";
 import { useCartStore } from "@/lib/store";
 import { useHasMounted } from "@/lib/useHasMounted";
 import { cn } from "@/lib/utils";
@@ -32,11 +40,10 @@ declare global {
   }
 }
 
-const deliverySlots = [
-  { id: "morning", label: "Morning", time: "8:00 AM - 12:00 PM", icon: "🌅" },
-  { id: "afternoon", label: "Afternoon", time: "12:00 PM - 4:00 PM", icon: "☀️" },
-  { id: "evening", label: "Evening", time: "4:00 PM - 8:00 PM", icon: "🌇" },
-];
+type CheckoutStep = 0 | 1 | 2;
+type PaymentMethod = "cod" | "online";
+
+const STEPS = ["Address", "Payment", "Confirm"] as const;
 
 const validCoupons: Record<
   string,
@@ -55,30 +62,206 @@ export default function CheckoutPage() {
   const subtotal = useCartStore((s) => s.subtotal());
   const clear = useCartStore((s) => s.clear);
 
+  const [step, setStep] = useState<CheckoutStep>(0);
   const [submitting, setSubmitting] = useState(false);
   const [orderId, setOrderId] = useState<string | null>(null);
-  const [selectedSlot, setSelectedSlot] = useState("evening");
   const [couponCode, setCouponCode] = useState("");
   const [appliedCoupon, setAppliedCoupon] = useState<{
     code: string;
     discount: number;
   } | null>(null);
   const [couponError, setCouponError] = useState("");
-  const [orderNotes, setOrderNotes] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
+  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("cod");
 
-  // Controlled shipping fields
   const [fullName, setFullName] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
-  const [state, setState] = useState("");
+  const [state, setState] = useState("Tamil Nadu");
   const [pincode, setPincode] = useState("");
-  const [email, setEmail] = useState("");
+  const [phoneError, setPhoneError] = useState("");
+  const [otp, setOtp] = useState("");
+  const [otpSent, setOtpSent] = useState(false);
+  const [otpMsg, setOtpMsg] = useState("");
+  const [otpBusy, setOtpBusy] = useState(false);
+  const [otpCooldown, setOtpCooldown] = useState(0);
+  const [phoneVerifiedToken, setPhoneVerifiedToken] = useState<string | null>(
+    null,
+  );
+  const [verifiedPhone, setVerifiedPhone] = useState<string | null>(null);
+  const [locating, setLocating] = useState(false);
+  const [locationMsg, setLocationMsg] = useState("");
+
+  const phoneVerified = Boolean(
+    phoneVerifiedToken && verifiedPhone === phone && isValidIndianMobile(phone),
+  );
+
+  useEffect(() => {
+    if (session?.user?.name && !fullName) {
+      setFullName(session.user.name);
+    }
+  }, [session?.user?.name, fullName]);
+
+  useEffect(() => {
+    if (otpCooldown <= 0) return;
+    const timer = window.setInterval(() => {
+      setOtpCooldown((s) => (s <= 1 ? 0 : s - 1));
+    }, 1000);
+    return () => window.clearInterval(timer);
+  }, [otpCooldown]);
+
+  const handlePhoneChange = (value: string) => {
+    const next = normalizeIndianMobile(value);
+    setPhone(next);
+    setPhoneError("");
+    setOtpMsg("");
+    if (verifiedPhone && verifiedPhone !== next) {
+      setPhoneVerifiedToken(null);
+      setVerifiedPhone(null);
+      setOtpSent(false);
+      setOtp("");
+    }
+  };
+
+  const sendOtp = async () => {
+    const err = indianMobileError(phone);
+    if (err) {
+      setPhoneError(err);
+      return;
+    }
+    setOtpBusy(true);
+    setOtpMsg("");
+    setPhoneError("");
+    try {
+      const res = await fetch("/api/otp/send", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ phone }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setOtpMsg(data.message ?? "Failed to send OTP.");
+        if (data.cooldownMs) {
+          setOtpCooldown(Math.ceil(Number(data.cooldownMs) / 1000));
+        }
+        return;
+      }
+      setOtpSent(true);
+      setOtpCooldown(Math.max(45, Math.ceil(Number(data.cooldownMs ?? 45000) / 1000)));
+      setOtpMsg(
+        data.devOtp
+          ? `OTP sent. Dev code: ${data.devOtp}`
+          : (data.message ?? "OTP sent to your mobile."),
+      );
+    } catch {
+      setOtpMsg("Failed to send OTP. Please try again.");
+    } finally {
+      setOtpBusy(false);
+    }
+  };
+
+  const verifyOtp = async () => {
+    if (!/^\d{6}$/.test(otp)) {
+      setOtpMsg("Enter the 6-digit OTP.");
+      return;
+    }
+    setOtpBusy(true);
+    setOtpMsg("");
+    try {
+      const res = await fetch("/api/otp/verify", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ phone, otp }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setOtpMsg(data.message ?? "OTP verification failed.");
+        return;
+      }
+      setPhoneVerifiedToken(data.phoneVerifiedToken);
+      setVerifiedPhone(phone);
+      setOtpMsg("Mobile number verified.");
+    } catch {
+      setOtpMsg("OTP verification failed. Please try again.");
+    } finally {
+      setOtpBusy(false);
+    }
+  };
+
+  const autofillCurrentAddress = () => {
+    setLocationMsg("");
+    if (!navigator.geolocation) {
+      setLocationMsg("Location is not supported on this browser.");
+      return;
+    }
+    setLocating(true);
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        try {
+          const { latitude, longitude } = position.coords;
+          const res = await fetch(
+            `/api/geocode/reverse?lat=${latitude}&lon=${longitude}`,
+          );
+          if (!res.ok) throw new Error("geocode failed");
+          const data = (await res.json()) as {
+            display_name?: string;
+            address?: {
+              house_number?: string;
+              road?: string;
+              neighbourhood?: string;
+              suburb?: string;
+              village?: string;
+              town?: string;
+              city?: string;
+              county?: string;
+              state_district?: string;
+              state?: string;
+              postcode?: string;
+            };
+          };
+          const a = data.address ?? {};
+          const streetParts = [
+            a.house_number,
+            a.road,
+            a.neighbourhood,
+            a.suburb,
+          ].filter(Boolean);
+          setAddress(
+            streetParts.length > 0
+              ? streetParts.join(", ")
+              : (data.display_name ?? ""),
+          );
+          setCity(a.city || a.town || a.village || a.county || a.state_district || "");
+          if (a.state) setState(a.state);
+          if (a.postcode) {
+            setPincode(a.postcode.replace(/\D/g, "").slice(0, 6));
+          }
+          setLocationMsg("Address filled from your current location. Please review.");
+        } catch {
+          setLocationMsg("Could not fetch address from location. Enter it manually.");
+        } finally {
+          setLocating(false);
+        }
+      },
+      (err) => {
+        setLocating(false);
+        setLocationMsg(
+          err.code === err.PERMISSION_DENIED
+            ? "Location permission denied. Enable it in browser settings."
+            : "Unable to get your location. Enter the address manually.",
+        );
+      },
+      { enableHighAccuracy: true, timeout: 15000, maximumAge: 60000 },
+    );
+  };
 
   const shipping = subtotal >= 500 || subtotal === 0 ? 0 : 49;
   const discount = appliedCoupon?.discount ?? 0;
-  const total = subtotal + shipping - discount;
+  const gst = 0;
+  const total = subtotal + shipping + gst - discount;
+  const email = session?.user?.email ?? "";
+  const itemCount = items.reduce((sum, i) => sum + i.quantity, 0);
 
   const applyCoupon = () => {
     setCouponError("");
@@ -165,8 +348,27 @@ export default function CheckoutPage() {
     [fullName, email, phone, clear],
   );
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const goToPayment = (e: React.FormEvent) => {
     e.preventDefault();
+    setErrorMsg("");
+    const err = indianMobileError(phone);
+    if (err) {
+      setPhoneError(err);
+      return;
+    }
+    if (!phoneVerified) {
+      setErrorMsg("Verify your mobile number with OTP before continuing.");
+      return;
+    }
+    setStep(1);
+  };
+
+  const goToReview = () => {
+    setErrorMsg("");
+    setStep(2);
+  };
+
+  const placeOrder = async () => {
     setErrorMsg("");
     setSubmitting(true);
 
@@ -181,20 +383,26 @@ export default function CheckoutPage() {
           })),
           fullName,
           phone,
+          phoneVerifiedToken,
           address,
           city,
           state,
           pincode,
-          email,
           couponCode: appliedCoupon?.code ?? undefined,
-          deliverySlot: selectedSlot,
-          notes: orderNotes || undefined,
+          paymentMethod,
         }),
       });
 
       const data = await res.json();
       if (!res.ok) {
         setErrorMsg(data.message ?? "Failed to create order.");
+        setSubmitting(false);
+        return;
+      }
+
+      if (paymentMethod === "cod") {
+        clear();
+        setOrderId(data.orderId);
         setSubmitting(false);
         return;
       }
@@ -208,7 +416,6 @@ export default function CheckoutPage() {
 
   if (!mounted) return null;
 
-  // Auth gate: redirect unauthenticated users to login
   if (authStatus === "loading") {
     return (
       <div className="flex min-h-[60vh] items-center justify-center">
@@ -234,16 +441,15 @@ export default function CheckoutPage() {
           <p className="text-[var(--color-body)] max-w-md mx-auto mb-2">
             Thank you for your order. Your order ID is:
           </p>
-          <p className="text-xl font-bold text-primary mb-4">
+          <p className="text-xl font-bold text-primary mb-2">
             #{orderId.slice(0, 8).toUpperCase()}
           </p>
-          <p className="text-sm text-[var(--color-body)] mb-8 max-w-sm mx-auto">
-            Delivery slot:{" "}
-            <strong>
-              {deliverySlots.find((s) => s.id === selectedSlot)?.time}
-            </strong>{" "}
-            tomorrow
-          </p>
+          {paymentMethod === "cod" && (
+            <p className="text-sm text-[var(--color-body)] mb-8">
+              Please keep ₹{total.toFixed(0)} ready for cash on delivery.
+            </p>
+          )}
+          {paymentMethod !== "cod" && <div className="mb-8" />}
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Button asChild size="lg" className="rounded-full px-8">
               <Link href={`/track-order?id=${orderId}`}>Track My Order</Link>
@@ -291,256 +497,500 @@ export default function CheckoutPage() {
 
       <section className="py-16 bg-background">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
-          {/* Progress steps */}
           <FadeIn className="mb-10">
             <div className="flex items-center justify-center gap-2 text-sm">
-              {["Cart", "Details", "Payment", "Confirm"].map((step, i) => (
-                <div key={step} className="flex items-center gap-2">
+              {STEPS.map((label, i) => (
+                <div key={label} className="flex items-center gap-2">
                   <span
                     className={cn(
                       "w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold",
-                      i <= 1
+                      i < step
                         ? "bg-primary text-white"
-                        : "bg-secondary text-muted-foreground",
+                        : i === step
+                          ? "bg-primary text-white"
+                          : "bg-secondary text-muted-foreground",
                     )}
                   >
-                    {i < 1 ? <CheckCircle2 size={14} /> : i + 1}
+                    {i < step ? <CheckCircle2 size={14} /> : i + 1}
                   </span>
                   <span
                     className={cn(
                       "hidden sm:inline",
-                      i <= 1
+                      i <= step
                         ? "text-foreground font-medium"
                         : "text-muted-foreground",
                     )}
                   >
-                    {step}
+                    {label}
                   </span>
-                  {i < 3 && <span className="w-8 h-px bg-border" />}
+                  {i < STEPS.length - 1 && (
+                    <span
+                      className={cn(
+                        "w-8 h-px",
+                        i < step ? "bg-primary" : "bg-border",
+                      )}
+                    />
+                  )}
                 </div>
               ))}
             </div>
           </FadeIn>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-            <FadeIn direction="right" className="lg:col-span-2">
-              <form onSubmit={handleSubmit} className="space-y-8">
-                {/* Shipping Details */}
-                <div className="space-y-4">
-                  <h2 className="text-xl font-bold font-heading text-foreground">
-                    Shipping Details
-                  </h2>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-10">
+            <FadeIn direction="right" className="lg:col-span-2 order-2 lg:order-1">
+              {/* Step 0: Address */}
+              {step === 0 && (
+                <form onSubmit={goToPayment}>
+                  <div className="rounded-2xl border border-border bg-card p-6 sm:p-8 space-y-5">
+                    <h2 className="text-xl font-bold font-heading text-foreground flex items-center gap-2">
+                      <MapPin size={20} className="text-primary" />
+                      Delivery Address
+                    </h2>
+
                     <div className="space-y-1.5">
-                      <Label htmlFor="fullName">Full Name</Label>
+                      <Label htmlFor="fullName">
+                        Full Name <span className="text-primary">*</span>
+                      </Label>
                       <Input
                         id="fullName"
                         required
-                        placeholder="Jane Doe"
-                        className="h-11"
+                        placeholder="Your full name"
                         value={fullName}
                         onChange={(e) => setFullName(e.target.value)}
                       />
                     </div>
+
                     <div className="space-y-1.5">
-                      <Label htmlFor="phone">Phone Number</Label>
-                      <Input
-                        id="phone"
-                        type="tel"
-                        required
-                        placeholder="+91 98765 43210"
-                        className="h-11"
-                        value={phone}
-                        onChange={(e) => setPhone(e.target.value)}
-                      />
+                      <Label htmlFor="phone">
+                        Phone Number <span className="text-primary">*</span>
+                      </Label>
+                      <div className="flex flex-col sm:flex-row gap-2">
+                        <div className="relative flex-1">
+                          <Input
+                            id="phone"
+                            type="tel"
+                            required
+                            inputMode="numeric"
+                            autoComplete="tel"
+                            maxLength={10}
+                            placeholder="10-digit mobile (6–9…)"
+                            value={phone}
+                            onChange={(e) => handlePhoneChange(e.target.value)}
+                            aria-invalid={Boolean(phoneError) || undefined}
+                            className={cn(phoneVerified && "pr-10")}
+                          />
+                          {phoneVerified && (
+                            <CheckCircle2
+                              size={16}
+                              className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--color-success)]"
+                              aria-label="Verified"
+                            />
+                          )}
+                        </div>
+                        {!phoneVerified && (
+                          <Button
+                            type="button"
+                            variant="outline"
+                            className="rounded-full h-11 px-5 shrink-0"
+                            disabled={otpBusy || otpCooldown > 0 || !phone}
+                            onClick={sendOtp}
+                          >
+                            {otpBusy && !otpSent ? (
+                              <Loader2 size={16} className="animate-spin" />
+                            ) : otpCooldown > 0 ? (
+                              `Resend in ${otpCooldown}s`
+                            ) : otpSent ? (
+                              "Resend OTP"
+                            ) : (
+                              "Send OTP"
+                            )}
+                          </Button>
+                        )}
+                      </div>
+                      {phoneError && (
+                        <p className="text-xs text-[var(--color-error)]">{phoneError}</p>
+                      )}
+                      {!phoneError && !phoneVerified && (
+                        <p className="text-xs text-muted-foreground">
+                          Must be 10 digits and start with 6, 7, 8, or 9. OTP verification is required.
+                        </p>
+                      )}
+                      {phoneVerified && (
+                        <p className="text-xs text-[var(--color-success)] flex items-center gap-1">
+                          <CheckCircle2 size={12} /> Mobile number verified
+                        </p>
+                      )}
+
+                      {otpSent && !phoneVerified && (
+                        <div className="mt-2 rounded-xl border border-border bg-secondary/40 p-3 space-y-2">
+                          <Label htmlFor="otp">
+                            Enter OTP <span className="text-primary">*</span>
+                          </Label>
+                          <div className="flex flex-col sm:flex-row gap-2">
+                            <Input
+                              id="otp"
+                              type="text"
+                              inputMode="numeric"
+                              autoComplete="one-time-code"
+                              maxLength={6}
+                              placeholder="6-digit OTP"
+                              value={otp}
+                              onChange={(e) =>
+                                setOtp(e.target.value.replace(/\D/g, "").slice(0, 6))
+                              }
+                            />
+                            <Button
+                              type="button"
+                              className="rounded-full h-11 px-5 shrink-0"
+                              disabled={otpBusy || otp.length !== 6}
+                              onClick={verifyOtp}
+                            >
+                              {otpBusy ? (
+                                <Loader2 size={16} className="animate-spin" />
+                              ) : (
+                                "Verify"
+                              )}
+                            </Button>
+                          </div>
+                        </div>
+                      )}
+                      {otpMsg && (
+                        <p
+                          className={cn(
+                            "text-xs",
+                            phoneVerified
+                              ? "text-[var(--color-success)]"
+                              : "text-[var(--color-body)]",
+                          )}
+                        >
+                          {otpMsg}
+                        </p>
+                      )}
                     </div>
-                    <div className="space-y-1.5 sm:col-span-2">
-                      <Label htmlFor="address">Street Address</Label>
-                      <Input
+
+                    <div className="space-y-1.5">
+                      <div className="flex items-center justify-between gap-3">
+                        <Label htmlFor="address">
+                          Street Address <span className="text-primary">*</span>
+                        </Label>
+                        <button
+                          type="button"
+                          onClick={autofillCurrentAddress}
+                          disabled={locating}
+                          className="inline-flex items-center gap-1.5 text-xs font-medium text-primary hover:underline disabled:opacity-60"
+                        >
+                          {locating ? (
+                            <Loader2 size={13} className="animate-spin" />
+                          ) : (
+                            <LocateFixed size={13} />
+                          )}
+                          {locating ? "Detecting…" : "Use current location"}
+                        </button>
+                      </div>
+                      <textarea
                         id="address"
                         required
-                        placeholder="House no., street, area"
-                        className="h-11"
+                        rows={3}
+                        placeholder="House/flat, street, area"
                         value={address}
                         onChange={(e) => setAddress(e.target.value)}
+                        className="w-full rounded-xl border border-border bg-card px-3.5 py-2 text-base md:text-sm outline-none focus-visible:border-primary focus-visible:ring-3 focus-visible:ring-primary/20 resize-none placeholder:text-muted-foreground"
                       />
+                      {locationMsg && (
+                        <p className="text-xs text-muted-foreground">{locationMsg}</p>
+                      )}
                     </div>
-                    <div className="space-y-1.5">
-                      <Label htmlFor="city">City</Label>
-                      <Input
-                        id="city"
-                        required
-                        placeholder="Salem"
-                        className="h-11"
-                        value={city}
-                        onChange={(e) => setCity(e.target.value)}
-                      />
-                    </div>
-                    <div className="space-y-1.5">
-                      <Label htmlFor="state">State</Label>
-                      <Input
-                        id="state"
-                        required
-                        placeholder="Tamil Nadu"
-                        className="h-11"
-                        value={state}
-                        onChange={(e) => setState(e.target.value)}
-                      />
-                    </div>
-                    <div className="space-y-1.5">
-                      <Label htmlFor="pincode">Pincode</Label>
-                      <Input
-                        id="pincode"
-                        required
-                        placeholder="636001"
-                        className="h-11"
-                        value={pincode}
-                        onChange={(e) => setPincode(e.target.value)}
-                      />
-                    </div>
-                    <div className="space-y-1.5">
-                      <Label htmlFor="email">Email (for order updates)</Label>
-                      <Input
-                        id="email"
-                        type="email"
-                        required
-                        placeholder="you@example.com"
-                        className="h-11"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                      />
-                    </div>
-                  </div>
-                </div>
 
-                {/* Delivery Time Slot */}
-                <div className="space-y-4">
-                  <h2 className="text-lg font-bold font-heading text-foreground flex items-center gap-2">
-                    <Clock size={18} className="text-primary" /> Choose Delivery
-                    Time
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                      <div className="space-y-1.5">
+                        <Label htmlFor="city">
+                          City <span className="text-primary">*</span>
+                        </Label>
+                        <Input
+                          id="city"
+                          required
+                          placeholder="City"
+                          value={city}
+                          onChange={(e) => setCity(e.target.value)}
+                        />
+                      </div>
+                      <div className="space-y-1.5">
+                        <Label htmlFor="state">State</Label>
+                        <Input
+                          id="state"
+                          required
+                          value={state}
+                          onChange={(e) => setState(e.target.value)}
+                        />
+                      </div>
+                      <div className="space-y-1.5">
+                        <Label htmlFor="pincode">
+                          PIN Code <span className="text-primary">*</span>
+                        </Label>
+                        <Input
+                          id="pincode"
+                          required
+                          pattern="[0-9]{6}"
+                          maxLength={6}
+                          placeholder="6-digit PIN"
+                          value={pincode}
+                          onChange={(e) =>
+                            setPincode(
+                              e.target.value.replace(/\D/g, "").slice(0, 6),
+                            )
+                          }
+                        />
+                      </div>
+                    </div>
+
+                    {errorMsg && (
+                      <p className="text-sm text-[var(--color-error)] bg-[var(--color-error)]/10 rounded-xl px-4 py-3">
+                        {errorMsg}
+                      </p>
+                    )}
+
+                    <Button type="submit" size="lg" className="rounded-full h-12 px-8">
+                      Continue to Payment
+                    </Button>
+                  </div>
+                </form>
+              )}
+
+              {/* Step 1: Payment */}
+              {step === 1 && (
+                <div className="rounded-2xl border border-border bg-card p-6 sm:p-8 space-y-5">
+                  <h2 className="text-xl font-bold font-heading text-foreground flex items-center gap-2">
+                    <CreditCard size={20} className="text-primary" />
+                    Payment Method
                   </h2>
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                    {deliverySlots.map((slot) => (
-                      <button
-                        key={slot.id}
-                        type="button"
-                        onClick={() => setSelectedSlot(slot.id)}
+
+                  <div className="space-y-3">
+                    <button
+                      type="button"
+                      onClick={() => setPaymentMethod("cod")}
+                      className={cn(
+                        "w-full flex items-start gap-4 p-4 rounded-xl border text-left transition-all",
+                        paymentMethod === "cod"
+                          ? "border-primary bg-primary/5 ring-2 ring-primary/20"
+                          : "border-border hover:border-primary/30",
+                      )}
+                    >
+                      <span
                         className={cn(
-                          "p-4 rounded-xl border text-center transition-all",
-                          selectedSlot === slot.id
-                            ? "border-primary bg-primary/5 ring-2 ring-primary/20"
-                            : "border-border bg-card hover:border-primary/30",
+                          "mt-0.5 w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0",
+                          paymentMethod === "cod"
+                            ? "border-primary"
+                            : "border-muted-foreground",
                         )}
                       >
-                        <span className="text-xl mb-1 block">{slot.icon}</span>
-                        <p className="text-sm font-semibold text-foreground">
-                          {slot.label}
+                        {paymentMethod === "cod" && (
+                          <span className="w-2.5 h-2.5 rounded-full bg-primary" />
+                        )}
+                      </span>
+                      <div>
+                        <p className="font-semibold text-foreground flex items-center gap-2">
+                          <Banknote size={16} className="text-primary" />
+                          Cash On Delivery
                         </p>
-                        <p className="text-xs text-muted-foreground">
-                          {slot.time}
+                        <p className="text-sm text-muted-foreground mt-0.5">
+                          Pay with cash when your order arrives
                         </p>
-                      </button>
-                    ))}
+                      </div>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => setPaymentMethod("online")}
+                      className={cn(
+                        "w-full flex items-start gap-4 p-4 rounded-xl border text-left transition-all",
+                        paymentMethod === "online"
+                          ? "border-primary bg-primary/5 ring-2 ring-primary/20"
+                          : "border-border hover:border-primary/30",
+                      )}
+                    >
+                      <span
+                        className={cn(
+                          "mt-0.5 w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0",
+                          paymentMethod === "online"
+                            ? "border-primary"
+                            : "border-muted-foreground",
+                        )}
+                      >
+                        {paymentMethod === "online" && (
+                          <span className="w-2.5 h-2.5 rounded-full bg-primary" />
+                        )}
+                      </span>
+                      <div>
+                        <p className="font-semibold text-foreground flex items-center gap-2">
+                          <CreditCard size={16} className="text-primary" />
+                          Pay Online
+                        </p>
+                        <p className="text-sm text-muted-foreground mt-0.5">
+                          UPI, cards &amp; net banking via Razorpay
+                        </p>
+                      </div>
+                    </button>
+                  </div>
+
+                  {paymentMethod === "online" && (
+                    <div className="rounded-2xl border border-border bg-secondary/50 p-4 flex items-center gap-3 text-sm text-[var(--color-body)]">
+                      <ShieldCheck size={18} className="text-primary shrink-0" />
+                      Secure payment powered by Razorpay. Your card details are
+                      never stored on our servers.
+                    </div>
+                  )}
+
+                  <div className="flex items-center gap-3 pt-2">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="lg"
+                      className="rounded-full h-12 px-6"
+                      onClick={() => setStep(0)}
+                    >
+                      Back
+                    </Button>
+                    <Button
+                      type="button"
+                      size="lg"
+                      className="rounded-full h-12 px-8 flex-1"
+                      onClick={goToReview}
+                    >
+                      Continue to Review
+                    </Button>
                   </div>
                 </div>
+              )}
 
-                {/* Order Notes */}
-                <div className="space-y-2">
-                  <Label htmlFor="notes">
-                    Delivery Instructions (optional)
-                  </Label>
-                  <textarea
-                    id="notes"
-                    value={orderNotes}
-                    onChange={(e) => setOrderNotes(e.target.value)}
-                    placeholder="e.g., Leave at door, Call before delivery, Ring bell twice..."
-                    rows={3}
-                    className="w-full rounded-xl border border-border bg-card px-3.5 py-2 text-sm outline-none focus-visible:border-primary focus-visible:ring-3 focus-visible:ring-primary/20 resize-none"
-                  />
-                </div>
+              {/* Step 2: Review & Place Order */}
+              {step === 2 && (
+                <div className="rounded-2xl border border-border bg-card p-6 sm:p-8 space-y-6">
+                  <h2 className="text-xl font-bold font-heading text-foreground flex items-center gap-2">
+                    <CheckCircle2 size={20} className="text-primary" />
+                    Review &amp; Place Order
+                  </h2>
 
-                <div className="rounded-2xl border border-border bg-secondary/50 p-4 flex items-center gap-3 text-sm text-[var(--color-body)]">
-                  <ShieldCheck size={18} className="text-primary shrink-0" />
-                  Secure payment powered by Razorpay. Your card details are never
-                  stored on our servers.
-                </div>
+                  <div className="space-y-1">
+                    <h3 className="text-sm font-semibold text-foreground">
+                      Delivery Address
+                    </h3>
+                    <p className="text-sm text-muted-foreground">
+                      {fullName}, {phone}
+                    </p>
+                    <p className="text-sm text-muted-foreground">{address}</p>
+                    <p className="text-sm text-muted-foreground">
+                      {city}, {state} – {pincode}
+                    </p>
+                  </div>
 
-                {errorMsg && (
-                  <p className="text-sm text-[var(--color-error)] bg-[var(--color-error)]/10 rounded-xl px-4 py-3">
-                    {errorMsg}
-                  </p>
-                )}
+                  <div className="space-y-1">
+                    <h3 className="text-sm font-semibold text-foreground">
+                      Payment
+                    </h3>
+                    <p className="text-sm text-muted-foreground">
+                      {paymentMethod === "cod"
+                        ? "Cash On Delivery"
+                        : "Pay Online (Razorpay)"}
+                    </p>
+                  </div>
 
-                <Button
-                  type="submit"
-                  disabled={submitting}
-                  size="lg"
-                  className="w-full rounded-full h-12"
-                >
-                  {submitting ? (
-                    <>
-                      <Loader2 size={18} className="mr-2 animate-spin" />{" "}
-                      Processing...
-                    </>
-                  ) : (
-                    `Pay with Razorpay · ₹${total.toFixed(0)}`
-                  )}
-                </Button>
-              </form>
-            </FadeIn>
-
-            <FadeIn direction="left" className="lg:col-span-1">
-              <div className="sticky top-24 space-y-4">
-                <div className="rounded-2xl border border-border bg-card p-6 space-y-4">
-                  <h3 className="text-lg font-bold font-heading text-foreground">
-                    Order Summary
-                  </h3>
-                  <div className="space-y-3 max-h-64 overflow-y-auto pr-1">
+                  <div className="space-y-3">
+                    <h3 className="text-sm font-semibold text-foreground">
+                      Items ({itemCount})
+                    </h3>
                     {items.map((item) => (
                       <div
                         key={item.productId}
-                        className="flex justify-between text-sm text-[var(--color-body)]"
+                        className="flex justify-between text-sm text-muted-foreground"
                       >
-                        <span className="line-clamp-1">
+                        <span>
                           {item.name} × {item.quantity}
                         </span>
-                        <span className="font-medium text-foreground shrink-0 ml-2">
+                        <span className="text-foreground font-medium">
                           ₹{item.price * item.quantity}
                         </span>
                       </div>
                     ))}
                   </div>
+
+                  {errorMsg && (
+                    <p className="text-sm text-[var(--color-error)] bg-[var(--color-error)]/10 rounded-xl px-4 py-3">
+                      {errorMsg}
+                    </p>
+                  )}
+
+                  <div className="flex items-center gap-3 pt-2">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="lg"
+                      className="rounded-full h-12 px-6"
+                      disabled={submitting}
+                      onClick={() => setStep(1)}
+                    >
+                      Back
+                    </Button>
+                    <Button
+                      type="button"
+                      size="lg"
+                      className="rounded-full h-12 px-8 flex-1"
+                      disabled={submitting}
+                      onClick={placeOrder}
+                    >
+                      {submitting ? (
+                        <>
+                          <Loader2 size={18} className="mr-2 animate-spin" />
+                          Placing Order...
+                        </>
+                      ) : (
+                        `Place Order – ₹${total.toFixed(0)}`
+                      )}
+                    </Button>
+                  </div>
+                </div>
+              )}
+            </FadeIn>
+
+            <FadeIn direction="left" className="lg:col-span-1 order-1 lg:order-2">
+              <div className="sticky top-24 space-y-4">
+                <div className="rounded-2xl border border-border bg-card p-6 space-y-4">
+                  <h3 className="text-lg font-bold font-heading text-foreground">
+                    Order Summary
+                  </h3>
                   <div className="border-t border-border pt-4 space-y-2">
                     <div className="flex justify-between text-sm text-[var(--color-body)]">
-                      <span>Subtotal</span>
-                      <span>₹{subtotal.toFixed(0)}</span>
+                      <span>Items ({itemCount})</span>
+                      <span>₹{subtotal.toFixed(2)}</span>
                     </div>
                     <div className="flex justify-between text-sm text-[var(--color-body)]">
-                      <span>Shipping</span>
+                      <span>GST</span>
+                      <span>₹{gst.toFixed(2)}</span>
+                    </div>
+                    <div className="flex justify-between text-sm text-[var(--color-body)]">
+                      <span>Delivery</span>
                       <span>
                         {shipping === 0 ? (
                           <span className="text-[var(--color-success)] font-medium">
-                            Free
+                            FREE
                           </span>
                         ) : (
-                          `₹${shipping}`
+                          `₹${shipping.toFixed(2)}`
                         )}
                       </span>
                     </div>
                     {appliedCoupon && (
                       <div className="flex justify-between text-sm text-[var(--color-success)]">
                         <span>Discount ({appliedCoupon.code})</span>
-                        <span>-₹{appliedCoupon.discount}</span>
+                        <span>-₹{appliedCoupon.discount.toFixed(2)}</span>
                       </div>
                     )}
                     <div className="flex justify-between font-bold text-foreground text-lg pt-2 border-t border-border">
                       <span>Total</span>
-                      <span>₹{total.toFixed(0)}</span>
+                      <span>₹{total.toFixed(2)}</span>
                     </div>
                   </div>
                 </div>
 
-                {/* Coupon Code */}
                 <div className="rounded-2xl border border-border bg-card p-5">
                   <h4 className="text-sm font-bold text-foreground mb-3 flex items-center gap-2">
                     <Tag size={14} className="text-primary" /> Apply Coupon
@@ -594,7 +1044,7 @@ export default function CheckoutPage() {
                   <div className="rounded-xl bg-[var(--color-success)]/10 border border-[var(--color-success)]/20 p-3 text-center">
                     <p className="text-xs font-semibold text-[var(--color-success)]">
                       <CheckCircle2 size={12} className="inline mr-1" /> You
-                      qualify for free shipping!
+                      qualify for free delivery!
                     </p>
                   </div>
                 )}

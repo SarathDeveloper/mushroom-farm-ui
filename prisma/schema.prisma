@@ -292,6 +292,21 @@ model BulkOrder {
   createdAt DateTime @default(now())
 }
 
+model PreOrder {
+  id            String   @id @default(uuid())
+  name          String
+  phone         String
+  email         String
+  product       String
+  quantity      String
+  preferredDate String
+  location      String
+  notes         String?
+  isHandled     Boolean  @default(false)
+
+  createdAt DateTime @default(now())
+}
+
 model Coupon {
   id            String   @id @default(uuid())
   code          String   @unique
@@ -323,4 +338,21 @@ model Notification {
   link      String?
 
   createdAt DateTime @default(now())
+}
+
+model HeroSlide {
+  id                String  @id @default(uuid())
+  badge             String
+  headline          String
+  subtitle          String
+  primaryCtaLabel   String
+  primaryCtaHref    String
+  secondaryCtaLabel String
+  secondaryCtaHref  String
+  image             String
+  sortOrder         Int     @default(0)
+  isActive          Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

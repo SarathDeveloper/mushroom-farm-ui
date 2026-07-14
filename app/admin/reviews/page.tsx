@@ -22,12 +22,12 @@ export default async function AdminReviewsPage() {
   };
 
   return (
-    <div className="p-6 sm:p-10">
-      <header className="mb-8">
-        <h1 className="text-2xl md:text-3xl font-bold font-heading text-foreground">
+    <div className="p-4 sm:p-6 lg:p-10">
+      <header className="mb-6 sm:mb-8">
+        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold font-heading text-foreground">
           Reviews
         </h1>
-        <p className="text-[var(--color-body)] mt-1">
+        <p className="text-[var(--color-body)] mt-1 text-xs sm:text-sm">
           {stats.total} review{stats.total !== 1 ? "s" : ""} · {stats.pending} pending · {stats.approved} approved
         </p>
       </header>

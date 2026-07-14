@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import toast from "react-hot-toast";
-import { Loader2, Plus, X, ArrowLeft } from "lucide-react";
+import { Loader2, Plus, X, ArrowLeft, Star, ShoppingCart } from "lucide-react";
 import Link from "next/link";
 
 import { Input } from "@/components/ui/input";
@@ -19,6 +19,8 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { CloudinaryUpload } from "@/components/CloudinaryUpload";
+import { SafeImage } from "@/components/SafeImage";
+import { cn } from "@/lib/utils";
 
 import {
   productSchema,
@@ -87,6 +89,11 @@ export function ProductForm({
   const images = watch("images");
   const highlights = watch("highlights");
   const slug = watch("slug");
+  const description = watch("description");
+  const price = watch("price");
+  const weight = watch("weight");
+  const stock = watch("stock");
+  const compareAtPrice = watch("compareAtPrice");
 
   useEffect(() => {
     if (mode === "create" && name) {
@@ -156,8 +163,14 @@ export function ProductForm({
     }
   }
 
+  const stockNum = Number(stock) || 0;
+  const previewStock =
+    stockNum <= 0 ? "Out of Stock" : stockNum <= 10 ? "Low Stock" : "In Stock";
+  const previewStockTone =
+    stockNum <= 0 ? "out" : stockNum <= 10 ? "low" : "in";
+
   return (
-    <div className="p-6 sm:p-10 max-w-4xl">
+    <div className="p-6 sm:p-10 max-w-6xl">
       <header className="mb-8">
         <Link
           href="/admin/products"
@@ -170,7 +183,8 @@ export function ProductForm({
         </h1>
       </header>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 xl:grid-cols-[1fr_340px] gap-8 items-start">
+        <div className="space-y-8">
         {/* Basic Info */}
         <section className="bg-card rounded-2xl border border-border shadow-[0_4px_12px_rgba(0,0,0,0.04)] p-6 space-y-5">
           <h2 className="font-heading font-semibold text-foreground text-lg">
@@ -403,22 +417,27 @@ export function ProductForm({
 
         {/* Highlights */}
         <section className="bg-card rounded-2xl border border-border shadow-[0_4px_12px_rgba(0,0,0,0.04)] p-6 space-y-5">
-          <h2 className="font-heading font-semibold text-foreground text-lg">
-            Highlights
-          </h2>
+          <div>
+            <h2 className="font-heading font-semibold text-foreground text-lg">
+              Highlights
+            </h2>
+            <p className="text-sm text-muted-foreground mt-1">
+              Shown as green tags on the storefront product card.
+            </p>
+          </div>
 
           {highlights.length > 0 && (
             <div className="flex flex-wrap gap-2">
               {highlights.map((h, i) => (
                 <span
                   key={i}
-                  className="inline-flex items-center gap-1.5 rounded-full bg-secondary px-3 py-1.5 text-sm text-foreground"
+                  className="inline-flex items-center gap-1.5 rounded-full bg-[#E8F2EC] px-3 py-1.5 text-sm font-medium text-[#2B7A5D] border border-[#2B7A5D]/10"
                 >
                   {h}
                   <button
                     type="button"
                     onClick={() => removeHighlight(i)}
-                    className="text-muted-foreground hover:text-destructive"
+                    className="text-[#2B7A5D]/70 hover:text-destructive"
                   >
                     <X size={14} />
                   </button>
@@ -429,7 +448,7 @@ export function ProductForm({
 
           <div className="flex gap-2">
             <Input
-              placeholder="e.g. Rich in protein & fiber"
+              placeholder="e.g. Organic, Fresh Daily, Premium Quality"
               value={highlightInput}
               onChange={(e) => setHighlightInput(e.target.value)}
               onKeyDown={(e) => {
@@ -497,6 +516,85 @@ export function ProductForm({
             Cancel
           </Button>
         </div>
+        </div>
+
+        {/* Live storefront card preview */}
+        <aside className="xl:sticky xl:top-6 space-y-3">
+          <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+            Storefront preview
+          </p>
+          <div className="flex flex-col bg-card rounded-2xl overflow-hidden border border-border/80 shadow-[0_8px_24px_rgba(0,0,0,0.06)]">
+            <div className="relative aspect-[4/3] overflow-hidden bg-secondary">
+              <SafeImage
+                src={images[0] || ""}
+                alt={name || "Product preview"}
+                fill
+                sizes="340px"
+                className="object-cover"
+              />
+              <span
+                className={cn(
+                  "absolute top-3 right-3 px-2.5 py-1 rounded-full text-[11px] font-semibold text-white shadow-sm",
+                  previewStockTone === "in" && "bg-[#2B7A5D]",
+                  previewStockTone === "low" && "bg-[#E5B06D]",
+                  previewStockTone === "out" && "bg-[#E56D6D]"
+                )}
+              >
+                {previewStock}
+              </span>
+            </div>
+            <div className="p-5 flex flex-col gap-3">
+              <div className="flex items-start justify-between gap-3">
+                <h3 className="font-bold text-[15px] leading-snug text-foreground line-clamp-2 font-heading">
+                  {name || "Product name"}
+                </h3>
+                <div className="flex items-center gap-1 shrink-0 pt-0.5">
+                  <Star size={13} className="fill-[#c4a96a] text-[#c4a96a]" />
+                  <span className="text-xs font-medium text-muted-foreground">
+                    4.8
+                  </span>
+                </div>
+              </div>
+              <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3">
+                {description || "Product description will appear here."}
+              </p>
+              {highlights.length > 0 && (
+                <div className="flex flex-wrap gap-1.5">
+                  {highlights.slice(0, 4).map((tag) => (
+                    <span
+                      key={tag}
+                      className="inline-flex items-center rounded-full bg-[#E8F2EC] px-2.5 py-0.5 text-[11px] font-medium text-[#2B7A5D] border border-[#2B7A5D]/10"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              )}
+              <div className="flex items-baseline gap-1.5">
+                <span className="text-xl font-extrabold text-[#1A4938] tabular-nums">
+                  ₹{(Number(price) || 0).toLocaleString("en-IN")}
+                </span>
+                {compareAtPrice ? (
+                  <span className="text-xs text-muted-foreground line-through">
+                    ₹{Number(compareAtPrice).toLocaleString("en-IN")}
+                  </span>
+                ) : null}
+                <span className="text-sm text-muted-foreground">
+                  per {weight || "unit"}
+                </span>
+              </div>
+              <div className="flex items-center gap-2.5 pt-1">
+                <div className="flex items-center rounded-lg border border-border bg-secondary/60 h-10 shrink-0 px-2.5 text-xs text-muted-foreground">
+                  − 1 + · {weight || "kg"}
+                </div>
+                <div className="flex-1 h-10 rounded-lg bg-[#1A4938] text-white text-sm font-semibold flex items-center justify-center gap-1.5">
+                  <ShoppingCart size={14} />
+                  Add to Cart
+                </div>
+              </div>
+            </div>
+          </div>
+        </aside>
       </form>
 
       {/* Add Category Dialog */}

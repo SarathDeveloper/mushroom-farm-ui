@@ -28,22 +28,25 @@ export function ProductActions({ product }: { product: Product }) {
       <SubscriptionToggle price={product.price} onSelect={handleSubscriptionSelect} />
 
       <div className="flex flex-col sm:flex-row gap-3">
-        <div className="flex items-center border border-border rounded-full w-fit">
+        <div className="flex items-center rounded-lg border border-border bg-secondary/60 h-11 w-fit">
           <button
             onClick={() => setQty((q) => Math.max(1, q - 1))}
             aria-label="Decrease quantity"
-            className="w-11 h-11 flex items-center justify-center text-[var(--color-body)] hover:text-primary"
+            className="w-9 h-full flex items-center justify-center text-muted-foreground hover:text-foreground"
           >
             <Minus size={16} />
           </button>
-          <span className="w-10 text-center font-semibold">{qty}</span>
+          <span className="w-8 text-center font-semibold tabular-nums">{qty}</span>
           <button
             onClick={() => setQty((q) => Math.min(product.stock, q + 1))}
             aria-label="Increase quantity"
-            className="w-11 h-11 flex items-center justify-center text-[var(--color-body)] hover:text-primary"
+            className="w-9 h-full flex items-center justify-center text-muted-foreground hover:text-foreground"
           >
             <Plus size={16} />
           </button>
+          <span className="pr-3 text-xs text-muted-foreground border-l border-border ml-0.5 pl-2.5">
+            {product.weight}
+          </span>
         </div>
         <Button
           onClick={() => {
@@ -55,7 +58,7 @@ export function ProductActions({ product }: { product: Product }) {
             setQty(1);
           }}
           size="lg"
-          className="flex-1 rounded-full h-[46px]"
+          className="flex-1 rounded-lg h-11 bg-[#1A4938] hover:bg-[#14392c]"
         >
           <ShoppingCart size={18} className="mr-2" />
           {purchaseMode === "subscription" ? "Subscribe" : "Add to Cart"}
@@ -71,7 +74,7 @@ export function ProductActions({ product }: { product: Product }) {
           size="lg"
           aria-label={wished ? "Remove from wishlist" : "Add to wishlist"}
           aria-pressed={wished}
-          className="rounded-full h-[46px] w-[46px] p-0 shrink-0"
+          className="rounded-lg h-11 w-11 p-0 shrink-0"
         >
           <Heart size={18} className={cn(wished && "fill-primary text-primary")} />
         </Button>

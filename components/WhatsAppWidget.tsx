@@ -8,7 +8,7 @@ const WHATSAPP_NUMBER = "919876543210";
 
 const quickMessages = [
   { label: "Order Mushrooms", message: "Hi! I'd like to place an order for fresh mushrooms." },
-  { label: "Bulk Order Enquiry", message: "Hi! I'm interested in bulk/wholesale mushroom supply for my business." },
+  { label: "Pre-Order Enquiry", message: "Hi! I'd like to pre-order fresh mushrooms." },
   { label: "Training Info", message: "Hi! I'd like to know about your mushroom farming training programs." },
   { label: "Track My Order", message: "Hi! I'd like to track my order. My order ID is: " },
 ];
@@ -25,7 +25,7 @@ export function WhatsAppWidget() {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 md:bottom-8 md:right-8">
+    <div className="fixed bottom-20 right-4 z-50 md:bottom-8 md:right-8">
       <AnimatePresence>
         {open && (
           <motion.div

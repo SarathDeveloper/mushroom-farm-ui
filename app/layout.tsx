@@ -19,8 +19,8 @@ export const metadata: Metadata = {
     default: "Vellimalai Mushroom Farm | Premium Organic Mushrooms",
     template: "%s | Vellimalai Farms",
   },
-  description: "Fresh, premium mushrooms grown in the pristine Kalvarayan Hills. We offer bulk orders, farm-fresh delivery, and mushroom farming training.",
-  keywords: ["organic mushrooms", "fresh mushrooms delivery", "mushroom farming training", "bulk mushroom supply", "oyster mushroom", "milky mushroom", "Salem", "Tamil Nadu"],
+  description: "Fresh, premium mushrooms grown in the pristine Kalvarayan Hills. We offer farm-fresh delivery, pre-orders, and mushroom farming training.",
+  keywords: ["organic mushrooms", "fresh mushrooms delivery", "mushroom farming training", "mushroom pre-order", "oyster mushroom", "milky mushroom", "Salem", "Tamil Nadu"],
   openGraph: {
     type: "website",
     locale: "en_IN",

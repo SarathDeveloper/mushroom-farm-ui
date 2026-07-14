@@ -12,7 +12,7 @@ export function PageHero({
   image?: string;
 }) {
   return (
-    <section className="relative pt-28 pb-14 md:pt-36 md:pb-20 overflow-hidden border-b border-border/40" style={{ background: 'linear-gradient(180deg, #eaf5ed 0%, #f5faf6 50%, #ffffff 100%)' }}>
+    <section className="relative pt-20 pb-10 sm:pt-28 sm:pb-14 md:pt-36 md:pb-20 overflow-hidden border-b border-border/40" style={{ background: 'linear-gradient(180deg, #eaf5ed 0%, #f5faf6 50%, #ffffff 100%)' }}>
       {/* Subtle background decoration */}
       <div className="absolute top-0 right-0 -translate-y-1/4 translate-x-1/4 w-[500px] h-[500px] rounded-full bg-primary/8 blur-3xl pointer-events-none" />
       <div className="absolute bottom-0 left-0 translate-y-1/4 -translate-x-1/4 w-[400px] h-[400px] rounded-full bg-primary/8 blur-3xl pointer-events-none" />
@@ -24,7 +24,7 @@ export function PageHero({
               {eyebrow}
             </span>
           )}
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-foreground leading-[1.15] font-heading mb-5">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-foreground leading-[1.15] font-heading mb-4 sm:mb-5">
             {title}
           </h1>
           {description && (

@@ -29,7 +29,7 @@ export function WishlistClient({ products }: { products: any[] }) {
           </Button>
         </FadeIn>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           {wishlistedProducts.map((product, i) => (
             <FadeIn key={product.id} delay={i * 0.08}>
               {/* @ts-ignore */}

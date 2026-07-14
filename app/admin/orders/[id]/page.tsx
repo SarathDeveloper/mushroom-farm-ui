@@ -53,20 +53,20 @@ export default async function OrderDetailPage(props: {
   const addr = parseShippingAddress(order.shippingAddress);
 
   return (
-    <div className="p-6 sm:p-10 max-w-5xl">
-      <header className="mb-8">
+    <div className="p-4 sm:p-6 lg:p-10 max-w-5xl">
+      <header className="mb-6 sm:mb-8">
         <Link
           href="/admin/orders"
-          className="inline-flex items-center gap-1.5 text-sm text-[var(--color-body)] hover:text-primary mb-4"
+          className="inline-flex items-center gap-1.5 text-sm text-[var(--color-body)] hover:text-primary mb-3 sm:mb-4"
         >
           <ArrowLeft size={16} /> Back to orders
         </Link>
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
           <div>
-            <h1 className="text-2xl md:text-3xl font-bold font-heading text-foreground">
+            <h1 className="text-xl sm:text-2xl md:text-3xl font-bold font-heading text-foreground">
               Order #{order.id.slice(0, 8).toUpperCase()}
             </h1>
-            <p className="text-[var(--color-body)] mt-1">
+            <p className="text-[var(--color-body)] mt-1 text-xs sm:text-sm">
               Placed on {formatDate(order.createdAt)}
             </p>
           </div>
@@ -74,7 +74,7 @@ export default async function OrderDetailPage(props: {
         </div>
       </header>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
         {/* Main content */}
         <div className="lg:col-span-2 space-y-6">
           {/* Order Items */}

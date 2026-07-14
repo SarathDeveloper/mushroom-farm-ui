@@ -7,6 +7,7 @@ import {
   Users,
   AlertTriangle,
   Building2,
+  CalendarCheck,
   GraduationCap,
   TrendingUp,
   TrendingDown,
@@ -39,6 +40,7 @@ async function getDashboardData() {
       lowStockProducts,
       outOfStockProducts,
       pendingBulkOrders,
+      pendingPreOrders,
       pendingRegistrations,
       recentOrders,
     ] = await Promise.all([
@@ -66,6 +68,7 @@ async function getDashboardData() {
       }),
       prisma.product.count({ where: { stock: 0, isActive: true } }),
       prisma.bulkOrder.count({ where: { isHandled: false } }),
+      prisma.preOrder.count({ where: { isHandled: false } }),
       prisma.trainingRegistration.count({ where: { status: "PENDING" } }),
       prisma.order.findMany({
         orderBy: { createdAt: "desc" },
@@ -97,6 +100,7 @@ async function getDashboardData() {
       lowStockProducts: lowStock.slice(0, 5),
       outOfStockCount: outOfStockProducts,
       pendingBulkOrders,
+      pendingPreOrders,
       pendingRegistrations,
       recentOrders,
     };
@@ -117,6 +121,7 @@ async function getDashboardData() {
       lowStockProducts: [],
       outOfStockCount: 0,
       pendingBulkOrders: 0,
+      pendingPreOrders: 0,
       pendingRegistrations: 0,
       recentOrders: [],
     };
@@ -142,22 +147,23 @@ export default async function AdminDashboardPage() {
     data.lowStockCount > 0 ||
     data.outOfStockCount > 0 ||
     data.pendingBulkOrders > 0 ||
+    data.pendingPreOrders > 0 ||
     data.pendingRegistrations > 0;
 
   return (
-    <div className="p-6 sm:p-10">
-      <header className="mb-8">
-        <h1 className="text-2xl md:text-3xl font-bold font-heading text-foreground">
+    <div className="p-4 sm:p-6 lg:p-10">
+      <header className="mb-6 sm:mb-8">
+        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold font-heading text-foreground">
           Dashboard
         </h1>
-        <p className="text-[var(--color-body)] mt-1">
+        <p className="text-[var(--color-body)] mt-1 text-sm sm:text-base">
           Welcome back! Here&apos;s what&apos;s happening today.
         </p>
       </header>
 
       {/* Alerts Section */}
       {hasAlerts && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-6 sm:mb-8">
           {data.pendingOrders > 0 && (
             <Link
               href="/admin/orders?status=PENDING"
@@ -245,6 +251,23 @@ export default async function AdminDashboardPage() {
             </Link>
           )}
 
+          {data.pendingPreOrders > 0 && (
+            <Link
+              href="/admin/pre-orders"
+              className="flex items-center gap-3 p-4 rounded-xl bg-teal-50 border border-teal-200 hover:bg-teal-100 transition-colors"
+            >
+              <div className="w-10 h-10 rounded-full bg-teal-100 flex items-center justify-center">
+                <CalendarCheck size={18} className="text-teal-700" />
+              </div>
+              <div>
+                <p className="font-semibold text-teal-800">
+                  {data.pendingPreOrders} Pre-Orders
+                </p>
+                <p className="text-xs text-teal-600">Awaiting confirmation</p>
+              </div>
+            </Link>
+          )}
+
           {data.pendingRegistrations > 0 && (
             <Link
               href="/admin/training"
@@ -265,24 +288,24 @@ export default async function AdminDashboardPage() {
       )}
 
       {/* Main Stats */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
-        <div className="bg-card rounded-2xl border border-border p-6 shadow-[0_4px_12px_rgba(0,0,0,0.04)]">
-          <div className="flex items-center justify-between mb-4">
-            <div className="w-11 h-11 rounded-xl bg-green-100 text-green-600 flex items-center justify-center">
-              <ShoppingBag size={20} strokeWidth={1.75} />
+      <div className="grid grid-cols-2 xl:grid-cols-4 gap-3 sm:gap-6 mb-6 sm:mb-8">
+        <div className="bg-card rounded-2xl border border-border p-4 sm:p-6 shadow-[0_4px_12px_rgba(0,0,0,0.04)]">
+          <div className="flex items-center justify-between mb-3 sm:mb-4">
+            <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-green-100 text-green-600 flex items-center justify-center">
+              <ShoppingBag size={18} strokeWidth={1.75} />
             </div>
-            <Badge variant="success">{data.todayOrders} today</Badge>
+            <Badge variant="success" className="text-[10px] sm:text-xs">{data.todayOrders} today</Badge>
           </div>
-          <p className="text-2xl font-bold font-heading text-foreground">{data.totalOrders}</p>
-          <p className="text-sm text-[var(--color-body)] mt-1">Total Orders</p>
+          <p className="text-xl sm:text-2xl font-bold font-heading text-foreground">{data.totalOrders}</p>
+          <p className="text-xs sm:text-sm text-[var(--color-body)] mt-0.5 sm:mt-1">Total Orders</p>
         </div>
 
-        <div className="bg-card rounded-2xl border border-border p-6 shadow-[0_4px_12px_rgba(0,0,0,0.04)]">
-          <div className="flex items-center justify-between mb-4">
-            <div className="w-11 h-11 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
-              <IndianRupee size={20} strokeWidth={1.75} />
+        <div className="bg-card rounded-2xl border border-border p-4 sm:p-6 shadow-[0_4px_12px_rgba(0,0,0,0.04)]">
+          <div className="flex items-center justify-between mb-3 sm:mb-4">
+            <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
+              <IndianRupee size={18} strokeWidth={1.75} />
             </div>
-            <div className={`flex items-center gap-1 text-xs font-semibold ${
+            <div className={`flex items-center gap-1 text-[10px] sm:text-xs font-semibold ${
               data.revenueChange >= 0 ? "text-green-600" : "text-red-600"
             }`}>
               {data.revenueChange >= 0 ? (
@@ -293,50 +316,51 @@ export default async function AdminDashboardPage() {
               {Math.abs(data.revenueChange).toFixed(0)}%
             </div>
           </div>
-          <p className="text-2xl font-bold font-heading text-foreground">
+          <p className="text-xl sm:text-2xl font-bold font-heading text-foreground">
             ₹{data.thisWeekRevenue.toLocaleString("en-IN")}
           </p>
-          <p className="text-sm text-[var(--color-body)] mt-1">
-            This Week (vs ₹{data.lastWeekRevenue.toLocaleString("en-IN")} last week)
+          <p className="text-xs sm:text-sm text-[var(--color-body)] mt-0.5 sm:mt-1">
+            <span className="hidden sm:inline">This Week (vs ₹{data.lastWeekRevenue.toLocaleString("en-IN")} last week)</span>
+            <span className="sm:hidden">This Week</span>
           </p>
         </div>
 
-        <div className="bg-card rounded-2xl border border-border p-6 shadow-[0_4px_12px_rgba(0,0,0,0.04)]">
-          <div className="flex items-center justify-between mb-4">
-            <div className="w-11 h-11 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center">
-              <Package size={20} strokeWidth={1.75} />
+        <div className="bg-card rounded-2xl border border-border p-4 sm:p-6 shadow-[0_4px_12px_rgba(0,0,0,0.04)]">
+          <div className="flex items-center justify-between mb-3 sm:mb-4">
+            <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center">
+              <Package size={18} strokeWidth={1.75} />
             </div>
           </div>
-          <p className="text-2xl font-bold font-heading text-foreground">{data.totalProducts}</p>
-          <p className="text-sm text-[var(--color-body)] mt-1">Total Products</p>
+          <p className="text-xl sm:text-2xl font-bold font-heading text-foreground">{data.totalProducts}</p>
+          <p className="text-xs sm:text-sm text-[var(--color-body)] mt-0.5 sm:mt-1">Products</p>
         </div>
 
-        <div className="bg-card rounded-2xl border border-border p-6 shadow-[0_4px_12px_rgba(0,0,0,0.04)]">
-          <div className="flex items-center justify-between mb-4">
-            <div className="w-11 h-11 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center">
-              <Users size={20} strokeWidth={1.75} />
+        <div className="bg-card rounded-2xl border border-border p-4 sm:p-6 shadow-[0_4px_12px_rgba(0,0,0,0.04)]">
+          <div className="flex items-center justify-between mb-3 sm:mb-4">
+            <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center">
+              <Users size={18} strokeWidth={1.75} />
             </div>
           </div>
-          <p className="text-2xl font-bold font-heading text-foreground">{data.totalUsers}</p>
-          <p className="text-sm text-[var(--color-body)] mt-1">Registered Customers</p>
+          <p className="text-xl sm:text-2xl font-bold font-heading text-foreground">{data.totalUsers}</p>
+          <p className="text-xs sm:text-sm text-[var(--color-body)] mt-0.5 sm:mt-1">Customers</p>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
         {/* Recent Orders */}
         <div className="lg:col-span-2 bg-card rounded-2xl border border-border shadow-[0_4px_12px_rgba(0,0,0,0.04)] overflow-hidden">
-          <div className="flex items-center justify-between p-6 border-b border-border">
-            <h2 className="font-bold font-heading text-foreground">Recent Orders</h2>
+          <div className="flex items-center justify-between px-4 sm:px-6 py-4 sm:py-6 border-b border-border">
+            <h2 className="font-bold font-heading text-foreground text-sm sm:text-base">Recent Orders</h2>
             <Link
               href="/admin/orders"
-              className="inline-flex items-center gap-1 text-sm font-semibold text-primary hover:underline"
+              className="inline-flex items-center gap-1 text-xs sm:text-sm font-semibold text-primary hover:underline"
             >
               View all <ArrowUpRight size={14} />
             </Link>
           </div>
 
           {data.recentOrders.length === 0 ? (
-            <p className="p-6 text-sm text-muted-foreground">
+            <p className="p-4 sm:p-6 text-sm text-muted-foreground">
               No orders yet. Orders will appear here once customers start buying.
             </p>
           ) : (
@@ -345,17 +369,17 @@ export default async function AdminDashboardPage() {
                 <Link
                   key={order.id}
                   href={`/admin/orders/${order.id}`}
-                  className="flex items-center justify-between gap-4 p-6 hover:bg-secondary/30 transition-colors"
+                  className="flex items-center justify-between gap-3 px-4 sm:px-6 py-3 sm:py-4 hover:bg-secondary/30 transition-colors"
                 >
                   <div className="min-w-0">
-                    <p className="font-semibold text-foreground">#{order.id.slice(0, 8).toUpperCase()}</p>
-                    <p className="text-sm text-muted-foreground truncate">
+                    <p className="font-semibold text-foreground text-sm">#{order.id.slice(0, 8).toUpperCase()}</p>
+                    <p className="text-xs sm:text-sm text-muted-foreground truncate">
                       {order.user?.name ?? order.user?.email ?? "Guest"} · {order.orderItems.length} items
                     </p>
                   </div>
-                  <div className="flex items-center gap-4 shrink-0">
-                    <span className="font-semibold text-foreground">₹{order.totalAmount}</span>
-                    <Badge variant={statusVariant[order.status] ?? "secondary"}>{order.status}</Badge>
+                  <div className="flex items-center gap-2 sm:gap-4 shrink-0">
+                    <span className="font-semibold text-foreground text-sm">₹{order.totalAmount}</span>
+                    <Badge variant={statusVariant[order.status] ?? "secondary"} className="text-[10px] sm:text-xs">{order.status}</Badge>
                   </div>
                 </Link>
               ))}
@@ -365,18 +389,18 @@ export default async function AdminDashboardPage() {
 
         {/* Low Stock Products */}
         <div className="bg-card rounded-2xl border border-border shadow-[0_4px_12px_rgba(0,0,0,0.04)] overflow-hidden">
-          <div className="flex items-center justify-between p-6 border-b border-border">
-            <h2 className="font-bold font-heading text-foreground">Low Stock</h2>
+          <div className="flex items-center justify-between px-4 sm:px-6 py-4 sm:py-6 border-b border-border">
+            <h2 className="font-bold font-heading text-foreground text-sm sm:text-base">Low Stock</h2>
             <Link
               href="/admin/products"
-              className="inline-flex items-center gap-1 text-sm font-semibold text-primary hover:underline"
+              className="inline-flex items-center gap-1 text-xs sm:text-sm font-semibold text-primary hover:underline"
             >
               Manage <ArrowUpRight size={14} />
             </Link>
           </div>
 
           {data.lowStockProducts.length === 0 ? (
-            <p className="p-6 text-sm text-muted-foreground">
+            <p className="p-4 sm:p-6 text-sm text-muted-foreground">
               All products are well stocked.
             </p>
           ) : (
@@ -385,7 +409,7 @@ export default async function AdminDashboardPage() {
                 <Link
                   key={product.id}
                   href={`/admin/products/${product.id}/edit`}
-                  className="flex items-center gap-3 p-4 hover:bg-secondary/30 transition-colors"
+                  className="flex items-center gap-3 p-3 sm:p-4 hover:bg-secondary/30 transition-colors"
                 >
                   <div className="relative h-10 w-10 rounded-lg overflow-hidden bg-secondary shrink-0">
                     <SafeImage
@@ -398,8 +422,8 @@ export default async function AdminDashboardPage() {
                   </div>
                   <div className="min-w-0 flex-1">
                     <p className="font-medium text-foreground text-sm truncate">{product.name}</p>
-                    <p className={`text-xs ${product.stock === 0 ? "text-red-600" : "text-yellow-600"}`}>
-                      {product.stock === 0 ? "Out of stock" : `${product.stock} left`}
+                    <p className={`text-xs font-medium ${product.stock === 0 ? "text-[#E56D6D]" : "text-[#E5B06D]"}`}>
+                      {product.stock === 0 ? "Out of Stock" : `${product.stock} left · Low Stock`}
                     </p>
                   </div>
                 </Link>

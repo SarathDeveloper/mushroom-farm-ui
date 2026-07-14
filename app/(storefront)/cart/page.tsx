@@ -47,32 +47,32 @@ export default function CartPage() {
             </FadeIn>
           ) : (
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-              <div className="lg:col-span-2 space-y-4">
+              <div className="lg:col-span-2 space-y-3 sm:space-y-4">
                 {items.map((item) => (
-                  <FadeIn key={item.productId} className="flex items-center gap-4 p-4 rounded-2xl border border-border bg-card">
-                    <div className="relative h-20 w-20 rounded-xl overflow-hidden shrink-0">
+                  <FadeIn key={item.productId} className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-2xl border border-border bg-card">
+                    <div className="relative h-16 w-16 sm:h-20 sm:w-20 rounded-xl overflow-hidden shrink-0">
                       <SafeImage src={item.image} alt={item.name} fill sizes="80px" className="object-cover" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <Link href={`/shop/${item.slug}`} className="font-semibold text-foreground hover:text-primary transition-colors line-clamp-1">
+                      <Link href={`/shop/${item.slug}`} className="font-semibold text-foreground hover:text-primary transition-colors line-clamp-1 text-sm sm:text-base">
                         {item.name}
                       </Link>
-                      <p className="text-sm text-muted-foreground">{item.weight}</p>
-                      <p className="text-primary font-bold mt-1">₹{item.price}</p>
+                      <p className="text-xs sm:text-sm text-muted-foreground">{item.weight}</p>
+                      <p className="text-primary font-bold mt-0.5 sm:mt-1 text-sm sm:text-base">₹{item.price}</p>
                     </div>
                     <div className="flex items-center border border-border rounded-full bg-background">
                       <button
                         onClick={() => setQuantity(item.productId, item.quantity - 1)}
                         aria-label={`Decrease quantity of ${item.name}`}
-                        className="w-9 h-9 flex items-center justify-center text-[var(--color-body)] hover:text-primary"
+                        className="w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center text-[var(--color-body)] hover:text-primary"
                       >
                         <Minus size={14} />
                       </button>
-                      <span className="w-8 text-center text-sm font-semibold">{item.quantity}</span>
+                      <span className="w-6 sm:w-8 text-center text-sm font-semibold">{item.quantity}</span>
                       <button
                         onClick={() => setQuantity(item.productId, item.quantity + 1)}
                         aria-label={`Increase quantity of ${item.name}`}
-                        className="w-9 h-9 flex items-center justify-center text-[var(--color-body)] hover:text-primary"
+                        className="w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center text-[var(--color-body)] hover:text-primary"
                       >
                         <Plus size={14} />
                       </button>
@@ -82,7 +82,7 @@ export default function CartPage() {
                       aria-label={`Remove ${item.name} from cart`}
                       className="text-muted-foreground hover:text-destructive transition-colors shrink-0"
                     >
-                      <Trash2 size={18} />
+                      <Trash2 size={16} />
                     </button>
                   </FadeIn>
                 ))}

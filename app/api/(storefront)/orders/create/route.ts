@@ -3,6 +3,8 @@ import { getServerSession } from "next-auth";
 import { z } from "zod";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { verifyPhoneVerificationToken } from "@/lib/otp";
+import { INDIAN_MOBILE_REGEX } from "@/lib/phone";
 import { razorpay, computeOrderTotals, VALID_COUPONS } from "@/lib/razorpay";
 
 const cartLineSchema = z.object({
@@ -13,15 +15,14 @@ const cartLineSchema = z.object({
 const createOrderSchema = z.object({
   items: z.array(cartLineSchema).min(1, "Cart is empty"),
   fullName: z.string().min(1),
-  phone: z.string().min(7),
+  phone: z.string().regex(INDIAN_MOBILE_REGEX, "Enter a valid 10-digit mobile starting with 6, 7, 8, or 9."),
+  phoneVerifiedToken: z.string().min(1, "Please verify your mobile number with OTP."),
   address: z.string().min(1),
   city: z.string().min(1),
   state: z.string().min(1),
-  pincode: z.string().min(5),
-  email: z.string().email(),
+  pincode: z.string().length(6),
   couponCode: z.string().optional(),
-  deliverySlot: z.string().optional(),
-  notes: z.string().optional(),
+  paymentMethod: z.enum(["cod", "online"]).default("online"),
 });
 
 export async function POST(request: Request) {
@@ -45,7 +46,15 @@ export async function POST(request: Request) {
     );
   }
 
-  const { items, couponCode, deliverySlot, notes, ...addressFields } = parsed.data;
+  const { items, couponCode, paymentMethod, phoneVerifiedToken, ...addressFields } =
+    parsed.data;
+
+  if (!verifyPhoneVerificationToken(phoneVerifiedToken, addressFields.phone)) {
+    return NextResponse.json(
+      { message: "Please verify your mobile number with OTP before placing the order." },
+      { status: 400 },
+    );
+  }
 
   // Validate coupon code if provided
   if (couponCode) {
@@ -89,17 +98,22 @@ export async function POST(request: Request) {
 
   const shippingAddress = JSON.stringify({
     ...addressFields,
-    deliverySlot: deliverySlot ?? "evening",
-    notes: notes ?? "",
+    email: session.user.email ?? "",
+    paymentMethod,
   });
 
   try {
+    const isCod = paymentMethod === "cod";
+
     const order = await prisma.order.create({
       data: {
         userId: session.user.id,
         totalAmount: total,
         shippingAddress,
         couponCode: couponCode?.toUpperCase().trim() ?? null,
+        status: isCod ? "PROCESSING" : "PENDING",
+        paymentStatus: "PENDING",
+        paymentId: isCod ? "COD" : null,
         orderItems: {
           create: items.map((item) => ({
             productId: item.productId,
@@ -109,6 +123,17 @@ export async function POST(request: Request) {
         },
       },
     });
+
+    if (isCod) {
+      return NextResponse.json({
+        orderId: order.id,
+        paymentMethod: "cod",
+        subtotal: itemSubtotal,
+        shipping,
+        discount,
+        total,
+      });
+    }
 
     const razorpayOrder = await razorpay.orders.create({
       amount: Math.round(total * 100),
@@ -123,6 +148,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({
       orderId: order.id,
+      paymentMethod: "online",
       razorpayOrderId: razorpayOrder.id,
       amount: Math.round(total * 100),
       currency: "INR",

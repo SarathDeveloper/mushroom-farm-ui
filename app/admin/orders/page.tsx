@@ -106,10 +106,10 @@ export default async function AdminOrdersPage(props: {
   };
 
   return (
-    <div className="p-6 sm:p-10">
-      <header className="mb-8">
-        <h1 className="text-2xl md:text-3xl font-bold font-heading text-foreground">Orders</h1>
-        <p className="text-[var(--color-body)] mt-1">
+    <div className="p-4 sm:p-6 lg:p-10">
+      <header className="mb-6 sm:mb-8">
+        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold font-heading text-foreground">Orders</h1>
+        <p className="text-[var(--color-body)] mt-1 text-xs sm:text-sm">
           {orders.length} total · {stats.pending} pending · {stats.processing} processing · {stats.shipped} shipped
         </p>
       </header>
@@ -129,7 +129,52 @@ export default async function AdminOrdersPage(props: {
           </p>
         </div>
       ) : (
-        <div className="bg-card rounded-2xl border border-border shadow-[0_4px_12px_rgba(0,0,0,0.04)] overflow-hidden">
+        {/* Mobile card view */}
+        <div className="space-y-3 md:hidden">
+          {filtered.map((order: any) => {
+            const addr = parseShippingAddress(order.shippingAddress);
+            return (
+              <div key={order.id} className="bg-card rounded-xl border border-border p-4 shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
+                <div className="flex items-center justify-between mb-3">
+                  <span className="font-bold text-foreground text-sm">
+                    #{order.id.slice(0, 8).toUpperCase()}
+                  </span>
+                  <Badge variant={statusVariant[order.status] ?? "secondary"} className="text-[10px]">
+                    {order.status}
+                  </Badge>
+                </div>
+                <div className="space-y-1.5 text-sm mb-3">
+                  <p className="text-foreground font-medium">{order.user?.name || "Guest"}</p>
+                  <p className="text-xs text-muted-foreground">{order.user?.email}</p>
+                  <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                    <span>{formatDate(order.createdAt)}</span>
+                    {addr.city && <span>· {addr.city}</span>}
+                    <span>· {order.orderItems.length} items</span>
+                  </div>
+                </div>
+                <div className="flex items-center justify-between pt-3 border-t border-border">
+                  <div className="flex items-center gap-2">
+                    <span className="font-bold text-foreground">₹{order.totalAmount.toLocaleString("en-IN")}</span>
+                    <Badge variant={paymentVariant[order.paymentStatus] ?? "secondary"} className="text-[10px]">
+                      {order.paymentStatus}
+                    </Badge>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <OrderStatusSelect orderId={order.id} currentStatus={order.status} />
+                    <Link href={`/admin/orders/${order.id}`}>
+                      <Button variant="outline" size="sm" className="h-8 w-8 p-0">
+                        <Eye size={14} />
+                      </Button>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Desktop table view */}
+        <div className="hidden md:block bg-card rounded-2xl border border-border shadow-[0_4px_12px_rgba(0,0,0,0.04)] overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm">
               <thead>

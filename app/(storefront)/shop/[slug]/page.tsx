@@ -75,7 +75,7 @@ export default async function ProductDetailPage(props: {
       id: { not: p.id }
     },
     include: { category: true },
-    take: 4
+    take: 3,
   });
   
   const related = rawRelated.map(mapProduct);
@@ -128,25 +128,40 @@ export default async function ProductDetailPage(props: {
                 <span className="text-sm text-muted-foreground">{product.rating} ({product.reviewCount} reviews)</span>
               </div>
 
-              {/* Freshness indicator */}
+              {/* Stock badge */}
               <div className="flex items-center gap-2 mb-4">
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[var(--color-success)]/10 text-[var(--color-success)] text-xs font-semibold">
-                  <span className="h-2 w-2 rounded-full bg-[var(--color-success)] animate-pulse" />
-                  Harvested today at 5:30 AM
+                <span
+                  className={
+                    product.stock <= 0
+                      ? "inline-flex px-2.5 py-1 rounded-full bg-[#E56D6D] text-white text-xs font-semibold"
+                      : product.stock <= 20
+                        ? "inline-flex px-2.5 py-1 rounded-full bg-[#E5B06D] text-white text-xs font-semibold"
+                        : "inline-flex px-2.5 py-1 rounded-full bg-[#2B7A5D] text-white text-xs font-semibold"
+                  }
+                >
+                  {product.stock <= 0
+                    ? "Out of Stock"
+                    : product.stock <= 20
+                      ? "Low Stock"
+                      : "In Stock"}
                 </span>
-                {product.stock <= 20 && (
-                  <span className="text-xs font-semibold text-[var(--color-warning)]">
+                {product.stock > 0 && product.stock <= 20 && (
+                  <span className="text-xs font-semibold text-[#E5B06D]">
                     Only {product.stock} left!
                   </span>
                 )}
               </div>
 
-              <div className="flex items-center gap-3 mb-6">
-                <span className="text-3xl font-bold text-primary">₹{product.price}</span>
+              <div className="flex items-baseline gap-2 mb-6 flex-wrap">
+                <span className="text-3xl font-bold text-[#1A4938]">
+                  ₹{product.price.toLocaleString("en-IN")}
+                </span>
                 {product.compareAtPrice && (
-                  <span className="text-lg text-muted-foreground line-through">₹{product.compareAtPrice}</span>
+                  <span className="text-lg text-muted-foreground line-through">
+                    ₹{product.compareAtPrice.toLocaleString("en-IN")}
+                  </span>
                 )}
-                <span className="text-[var(--color-body)]">/ {product.weight}</span>
+                <span className="text-muted-foreground">per {product.weight}</span>
                 {product.compareAtPrice && (
                   <span className="text-xs font-bold text-white bg-[var(--color-error)] px-2 py-0.5 rounded-full">
                     {Math.round((1 - product.price / product.compareAtPrice) * 100)}% OFF
@@ -156,13 +171,16 @@ export default async function ProductDetailPage(props: {
 
               <p className="text-[var(--color-body)] leading-relaxed mb-6">{product.description}</p>
 
-              <ul className="grid grid-cols-2 gap-3 mb-6">
+              <div className="flex flex-wrap gap-2 mb-6">
                 {product.highlights.map((h: string) => (
-                  <li key={h} className="text-sm text-[var(--color-body)] flex items-start gap-2">
-                    <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary shrink-0" /> {h}
-                  </li>
+                  <span
+                    key={h}
+                    className="inline-flex items-center rounded-full bg-[#E8F2EC] px-3 py-1 text-xs font-medium text-[#2B7A5D] border border-[#2B7A5D]/10"
+                  >
+                    {h}
+                  </span>
                 ))}
-              </ul>
+              </div>
 
               {/* @ts-ignore */}
               <ProductActions product={product} />
@@ -264,7 +282,7 @@ export default async function ProductDetailPage(props: {
             <FadeIn>
               <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-10 font-heading">You Might Also Like</h2>
             </FadeIn>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
               {related.map((p, i) => (
                 <FadeIn key={p.id} delay={i * 0.08}>
                   {/* @ts-ignore */}

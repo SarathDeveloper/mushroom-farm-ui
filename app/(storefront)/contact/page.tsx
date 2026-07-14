@@ -59,13 +59,13 @@ export default function ContactPage() {
       <PageHero
         eyebrow="Contact"
         title="Get in Touch"
-        description="Questions about our mushrooms, bulk supply, or training? We'd love to hear from you."
+        description="Questions about our mushrooms, pre-orders, or training? We'd love to hear from you."
         image="https://images.unsplash.com/photo-1516571748831-5d81767b788d?q=80&w=2000&auto=format&fit=crop"
       />
 
-      <section className="py-20 bg-background">
+      <section className="py-14 sm:py-20 bg-background">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
             {/* Contact info */}
             <FadeIn direction="right" className="space-y-8">
               <div>
@@ -139,7 +139,7 @@ export default function ContactPage() {
               ) : (
                 <form
                   onSubmit={handleSubmit}
-                  className="bg-card rounded-2xl p-8 border border-border shadow-[0_8px_20px_rgba(0,0,0,0.06)] space-y-5"
+                  className="bg-card rounded-2xl p-5 sm:p-8 border border-border shadow-[0_8px_20px_rgba(0,0,0,0.06)] space-y-4 sm:space-y-5"
                 >
                   <h2 className="text-xl font-bold font-heading text-foreground">Send Us a Message</h2>
                   <div className="space-y-1.5">

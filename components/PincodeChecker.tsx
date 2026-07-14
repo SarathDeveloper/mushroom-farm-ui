@@ -112,7 +112,7 @@ export function PincodeChecker({ compact = false }: PincodeCheckerProps) {
           ) : (
             <>
               <X size={16} className="shrink-0 mt-0.5" />
-              <span>Sorry, we don&apos;t deliver to this pincode yet. <a href="/bulk-orders" className="underline text-primary">Try bulk orders</a> or <a href="https://wa.me/919876543210" className="underline text-primary">contact us on WhatsApp</a>.</span>
+              <span>Sorry, we don&apos;t deliver to this pincode yet. <a href="/pre-order" className="underline text-primary">Try pre-ordering</a> or <a href="https://wa.me/919876543210" className="underline text-primary">contact us on WhatsApp</a>.</span>
             </>
           )}
         </div>

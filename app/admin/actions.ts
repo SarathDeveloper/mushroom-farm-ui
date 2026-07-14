@@ -228,6 +228,46 @@ export async function deleteBulkOrder(id: string): Promise<ActionResult> {
 }
 
 // =====================
+// PRE ORDERS
+// =====================
+
+export async function markPreOrderHandled(
+  id: string,
+  isHandled: boolean
+): Promise<ActionResult> {
+  try {
+    await requireAdmin();
+    await prisma.preOrder.update({
+      where: { id },
+      data: { isHandled },
+    });
+    revalidatePath("/admin/pre-orders");
+    return { success: true };
+  } catch (error) {
+    if (error instanceof Error && error.message === "Unauthorized") {
+      return { success: false, error: "Unauthorized" };
+    }
+    console.error("markPreOrderHandled error:", error);
+    return { success: false, error: "Failed to update pre-order." };
+  }
+}
+
+export async function deletePreOrder(id: string): Promise<ActionResult> {
+  try {
+    await requireAdmin();
+    await prisma.preOrder.delete({ where: { id } });
+    revalidatePath("/admin/pre-orders");
+    return { success: true };
+  } catch (error) {
+    if (error instanceof Error && error.message === "Unauthorized") {
+      return { success: false, error: "Unauthorized" };
+    }
+    console.error("deletePreOrder error:", error);
+    return { success: false, error: "Failed to delete pre-order." };
+  }
+}
+
+// =====================
 // TRAINING MANAGEMENT
 // =====================
 
@@ -449,7 +489,6 @@ export async function createGalleryItem(data: {
     await requireAdmin();
     const item = await prisma.gallery.create({ data });
     revalidatePath("/admin/gallery");
-    revalidatePath("/gallery");
     return { success: true, data: { id: item.id } };
   } catch (error) {
     if (error instanceof Error && error.message === "Unauthorized") {
@@ -473,7 +512,6 @@ export async function updateGalleryItem(
     await requireAdmin();
     await prisma.gallery.update({ where: { id }, data });
     revalidatePath("/admin/gallery");
-    revalidatePath("/gallery");
     return { success: true };
   } catch (error) {
     if (error instanceof Error && error.message === "Unauthorized") {
@@ -489,7 +527,6 @@ export async function deleteGalleryItem(id: string): Promise<ActionResult> {
     await requireAdmin();
     await prisma.gallery.delete({ where: { id } });
     revalidatePath("/admin/gallery");
-    revalidatePath("/gallery");
     return { success: true };
   } catch (error) {
     if (error instanceof Error && error.message === "Unauthorized") {
@@ -497,5 +534,82 @@ export async function deleteGalleryItem(id: string): Promise<ActionResult> {
     }
     console.error("deleteGalleryItem error:", error);
     return { success: false, error: "Failed to delete gallery item." };
+  }
+}
+
+// =====================
+// HERO SLIDES
+// =====================
+
+export async function createHeroSlide(data: {
+  badge: string;
+  headline: string;
+  subtitle: string;
+  primaryCtaLabel: string;
+  primaryCtaHref: string;
+  secondaryCtaLabel: string;
+  secondaryCtaHref: string;
+  image: string;
+  sortOrder?: number;
+  isActive?: boolean;
+}): Promise<ActionResult<{ id: string }>> {
+  try {
+    await requireAdmin();
+    const slide = await prisma.heroSlide.create({ data });
+    revalidatePath("/admin/hero-slides");
+    revalidatePath("/");
+    return { success: true, data: { id: slide.id } };
+  } catch (error) {
+    if (error instanceof Error && error.message === "Unauthorized") {
+      return { success: false, error: "Unauthorized" };
+    }
+    console.error("createHeroSlide error:", error);
+    return { success: false, error: "Failed to create hero slide." };
+  }
+}
+
+export async function updateHeroSlide(
+  id: string,
+  data: {
+    badge?: string;
+    headline?: string;
+    subtitle?: string;
+    primaryCtaLabel?: string;
+    primaryCtaHref?: string;
+    secondaryCtaLabel?: string;
+    secondaryCtaHref?: string;
+    image?: string;
+    sortOrder?: number;
+    isActive?: boolean;
+  }
+): Promise<ActionResult> {
+  try {
+    await requireAdmin();
+    await prisma.heroSlide.update({ where: { id }, data });
+    revalidatePath("/admin/hero-slides");
+    revalidatePath("/");
+    return { success: true };
+  } catch (error) {
+    if (error instanceof Error && error.message === "Unauthorized") {
+      return { success: false, error: "Unauthorized" };
+    }
+    console.error("updateHeroSlide error:", error);
+    return { success: false, error: "Failed to update hero slide." };
+  }
+}
+
+export async function deleteHeroSlide(id: string): Promise<ActionResult> {
+  try {
+    await requireAdmin();
+    await prisma.heroSlide.delete({ where: { id } });
+    revalidatePath("/admin/hero-slides");
+    revalidatePath("/");
+    return { success: true };
+  } catch (error) {
+    if (error instanceof Error && error.message === "Unauthorized") {
+      return { success: false, error: "Unauthorized" };
+    }
+    console.error("deleteHeroSlide error:", error);
+    return { success: false, error: "Failed to delete hero slide." };
   }
 }

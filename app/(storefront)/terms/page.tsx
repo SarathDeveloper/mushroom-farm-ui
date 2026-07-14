@@ -24,8 +24,8 @@ const sections = [
     body: "Due to the perishable nature of our products, we accept returns only in cases of damaged, spoiled, or incorrect items received. Please contact us within 24 hours of delivery with photographic evidence to be eligible for a replacement or refund.",
   },
   {
-    title: "5. Bulk Orders & Training Programs",
-    body: "Bulk order enquiries and training program registrations submitted through our website are non-binding requests for information. Final pricing, availability, and terms will be confirmed directly with our team before any payment is collected.",
+    title: "5. Pre-Orders & Training Programs",
+    body: "Pre-order requests and training program registrations submitted through our website are non-binding requests for information. Final pricing, availability, and terms will be confirmed directly with our team before any payment is collected.",
   },
   {
     title: "6. User Accounts",

@@ -11,6 +11,7 @@ import { searchProducts } from "@/app/admin/products/actions";
 const popularSearches = ["Oyster", "Milky Mushroom", "Shiitake", "Combo Pack", "Organic"];
 
 const quickLinks = [
+  { label: "Pre-Order Mushrooms", href: "/pre-order" },
   { label: "Compare Nutrition", href: "/compare" },
   { label: "Track Order", href: "/track-order" },
   { label: "Training Programs", href: "/training" },

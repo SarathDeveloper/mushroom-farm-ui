@@ -11,35 +11,32 @@ import {
   DialogContent,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { markBulkOrderHandled, deleteBulkOrder } from "@/app/admin/actions";
+import { markPreOrderHandled, deletePreOrder } from "@/app/admin/actions";
 
-type BulkOrder = {
+type PreOrder = {
   id: string;
-  businessName: string;
-  contactName: string;
+  name: string;
   phone: string;
   email: string;
-  location: string;
   product: string;
   quantity: string;
-  frequency: string;
-  requirements: string | null;
+  preferredDate: string;
+  location: string;
+  notes: string | null;
   isHandled: boolean;
-  createdAt: Date;
+  createdAt: string;
 };
 
-function formatDate(date: Date) {
-  return new Date(date).toLocaleDateString("en-IN", {
-    day: "numeric",
-    month: "short",
-    year: "numeric",
-  });
+function formatDate(date: string) {
+  const [year, month, day] = date.slice(0, 10).split("-").map(Number);
+  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  return `${day} ${months[(month ?? 1) - 1]} ${year}`;
 }
 
-export function BulkOrdersTable({ orders }: { orders: BulkOrder[] }) {
+export function PreOrdersTable({ orders }: { orders: PreOrder[] }) {
   const [filter, setFilter] = useState<"all" | "pending" | "handled">("all");
-  const [deleteTarget, setDeleteTarget] = useState<BulkOrder | null>(null);
-  const [viewTarget, setViewTarget] = useState<BulkOrder | null>(null);
+  const [deleteTarget, setDeleteTarget] = useState<PreOrder | null>(null);
+  const [viewTarget, setViewTarget] = useState<PreOrder | null>(null);
   const [isPending, startTransition] = useTransition();
 
   const filtered = orders.filter((o) => {
@@ -48,9 +45,9 @@ export function BulkOrdersTable({ orders }: { orders: BulkOrder[] }) {
     return true;
   });
 
-  function handleToggle(order: BulkOrder) {
+  function handleToggle(order: PreOrder) {
     startTransition(async () => {
-      const result = await markBulkOrderHandled(order.id, !order.isHandled);
+      const result = await markPreOrderHandled(order.id, !order.isHandled);
       if (result.success) {
         toast.success(order.isHandled ? "Marked as pending" : "Marked as handled");
       } else {
@@ -62,9 +59,9 @@ export function BulkOrdersTable({ orders }: { orders: BulkOrder[] }) {
   function handleDelete() {
     if (!deleteTarget) return;
     startTransition(async () => {
-      const result = await deleteBulkOrder(deleteTarget.id);
+      const result = await deletePreOrder(deleteTarget.id);
       if (result.success) {
-        toast.success("Enquiry deleted");
+        toast.success("Pre-order deleted");
         setDeleteTarget(null);
       } else {
         toast.error(result.error || "Failed to delete");
@@ -78,10 +75,10 @@ export function BulkOrdersTable({ orders }: { orders: BulkOrder[] }) {
         <Filter size={18} className="text-muted-foreground" />
         <select
           value={filter}
-          onChange={(e) => setFilter(e.target.value as any)}
+          onChange={(e) => setFilter(e.target.value as "all" | "pending" | "handled")}
           className="h-9 rounded-lg border border-border bg-card px-3 text-sm outline-none focus:border-primary"
         >
-          <option value="all">All Enquiries</option>
+          <option value="all">All Requests</option>
           <option value="pending">Pending</option>
           <option value="handled">Handled</option>
         </select>
@@ -96,18 +93,18 @@ export function BulkOrdersTable({ orders }: { orders: BulkOrder[] }) {
             onClick={() => setViewTarget(order)}
           >
             <div className="flex items-center justify-between mb-2">
-              <span className="font-bold text-foreground text-sm">{order.businessName}</span>
+              <span className="font-bold text-foreground text-sm">{order.name}</span>
               <Badge variant={order.isHandled ? "success" : "warning"} className="text-[10px]">
                 {order.isHandled ? "Handled" : "Pending"}
               </Badge>
             </div>
-            <p className="text-sm text-foreground">{order.contactName}</p>
+            <div className="text-sm text-foreground">{order.product} · {order.quantity}</div>
             <div className="flex items-center gap-3 text-xs text-muted-foreground mt-1">
-              <span>{order.product}</span>
-              <span>· {order.quantity} / {order.frequency}</span>
+              <span>Preferred: {order.preferredDate}</span>
+              <span>· {order.location}</span>
             </div>
             <div className="flex items-center justify-between mt-3 pt-3 border-t border-border">
-              <span className="text-xs text-muted-foreground">{order.location} · {formatDate(order.createdAt)}</span>
+              <span className="text-xs text-muted-foreground">{formatDate(order.createdAt)}</span>
               <div className="flex items-center gap-1.5" onClick={(e) => e.stopPropagation()}>
                 <a href={`tel:${order.phone}`} className="h-8 w-8 rounded-lg bg-secondary flex items-center justify-center text-foreground">
                   <Phone size={13} />
@@ -127,12 +124,12 @@ export function BulkOrdersTable({ orders }: { orders: BulkOrder[] }) {
           <table className="w-full text-left text-sm">
             <thead>
               <tr className="border-b border-border bg-secondary/50 text-[var(--color-body)]">
-                <th className="font-semibold px-6 py-4">Business</th>
-                <th className="font-semibold px-6 py-4">Contact</th>
-                <th className="font-semibold px-6 py-4">Location</th>
+                <th className="font-semibold px-6 py-4">Customer</th>
                 <th className="font-semibold px-6 py-4">Product</th>
-                <th className="font-semibold px-6 py-4">Qty/Freq</th>
-                <th className="font-semibold px-6 py-4">Date</th>
+                <th className="font-semibold px-6 py-4">Qty</th>
+                <th className="font-semibold px-6 py-4">Preferred Date</th>
+                <th className="font-semibold px-6 py-4">Location</th>
+                <th className="font-semibold px-6 py-4">Submitted</th>
                 <th className="font-semibold px-6 py-4">Status</th>
                 <th className="font-semibold px-6 py-4 text-right">Actions</th>
               </tr>
@@ -145,28 +142,22 @@ export function BulkOrdersTable({ orders }: { orders: BulkOrder[] }) {
                   onClick={() => setViewTarget(order)}
                 >
                   <td className="px-6 py-4">
-                    <span className="font-semibold text-foreground">{order.businessName}</span>
-                  </td>
-                  <td className="px-6 py-4">
                     <div>
-                      <p className="text-foreground">{order.contactName}</p>
-                      <div className="flex items-center gap-2 mt-1">
-                        <a
-                          href={`tel:${order.phone}`}
-                          onClick={(e) => e.stopPropagation()}
-                          className="text-xs text-muted-foreground hover:text-primary"
-                        >
-                          <Phone size={12} className="inline mr-1" />
-                          {order.phone}
-                        </a>
-                      </div>
+                      <p className="font-semibold text-foreground">{order.name}</p>
+                      <a
+                        href={`tel:${order.phone}`}
+                        onClick={(e) => e.stopPropagation()}
+                        className="text-xs text-muted-foreground hover:text-primary"
+                      >
+                        <Phone size={12} className="inline mr-1" />
+                        {order.phone}
+                      </a>
                     </div>
                   </td>
-                  <td className="px-6 py-4 text-[var(--color-body)]">{order.location}</td>
                   <td className="px-6 py-4 text-foreground">{order.product}</td>
-                  <td className="px-6 py-4 text-muted-foreground">
-                    {order.quantity} / {order.frequency}
-                  </td>
+                  <td className="px-6 py-4 text-muted-foreground">{order.quantity}</td>
+                  <td className="px-6 py-4 text-[var(--color-body)]">{order.preferredDate}</td>
+                  <td className="px-6 py-4 text-[var(--color-body)]">{order.location}</td>
                   <td className="px-6 py-4 text-muted-foreground">{formatDate(order.createdAt)}</td>
                   <td className="px-6 py-4">
                     <Badge variant={order.isHandled ? "success" : "warning"}>
@@ -216,28 +207,23 @@ export function BulkOrdersTable({ orders }: { orders: BulkOrder[] }) {
         </div>
       </div>
 
-      {/* View Details Dialog */}
       <Dialog open={!!viewTarget} onOpenChange={(open) => !open && setViewTarget(null)}>
         <DialogContent className="sm:max-w-lg">
-          <DialogTitle>{viewTarget?.businessName}</DialogTitle>
+          <DialogTitle>{viewTarget?.name}</DialogTitle>
           {viewTarget && (
             <div className="space-y-4 mt-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <p className="text-xs text-muted-foreground">Contact</p>
-                  <p className="font-medium">{viewTarget.contactName}</p>
-                </div>
-                <div>
-                  <p className="text-xs text-muted-foreground">Location</p>
-                  <p className="font-medium">{viewTarget.location}</p>
-                </div>
-                <div>
                   <p className="text-xs text-muted-foreground">Phone</p>
-                  <a href={`tel:${viewTarget.phone}`} className="font-medium text-primary">{viewTarget.phone}</a>
+                  <a href={`tel:${viewTarget.phone}`} className="font-medium text-primary">
+                    {viewTarget.phone}
+                  </a>
                 </div>
                 <div>
                   <p className="text-xs text-muted-foreground">Email</p>
-                  <a href={`mailto:${viewTarget.email}`} className="font-medium text-primary">{viewTarget.email}</a>
+                  <a href={`mailto:${viewTarget.email}`} className="font-medium text-primary">
+                    {viewTarget.email}
+                  </a>
                 </div>
                 <div>
                   <p className="text-xs text-muted-foreground">Product</p>
@@ -248,18 +234,22 @@ export function BulkOrdersTable({ orders }: { orders: BulkOrder[] }) {
                   <p className="font-medium">{viewTarget.quantity}</p>
                 </div>
                 <div>
-                  <p className="text-xs text-muted-foreground">Frequency</p>
-                  <p className="font-medium">{viewTarget.frequency}</p>
+                  <p className="text-xs text-muted-foreground">Preferred Date</p>
+                  <p className="font-medium">{viewTarget.preferredDate}</p>
                 </div>
                 <div>
-                  <p className="text-xs text-muted-foreground">Date</p>
+                  <p className="text-xs text-muted-foreground">Location</p>
+                  <p className="font-medium">{viewTarget.location}</p>
+                </div>
+                <div className="col-span-2">
+                  <p className="text-xs text-muted-foreground">Submitted</p>
                   <p className="font-medium">{formatDate(viewTarget.createdAt)}</p>
                 </div>
               </div>
-              {viewTarget.requirements && (
+              {viewTarget.notes && (
                 <div>
-                  <p className="text-xs text-muted-foreground">Requirements</p>
-                  <p className="text-foreground mt-1">{viewTarget.requirements}</p>
+                  <p className="text-xs text-muted-foreground">Notes</p>
+                  <p className="text-foreground mt-1">{viewTarget.notes}</p>
                 </div>
               )}
               <div className="flex gap-2 pt-4">
@@ -288,12 +278,12 @@ export function BulkOrdersTable({ orders }: { orders: BulkOrder[] }) {
         </DialogContent>
       </Dialog>
 
-      {/* Delete Confirmation Dialog */}
       <Dialog open={!!deleteTarget} onOpenChange={(open) => !open && setDeleteTarget(null)}>
         <DialogContent className="sm:max-w-md">
-          <DialogTitle>Delete Enquiry</DialogTitle>
+          <DialogTitle>Delete Pre-Order</DialogTitle>
           <p className="text-sm text-[var(--color-body)] mt-2">
-            Are you sure you want to delete the enquiry from <strong className="text-foreground">{deleteTarget?.businessName}</strong>?
+            Are you sure you want to delete the pre-order from{" "}
+            <strong className="text-foreground">{deleteTarget?.name}</strong>?
           </p>
           <div className="flex justify-end gap-3 mt-6">
             <Button variant="outline" onClick={() => setDeleteTarget(null)} disabled={isPending}>

@@ -3,18 +3,18 @@ import { MapPin, Phone, Mail, Clock, Leaf } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="bg-[#0b0b0b] text-[#f2efec] pt-16 pb-8">
+    <footer className="bg-[#0b0b0b] text-[#f2efec] pt-12 sm:pt-16 pb-8">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-        <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-5 lg:gap-8">
+        <div className="grid grid-cols-2 gap-8 md:grid-cols-2 lg:grid-cols-5 lg:gap-8">
           
           {/* Brand Info */}
-          <div className="space-y-4 lg:col-span-2">
+          <div className="space-y-4 col-span-2 lg:col-span-2">
             <Link href="/" className="flex items-center gap-2 text-white">
                <Leaf size={28} />
                <span className="text-2xl font-bold tracking-tight font-heading">Vellimalai<span className="text-secondary">Farms</span></span>
             </Link>
             <p className="text-sm text-white/80 max-w-xs">
-              Premium, organic mushrooms grown in the pristine Kalvarayan Hills, Vellimalai. We offer farm-fresh mushrooms, bulk orders, and expert farming training.
+              Premium, organic mushrooms grown in the pristine Kalvarayan Hills, Vellimalai. We offer farm-fresh mushrooms, pre-orders, and expert farming training.
             </p>
             <div className="flex items-center gap-3 pt-2">
               <a href="https://wa.me/919876543210" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-[#25D366] transition-colors" aria-label="WhatsApp">
@@ -34,8 +34,8 @@ export default function Footer() {
             <h3 className="text-lg font-semibold text-white mb-4">Shop</h3>
             <ul className="space-y-3 text-sm text-secondary">
               <li><Link href="/shop" className="hover:text-white transition-colors">All Products</Link></li>
+              <li><Link href="/pre-order" className="hover:text-white transition-colors">Pre-Order Mushrooms</Link></li>
               <li><Link href="/compare" className="hover:text-white transition-colors">Compare Mushrooms</Link></li>
-              <li><Link href="/bulk-orders" className="hover:text-white transition-colors">Bulk Orders</Link></li>
               <li><Link href="/track-order" className="hover:text-white transition-colors">Track Order</Link></li>
             </ul>
           </div>
@@ -45,14 +45,13 @@ export default function Footer() {
             <h3 className="text-lg font-semibold text-white mb-4">Company</h3>
             <ul className="space-y-3 text-sm text-secondary">
               <li><Link href="/about" className="hover:text-white transition-colors">About Us</Link></li>
-              <li><Link href="/gallery" className="hover:text-white transition-colors">Gallery</Link></li>
               <li><Link href="/training" className="hover:text-white transition-colors">Training Programs</Link></li>
               <li><Link href="/contact" className="hover:text-white transition-colors">Contact Us</Link></li>
             </ul>
           </div>
 
           {/* Contact Info */}
-          <div>
+          <div className="col-span-2 sm:col-span-1">
             <h3 className="text-lg font-semibold text-white mb-4">Reach Us</h3>
             <ul className="space-y-4 text-sm text-white/90">
               <li className="flex items-start gap-3">
