@@ -56,8 +56,8 @@ export async function createProduct(
         images: normalized.publicIds,
         compareAtPrice: compareAtPrice ?? null,
         tag: tag ?? null,
-        harvestDate: harvestDate ?? null,
-        bestBefore: bestBefore ?? null,
+        harvestDate: harvestDate ? new Date(harvestDate) : null,
+        bestBefore: bestBefore ? new Date(bestBefore) : null,
       },
     });
 
@@ -108,8 +108,8 @@ export async function updateProduct(
         images: normalized.publicIds,
         compareAtPrice: compareAtPrice ?? null,
         tag: tag ?? null,
-        harvestDate: harvestDate ?? null,
-        bestBefore: bestBefore ?? null,
+        harvestDate: harvestDate ? new Date(harvestDate) : null,
+        bestBefore: bestBefore ? new Date(bestBefore) : null,
       },
     });
 

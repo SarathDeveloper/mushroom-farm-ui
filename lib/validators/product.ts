@@ -27,8 +27,14 @@ export const productSchema = z.object({
   weight: z.string().min(1, "Weight is required"),
   stock: z.coerce.number().int().min(0, "Stock cannot be negative"),
   lowStockThreshold: z.coerce.number().int().min(0).default(10),
-  harvestDate: z.coerce.date().optional().or(z.literal("").transform(() => undefined)),
-  bestBefore: z.coerce.date().optional().or(z.literal("").transform(() => undefined)),
+  harvestDate: z
+    .string()
+    .optional()
+    .or(z.literal("").transform(() => undefined)),
+  bestBefore: z
+    .string()
+    .optional()
+    .or(z.literal("").transform(() => undefined)),
   isActive: z.boolean().default(true),
   images: z
     .array(cloudinaryImage)

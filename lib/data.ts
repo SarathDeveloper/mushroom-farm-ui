@@ -2,15 +2,15 @@ export interface Product {
   id: string;
   slug: string;
   name: string;
-  category: "Oyster" | "Milky" | "Button" | "Shiitake" | "Value-Added";
+  category: string;
   price: number;
-  compareAtPrice?: number;
+  compareAtPrice?: number | null;
   weight: string;
   image: string;
   gallery: string[];
   rating: number;
   reviewCount: number;
-  tag?: string;
+  tag?: string | null;
   stock: number;
   description: string;
   highlights: string[];

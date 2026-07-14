@@ -42,8 +42,12 @@ export default async function EditProductPage(props: {
         weight: product.weight,
         stock: product.stock,
         lowStockThreshold: product.lowStockThreshold,
-        harvestDate: product.harvestDate ? product.harvestDate.toISOString().split("T")[0] : undefined,
-        bestBefore: product.bestBefore ? product.bestBefore.toISOString().split("T")[0] : undefined,
+        harvestDate: product.harvestDate
+          ? product.harvestDate.toISOString().slice(0, 10)
+          : undefined,
+        bestBefore: product.bestBefore
+          ? product.bestBefore.toISOString().slice(0, 10)
+          : undefined,
         isActive: product.isActive,
         images,
         isFeatured: product.isFeatured,

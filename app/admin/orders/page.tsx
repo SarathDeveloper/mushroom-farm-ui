@@ -96,7 +96,13 @@ export default async function AdminOrdersPage(props: {
   }
 
   // Get unique cities for filter
-  const cities = [...new Set(orders.map((o) => parseShippingAddress(o.shippingAddress).city).filter(Boolean))];
+  const cities = [
+    ...new Set(
+      orders
+        .map((o) => parseShippingAddress(o.shippingAddress).city)
+        .filter((city): city is string => Boolean(city))
+    ),
+  ];
 
   const stats = {
     total: orders.length,
@@ -129,120 +135,122 @@ export default async function AdminOrdersPage(props: {
           </p>
         </div>
       ) : (
-        {/* Mobile card view */}
-        <div className="space-y-3 md:hidden">
-          {filtered.map((order: any) => {
-            const addr = parseShippingAddress(order.shippingAddress);
-            return (
-              <div key={order.id} className="bg-card rounded-xl border border-border p-4 shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
-                <div className="flex items-center justify-between mb-3">
-                  <span className="font-bold text-foreground text-sm">
-                    #{order.id.slice(0, 8).toUpperCase()}
-                  </span>
-                  <Badge variant={statusVariant[order.status] ?? "secondary"} className="text-[10px]">
-                    {order.status}
-                  </Badge>
-                </div>
-                <div className="space-y-1.5 text-sm mb-3">
-                  <p className="text-foreground font-medium">{order.user?.name || "Guest"}</p>
-                  <p className="text-xs text-muted-foreground">{order.user?.email}</p>
-                  <div className="flex items-center gap-3 text-xs text-muted-foreground">
-                    <span>{formatDate(order.createdAt)}</span>
-                    {addr.city && <span>· {addr.city}</span>}
-                    <span>· {order.orderItems.length} items</span>
-                  </div>
-                </div>
-                <div className="flex items-center justify-between pt-3 border-t border-border">
-                  <div className="flex items-center gap-2">
-                    <span className="font-bold text-foreground">₹{order.totalAmount.toLocaleString("en-IN")}</span>
-                    <Badge variant={paymentVariant[order.paymentStatus] ?? "secondary"} className="text-[10px]">
-                      {order.paymentStatus}
+        <>
+          {/* Mobile card view */}
+          <div className="space-y-3 md:hidden">
+            {filtered.map((order: any) => {
+              const addr = parseShippingAddress(order.shippingAddress);
+              return (
+                <div key={order.id} className="bg-card rounded-xl border border-border p-4 shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="font-bold text-foreground text-sm">
+                      #{order.id.slice(0, 8).toUpperCase()}
+                    </span>
+                    <Badge variant={statusVariant[order.status] ?? "secondary"} className="text-[10px]">
+                      {order.status}
                     </Badge>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <OrderStatusSelect orderId={order.id} currentStatus={order.status} />
-                    <Link href={`/admin/orders/${order.id}`}>
-                      <Button variant="outline" size="sm" className="h-8 w-8 p-0">
-                        <Eye size={14} />
-                      </Button>
-                    </Link>
+                  <div className="space-y-1.5 text-sm mb-3">
+                    <p className="text-foreground font-medium">{order.user?.name || "Guest"}</p>
+                    <p className="text-xs text-muted-foreground">{order.user?.email}</p>
+                    <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                      <span>{formatDate(order.createdAt)}</span>
+                      {addr.city && <span>· {addr.city}</span>}
+                      <span>· {order.orderItems.length} items</span>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between pt-3 border-t border-border">
+                    <div className="flex items-center gap-2">
+                      <span className="font-bold text-foreground">₹{order.totalAmount.toLocaleString("en-IN")}</span>
+                      <Badge variant={paymentVariant[order.paymentStatus] ?? "secondary"} className="text-[10px]">
+                        {order.paymentStatus}
+                      </Badge>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <OrderStatusSelect orderId={order.id} currentStatus={order.status} />
+                      <Link href={`/admin/orders/${order.id}`}>
+                        <Button variant="outline" size="sm" className="h-8 w-8 p-0">
+                          <Eye size={14} />
+                        </Button>
+                      </Link>
+                    </div>
                   </div>
                 </div>
-              </div>
-            );
-          })}
-        </div>
-
-        {/* Desktop table view */}
-        <div className="hidden md:block bg-card rounded-2xl border border-border shadow-[0_4px_12px_rgba(0,0,0,0.04)] overflow-hidden">
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm">
-              <thead>
-                <tr className="border-b border-border bg-secondary/50 text-[var(--color-body)]">
-                  <th className="font-semibold px-6 py-4">Order</th>
-                  <th className="font-semibold px-6 py-4">Customer</th>
-                  <th className="font-semibold px-6 py-4">City</th>
-                  <th className="font-semibold px-6 py-4">Date</th>
-                  <th className="font-semibold px-6 py-4">Items</th>
-                  <th className="font-semibold px-6 py-4">Total</th>
-                  <th className="font-semibold px-6 py-4">Payment</th>
-                  <th className="font-semibold px-6 py-4">Status</th>
-                  <th className="font-semibold px-6 py-4 text-right">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-border">
-                {filtered.map((order: any) => {
-                  const addr = parseShippingAddress(order.shippingAddress);
-                  return (
-                    <tr key={order.id} className="hover:bg-secondary/30 transition-colors">
-                      <td className="px-6 py-4 font-semibold text-foreground">
-                        #{order.id.slice(0, 8).toUpperCase()}
-                      </td>
-                      <td className="px-6 py-4">
-                        <div>
-                          <p className="font-medium text-foreground">
-                            {order.user?.name || "Guest"}
-                          </p>
-                          <p className="text-xs text-muted-foreground">{order.user?.email}</p>
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 text-[var(--color-body)]">
-                        {addr.city || "—"}
-                      </td>
-                      <td className="px-6 py-4 text-[var(--color-body)]">
-                        {formatDate(order.createdAt)}
-                      </td>
-                      <td className="px-6 py-4 text-[var(--color-body)]">
-                        {order.orderItems.length}
-                      </td>
-                      <td className="px-6 py-4 font-semibold text-foreground">
-                        ₹{order.totalAmount.toLocaleString("en-IN")}
-                      </td>
-                      <td className="px-6 py-4">
-                        <Badge variant={paymentVariant[order.paymentStatus] ?? "secondary"}>
-                          {order.paymentStatus}
-                        </Badge>
-                      </td>
-                      <td className="px-6 py-4">
-                        <OrderStatusSelect
-                          orderId={order.id}
-                          currentStatus={order.status}
-                        />
-                      </td>
-                      <td className="px-6 py-4 text-right">
-                        <Link href={`/admin/orders/${order.id}`}>
-                          <Button variant="outline" size="sm" className="h-8 gap-1.5">
-                            <Eye size={14} /> View
-                          </Button>
-                        </Link>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+              );
+            })}
           </div>
-        </div>
+
+          {/* Desktop table view */}
+          <div className="hidden md:block bg-card rounded-2xl border border-border shadow-[0_4px_12px_rgba(0,0,0,0.04)] overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm">
+                <thead>
+                  <tr className="border-b border-border bg-secondary/50 text-[var(--color-body)]">
+                    <th className="font-semibold px-6 py-4">Order</th>
+                    <th className="font-semibold px-6 py-4">Customer</th>
+                    <th className="font-semibold px-6 py-4">City</th>
+                    <th className="font-semibold px-6 py-4">Date</th>
+                    <th className="font-semibold px-6 py-4">Items</th>
+                    <th className="font-semibold px-6 py-4">Total</th>
+                    <th className="font-semibold px-6 py-4">Payment</th>
+                    <th className="font-semibold px-6 py-4">Status</th>
+                    <th className="font-semibold px-6 py-4 text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-border">
+                  {filtered.map((order: any) => {
+                    const addr = parseShippingAddress(order.shippingAddress);
+                    return (
+                      <tr key={order.id} className="hover:bg-secondary/30 transition-colors">
+                        <td className="px-6 py-4 font-semibold text-foreground">
+                          #{order.id.slice(0, 8).toUpperCase()}
+                        </td>
+                        <td className="px-6 py-4">
+                          <div>
+                            <p className="font-medium text-foreground">
+                              {order.user?.name || "Guest"}
+                            </p>
+                            <p className="text-xs text-muted-foreground">{order.user?.email}</p>
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 text-[var(--color-body)]">
+                          {addr.city || "—"}
+                        </td>
+                        <td className="px-6 py-4 text-[var(--color-body)]">
+                          {formatDate(order.createdAt)}
+                        </td>
+                        <td className="px-6 py-4 text-[var(--color-body)]">
+                          {order.orderItems.length}
+                        </td>
+                        <td className="px-6 py-4 font-semibold text-foreground">
+                          ₹{order.totalAmount.toLocaleString("en-IN")}
+                        </td>
+                        <td className="px-6 py-4">
+                          <Badge variant={paymentVariant[order.paymentStatus] ?? "secondary"}>
+                            {order.paymentStatus}
+                          </Badge>
+                        </td>
+                        <td className="px-6 py-4">
+                          <OrderStatusSelect
+                            orderId={order.id}
+                            currentStatus={order.status}
+                          />
+                        </td>
+                        <td className="px-6 py-4 text-right">
+                          <Link href={`/admin/orders/${order.id}`}>
+                            <Button variant="outline" size="sm" className="h-8 gap-1.5">
+                              <Eye size={14} /> View
+                            </Button>
+                          </Link>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </>
       )}
     </div>
   );
