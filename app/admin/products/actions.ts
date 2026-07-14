@@ -9,6 +9,7 @@ import {
   categorySchema,
   type ProductFormValues,
 } from "@/lib/validators/product";
+import { normalizeCloudinaryImages } from "@/lib/cloudinary-utils";
 
 type ActionResult<T = unknown> = {
   success: boolean;
@@ -42,13 +43,21 @@ export async function createProduct(
       return { success: false, error: "A product with this slug already exists." };
     }
 
-    const { compareAtPrice, tag, ...rest } = parsed.data;
+    const { compareAtPrice, tag, images, harvestDate, bestBefore, ...rest } = parsed.data;
+
+    const normalized = normalizeCloudinaryImages(images);
+    if (!normalized.ok) {
+      return { success: false, error: normalized.error };
+    }
 
     const product = await prisma.product.create({
       data: {
         ...rest,
+        images: normalized.publicIds,
         compareAtPrice: compareAtPrice ?? null,
         tag: tag ?? null,
+        harvestDate: harvestDate ?? null,
+        bestBefore: bestBefore ?? null,
       },
     });
 
@@ -85,14 +94,22 @@ export async function updateProduct(
       return { success: false, error: "Another product with this slug already exists." };
     }
 
-    const { compareAtPrice, tag, ...rest } = parsed.data;
+    const { compareAtPrice, tag, images, harvestDate, bestBefore, ...rest } = parsed.data;
+
+    const normalized = normalizeCloudinaryImages(images);
+    if (!normalized.ok) {
+      return { success: false, error: normalized.error };
+    }
 
     const product = await prisma.product.update({
       where: { id },
       data: {
         ...rest,
+        images: normalized.publicIds,
         compareAtPrice: compareAtPrice ?? null,
         tag: tag ?? null,
+        harvestDate: harvestDate ?? null,
+        bestBefore: bestBefore ?? null,
       },
     });
 

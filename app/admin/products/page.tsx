@@ -15,8 +15,11 @@ export default async function AdminProductsPage() {
     slug: string;
     price: number;
     stock: number;
+    lowStockThreshold: number;
+    isActive: boolean;
     isFeatured: boolean;
     images: string[];
+    harvestDate: Date | null;
     category: { id: string; name: string };
   }[] = [];
 
@@ -37,8 +40,7 @@ export default async function AdminProductsPage() {
             Products
           </h1>
           <p className="text-[var(--color-body)] mt-1">
-            {products.length} product{products.length !== 1 && "s"} in your
-            catalog.
+            {products.length} product{products.length !== 1 && "s"} in your catalog.
           </p>
         </div>
         <Link href="/admin/products/new">

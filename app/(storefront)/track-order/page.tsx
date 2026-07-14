@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { PageHero } from "@/components/PageHero";
 import { FadeIn } from "@/components/FadeIn";
+import { SafeImage } from "@/components/SafeImage";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
@@ -242,12 +243,25 @@ export default function TrackOrderPage() {
                     {order.items.map((item, i) => (
                       <div
                         key={i}
-                        className="flex justify-between text-sm text-[var(--color-body)]"
+                        className="flex items-center justify-between gap-3 text-sm text-[var(--color-body)]"
                       >
-                        <span>
-                          {item.name} × {item.quantity}
-                        </span>
-                        <span className="font-medium text-foreground">
+                        <div className="flex items-center gap-3 min-w-0">
+                          {item.image && (
+                            <div className="relative h-10 w-10 rounded-lg overflow-hidden shrink-0 bg-secondary">
+                              <SafeImage
+                                src={item.image}
+                                alt={item.name}
+                                fill
+                                sizes="40px"
+                                className="object-cover"
+                              />
+                            </div>
+                          )}
+                          <span className="truncate">
+                            {item.name} × {item.quantity}
+                          </span>
+                        </div>
+                        <span className="font-medium text-foreground shrink-0">
                           ₹{item.price * item.quantity}
                         </span>
                       </div>

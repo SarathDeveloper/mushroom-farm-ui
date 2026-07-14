@@ -3,9 +3,9 @@
 import { useState } from "react";
 import { CldUploadWidget, type CloudinaryUploadWidgetResults } from "next-cloudinary";
 import { ImagePlus, Loader2, X } from "lucide-react";
-import { CldImage } from "next-cloudinary";
 import { Button } from "@/components/ui/button";
-import { CLOUDINARY_FOLDER } from "@/lib/cloudinary-utils";
+import { SafeImage } from "@/components/SafeImage";
+import { CLOUDINARY_FOLDER, isCloudinarySrc } from "@/lib/cloudinary-utils";
 import { cn } from "@/lib/utils";
 
 type UploadedAsset = {
@@ -36,6 +36,7 @@ export function CloudinaryUpload({
 }: CloudinaryUploadProps) {
   const [pending, setPending] = useState(false);
   const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET;
+  const hasNonCloudinary = value.some((src) => src && !isCloudinarySrc(src));
 
   function handleSuccess(results: CloudinaryUploadWidgetResults) {
     const info = results.info;
@@ -49,7 +50,9 @@ export function CloudinaryUpload({
     onUploaded?.(asset);
 
     if (onChange) {
-      onChange(multiple ? [...value, asset.publicId] : [asset.publicId]);
+      // Always persist the Cloudinary public ID (never raw external URLs).
+      const next = multiple ? [...value.filter(isCloudinarySrc), asset.publicId] : [asset.publicId];
+      onChange(next);
     }
   }
 
@@ -58,22 +61,51 @@ export function CloudinaryUpload({
     onChange(value.filter((_, i) => i !== index));
   }
 
+  function clearNonCloudinary() {
+    if (!onChange) return;
+    onChange(value.filter(isCloudinarySrc));
+  }
+
   return (
     <div className={cn("space-y-3", className)}>
+      {hasNonCloudinary && (
+        <div className="rounded-xl border border-[var(--color-warning)]/40 bg-[var(--color-warning)]/10 px-4 py-3 text-sm text-foreground">
+          <p className="font-medium">
+            Some images are not stored in Cloudinary (e.g. Unsplash seed URLs).
+          </p>
+          <p className="mt-1 text-[var(--color-body)]">
+            Remove them and upload new images so the storefront can serve them from Cloudinary.
+          </p>
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            className="mt-3"
+            onClick={clearNonCloudinary}
+          >
+            Remove non-Cloudinary images
+          </Button>
+        </div>
+      )}
+
       {value.length > 0 && (
         <ul className="flex flex-wrap gap-3">
-          {value.map((publicId, index) => (
+          {value.map((src, index) => (
             <li
-              key={publicId}
-              className="relative h-24 w-24 overflow-hidden rounded-xl border border-border bg-secondary"
+              key={`${src}-${index}`}
+              className={cn(
+                "relative h-24 w-24 overflow-hidden rounded-xl border bg-secondary",
+                isCloudinarySrc(src)
+                  ? "border-border"
+                  : "border-[var(--color-warning)]"
+              )}
             >
-              <CldImage
-                src={publicId}
+              <SafeImage
+                src={src}
                 alt=""
-                width={96}
-                height={96}
-                crop={{ type: "fill", source: true }}
-                className="h-full w-full object-cover"
+                fill
+                sizes="96px"
+                className="object-cover"
               />
               {onChange && (
                 <button
@@ -84,6 +116,11 @@ export function CloudinaryUpload({
                 >
                   <X size={12} />
                 </button>
+              )}
+              {!isCloudinarySrc(src) && (
+                <span className="absolute bottom-0 inset-x-0 bg-[var(--color-warning)]/90 text-[10px] font-bold text-center text-white py-0.5">
+                  External
+                </span>
               )}
             </li>
           ))}

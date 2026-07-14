@@ -1,4 +1,14 @@
 import { z } from "zod";
+import { isCloudinarySrc, toCloudinaryPublicId } from "@/lib/cloudinary-utils";
+
+const cloudinaryImage = z
+  .string()
+  .min(1)
+  .refine((src) => isCloudinarySrc(src), {
+    message:
+      "Images must be Cloudinary uploads (public ID or res.cloudinary.com URL)",
+  })
+  .transform((src) => toCloudinaryPublicId(src));
 
 export const productSchema = z.object({
   name: z.string().min(2, "Name is required"),
@@ -16,7 +26,13 @@ export const productSchema = z.object({
     .or(z.literal("").transform(() => undefined)),
   weight: z.string().min(1, "Weight is required"),
   stock: z.coerce.number().int().min(0, "Stock cannot be negative"),
-  images: z.array(z.string()).min(1, "At least one image is required"),
+  lowStockThreshold: z.coerce.number().int().min(0).default(10),
+  harvestDate: z.coerce.date().optional().or(z.literal("").transform(() => undefined)),
+  bestBefore: z.coerce.date().optional().or(z.literal("").transform(() => undefined)),
+  isActive: z.boolean().default(true),
+  images: z
+    .array(cloudinaryImage)
+    .min(1, "Upload at least one image via Cloudinary"),
   isFeatured: z.boolean().default(false),
   tag: z
     .string()

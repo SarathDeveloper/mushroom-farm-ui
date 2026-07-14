@@ -9,4 +9,9 @@ cloudinary.config({
 
 export { cloudinary };
 
-export { CLOUDINARY_FOLDER, isCloudinarySrc, toCloudinaryPublicId } from "./cloudinary-utils";
+export {
+  CLOUDINARY_FOLDER,
+  isCloudinarySrc,
+  toCloudinaryPublicId,
+  normalizeCloudinaryImages,
+} from "./cloudinary-utils";

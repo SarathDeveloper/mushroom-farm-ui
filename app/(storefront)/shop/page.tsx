@@ -44,7 +44,9 @@ export default async function ShopPage(props: {
 
   const categories = await prisma.category.findMany();
 
-  const where: Prisma.ProductWhereInput = {};
+  const where: Prisma.ProductWhereInput = {
+    isActive: true,
+  };
 
   if (activeCategorySlug && activeCategorySlug !== "all") {
     where.category = { slug: activeCategorySlug };

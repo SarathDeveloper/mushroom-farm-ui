@@ -71,6 +71,10 @@ export function ProductForm({
       compareAtPrice: undefined,
       weight: "200g",
       stock: 0,
+      lowStockThreshold: 10,
+      harvestDate: undefined,
+      bestBefore: undefined,
+      isActive: true,
       images: [],
       isFeatured: false,
       tag: "",
@@ -279,6 +283,55 @@ export function ProductForm({
               )}
             </div>
           </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+            <div className="space-y-2">
+              <Label htmlFor="lowStockThreshold">Low Stock Alert</Label>
+              <Input
+                id="lowStockThreshold"
+                type="number"
+                min="0"
+                placeholder="10"
+                {...register("lowStockThreshold")}
+              />
+              <p className="text-xs text-muted-foreground">Alert when stock falls below this</p>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="harvestDate">Harvest Date</Label>
+              <Input
+                id="harvestDate"
+                type="date"
+                {...register("harvestDate")}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="bestBefore">Best Before</Label>
+              <Input
+                id="bestBefore"
+                type="date"
+                {...register("bestBefore")}
+              />
+            </div>
+          </div>
+
+          <div className="flex items-center gap-3 pt-2">
+            <Controller
+              name="isActive"
+              control={control}
+              render={({ field }) => (
+                <Switch
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                  id="isActive"
+                />
+              )}
+            />
+            <Label htmlFor="isActive" className="cursor-pointer">
+              Product is active and visible on storefront
+            </Label>
+          </div>
         </section>
 
         {/* Organization */}
@@ -403,8 +456,9 @@ export function ProductForm({
             Product Images *
           </h2>
           <p className="text-sm text-[var(--color-body)]">
-            Upload product images via Cloudinary. The first image is the main
-            display image.
+            Images are uploaded to Cloudinary and the public ID is saved in the
+            database. The storefront and admin panels both load them from
+            Cloudinary. The first image is the main display image.
           </p>
 
           <Controller

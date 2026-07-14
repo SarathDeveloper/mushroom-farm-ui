@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { ProductForm } from "@/components/admin/ProductForm";
+import { isCloudinarySrc, toCloudinaryPublicId } from "@/lib/cloudinary-utils";
 
 export const metadata = {
   title: "Edit Product · Admin",
@@ -21,6 +22,12 @@ export default async function EditProductPage(props: {
 
   if (!product) notFound();
 
+  // Prefer Cloudinary public IDs in the form; keep legacy external URLs so
+  // the admin can see and replace them.
+  const images = product.images.map((src) =>
+    isCloudinarySrc(src) ? toCloudinaryPublicId(src) : src
+  );
+
   return (
     <ProductForm
       categories={categories}
@@ -34,7 +41,11 @@ export default async function EditProductPage(props: {
         compareAtPrice: product.compareAtPrice ?? undefined,
         weight: product.weight,
         stock: product.stock,
-        images: product.images,
+        lowStockThreshold: product.lowStockThreshold,
+        harvestDate: product.harvestDate ? product.harvestDate.toISOString().split("T")[0] : undefined,
+        bestBefore: product.bestBefore ? product.bestBefore.toISOString().split("T")[0] : undefined,
+        isActive: product.isActive,
+        images,
         isFeatured: product.isFeatured,
         tag: product.tag ?? "",
         highlights: product.highlights,

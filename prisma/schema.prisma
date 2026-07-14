@@ -121,6 +121,7 @@ model Category {
   slug        String    @unique
   description String?
   image       String?
+  sortOrder   Int       @default(0)
   
   products    Product[]
 
@@ -137,6 +138,10 @@ model Product {
   compareAtPrice Float?
   weight         String   @default("200g")
   stock          Int      @default(0)
+  lowStockThreshold Int   @default(10)
+  harvestDate    DateTime?
+  bestBefore     DateTime?
+  isActive       Boolean  @default(true)
   images         String[]
   isFeatured     Boolean  @default(false)
   tag            String?

@@ -30,3 +30,39 @@ export function toCloudinaryPublicId(src: string): string {
     return src;
   }
 }
+
+/**
+ * Normalize a list of image refs to Cloudinary public IDs.
+ * Accepts public IDs and res.cloudinary.com delivery URLs.
+ * Drops empty strings and rejects non-Cloudinary remote URLs.
+ */
+export function normalizeCloudinaryImages(images: string[]): {
+  ok: true;
+  publicIds: string[];
+} | {
+  ok: false;
+  error: string;
+} {
+  const publicIds: string[] = [];
+
+  for (const raw of images) {
+    const src = typeof raw === "string" ? raw.trim() : "";
+    if (!src) continue;
+
+    if (!isCloudinarySrc(src)) {
+      return {
+        ok: false,
+        error:
+          "All product images must be uploaded to Cloudinary. Remove external image URLs and upload via the image uploader.",
+      };
+    }
+
+    publicIds.push(toCloudinaryPublicId(src));
+  }
+
+  if (publicIds.length === 0) {
+    return { ok: false, error: "At least one Cloudinary image is required." };
+  }
+
+  return { ok: true, publicIds };
+}
