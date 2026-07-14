@@ -19,9 +19,9 @@ export function HomeHero() {
           
           {/* Left Column - Text */}
           <FadeIn direction="up" className="max-w-[540px]">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#E8F2EC] text-[#2B7A5D] text-[10px] font-bold uppercase tracking-wider mb-6">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#E8F2EC] text-[#1A4938] text-[10px] font-bold uppercase tracking-wider mb-6">
               <span>Organic Certified</span>
-              <span className="w-1 h-1 rounded-full bg-[#2B7A5D]/50"></span>
+              <span className="w-1 h-1 rounded-full bg-[#1A4938]/50"></span>
               <span>Daily Harvest</span>
             </div>
 
@@ -85,7 +85,7 @@ export function HomeHero() {
             
             {/* Floating Badge Top Left */}
             <div className="absolute top-10 -left-2 sm:-left-8 bg-white rounded-full p-2.5 pr-5 flex items-center gap-3 shadow-[0_8px_30px_rgb(0,0,0,0.12)] z-10 animate-in slide-in-from-bottom-4 fade-in duration-700 delay-300 fill-mode-both">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-[#E8F2EC] flex items-center justify-center text-[#2B7A5D]">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-[#E8F2EC] flex items-center justify-center text-[#1A4938]">
                 <Leaf size={18} />
               </div>
               <span className="text-xs sm:text-sm font-bold text-[#0B0B0B]">Fresh, organic harvest</span>
@@ -107,21 +107,21 @@ export function HomeHero() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-8 sm:py-10">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 divide-y sm:divide-y-0 sm:divide-x divide-white/10">
             <div className="flex items-center gap-4 sm:justify-center pt-4 sm:pt-0 first:pt-0">
-              <Leaf className="text-[#7DD681] shrink-0" size={32} strokeWidth={1.5} />
+              <Leaf className="text-white shrink-0" size={32} strokeWidth={1.5} />
               <div>
                 <h3 className="font-bold text-white text-sm sm:text-base">100% Chemical-Free</h3>
                 <p className="text-[#A2C7B8] text-xs sm:text-sm mt-0.5">grown naturally & safely</p>
               </div>
             </div>
             <div className="flex items-center gap-4 sm:justify-center pt-4 sm:pt-0">
-              <ChefHat className="text-[#7DD681] shrink-0" size={32} strokeWidth={1.5} />
+              <ChefHat className="text-white shrink-0" size={32} strokeWidth={1.5} />
               <div>
                 <h3 className="font-bold text-white text-sm sm:text-base">Expert-Cultivated</h3>
                 <p className="text-[#A2C7B8] text-xs sm:text-sm mt-0.5">FSSAI-approved farm</p>
               </div>
             </div>
             <div className="flex items-center gap-4 sm:justify-center pt-4 sm:pt-0">
-              <Truck className="text-[#7DD681] shrink-0" size={32} strokeWidth={1.5} />
+              <Truck className="text-white shrink-0" size={32} strokeWidth={1.5} />
               <div>
                 <h3 className="font-bold text-white text-sm sm:text-base">Free doorstep delivery</h3>
                 <p className="text-[#A2C7B8] text-xs sm:text-sm mt-0.5">every single day</p>

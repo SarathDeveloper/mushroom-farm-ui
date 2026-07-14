@@ -4,10 +4,11 @@
 
 @theme inline {
   /* Get Diety Theme - Vibrant Green & Clean White/Black */
-  --color-primary-dark: #3ca841; /* Darker green for hovers */
+  --color-primary-dark: #1A4938;
+  /* Darker green for hovers */
   --color-body: #0b0b0b;
   --color-heading: #000000;
-  --color-success: #52c057;
+  --color-success: #1A4938;
   --color-warning: #e5b06d;
   --color-error: #e56d6d;
 
@@ -65,7 +66,7 @@
   --popover-foreground: #0b0b0b;
 
   /* Primary Vibrant Green */
-  --primary: #52c057;
+  --primary: #1A4938;
   --primary-foreground: #ffffff;
 
   /* Secondary / Alternate Backgrounds */
@@ -75,19 +76,19 @@
   --muted: #f2f2f2;
   --muted-foreground: #5c6370;
 
-  /* Accent */
-  --accent: #52c057;
+  /* Accent rgb(33, 78, 36) */
+  --accent: #1A4938;
   --accent-foreground: #ffffff;
 
   --destructive: #e56d6d;
 
   --border: #e0e0e0;
   --input: #e0e0e0;
-  --ring: #52c057;
+  --ring: #1A4938;
 
-  --chart-1: #52c057;
-  --chart-2: #3ca841;
-  --chart-3: #7dd681;
+  --chart-1: #1A4938;
+  --chart-2: #1A4938;
+  --chart-3: #1A4938;
   --chart-4: #e5b06d;
   --chart-5: #f2f2f2;
 
@@ -95,21 +96,23 @@
 
   --sidebar: #0b0b0b;
   --sidebar-foreground: #f2efec;
-  --sidebar-primary: #52c057;
+  --sidebar-primary: #1A4938;
   --sidebar-primary-foreground: #ffffff;
   --sidebar-accent: #303030;
   --sidebar-accent-foreground: #f2efec;
   --sidebar-border: rgba(242, 239, 236, 0.15);
-  --sidebar-ring: #52c057;
+  --sidebar-ring: #1A4938;
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
+
   html {
     @apply font-sans scroll-smooth;
   }
@@ -124,13 +127,16 @@
   width: 10px;
   height: 10px;
 }
+
 ::-webkit-scrollbar-track {
   background: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
   background-color: var(--color-border);
   border-radius: 999px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background-color: var(--color-primary);
 }
@@ -143,6 +149,7 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }

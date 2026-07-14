@@ -26,9 +26,9 @@ export const products: Product[] = [
     compareAtPrice: 180,
     weight: "250g",
     image:
-      "https://images.unsplash.com/photo-1590740924976-15ff4eb430d8?q=80&w=1000&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1518977676601-b53f82aba655?q=80&w=1000&auto=format&fit=crop",
     gallery: [
-      "https://images.unsplash.com/photo-1590740924976-15ff4eb430d8?q=80&w=1000&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1518977676601-b53f82aba655?q=80&w=1000&auto=format&fit=crop",
       "https://images.unsplash.com/photo-1518977676601-b53f82aba655?q=80&w=1000&auto=format&fit=crop",
     ],
     rating: 4.8,
@@ -113,7 +113,7 @@ export const products: Product[] = [
       "https://images.unsplash.com/photo-1518977956812-cd3dbadaaf31?q=80&w=1000&auto=format&fit=crop",
     gallery: [
       "https://images.unsplash.com/photo-1518977956812-cd3dbadaaf31?q=80&w=1000&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1590740924976-15ff4eb430d8?q=80&w=1000&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1518977676601-b53f82aba655?q=80&w=1000&auto=format&fit=crop",
     ],
     rating: 4.7,
     reviewCount: 54,

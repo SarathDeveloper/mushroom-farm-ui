@@ -3,10 +3,8 @@ import { ArrowRight, Award, Droplets, HeartHandshake, Leaf, Newspaper, Quote, Us
 import { PageHero } from "@/components/PageHero";
 import { FadeIn } from "@/components/FadeIn";
 import { SafeImage } from "@/components/SafeImage";
-import { StatsCounter } from "@/components/StatsCounter";
 import { Certifications } from "@/components/Certifications";
 import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export const metadata = {
   title: "About Us",
@@ -20,10 +18,6 @@ const values = [
   { icon: HeartHandshake, title: "Radical Transparency", desc: "From farm practices to pricing, we believe our customers deserve to know exactly what they're getting." },
 ];
 
-const team = [
-  { name: "Dr. Kavitha Raman", role: "Agricultural Scientist", avatar: "https://i.pravatar.cc/200?img=32" },
-  { name: "Lakshmi Narayanan", role: "Operations & Training Lead", avatar: "https://i.pravatar.cc/200?img=47" },
-];
 
 const mediaArticles = [
   {
@@ -242,30 +236,6 @@ export default function AboutPage() {
             ))}
           </div>
 
-          <FadeIn className="text-center mb-12">
-            <h2 className="text-3xl font-bold font-heading text-foreground mb-4">Meet the Team</h2>
-            <p className="text-[var(--color-body)] max-w-2xl mx-auto">
-              Led by our founder Murugan Selvam, our team brings together agricultural expertise and community spirit.
-            </p>
-          </FadeIn>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-2xl mx-auto">
-            {team.map((member, i) => (
-              <FadeIn key={member.name} delay={i * 0.1} className="text-center">
-                <Avatar className="size-28 mx-auto mb-4">
-                  <AvatarImage src={member.avatar} alt={member.name} />
-                  <AvatarFallback>{member.name.charAt(0)}</AvatarFallback>
-                </Avatar>
-                <h3 className="font-bold text-foreground font-heading">{member.name}</h3>
-                <p className="text-sm text-muted-foreground">{member.role}</p>
-              </FadeIn>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="py-20 bg-[var(--color-primary-dark)] relative overflow-hidden">
-        <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-          <StatsCounter />
         </div>
       </section>
     </div>

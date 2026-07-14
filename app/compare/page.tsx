@@ -15,7 +15,7 @@ const mushrooms = [
   {
     name: "Oyster",
     slug: "premium-oyster-mushroom",
-    image: "https://images.unsplash.com/photo-1590740924976-15ff4eb430d8?q=80&w=400&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1518977676601-b53f82aba655?q=80&w=400&auto=format&fit=crop",
     calories: 33,
     protein: "3.3g",
     fiber: "2.3g",

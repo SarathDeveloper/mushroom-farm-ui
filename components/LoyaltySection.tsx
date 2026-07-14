@@ -27,7 +27,7 @@ export function LoyaltySection() {
 
       <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         <FadeIn className="text-center mb-14">
-          <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#E8F2EC]/10 text-[#7DD681] text-xs font-bold uppercase tracking-wider mb-4">
+          <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 text-white text-xs font-bold uppercase tracking-wider mb-4">
             <Gift size={16} /> Loyalty Program
           </span>
           <h2 className="text-3xl md:text-4xl font-extrabold text-white font-heading">
@@ -42,7 +42,7 @@ export function LoyaltySection() {
           {perks.map((perk, i) => (
             <FadeIn key={perk.title} delay={i * 0.1}>
               <div className="bg-white/5 backdrop-blur-sm rounded-3xl p-6 border border-white/10 h-full hover:bg-white/10 transition-colors duration-300">
-                <div className="w-12 h-12 rounded-2xl bg-white/10 text-[#7DD681] flex items-center justify-center mb-4">
+                <div className="w-12 h-12 rounded-2xl bg-white/10 text-white flex items-center justify-center mb-4">
                   <perk.icon size={22} strokeWidth={1.75} />
                 </div>
                 <h3 className="font-bold text-white text-base mb-2 font-heading">{perk.title}</h3>
