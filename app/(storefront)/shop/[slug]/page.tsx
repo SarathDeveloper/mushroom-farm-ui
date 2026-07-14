@@ -8,10 +8,11 @@ import { ProductActions } from "@/components/ProductActions";
 import { ProductCard } from "@/components/ProductCard";
 import { PincodeChecker } from "@/components/PincodeChecker";
 import { prisma } from "@/lib/prisma";
+import type { Product } from "@/lib/data";
 
 export async function generateStaticParams() {
   const products = await prisma.product.findMany({ select: { slug: true } });
-  return products.map((p) => ({ slug: p.slug }));
+  return products.map((p: { slug: string }) => ({ slug: p.slug }));
 }
 
 export async function generateMetadata(props: {
@@ -46,7 +47,13 @@ const storageInstructions: Record<string, string> = {
   "Value-Added": "Store in a cool, dry place away from sunlight. Check label for specific shelf life.",
 };
 
-function mapProduct(p: any) {
+type DbProduct = Omit<Product, "category" | "image" | "gallery"> & {
+  images: string[];
+  category: { name: string };
+  categoryId: string;
+};
+
+function mapProduct(p: DbProduct): Product {
   return {
     ...p,
     category: p.category.name,
@@ -78,7 +85,7 @@ export default async function ProductDetailPage(props: {
     take: 3,
   });
   
-  const related = rawRelated.map(mapProduct);
+  const related: Product[] = rawRelated.map((p: DbProduct) => mapProduct(p));
   const nutrition = nutritionData[product.category] || nutritionData["Value-Added"];
   const storage = storageInstructions[product.category] || storageInstructions["Value-Added"];
 

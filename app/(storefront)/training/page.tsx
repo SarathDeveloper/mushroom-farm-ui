@@ -3,6 +3,7 @@ import { PageHero } from "@/components/PageHero";
 import { FadeIn } from "@/components/FadeIn";
 import { TrainingCard } from "@/components/TrainingCard";
 import { prisma } from "@/lib/prisma";
+import type { TrainingProgram } from "@/lib/data";
 
 const highlights = [
   { icon: GraduationCap, title: "Expert Trainers", desc: "Learn from farmers and scientists with 10+ years of hands-on experience." },
@@ -21,7 +22,13 @@ export default async function TrainingPage() {
     orderBy: { startDate: "asc" }
   });
 
-  const trainingPrograms = dbPrograms.map((p) => ({
+  type DbTraining = Omit<TrainingProgram, "fee" | "seatsLeft" | "level" | "image" | "startDate"> & {
+    fees: number;
+    maxCapacity: number;
+    image: string | null;
+    startDate: Date;
+  };
+  const trainingPrograms: TrainingProgram[] = dbPrograms.map((p: DbTraining) => ({
     ...p,
     fee: p.fees,
     seatsLeft: p.maxCapacity, // Using maxCapacity as seatsLeft for now

@@ -14,7 +14,7 @@ import { NewsletterForm } from "@/components/NewsletterForm";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { prisma } from "@/lib/prisma";
-import { testimonials } from "@/lib/data";
+import { testimonials, type Product } from "@/lib/data";
 
 export default async function Home() {
   const [dbProducts, dbSlides] = await Promise.all([
@@ -40,16 +40,26 @@ export default async function Home() {
     highlights: string[];
     category: { name: string };
   };
-  const featuredProducts = dbProducts.map((p: FeaturedProduct) => ({
+  const featuredProducts: Product[] = dbProducts.map((p: FeaturedProduct) => ({
     ...p,
     category: p.category.name,
     image: p.images[0] || "",
     gallery: p.images,
   }));
 
+  type DbHeroSlide = {
+    badge: string;
+    headline: string;
+    subtitle: string;
+    primaryCtaLabel: string;
+    primaryCtaHref: string;
+    secondaryCtaLabel: string;
+    secondaryCtaHref: string;
+    image: string;
+  };
   const heroSlides: HeroSlideData[] | undefined =
     dbSlides.length > 0
-      ? dbSlides.map((s) => ({
+      ? dbSlides.map((s: DbHeroSlide) => ({
           badge: s.badge,
           headline: s.headline,
           subtitle: s.subtitle,

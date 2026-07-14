@@ -6,9 +6,14 @@ import { ShopControls } from "@/components/ShopControls";
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import type { Prisma } from "@prisma/client";
+import type { Product } from "@/lib/data";
 
-function mapProduct(p: any) {
+type DbProduct = Omit<Product, "category" | "image" | "gallery"> & {
+  images: string[];
+  category: { name: string };
+};
+
+function mapProduct(p: DbProduct): Product {
   return {
     ...p,
     category: p.category.name,
@@ -19,7 +24,7 @@ function mapProduct(p: any) {
 
 function getOrderBy(
   sort: string | undefined
-): Prisma.ProductOrderByWithRelationInput {
+): Record<string, "asc" | "desc"> {
   switch (sort) {
     case "price-asc":
       return { price: "asc" };
@@ -34,6 +39,16 @@ function getOrderBy(
   }
 }
 
+type ProductWhere = {
+  isActive: boolean;
+  category?: { slug: string };
+  OR?: Array<{
+    name?: { contains: string; mode: "insensitive" };
+    description?: { contains: string; mode: "insensitive" };
+  }>;
+};
+type ShopCategory = { id: string; name: string; slug: string };
+
 export default async function ShopPage(props: {
   searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
@@ -42,9 +57,9 @@ export default async function ShopPage(props: {
   const sort = searchParams?.sort as string | undefined;
   const query = searchParams?.q as string | undefined;
 
-  const categories = await prisma.category.findMany();
+  const categories: ShopCategory[] = await prisma.category.findMany();
 
-  const where: Prisma.ProductWhereInput = {
+  const where: ProductWhere = {
     isActive: true,
   };
 
@@ -65,7 +80,9 @@ export default async function ShopPage(props: {
     orderBy: getOrderBy(sort),
   });
 
-  const products = prismaProducts.map(mapProduct);
+  const products: Product[] = prismaProducts.map((product: DbProduct) =>
+    mapProduct(product)
+  );
 
   return (
     <div className="flex flex-col min-h-screen">

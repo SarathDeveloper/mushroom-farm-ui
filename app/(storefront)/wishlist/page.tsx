@@ -1,11 +1,15 @@
 import { PageHero } from "@/components/PageHero";
 import { prisma } from "@/lib/prisma";
 import { WishlistClient } from "./WishlistClient";
+import type { Product } from "@/lib/data";
 
 export default async function WishlistPage() {
   const dbProducts = await prisma.product.findMany({ include: { category: true } });
-  
-  const products = dbProducts.map((p) => ({
+  type DbProduct = Omit<Product, "category" | "image" | "gallery"> & {
+    images: string[];
+    category: { name: string };
+  };
+  const products: Product[] = dbProducts.map((p: DbProduct) => ({
     ...p,
     category: p.category.name,
     image: p.images[0] || "",

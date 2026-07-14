@@ -4,7 +4,11 @@ import { revalidatePath } from "next/cache";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import type { OrderStatus, PaymentStatus, TrainingStatus } from "@prisma/client";
+import type {
+  OrderStatus,
+  PaymentStatus,
+  TrainingStatus,
+} from "@/lib/status-types";
 
 type ActionResult<T = unknown> = {
   success: boolean;

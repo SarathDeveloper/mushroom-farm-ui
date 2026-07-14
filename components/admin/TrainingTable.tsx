@@ -23,7 +23,7 @@ import {
   updateRegistrationStatus,
 } from "@/app/admin/actions";
 import { generateSlug } from "@/lib/validators/product";
-import type { TrainingStatus, PaymentStatus } from "@prisma/client";
+import type { TrainingStatus, PaymentStatus } from "@/lib/status-types";
 
 type Registration = {
   id: string;
