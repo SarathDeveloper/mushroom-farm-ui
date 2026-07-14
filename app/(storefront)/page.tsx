@@ -15,7 +15,6 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { prisma } from "@/lib/prisma";
 import { testimonials } from "@/lib/data";
-import type { Prisma } from "@prisma/client";
 
 export default async function Home() {
   const [dbProducts, dbSlides] = await Promise.all([
@@ -25,9 +24,22 @@ export default async function Home() {
       orderBy: { sortOrder: "asc" },
     }),
   ]);
-  type FeaturedProduct = Prisma.ProductGetPayload<{
-    include: { category: true };
-  }>;
+  type FeaturedProduct = {
+    id: string;
+    slug: string;
+    name: string;
+    description: string;
+    price: number;
+    compareAtPrice: number | null;
+    weight: string;
+    stock: number;
+    images: string[];
+    rating: number;
+    reviewCount: number;
+    tag: string | null;
+    highlights: string[];
+    category: { name: string };
+  };
   const featuredProducts = dbProducts.map((p: FeaturedProduct) => ({
     ...p,
     category: p.category.name,
