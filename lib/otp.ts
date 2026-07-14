@@ -6,6 +6,8 @@ const OTP_TTL_MS = 10 * 60 * 1000;
 const VERIFY_TTL_MS = 60 * 60 * 1000;
 const RESEND_COOLDOWN_MS = 45 * 1000;
 const MAX_ATTEMPTS = 5;
+/** Temporary fixed OTP for testing — remove before production. */
+const TEST_OTP = "1234";
 
 function otpIdentifier(phone: string) {
   return `phone-otp:${phone}`;
@@ -99,11 +101,19 @@ export async function verifyStoredOtp(
   if (!isValidIndianMobile(phone)) {
     return { ok: false, message: "Invalid phone number." };
   }
+
+  const identifier = otpIdentifier(phone);
+
+  // Temporary test bypass — accepts without a stored OTP.
+  if (otp === TEST_OTP) {
+    await prisma.verificationToken.deleteMany({ where: { identifier } });
+    return { ok: true };
+  }
+
   if (!/^\d{6}$/.test(otp)) {
     return { ok: false, message: "Enter the 6-digit OTP." };
   }
 
-  const identifier = otpIdentifier(phone);
   const record = await prisma.verificationToken.findFirst({
     where: { identifier },
     orderBy: { expires: "desc" },
