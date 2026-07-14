@@ -4,14 +4,19 @@ const globalForRazorpay = globalThis as unknown as {
   razorpay: Razorpay | undefined;
 };
 
-export const razorpay =
-  globalForRazorpay.razorpay ??
-  new Razorpay({
-    key_id: process.env.RAZORPAY_KEY_ID!,
-    key_secret: process.env.RAZORPAY_KEY_SECRET!,
-  });
+export function getRazorpay() {
+  if (!process.env.RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {
+    throw new Error("Razorpay credentials are not configured.");
+  }
 
-if (process.env.NODE_ENV !== "production") globalForRazorpay.razorpay = razorpay;
+  return (
+    globalForRazorpay.razorpay ??
+    (globalForRazorpay.razorpay = new Razorpay({
+      key_id: process.env.RAZORPAY_KEY_ID,
+      key_secret: process.env.RAZORPAY_KEY_SECRET,
+    }))
+  );
+}
 
 export const FREE_SHIPPING_MIN = 500;
 export const SHIPPING_FEE = 49;

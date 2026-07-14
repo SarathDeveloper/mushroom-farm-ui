@@ -5,7 +5,7 @@ import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { verifyPhoneVerificationToken } from "@/lib/otp";
 import { INDIAN_MOBILE_REGEX } from "@/lib/phone";
-import { razorpay, computeOrderTotals, VALID_COUPONS } from "@/lib/razorpay";
+import { getRazorpay, computeOrderTotals, VALID_COUPONS } from "@/lib/razorpay";
 
 const cartLineSchema = z.object({
   productId: z.string().uuid(),
@@ -45,7 +45,6 @@ export async function POST(request: Request) {
       { status: 400 },
     );
   }
-
   const { items, couponCode, paymentMethod, phoneVerifiedToken, ...addressFields } =
     parsed.data;
 
@@ -135,7 +134,7 @@ export async function POST(request: Request) {
       });
     }
 
-    const razorpayOrder = await razorpay.orders.create({
+    const razorpayOrder = await getRazorpay().orders.create({
       amount: Math.round(total * 100),
       currency: "INR",
       receipt: order.id,
