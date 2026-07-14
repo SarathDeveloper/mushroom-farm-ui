@@ -1,66 +1,54 @@
-import { SafeImage } from "@/components/SafeImage";
-import { Badge } from "@/components/ui/badge";
+import Link from "next/link";
+import { Plus } from "lucide-react";
 import { prisma } from "@/lib/prisma";
+import { Button } from "@/components/ui/button";
+import { ProductsTable } from "@/components/admin/ProductsTable";
 
 export const metadata = {
   title: "Products · Admin",
 };
 
 export default async function AdminProductsPage() {
-  const products = await prisma.product.findMany({
-    include: { category: true }
-  });
+  let products: {
+    id: string;
+    name: string;
+    slug: string;
+    price: number;
+    stock: number;
+    isFeatured: boolean;
+    images: string[];
+    category: { id: string; name: string };
+  }[] = [];
+
+  try {
+    products = await prisma.product.findMany({
+      include: { category: { select: { id: true, name: true } } },
+      orderBy: { createdAt: "desc" },
+    });
+  } catch (error) {
+    console.error("Failed to fetch products:", error);
+  }
 
   return (
     <div className="p-6 sm:p-10">
-      <header className="mb-10">
-        <h1 className="text-2xl md:text-3xl font-bold font-heading text-foreground">Products</h1>
-        <p className="text-[var(--color-body)] mt-1">
-          {products.length} products in your catalog.
-        </p>
+      <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
+        <div>
+          <h1 className="text-2xl md:text-3xl font-bold font-heading text-foreground">
+            Products
+          </h1>
+          <p className="text-[var(--color-body)] mt-1">
+            {products.length} product{products.length !== 1 && "s"} in your
+            catalog.
+          </p>
+        </div>
+        <Link href="/admin/products/new">
+          <Button className="gap-2">
+            <Plus size={18} /> Add Product
+          </Button>
+        </Link>
       </header>
 
-      <div className="bg-card rounded-2xl border border-border shadow-[0_4px_12px_rgba(0,0,0,0.04)] overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-sm">
-            <thead>
-              <tr className="border-b border-border bg-secondary/50 text-[var(--color-body)]">
-                <th className="font-semibold px-6 py-4">Product</th>
-                <th className="font-semibold px-6 py-4">Category</th>
-                <th className="font-semibold px-6 py-4">Price</th>
-                <th className="font-semibold px-6 py-4">Stock</th>
-                <th className="font-semibold px-6 py-4">Status</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-border">
-              {products.map((product) => (
-                <tr key={product.id} className="hover:bg-secondary/30 transition-colors">
-                  <td className="px-6 py-4">
-                    <div className="flex items-center gap-3">
-                      <div className="relative h-12 w-12 rounded-xl overflow-hidden shrink-0 bg-secondary">
-                        <SafeImage src={product.images[0] || ""} alt={product.name} fill sizes="48px" className="object-cover" />
-                      </div>
-                      <span className="font-semibold text-foreground line-clamp-1">{product.name}</span>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 text-[var(--color-body)]">{product.category.name}</td>
-                  <td className="px-6 py-4 font-semibold text-primary">₹{product.price}</td>
-                  <td className="px-6 py-4 text-[var(--color-body)]">{product.stock}</td>
-                  <td className="px-6 py-4">
-                    {product.stock === 0 ? (
-                      <Badge variant="destructive">Out of stock</Badge>
-                    ) : product.stock < 20 ? (
-                      <Badge variant="warning">Low stock</Badge>
-                    ) : (
-                      <Badge variant="success">In stock</Badge>
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
+      <ProductsTable products={products} />
     </div>
   );
 }

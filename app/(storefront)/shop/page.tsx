@@ -1,11 +1,13 @@
+import { Suspense } from "react";
 import { PageHero } from "@/components/PageHero";
 import { ProductCard } from "@/components/ProductCard";
 import { FadeIn } from "@/components/FadeIn";
+import { ShopControls } from "@/components/ShopControls";
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import type { Prisma } from "@prisma/client";
 
-// Adapter to map Prisma Product to the type expected by ProductCard
 function mapProduct(p: any) {
   return {
     ...p,
@@ -15,21 +17,50 @@ function mapProduct(p: any) {
   };
 }
 
+function getOrderBy(
+  sort: string | undefined
+): Prisma.ProductOrderByWithRelationInput {
+  switch (sort) {
+    case "price-asc":
+      return { price: "asc" };
+    case "price-desc":
+      return { price: "desc" };
+    case "newest":
+      return { createdAt: "desc" };
+    case "name-asc":
+      return { name: "asc" };
+    default:
+      return { createdAt: "desc" };
+  }
+}
+
 export default async function ShopPage(props: {
   searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
   const searchParams = await props.searchParams;
   const activeCategorySlug = searchParams?.category as string | undefined;
+  const sort = searchParams?.sort as string | undefined;
+  const query = searchParams?.q as string | undefined;
 
   const categories = await prisma.category.findMany();
-  
-  const whereClause = activeCategorySlug && activeCategorySlug !== 'all' 
-    ? { category: { slug: activeCategorySlug } }
-    : {};
+
+  const where: Prisma.ProductWhereInput = {};
+
+  if (activeCategorySlug && activeCategorySlug !== "all") {
+    where.category = { slug: activeCategorySlug };
+  }
+
+  if (query && query.length >= 2) {
+    where.OR = [
+      { name: { contains: query, mode: "insensitive" } },
+      { description: { contains: query, mode: "insensitive" } },
+    ];
+  }
 
   const prismaProducts = await prisma.product.findMany({
-    where: whereClause,
-    include: { category: true }
+    where,
+    include: { category: true },
+    orderBy: getOrderBy(sort),
   });
 
   const products = prismaProducts.map(mapProduct);
@@ -45,12 +76,12 @@ export default async function ShopPage(props: {
 
       <section className="py-16 bg-background">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-          <FadeIn className="flex flex-wrap items-center justify-center gap-3 mb-12">
+          <FadeIn className="flex flex-wrap items-center justify-center gap-3 mb-8">
             <Link
               href="/shop"
               className={cn(
                 "px-5 py-2.5 rounded-full text-sm font-semibold transition-colors border",
-                !activeCategorySlug || activeCategorySlug === 'all'
+                !activeCategorySlug || activeCategorySlug === "all"
                   ? "bg-primary text-white border-primary"
                   : "bg-secondary text-secondary-foreground border-border hover:border-primary hover:text-primary"
               )}
@@ -73,8 +104,18 @@ export default async function ShopPage(props: {
             ))}
           </FadeIn>
 
+          <Suspense>
+            <ShopControls />
+          </Suspense>
+
           <FadeIn className="mb-8 text-center text-sm text-muted-foreground">
             Showing {products.length} product{products.length !== 1 && "s"}
+            {query && (
+              <span>
+                {" "}
+                for &ldquo;{query}&rdquo;
+              </span>
+            )}
           </FadeIn>
 
           {products.length > 0 ? (
@@ -87,7 +128,11 @@ export default async function ShopPage(props: {
               ))}
             </div>
           ) : (
-            <div className="text-center py-20 text-muted-foreground">No products found in this category.</div>
+            <div className="text-center py-20 text-muted-foreground">
+              {query
+                ? `No products found for "${query}".`
+                : "No products found in this category."}
+            </div>
           )}
         </div>
       </section>

@@ -1,12 +1,12 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { SafeImage } from "@/components/SafeImage";
-import { Search, ArrowRight, TrendingUp, Clock } from "lucide-react";
+import { Search, ArrowRight, TrendingUp, Clock, Loader2 } from "lucide-react";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { products } from "@/lib/data";
+import { searchProducts } from "@/app/admin/products/actions";
 
 const popularSearches = ["Oyster", "Milky Mushroom", "Shiitake", "Combo Pack", "Organic"];
 
@@ -16,9 +16,21 @@ const quickLinks = [
   { label: "Training Programs", href: "/training" },
 ];
 
+type SearchResult = {
+  id: string;
+  name: string;
+  slug: string;
+  price: number;
+  image: string;
+};
+
 export function SearchDialog() {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
+  const [results, setResults] = useState<SearchResult[]>([]);
+  const [isSearching, setIsSearching] = useState(false);
+  const [hasSearched, setHasSearched] = useState(false);
+  const debounceRef = useRef<ReturnType<typeof setTimeout>>(undefined);
   const router = useRouter();
 
   useEffect(() => {
@@ -34,19 +46,40 @@ export function SearchDialog() {
   }, []);
 
   useEffect(() => {
-    if (!open) setQuery("");
+    if (!open) {
+      setQuery("");
+      setResults([]);
+      setHasSearched(false);
+    }
   }, [open]);
 
-  const productResults = useMemo(() => {
-    if (!query.trim()) return [];
-    const q = query.toLowerCase();
-    return products.filter(
-      (p) =>
-        p.name.toLowerCase().includes(q) ||
-        p.category.toLowerCase().includes(q) ||
-        p.description.toLowerCase().includes(q)
-    );
-  }, [query]);
+  const doSearch = useCallback(async (q: string) => {
+    if (q.length < 2) {
+      setResults([]);
+      setHasSearched(false);
+      setIsSearching(false);
+      return;
+    }
+
+    setIsSearching(true);
+    const result = await searchProducts(q);
+    setIsSearching(false);
+    setHasSearched(true);
+
+    if (result.success && result.data) {
+      setResults(result.data);
+    } else {
+      setResults([]);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+    debounceRef.current = setTimeout(() => doSearch(query), 300);
+    return () => {
+      if (debounceRef.current) clearTimeout(debounceRef.current);
+    };
+  }, [query, doSearch]);
 
   const goTo = (path: string) => {
     setOpen(false);
@@ -73,7 +106,11 @@ export function SearchDialog() {
         >
           <DialogTitle className="sr-only">Search products and recipes</DialogTitle>
           <div className="flex items-center gap-3 border-b border-border px-4">
-            <Search size={18} className="text-muted-foreground shrink-0" />
+            {isSearching ? (
+              <Loader2 size={18} className="text-primary animate-spin shrink-0" />
+            ) : (
+              <Search size={18} className="text-muted-foreground shrink-0" />
+            )}
             <Input
               autoFocus
               value={query}
@@ -88,7 +125,6 @@ export function SearchDialog() {
           <div className="max-h-[28rem] overflow-y-auto">
             {!query.trim() ? (
               <div className="p-4 space-y-5">
-                {/* Popular Searches */}
                 <div>
                   <h4 className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-2 flex items-center gap-1.5">
                     <TrendingUp size={12} /> Popular Searches
@@ -106,7 +142,6 @@ export function SearchDialog() {
                   </div>
                 </div>
 
-                {/* Quick Links */}
                 <div>
                   <h4 className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-2 flex items-center gap-1.5">
                     <Clock size={12} /> Quick Links
@@ -127,13 +162,12 @@ export function SearchDialog() {
               </div>
             ) : (
               <div className="p-2">
-                {/* Product Results */}
-                {productResults.length > 0 && (
+                {results.length > 0 && (
                   <div className="mb-2">
                     <h4 className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider px-2.5 py-1.5">
-                      Products ({productResults.length})
+                      Products ({results.length})
                     </h4>
-                    {productResults.map((product) => (
+                    {results.map((product) => (
                       <button
                         key={product.id}
                         onClick={() => goTo(`/shop/${product.slug}`)}
@@ -144,9 +178,6 @@ export function SearchDialog() {
                         </div>
                         <div className="flex-1 min-w-0">
                           <p className="font-semibold text-sm text-foreground truncate">{product.name}</p>
-                          <p className="text-xs text-[#5C6370]">
-                            {product.category} · ₹{product.price} · {product.weight}
-                          </p>
                         </div>
                         <span className="text-xs font-semibold text-[#2B7A5D] shrink-0">₹{product.price}</span>
                       </button>
@@ -154,7 +185,7 @@ export function SearchDialog() {
                   </div>
                 )}
 
-                {productResults.length === 0 && (
+                {hasSearched && !isSearching && results.length === 0 && (
                   <div className="text-center py-10">
                     <p className="text-sm text-[#5C6370]">
                       No results for &ldquo;{query}&rdquo;

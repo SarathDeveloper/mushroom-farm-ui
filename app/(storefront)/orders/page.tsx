@@ -63,13 +63,21 @@ export default async function OrdersPage() {
           ) : (
             <div className="space-y-4">
               {orders.map((order: any) => (
-                <FadeIn key={order.id} className="flex items-center justify-between p-5 rounded-2xl border border-border bg-card">
-                  <div>
-                    <p className="font-semibold text-foreground">#{order.id.slice(0, 8).toUpperCase()}</p>
-                    <p className="text-sm text-muted-foreground">{order.orderItems.length} items · ₹{order.totalAmount}</p>
-                  </div>
-                  <Badge variant={statusVariant[order.status] ?? "secondary"}>{order.status}</Badge>
-                </FadeIn>
+                <Link key={order.id} href={`/track-order?id=${order.id}`}>
+                  <FadeIn className="flex items-center justify-between p-5 rounded-2xl border border-border bg-card hover:border-primary/30 transition-colors">
+                    <div>
+                      <p className="font-semibold text-foreground">#{order.id.slice(0, 8).toUpperCase()}</p>
+                      <p className="text-sm text-muted-foreground">
+                        {order.orderItems.length} items · ₹{order.totalAmount}
+                        {order.paymentStatus === "COMPLETED" && " · Paid"}
+                      </p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Badge variant={statusVariant[order.status] ?? "secondary"}>{order.status}</Badge>
+                      <ArrowRight size={16} className="text-muted-foreground" />
+                    </div>
+                  </FadeIn>
+                </Link>
               ))}
             </div>
           )}
