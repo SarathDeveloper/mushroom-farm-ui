@@ -1,12 +1,16 @@
 import { SafeImage } from "@/components/SafeImage";
 import { Badge } from "@/components/ui/badge";
-import { products } from "@/lib/data";
+import { prisma } from "@/lib/prisma";
 
 export const metadata = {
   title: "Products · Admin",
 };
 
-export default function AdminProductsPage() {
+export default async function AdminProductsPage() {
+  const products = await prisma.product.findMany({
+    include: { category: true }
+  });
+
   return (
     <div className="p-6 sm:p-10">
       <header className="mb-10">
@@ -34,12 +38,12 @@ export default function AdminProductsPage() {
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-3">
                       <div className="relative h-12 w-12 rounded-xl overflow-hidden shrink-0 bg-secondary">
-                        <SafeImage src={product.image} alt={product.name} fill sizes="48px" className="object-cover" />
+                        <SafeImage src={product.images[0] || ""} alt={product.name} fill sizes="48px" className="object-cover" />
                       </div>
                       <span className="font-semibold text-foreground line-clamp-1">{product.name}</span>
                     </div>
                   </td>
-                  <td className="px-6 py-4 text-[var(--color-body)]">{product.category}</td>
+                  <td className="px-6 py-4 text-[var(--color-body)]">{product.category.name}</td>
                   <td className="px-6 py-4 font-semibold text-primary">₹{product.price}</td>
                   <td className="px-6 py-4 text-[var(--color-body)]">{product.stock}</td>
                   <td className="px-6 py-4">

@@ -15,10 +15,20 @@ import { NewsletterForm } from "@/components/NewsletterForm";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { products, testimonials } from "@/lib/data";
+import { prisma } from "@/lib/prisma";
+import { testimonials } from "@/lib/data";
 
-export default function Home() {
-  const featuredProducts = products.slice(0, 4);
+export default async function Home() {
+  const dbProducts = await prisma.product.findMany({ 
+    take: 4, 
+    include: { category: true } 
+  });
+  const featuredProducts = dbProducts.map((p) => ({
+    ...p,
+    category: p.category.name,
+    image: p.images[0] || "",
+    gallery: p.images,
+  }));
 
   return (
     <div className="flex flex-col min-h-screen">

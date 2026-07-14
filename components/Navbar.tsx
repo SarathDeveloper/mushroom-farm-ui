@@ -104,6 +104,11 @@ export default function Navbar() {
                   <DropdownMenuContent align="end" className="w-48">
                     <DropdownMenuLabel>{session.user.name ?? session.user.email}</DropdownMenuLabel>
                     <DropdownMenuSeparator />
+                    {session.user.role === "ADMIN" && (
+                      <DropdownMenuItem render={<Link href="/admin" />}>
+                        <Leaf size={14} /> Admin Dashboard
+                      </DropdownMenuItem>
+                    )}
                     <DropdownMenuItem render={<Link href="/orders" />}>
                       <Package size={14} /> My Orders
                     </DropdownMenuItem>
@@ -153,9 +158,16 @@ export default function Navbar() {
                     <Link href="/cart" className="text-lg font-medium text-[#5C6370] hover:text-[#2B7A5D]">Cart</Link>
                     <div className="mt-4 border-t pt-4">
                       {session?.user ? (
-                        <Button onClick={() => signOut()} variant="outline" className="w-full">
-                          Sign Out
-                        </Button>
+                        <>
+                          {session.user.role === "ADMIN" && (
+                            <Link href="/admin" className="block text-lg font-medium text-[#2B7A5D] mb-4">
+                              Admin Dashboard
+                            </Link>
+                          )}
+                          <Button onClick={() => signOut()} variant="outline" className="w-full">
+                            Sign Out
+                          </Button>
+                        </>
                       ) : (
                         <Button asChild className="w-full bg-[#2B7A5D] hover:bg-[#1A4938] text-white">
                           <Link href="/login">Sign In</Link>

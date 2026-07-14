@@ -1,20 +1,20 @@
 import Link from "next/link";
 import { ArrowUpRight, IndianRupee, Package, ShoppingBag, Users } from "lucide-react";
 import { prisma } from "@/lib/prisma";
-import { products } from "@/lib/data";
 import { Badge } from "@/components/ui/badge";
 
 async function getStats() {
   try {
-    const [orderCount, userCount, orders] = await Promise.all([
+    const [orderCount, userCount, productCount, orders] = await Promise.all([
       prisma.order.count(),
       prisma.user.count(),
+      prisma.product.count(),
       prisma.order.findMany({ select: { totalAmount: true } }),
     ]);
     const revenue = orders.reduce((sum: number, o: { totalAmount: number }) => sum + o.totalAmount, 0);
-    return { orderCount, userCount, revenue };
+    return { orderCount, userCount, productCount, revenue };
   } catch {
-    return { orderCount: 0, userCount: 0, revenue: 0 };
+    return { orderCount: 0, userCount: 0, productCount: 0, revenue: 0 };
   }
 }
 
@@ -42,11 +42,11 @@ const statusVariant: Record<
 };
 
 export default async function AdminOverviewPage() {
-  const { orderCount, userCount, revenue } = await getStats();
+  const { orderCount, userCount, productCount, revenue } = await getStats();
   const recentOrders = await getRecentOrders();
 
   const cards = [
-    { label: "Total Products", value: products.length.toString(), icon: Package },
+    { label: "Total Products", value: productCount.toString(), icon: Package },
     { label: "Total Orders", value: orderCount.toString(), icon: ShoppingBag },
     { label: "Registered Users", value: userCount.toString(), icon: Users },
     { label: "Revenue", value: `₹${revenue.toLocaleString("en-IN")}`, icon: IndianRupee },

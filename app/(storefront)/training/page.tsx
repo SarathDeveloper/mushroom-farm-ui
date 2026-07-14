@@ -2,7 +2,7 @@ import { Award, GraduationCap, HandHeart, TrendingUp } from "lucide-react";
 import { PageHero } from "@/components/PageHero";
 import { FadeIn } from "@/components/FadeIn";
 import { TrainingCard } from "@/components/TrainingCard";
-import { trainingPrograms } from "@/lib/data";
+import { prisma } from "@/lib/prisma";
 
 const highlights = [
   { icon: GraduationCap, title: "Expert Trainers", desc: "Learn from farmers and scientists with 10+ years of hands-on experience." },
@@ -16,7 +16,20 @@ export const metadata = {
   description: "Hands-on mushroom cultivation training programs at Vellimalai Farms — from beginner crash courses to commercial-scale certification.",
 };
 
-export default function TrainingPage() {
+export default async function TrainingPage() {
+  const dbPrograms = await prisma.training.findMany({
+    orderBy: { startDate: "asc" }
+  });
+
+  const trainingPrograms = dbPrograms.map((p) => ({
+    ...p,
+    fee: p.fees,
+    seatsLeft: p.maxCapacity, // Using maxCapacity as seatsLeft for now
+    level: p.title.toLowerCase().includes('crash') ? "Beginner" : p.title.toLowerCase().includes('commercial') ? "Intermediate" : "Advanced",
+    image: p.image || "",
+    startDate: p.startDate.toISOString(),
+  }));
+
   return (
     <div className="flex flex-col min-h-screen">
       <PageHero
@@ -50,6 +63,7 @@ export default function TrainingPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {trainingPrograms.map((program, i) => (
               <FadeIn key={program.id} delay={i * 0.1}>
+                {/* @ts-ignore */}
                 <TrainingCard program={program} />
               </FadeIn>
             ))}

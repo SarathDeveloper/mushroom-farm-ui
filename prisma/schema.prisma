@@ -133,10 +133,16 @@ model Product {
   name        String
   slug        String   @unique
   description String
-  price       Float
-  stock       Int      @default(0)
-  images      String[]
-  isFeatured  Boolean  @default(false)
+  price          Float
+  compareAtPrice Float?
+  weight         String   @default("200g")
+  stock          Int      @default(0)
+  images         String[]
+  isFeatured     Boolean  @default(false)
+  tag            String?
+  rating         Float    @default(4.5)
+  reviewCount    Int      @default(0)
+  highlights     String[] @default([])
   
   categoryId  String
   category    Category @relation(fields: [categoryId], references: [id])
