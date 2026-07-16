@@ -11,7 +11,7 @@ export default function Footer() {
           <div className="space-y-4 col-span-2 lg:col-span-2">
             <Link href="/" className="flex items-center gap-2 text-white">
                <Leaf size={28} />
-               <span className="text-xl font-bold tracking-tight font-heading">Vellimalai<span className="text-secondary">Farms</span></span>
+               <span className="text-xl font-bold tracking-tight font-heading">Sri Amman <span className="text-secondary">Farms</span></span>
             </Link>
             <p className="text-sm text-white/80 max-w-xs">
               Premium, organic mushrooms grown in the pristine Kalvarayan Hills, Vellimalai. We offer farm-fresh mushrooms, pre-orders, and expert farming training.
@@ -76,7 +76,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-16 border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between text-xs text-white/60 gap-4">
-          <p>&copy; {new Date().getFullYear()} Vellimalai Mushroom Farm. All rights reserved. FSSAI Lic: 12421033000123</p>
+          <p>&copy; {new Date().getFullYear()} Sri Amman Mushroom Farms. All rights reserved. FSSAI Lic: 12421033000123</p>
           <div className="flex gap-4">
             <Link href="/privacy" className="hover:text-white">Privacy Policy</Link>
             <Link href="/terms" className="hover:text-white">Terms of Service</Link>

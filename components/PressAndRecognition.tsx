@@ -42,7 +42,7 @@ const recognitionPhotos = [
   {
     src: "/gallery/recognition/officials-walking.png",
     title: "Official Farm Tour",
-    desc: "Senior government officials touring the Vellimalai mushroom growing facility to evaluate sustainable farming practices.",
+    desc: "Senior government officials touring the Sri Amman Mushroom Farms growing facility to evaluate sustainable farming practices.",
   },
 ];
 

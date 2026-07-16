@@ -46,7 +46,7 @@ export function OrderActions({ order, address }: OrderActionsProps) {
           </style>
         </head>
         <body>
-          <h1>Vellimalai Farms</h1>
+          <h1>Sri Amman Mushroom Farms</h1>
           <p class="meta">Order #${order.id.slice(0, 8).toUpperCase()} · ${order.status}</p>
           
           <h2>Items</h2>
@@ -94,7 +94,7 @@ export function OrderActions({ order, address }: OrderActionsProps) {
       .filter(Boolean)
       .join("\n");
 
-    const message = `*Vellimalai Farms - Packing Slip*
+    const message = `*Sri Amman Mushroom Farms - Packing Slip*
 
 Order: #${order.id.slice(0, 8).toUpperCase()}
 Status: ${order.status}

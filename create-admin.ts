@@ -3,6 +3,7 @@ import bcrypt from 'bcryptjs';
 
 async function main() {
   const email = 'admin@vellimalaifarms.in';
+  const phone = '+919876543210';
   const password = 'admin';
   const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -11,9 +12,11 @@ async function main() {
     update: {
       password: hashedPassword,
       role: 'ADMIN',
+      phone,
     },
     create: {
       email,
+      phone,
       name: 'Admin User',
       password: hashedPassword,
       role: 'ADMIN',
@@ -21,7 +24,7 @@ async function main() {
   });
 
   console.log('Admin user created/updated successfully!');
-  console.log('Email:', email);
+  console.log('Phone:', phone);
   console.log('Password:', password);
 }
 

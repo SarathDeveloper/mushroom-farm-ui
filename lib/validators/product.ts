@@ -4,10 +4,6 @@ import { isCloudinarySrc, toCloudinaryPublicId } from "@/lib/cloudinary-utils";
 const cloudinaryImage = z
   .string()
   .min(1)
-  .refine((src) => isCloudinarySrc(src), {
-    message:
-      "Images must be Cloudinary uploads (public ID or res.cloudinary.com URL)",
-  })
   .transform((src) => toCloudinaryPublicId(src));
 
 export const productSchema = z.object({
@@ -17,13 +13,11 @@ export const productSchema = z.object({
     .min(2, "Slug is required")
     .regex(/^[a-z0-9-]+$/, "Slug must be lowercase with dashes only"),
   description: z.string().min(10, "Description must be at least 10 characters"),
-  price: z.coerce.number().positive("Price must be positive"),
-  compareAtPrice: z.coerce
-    .number()
-    .positive("Compare price must be positive")
-    .optional()
-    .or(z.literal(0).transform(() => undefined))
-    .or(z.literal("").transform(() => undefined)),
+  price: z.coerce.number().nonnegative("Price must be 0 or greater"),
+  compareAtPrice: z.union([
+    z.literal("").transform(() => undefined),
+    z.coerce.number().nonnegative("Compare price must be 0 or greater").optional()
+  ]),
   weight: z.string().min(1, "Weight is required"),
   stock: z.coerce.number().int().min(0, "Stock cannot be negative"),
   lowStockThreshold: z.coerce.number().int().min(0).default(10),

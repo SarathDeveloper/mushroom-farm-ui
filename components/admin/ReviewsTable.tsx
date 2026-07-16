@@ -21,7 +21,7 @@ type Review = {
   comment: string | null;
   isApproved: boolean;
   createdAt: Date;
-  user: { id: string; name: string | null; email: string };
+  user: { id: string; name: string | null; email: string | null };
   product: { id: string; name: string; slug: string; images: string[] };
 };
 
@@ -161,7 +161,7 @@ export function ReviewsTable({ reviews }: { reviews: Review[] }) {
                 )}
 
                 <div className="flex items-center gap-4 mt-3 text-xs text-muted-foreground">
-                  <span>By {review.user.name || review.user.email}</span>
+                  <span>By {review.user.name || review.user.email || "User"}</span>
                   <span>·</span>
                   <span>{formatDate(review.createdAt)}</span>
                 </div>
@@ -182,7 +182,7 @@ export function ReviewsTable({ reviews }: { reviews: Review[] }) {
         <DialogContent className="sm:max-w-md">
           <DialogTitle>Delete Review</DialogTitle>
           <p className="text-sm text-[var(--color-body)] mt-2">
-            Are you sure you want to delete this review from <strong className="text-foreground">{deleteTarget?.user.name || deleteTarget?.user.email}</strong>?
+            Are you sure you want to delete this review from <strong className="text-foreground">{deleteTarget?.user.name || deleteTarget?.user.email || "this user"}</strong>?
           </p>
           <div className="flex justify-end gap-3 mt-6">
             <Button variant="outline" onClick={() => setDeleteTarget(null)} disabled={isPending}>

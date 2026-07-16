@@ -11,7 +11,7 @@ const stories = [
     name: "Rahul Menon",
     role: "Restaurant Owner, Salem",
     image: "https://i.pravatar.cc/200?img=12",
-    story: "We switched to Vellimalai Farms 2 years ago. Our mushroom dishes are now our top sellers — consistent quality and never a missed delivery.",
+    story: "We switched to Sri Amman Mushroom Farms 2 years ago. Our mushroom dishes are now our top sellers — consistent quality and never a missed delivery.",
     metric: "20% cost savings",
     metricLabel: "vs. previous supplier",
     type: "B2B Partner",
@@ -46,7 +46,7 @@ export function SuccessStories() {
             Success Stories
           </h2>
           <p className="text-[var(--color-body)] max-w-2xl mx-auto mt-4 text-xs sm:text-sm">
-            From restaurant owners to first-time farmers — see how Vellimalai Farms creates real impact.
+            From restaurant owners to first-time farmers — see how Sri Amman Mushroom Farms creates real impact.
           </p>
         </FadeIn>
 

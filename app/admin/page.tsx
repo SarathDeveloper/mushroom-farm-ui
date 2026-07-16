@@ -6,7 +6,6 @@ import {
   ShoppingBag,
   Users,
   AlertTriangle,
-  Building2,
   CalendarCheck,
   GraduationCap,
   TrendingUp,
@@ -39,7 +38,6 @@ async function getDashboardData() {
       lastWeekOrders,
       lowStockProducts,
       outOfStockProducts,
-      pendingBulkOrders,
       pendingPreOrders,
       pendingRegistrations,
       recentOrders,
@@ -67,7 +65,6 @@ async function getDashboardData() {
         select: { id: true, name: true, stock: true, lowStockThreshold: true, images: true },
       }),
       prisma.product.count({ where: { stock: 0, isActive: true } }),
-      prisma.bulkOrder.count({ where: { isHandled: false } }),
       prisma.preOrder.count({ where: { isHandled: false } }),
       prisma.trainingRegistration.count({ where: { status: "PENDING" } }),
       prisma.order.findMany({
@@ -99,7 +96,6 @@ async function getDashboardData() {
       lowStockCount: lowStock.length,
       lowStockProducts: lowStock.slice(0, 5),
       outOfStockCount: outOfStockProducts,
-      pendingBulkOrders,
       pendingPreOrders,
       pendingRegistrations,
       recentOrders,
@@ -120,7 +116,6 @@ async function getDashboardData() {
       lowStockCount: 0,
       lowStockProducts: [],
       outOfStockCount: 0,
-      pendingBulkOrders: 0,
       pendingPreOrders: 0,
       pendingRegistrations: 0,
       recentOrders: [],
@@ -146,7 +141,6 @@ export default async function AdminDashboardPage() {
     data.pendingOrders > 0 ||
     data.lowStockCount > 0 ||
     data.outOfStockCount > 0 ||
-    data.pendingBulkOrders > 0 ||
     data.pendingPreOrders > 0 ||
     data.pendingRegistrations > 0;
 
@@ -230,23 +224,6 @@ export default async function AdminDashboardPage() {
                     : `${data.lowStockCount} Low Stock`}
                 </p>
                 <p className="text-xs text-red-600">Restock needed</p>
-              </div>
-            </Link>
-          )}
-
-          {data.pendingBulkOrders > 0 && (
-            <Link
-              href="/admin/bulk-orders"
-              className="flex items-center gap-3 p-4 rounded-xl bg-orange-50 border border-orange-200 hover:bg-orange-100 transition-colors"
-            >
-              <div className="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center">
-                <Building2 size={18} className="text-orange-700" />
-              </div>
-              <div>
-                <p className="font-semibold text-orange-800">
-                  {data.pendingBulkOrders} B2B Enquiries
-                </p>
-                <p className="text-xs text-orange-600">Awaiting response</p>
               </div>
             </Link>
           )}

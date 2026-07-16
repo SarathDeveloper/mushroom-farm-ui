@@ -14,7 +14,7 @@ const highlights = [
 
 export const metadata = {
   title: "Mushroom Farming Training",
-  description: "Hands-on mushroom cultivation training programs at Vellimalai Farms — from beginner crash courses to commercial-scale certification.",
+  description: "Hands-on mushroom cultivation training programs at Sri Amman Mushroom Farms — from beginner crash courses to commercial-scale certification.",
 };
 
 export default async function TrainingPage() {

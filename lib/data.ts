@@ -217,7 +217,7 @@ export const testimonials: Testimonial[] = [
   {
     name: "Rahul Menon",
     role: "Restaurant Owner",
-    review: "Consistent quality and reliable delivery. Vellimalai Farms is our trusted partner.",
+    review: "Consistent quality and reliable delivery. Sri Amman Mushroom Farms is our trusted partner.",
     rating: 5,
     avatar: "https://i.pravatar.cc/150?img=12",
   },

@@ -23,8 +23,8 @@ const playfair = Playfair_Display({
 
 export const metadata: Metadata = {
   title: {
-    default: "Vellimalai Mushroom Farm | Premium Organic Mushrooms",
-    template: "%s | Vellimalai Farms",
+    default: "Sri Amman Mushroom Farms | Premium Organic Mushrooms",
+    template: "%s | Sri Amman Mushroom Farms",
   },
   description: "Fresh, premium mushrooms grown in the pristine Kalvarayan Hills. We offer farm-fresh delivery, pre-orders, and mushroom farming training.",
   keywords: ["organic mushrooms", "fresh mushrooms delivery", "mushroom farming training", "mushroom pre-order", "oyster mushroom", "milky mushroom", "Salem", "Tamil Nadu"],
@@ -32,8 +32,8 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_IN",
     url: "https://vellimalaifarms.in",
-    siteName: "Vellimalai Mushroom Farm",
-    title: "Vellimalai Mushroom Farm | Premium Organic Mushrooms",
+    siteName: "Sri Amman Mushroom Farms",
+    title: "Sri Amman Mushroom Farms | Premium Organic Mushrooms",
     description: "Fresh, premium mushrooms grown in the pristine Kalvarayan Hills.",
   },
 };
@@ -56,7 +56,7 @@ export default function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "LocalBusiness",
-              name: "Vellimalai Mushroom Farm",
+              name: "Sri Amman Mushroom Farms",
               description: "Premium organic mushrooms grown in the Kalvarayan Hills, Tamil Nadu",
               url: "https://vellimalaifarms.in",
               telephone: "+919876543210",

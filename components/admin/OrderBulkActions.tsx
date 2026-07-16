@@ -18,7 +18,7 @@ type OrderData = {
   totalAmount: number;
   createdAt: string;
   shippingAddress: string;
-  user: { name: string | null; email: string | null } | null;
+  user: { name: string | null; email: string | null; phone: string | null } | null;
   orderItems: { id: string }[];
 };
 
@@ -121,7 +121,7 @@ export function OrderBulkActions({ orders }: Props) {
             </div>
             <div className="space-y-1.5 text-sm mb-3 pl-7">
               <p className="text-foreground font-medium">{order.user?.name || "Guest"}</p>
-              <p className="text-xs text-muted-foreground">{order.user?.email}</p>
+              <p className="text-xs text-muted-foreground">{order.user?.email || order.user?.phone || ""}</p>
               <div className="flex items-center gap-3 text-xs text-muted-foreground">
                 <span>{formatDate(order.createdAt)}</span>
                 <span>· {order.orderItems.length} items</span>
@@ -189,7 +189,7 @@ export function OrderBulkActions({ orders }: Props) {
                   <td className="px-6 py-4">
                     <div>
                       <p className="font-medium text-foreground">{order.user?.name || "Guest"}</p>
-                      <p className="text-xs text-muted-foreground">{order.user?.email}</p>
+                      <p className="text-xs text-muted-foreground">{order.user?.email || order.user?.phone || ""}</p>
                     </div>
                   </td>
                   <td className="px-6 py-4 text-[var(--color-body)]">

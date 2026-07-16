@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input";
 type Customer = {
   id: string;
   name: string | null;
-  email: string;
+  email: string | null;
   phone: string | null;
   image: string | null;
   orderCount: number;
@@ -27,11 +27,12 @@ function formatDate(date: Date) {
   });
 }
 
-function getInitials(name: string | null, email: string): string {
+function getInitials(name: string | null, email: string | null): string {
   if (name) {
     return name.split(" ").map((n) => n[0]).join("").toUpperCase().slice(0, 2);
   }
-  return email[0].toUpperCase();
+  if (email) return email[0].toUpperCase();
+  return "?";
 }
 
 export function CustomersTable({ customers }: { customers: Customer[] }) {
@@ -41,7 +42,7 @@ export function CustomersTable({ customers }: { customers: Customer[] }) {
   const filtered = customers.filter(
     (c) =>
       (c.name?.toLowerCase().includes(search.toLowerCase())) ||
-      c.email.toLowerCase().includes(search.toLowerCase()) ||
+      (c.email?.toLowerCase().includes(search.toLowerCase())) ||
       (c.phone?.includes(search))
   );
 
@@ -85,7 +86,7 @@ export function CustomersTable({ customers }: { customers: Customer[] }) {
                 <p className="font-semibold text-foreground text-sm truncate">
                   {customer.name || "—"}
                 </p>
-                <p className="text-xs text-muted-foreground truncate">{customer.email}</p>
+                <p className="text-xs text-muted-foreground truncate">{customer.email || customer.phone || "—"}</p>
               </div>
               <Badge variant={customer.orderCount > 0 ? "default" : "secondary"} className="shrink-0">
                 {customer.orderCount} orders
@@ -154,19 +155,21 @@ export function CustomersTable({ customers }: { customers: Customer[] }) {
                           {customer.name || "—"}
                         </span>
                         <p className="text-xs text-muted-foreground truncate max-w-[200px]">
-                          {customer.email}
+                          {customer.email || customer.phone || "—"}
                         </p>
                       </div>
                     </div>
                   </td>
                   <td className="px-6 py-4">
                     <div className="space-y-1">
-                      <a
-                        href={`mailto:${customer.email}`}
-                        className="flex items-center gap-1.5 text-[var(--color-body)] hover:text-primary text-xs"
-                      >
-                        <Mail size={12} /> Email
-                      </a>
+                      {customer.email && (
+                        <a
+                          href={`mailto:${customer.email}`}
+                          className="flex items-center gap-1.5 text-[var(--color-body)] hover:text-primary text-xs"
+                        >
+                          <Mail size={12} /> Email
+                        </a>
+                      )}
                       {customer.phone && (
                         <a
                           href={`tel:${customer.phone}`}

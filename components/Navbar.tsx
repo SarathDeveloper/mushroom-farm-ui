@@ -45,7 +45,7 @@ export default function Navbar() {
             <div className="relative h-10 w-10 shrink-0">
               <Image
                 src="/gallery/Logo.png"
-                alt="Vellimalai Farms"
+                alt="Sri Amman Mushroom Farms"
                 fill
                 sizes="40px"
                 className="object-contain"
@@ -53,7 +53,7 @@ export default function Navbar() {
               />
             </div>
             <span className="text-xl font-bold text-[#1A4938] tracking-tight font-heading">
-              Vellimalai<span className="text-[#2B7A5D]">Farms</span>
+              Sri Amman <span className="text-[#2B7A5D]">Farms</span>
             </span>
           </Link>
 
@@ -109,7 +109,7 @@ export default function Navbar() {
                     <User size={18} />
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end" className="w-48">
-                    <DropdownMenuLabel>{session.user.name ?? session.user.email}</DropdownMenuLabel>
+                    <DropdownMenuLabel>{session.user.name ?? session.user.email ?? "User"}</DropdownMenuLabel>
                     <DropdownMenuSeparator />
                     {session.user.role === "ADMIN" && (
                       <DropdownMenuItem render={<Link href="/admin" />}>
@@ -143,7 +143,7 @@ export default function Navbar() {
                       <div className="relative h-7 w-7">
                         <Image src="/gallery/Logo.png" alt="Logo" fill sizes="28px" className="object-contain" />
                       </div>
-                      Vellimalai Farms
+                      Sri Amman Farms
                     </SheetTitle>
                   </SheetHeader>
                   <div className="mt-8 flex flex-col gap-4 px-4">

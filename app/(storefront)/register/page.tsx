@@ -35,7 +35,7 @@ export default function RegisterPage() {
       toast.success("Account created! Signing you in...");
       const signInResult = await signIn("credentials", {
         redirect: false,
-        email: form.email,
+        phone: form.phone,
         password: form.password,
       });
 

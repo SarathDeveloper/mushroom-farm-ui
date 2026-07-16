@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { createManualOrder } from "@/app/admin/actions";
 import toast from "react-hot-toast";
 
-type Customer = { id: string; name: string; email: string; phone: string };
+type Customer = { id: string; name: string | null; email: string | null; phone: string | null };
 type Product = { id: string; name: string; price: number; stock: number; weight: string; image: string };
 type OrderItem = { productId: string; name: string; price: number; quantity: number; maxStock: number };
 
@@ -31,9 +31,9 @@ export function ManualOrderForm({
   const filteredCustomers = customerSearch.length >= 2
     ? customers.filter(
         (c) =>
-          c.name.toLowerCase().includes(customerSearch.toLowerCase()) ||
-          c.email.toLowerCase().includes(customerSearch.toLowerCase()) ||
-          c.phone.includes(customerSearch)
+          c.name?.toLowerCase().includes(customerSearch.toLowerCase()) ||
+          c.email?.toLowerCase().includes(customerSearch.toLowerCase()) ||
+          c.phone?.includes(customerSearch)
       ).slice(0, 8)
     : [];
 
@@ -120,9 +120,9 @@ export function ManualOrderForm({
         {selectedCustomer ? (
           <div className="flex items-center justify-between p-3 rounded-lg bg-secondary/50">
             <div>
-              <p className="font-semibold text-foreground">{selectedCustomer.name || selectedCustomer.email}</p>
+              <p className="font-semibold text-foreground">{selectedCustomer.name || selectedCustomer.email || selectedCustomer.phone}</p>
               <p className="text-xs text-muted-foreground">
-                {selectedCustomer.email} {selectedCustomer.phone && `· ${selectedCustomer.phone}`}
+                {selectedCustomer.email || ""} {selectedCustomer.phone && `${selectedCustomer.email ? "· " : ""}${selectedCustomer.phone}`}
               </p>
             </div>
             <Button type="button" variant="outline" size="sm" onClick={() => setSelectedCustomer(null)}>
@@ -150,9 +150,9 @@ export function ManualOrderForm({
                     }}
                     className="w-full text-left px-4 py-2.5 hover:bg-secondary/50 transition-colors text-sm"
                   >
-                    <p className="font-medium text-foreground">{c.name || c.email}</p>
+                    <p className="font-medium text-foreground">{c.name || c.email || c.phone}</p>
                     <p className="text-xs text-muted-foreground">
-                      {c.email} {c.phone && `· ${c.phone}`}
+                      {c.email || ""} {c.phone && `${c.email ? "· " : ""}${c.phone}`}
                     </p>
                   </button>
                 ))}

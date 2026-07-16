@@ -130,7 +130,7 @@ export default async function AdminOrdersPage(props: {
     totalAmount: o.totalAmount as number,
     createdAt: o.createdAt.toISOString(),
     shippingAddress: o.shippingAddress,
-    user: o.user ? { name: o.user.name, email: o.user.email } : null,
+    user: o.user ? { name: o.user.name, email: o.user.email, phone: o.user.phone } : null,
     orderItems: o.orderItems.map((item: any) => ({ id: item.id })),
   }));
 

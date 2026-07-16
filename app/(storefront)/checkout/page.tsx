@@ -301,7 +301,7 @@ export default function CheckoutPage() {
         key: data.key,
         amount: data.amount,
         currency: data.currency,
-        name: "Vellimalai Mushrooms",
+        name: "Sri Amman Mushroom Farms",
         description: `Order #${data.orderId.slice(0, 8).toUpperCase()}`,
         order_id: data.razorpayOrderId,
         handler: async (response: {

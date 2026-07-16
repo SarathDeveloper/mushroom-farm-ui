@@ -1,6 +1,6 @@
-# Vellimalai Mushroom Farm UI
+# Sri Amman Mushroom Farms UI
 
-Customer storefront and light admin for **Vellimalai Mushroom Farm** (Tamil Nadu): sell fresh mushrooms online, accept Razorpay payments, capture bulk/B2B leads, promote farming training, and manage products/orders.
+Customer storefront and light admin for **Sri Amman Mushroom Farms** (Tamil Nadu): sell fresh mushrooms online, accept Razorpay payments, capture bulk/B2B leads, promote farming training, and manage products/orders.
 
 Repo package name: `mushroom-farming-ui` · Brand site: [vellimalaifarms.in](https://vellimalaifarms.in)
 
@@ -33,9 +33,7 @@ Repo package name: `mushroom-farming-ui` · Brand site: [vellimalaifarms.in](htt
 | `/orders`, `/track-order` | Customer orders and public tracking |
 | `/wishlist`, `/compare` | Wishlist and product compare |
 | `/login`, `/register` | Credentials auth |
-| `/bulk-orders` | B2B inquiry form |
 | `/training` | Farming training programs |
-| `/gallery` | Farm media |
 | `/about`, `/contact`, `/privacy`, `/terms` | Content and legal |
 
 ### Admin (`ADMIN` only)
@@ -51,8 +49,6 @@ Repo package name: `mushroom-farming-ui` · Brand site: [vellimalaifarms.in](htt
 - `auth/[...nextauth]` — NextAuth
 - `register` — signup
 - `orders/create`, `orders/verify`, `orders/track` — Razorpay + tracking
-- `bulk-orders` — B2B inquiry
-
 ---
 
 ## Architecture
@@ -92,9 +88,7 @@ PostgreSQL · UUID primary keys · URL from `DATABASE_URL` via `prisma.config.ts
 | `Order`, `OrderItem` | Checkout; Razorpay IDs; shipping as JSON string |
 | `CartItem`, `Wishlist` | Server-side cart / wishlist |
 | `Review` | Product reviews (admin approval flag) |
-| `Gallery` | Media items |
 | `Training`, `TrainingRegistration` | Programs and registrations |
-| `BulkOrder` | B2B lead form |
 | `Coupon` | Discounts |
 | `Setting` | Key/value config |
 | `Notification` | User notifications |

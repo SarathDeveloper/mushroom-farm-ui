@@ -35,6 +35,13 @@ enum TrainingStatus {
   COMPLETED
 }
 
+enum PreOrderStatus {
+  PENDING
+  CONTACTED
+  CONFIRMED
+  CANCELLED
+}
+
 // =======================
 // Models
 // =======================
@@ -42,12 +49,13 @@ enum TrainingStatus {
 model User {
   id            String    @id @default(uuid())
   name          String?
-  email         String    @unique
+  email         String?   @unique
   emailVerified DateTime?
   password      String?
   image         String?
   role          Role      @default(USER)
-  phone         String?
+  phone         String?   @unique
+  isActive      Boolean   @default(true)
   
   // Relations
   accounts              Account[]
@@ -64,6 +72,7 @@ model User {
   updatedAt DateTime @updatedAt
 
   @@index([email])
+  @@index([phone])
   @@index([role])
   @@index([createdAt])
 }
@@ -265,16 +274,6 @@ model Review {
   @@index([isApproved])
 }
 
-model Gallery {
-  id          String   @id @default(uuid())
-  title       String
-  url         String
-  type        String   @default("IMAGE") // IMAGE, VIDEO
-  category    String?  // e.g., Farm, Training
-  
-  createdAt DateTime @default(now())
-}
-
 model Training {
   id          String         @id @default(uuid())
   title       String
@@ -309,24 +308,8 @@ model TrainingRegistration {
   @@unique([trainingId, userId])
 }
 
-model BulkOrder {
-  id            String   @id @default(uuid())
-  businessName  String
-  contactName   String
-  phone         String
-  email         String
-  location      String
-  product       String
-  quantity      String
-  frequency     String
-  requirements  String?
-  isHandled     Boolean  @default(false)
-
-  createdAt DateTime @default(now())
-}
-
 model PreOrder {
-  id            String   @id @default(uuid())
+  id            String         @id @default(uuid())
   name          String
   phone         String
   email         String

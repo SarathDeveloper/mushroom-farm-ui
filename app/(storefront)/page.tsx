@@ -233,7 +233,7 @@ export default async function Home() {
       <section className="py-24 sm:py-32 bg-background grain-overlay">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl text-center">
           <FadeIn>
-            <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3 sm:mb-4 font-heading">The Vellimalai Promise</h2>
+            <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3 sm:mb-4 font-heading">The Sri Amman Promise</h2>
             <p className="text-[var(--color-body)] max-w-2xl mx-auto mb-12 sm:mb-20 text-sm sm:text-base">
               We bridge the gap between traditional organic farming and modern quality standards. Our mushrooms are cultivated in the pristine climate of Kalvarayan Hills.
             </p>

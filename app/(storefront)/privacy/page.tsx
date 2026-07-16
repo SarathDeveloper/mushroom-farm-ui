@@ -3,7 +3,7 @@ import { FadeIn } from "@/components/FadeIn";
 
 export const metadata = {
   title: "Privacy Policy",
-  description: "How Vellimalai Mushroom Farm collects, uses, and protects your personal information.",
+  description: "How Sri Amman Mushroom Farms collects, uses, and protects your personal information.",
 };
 
 const sections = [

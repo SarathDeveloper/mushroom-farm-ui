@@ -280,7 +280,7 @@ export default function TrackOrderPage() {
                         Delivery Partner
                       </p>
                       <p className="text-xs font-semibold text-foreground">
-                        Vellimalai Express
+                        Sri Amman Express
                       </p>
                     </div>
                     {order.city && (

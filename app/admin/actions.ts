@@ -287,46 +287,6 @@ export async function deleteCategory(id: string): Promise<ActionResult> {
 }
 
 // =====================
-// BULK ORDERS (B2B)
-// =====================
-
-export async function markBulkOrderHandled(
-  id: string,
-  isHandled: boolean
-): Promise<ActionResult> {
-  try {
-    await requireAdmin();
-    await prisma.bulkOrder.update({
-      where: { id },
-      data: { isHandled },
-    });
-    revalidatePath("/admin/bulk-orders");
-    return { success: true };
-  } catch (error) {
-    if (error instanceof Error && error.message === "Unauthorized") {
-      return { success: false, error: "Unauthorized" };
-    }
-    console.error("markBulkOrderHandled error:", error);
-    return { success: false, error: "Failed to update bulk order." };
-  }
-}
-
-export async function deleteBulkOrder(id: string): Promise<ActionResult> {
-  try {
-    await requireAdmin();
-    await prisma.bulkOrder.delete({ where: { id } });
-    revalidatePath("/admin/bulk-orders");
-    return { success: true };
-  } catch (error) {
-    if (error instanceof Error && error.message === "Unauthorized") {
-      return { success: false, error: "Unauthorized" };
-    }
-    console.error("deleteBulkOrder error:", error);
-    return { success: false, error: "Failed to delete bulk order." };
-  }
-}
-
-// =====================
 // PRE ORDERS
 // =====================
 
@@ -579,71 +539,6 @@ export async function deleteReview(id: string): Promise<ActionResult> {
 }
 
 // =====================
-// GALLERY MANAGEMENT
-// =====================
-
-export async function createGalleryItem(data: {
-  title: string;
-  url: string;
-  type: string;
-  category?: string;
-}): Promise<ActionResult<{ id: string }>> {
-  try {
-    await requireAdmin();
-    const item = await prisma.gallery.create({ data });
-    revalidatePath("/admin/gallery");
-    revalidatePath("/gallery");
-    return { success: true, data: { id: item.id } };
-  } catch (error) {
-    if (error instanceof Error && error.message === "Unauthorized") {
-      return { success: false, error: "Unauthorized" };
-    }
-    console.error("createGalleryItem error:", error);
-    return { success: false, error: "Failed to create gallery item." };
-  }
-}
-
-export async function updateGalleryItem(
-  id: string,
-  data: {
-    title?: string;
-    url?: string;
-    type?: string;
-    category?: string;
-  }
-): Promise<ActionResult> {
-  try {
-    await requireAdmin();
-    await prisma.gallery.update({ where: { id }, data });
-    revalidatePath("/admin/gallery");
-    revalidatePath("/gallery");
-    return { success: true };
-  } catch (error) {
-    if (error instanceof Error && error.message === "Unauthorized") {
-      return { success: false, error: "Unauthorized" };
-    }
-    console.error("updateGalleryItem error:", error);
-    return { success: false, error: "Failed to update gallery item." };
-  }
-}
-
-export async function deleteGalleryItem(id: string): Promise<ActionResult> {
-  try {
-    await requireAdmin();
-    await prisma.gallery.delete({ where: { id } });
-    revalidatePath("/admin/gallery");
-    revalidatePath("/gallery");
-    return { success: true };
-  } catch (error) {
-    if (error instanceof Error && error.message === "Unauthorized") {
-      return { success: false, error: "Unauthorized" };
-    }
-    console.error("deleteGalleryItem error:", error);
-    return { success: false, error: "Failed to delete gallery item." };
-  }
-}
-
-// =====================
 // HERO SLIDES
 // =====================
 
@@ -717,6 +612,142 @@ export async function deleteHeroSlide(id: string): Promise<ActionResult> {
     }
     console.error("deleteHeroSlide error:", error);
     return { success: false, error: "Failed to delete hero slide." };
+  }
+}
+
+// =====================
+// ADMIN USER MANAGEMENT
+// =====================
+
+export async function createAdmin(data: {
+  name: string;
+  phone: string;
+  email?: string;
+  password: string;
+}): Promise<ActionResult<{ id: string }>> {
+  try {
+    await requireAdmin();
+    const bcrypt = (await import("bcryptjs")).default;
+
+    const existingByPhone = await prisma.user.findUnique({
+      where: { phone: data.phone },
+    });
+    if (existingByPhone) {
+      return { success: false, error: "A user with this phone number already exists." };
+    }
+
+    if (data.email) {
+      const existingByEmail = await prisma.user.findUnique({
+        where: { email: data.email },
+      });
+      if (existingByEmail) {
+        return { success: false, error: "A user with this email already exists." };
+      }
+    }
+
+    const hashedPassword = await bcrypt.hash(data.password, 10);
+    const admin = await prisma.user.create({
+      data: {
+        name: data.name,
+        phone: data.phone,
+        email: data.email || null,
+        password: hashedPassword,
+        role: "ADMIN",
+        isActive: true,
+      },
+    });
+    revalidatePath("/admin/admins");
+    return { success: true, data: { id: admin.id } };
+  } catch (error) {
+    if (error instanceof Error && error.message === "Unauthorized") {
+      return { success: false, error: "Unauthorized" };
+    }
+    console.error("createAdmin error:", error);
+    return { success: false, error: "Failed to create admin." };
+  }
+}
+
+export async function updateAdmin(
+  id: string,
+  data: {
+    name?: string;
+    phone?: string;
+    email?: string;
+    password?: string;
+    isActive?: boolean;
+  }
+): Promise<ActionResult> {
+  try {
+    await requireAdmin();
+    const bcrypt = (await import("bcryptjs")).default;
+
+    const updateData: Record<string, unknown> = {};
+    if (data.name !== undefined) updateData.name = data.name;
+    if (data.email !== undefined) updateData.email = data.email || null;
+    if (data.isActive !== undefined) updateData.isActive = data.isActive;
+
+    if (data.phone !== undefined) {
+      const existingByPhone = await prisma.user.findUnique({
+        where: { phone: data.phone },
+      });
+      if (existingByPhone && existingByPhone.id !== id) {
+        return { success: false, error: "A user with this phone number already exists." };
+      }
+      updateData.phone = data.phone;
+    }
+
+    if (data.password) {
+      updateData.password = await bcrypt.hash(data.password, 10);
+    }
+
+    await prisma.user.update({ where: { id }, data: updateData });
+    revalidatePath("/admin/admins");
+    return { success: true };
+  } catch (error) {
+    if (error instanceof Error && error.message === "Unauthorized") {
+      return { success: false, error: "Unauthorized" };
+    }
+    console.error("updateAdmin error:", error);
+    return { success: false, error: "Failed to update admin." };
+  }
+}
+
+export async function deleteAdmin(id: string): Promise<ActionResult> {
+  try {
+    const currentUser = await requireAdmin();
+    if (currentUser.id === id) {
+      return { success: false, error: "You cannot delete your own account." };
+    }
+    await prisma.user.delete({ where: { id } });
+    revalidatePath("/admin/admins");
+    return { success: true };
+  } catch (error) {
+    if (error instanceof Error && error.message === "Unauthorized") {
+      return { success: false, error: "Unauthorized" };
+    }
+    console.error("deleteAdmin error:", error);
+    return { success: false, error: "Failed to delete admin." };
+  }
+}
+
+export async function toggleAdminActive(
+  id: string,
+  isActive: boolean
+): Promise<ActionResult> {
+  try {
+    const currentUser = await requireAdmin();
+    if (currentUser.id === id) {
+      return { success: false, error: "You cannot deactivate your own account." };
+    }
+    await prisma.user.update({ where: { id }, data: { isActive } });
+    revalidatePath("/admin/admins");
+    return { success: true };
+  } catch (error) {
+    if (error instanceof Error && error.message === "Unauthorized") {
+      return { success: false, error: "Unauthorized" };
+    }
+    console.error("toggleAdminActive error:", error);
+    return { success: false, error: "Failed to update admin status." };
   }
 }
 

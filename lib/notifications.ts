@@ -172,7 +172,7 @@ function orderConfirmationMessage(params: {
 }): string {
   const namePart = params.fullName ? `Hi ${params.fullName}, ` : "";
   const total = formatCurrency(params.totalAmount);
-  return `${namePart}your order ${params.orderId} is confirmed. Total ${total}. We'll notify you when it ships. - Vellimalai Mushrooms`;
+  return `${namePart}your order ${params.orderId} is confirmed. Total ${total}. We'll notify you when it ships. - Sri Amman Mushroom Farms`;
 }
 
 function orderStatusMessage(params: {
@@ -183,7 +183,7 @@ function orderStatusMessage(params: {
   const namePart = params.fullName ? `Hi ${params.fullName}, ` : "";
   const tracking = buildTrackingLine(params.orderId);
   const trackingPart = tracking ? ` ${tracking}` : "";
-  return `${namePart}your order ${params.orderId} status is now ${params.status}.${trackingPart} - Vellimalai Mushrooms`;
+  return `${namePart}your order ${params.orderId} status is now ${params.status}.${trackingPart} - Sri Amman Mushroom Farms`;
 }
 
 export async function notifyOrderConfirmation(params: {

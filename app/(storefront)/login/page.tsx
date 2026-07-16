@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
-import { Leaf, Loader2, Lock, Mail } from "lucide-react";
+import { Leaf, Loader2, Lock, Phone } from "lucide-react";
 import toast from "react-hot-toast";
 import { FadeIn } from "@/components/FadeIn";
 import { Button } from "@/components/ui/button";
@@ -14,7 +14,7 @@ import { Label } from "@/components/ui/label";
 export default function LoginPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const [form, setForm] = useState({ email: "", password: "" });
+  const [form, setForm] = useState({ phone: "", password: "" });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,11 +22,11 @@ export default function LoginPage() {
     try {
       const result = await signIn("credentials", {
         redirect: false,
-        email: form.email,
+        phone: form.phone,
         password: form.password,
       });
       if (result?.error) {
-        toast.error("Invalid email or password.");
+        toast.error("Invalid mobile number or password.");
       } else {
         toast.success("Welcome back!");
         router.push("/");
@@ -53,16 +53,16 @@ export default function LoginPage() {
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <div className="space-y-1.5">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="phone">Mobile Number</Label>
               <div className="relative">
-                <Mail size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+                <Phone size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
                 <Input
-                  id="email"
-                  type="email"
+                  id="phone"
+                  type="tel"
                   required
-                  value={form.email}
-                  onChange={(e) => setForm({ ...form, email: e.target.value })}
-                  placeholder="you@example.com"
+                  value={form.phone}
+                  onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                  placeholder="+91 98765 43210"
                   className="h-11 pl-9"
                 />
               </div>

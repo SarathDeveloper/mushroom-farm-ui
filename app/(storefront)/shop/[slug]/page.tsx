@@ -202,7 +202,7 @@ export default async function ProductDetailPage(props: {
                 <Share2 size={14} />
                 <span>Share:</span>
                 <a
-                  href={`https://wa.me/?text=Check out ${product.name} from Vellimalai Farms!`}
+                  href={`https://wa.me/?text=Check out ${product.name} from Sri Amman Mushroom Farms!`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-primary font-medium"

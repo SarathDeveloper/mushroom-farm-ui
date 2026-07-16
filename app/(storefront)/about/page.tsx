@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 
 export const metadata = {
   title: "About Us",
-  description: "Learn the story behind Sari Amman Oyster Mushroom Farm and our mission for sustainable, organic farming in the Kalvarayan Hills.",
+  description: "Learn the story behind Sri Amman Mushroom Farms and our mission for sustainable, organic farming in the Kalvarayan Hills.",
 };
 
 const values = [
@@ -52,7 +52,7 @@ export default function AboutPage() {
                 In 2017, our founder began cultivating oyster mushrooms in a single bamboo shed as a way to supplement his family&apos;s income. What started as a small side project quickly revealed something bigger: the Kalvarayan Hills&apos; cool, humid climate was perfect for mushroom cultivation.
               </p>
               <p className="text-[var(--color-body)] leading-relaxed text-sm sm:text-base">
-                Today, Sari Amman Oyster Mushroom Farm spans several growing units, supplies restaurants and retailers across Tamil Nadu, and has trained hundreds of aspiring farmers through hands-on workshops — all while staying true to our founding promise: 100% organic, chemical-free cultivation.
+                Today, Sri Amman Mushroom Farms spans several growing units, supplies restaurants and retailers across Tamil Nadu, and has trained hundreds of aspiring farmers through hands-on workshops — all while staying true to our founding promise: 100% organic, chemical-free cultivation.
               </p>
               <Button asChild size="lg" className="rounded-full px-8 mt-2">
                 <Link href="/shop">Taste the Difference <ArrowRight className="ml-2" size={18} /></Link>
@@ -91,7 +91,7 @@ export default function AboutPage() {
                   Growing up in the Kalvarayan Hills of Tamil Nadu, Mathesh witnessed firsthand how tribal farming communities struggled with limited income options. In 2017, with little more than determination and a single bamboo shed, he began experimenting with oyster mushroom cultivation — a crop uniquely suited to the region&apos;s cool, misty climate.
                 </p>
                 <p className="text-[var(--color-body)] leading-relaxed mb-6">
-                  What started as a modest side project has since grown into Sari Amman Oyster Mushroom Farm, a thriving enterprise that supplies fresh and dried mushrooms to restaurants and retailers across Tamil Nadu. More importantly, Mathesh has trained hundreds of local farmers, empowering them to build their own mushroom-growing businesses and create sustainable livelihoods in the hills.
+                  What started as a modest side project has since grown into Sri Amman Mushroom Farms, a thriving enterprise that supplies fresh and dried mushrooms to restaurants and retailers across Tamil Nadu. More importantly, Mathesh has trained hundreds of local farmers, empowering them to build their own mushroom-growing businesses and create sustainable livelihoods in the hills.
                 </p>
                 <div className="relative bg-card rounded-2xl p-6 border border-border">
                   <Quote size={32} className="text-primary/20 absolute top-4 left-4" />

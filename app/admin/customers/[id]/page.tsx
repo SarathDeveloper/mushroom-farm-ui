@@ -83,7 +83,7 @@ export default async function CustomerDetailPage(props: {
             </div>
           ) : (
             <div className="h-14 w-14 rounded-full bg-primary flex items-center justify-center text-white font-bold text-lg shrink-0">
-              {customer.name?.[0]?.toUpperCase() || customer.email[0].toUpperCase()}
+              {customer.name?.[0]?.toUpperCase() || customer.email?.[0]?.toUpperCase() || customer.phone?.[0] || "?"}
             </div>
           )}
           <div>
@@ -173,12 +173,14 @@ export default async function CustomerDetailPage(props: {
           <section className="bg-card rounded-2xl border border-border shadow-[0_4px_12px_rgba(0,0,0,0.04)] p-5">
             <h2 className="font-heading font-semibold text-foreground mb-4">Contact</h2>
             <div className="space-y-3">
-              <a
-                href={`mailto:${customer.email}`}
-                className="flex items-center gap-2 text-sm text-[var(--color-body)] hover:text-primary"
-              >
-                <Mail size={14} /> {customer.email}
-              </a>
+              {customer.email && (
+                <a
+                  href={`mailto:${customer.email}`}
+                  className="flex items-center gap-2 text-sm text-[var(--color-body)] hover:text-primary"
+                >
+                  <Mail size={14} /> {customer.email}
+                </a>
+              )}
               {customer.phone && (
                 <a
                   href={`tel:${customer.phone}`}

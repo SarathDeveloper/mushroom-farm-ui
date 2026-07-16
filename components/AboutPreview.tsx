@@ -11,7 +11,7 @@ export function AboutPreview() {
         <FadeIn direction="right" className="relative min-h-[480px] lg:min-h-full">
           <SafeImage
             src="/gallery/mathesh-owner.png"
-            alt="Mathesh — Owner & Head Farmer at Sari Amman Oyster Mushroom Farm"
+            alt="Mathesh — Owner & Head Farmer at Sri Amman Mushroom Farms"
             fill
             sizes="(max-width: 1024px) 100vw, 50vw"
             className="object-cover object-top"

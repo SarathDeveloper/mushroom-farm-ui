@@ -12,15 +12,14 @@ import {
   ShoppingBag,
   Store,
   FolderTree,
-  Building2,
   CalendarCheck,
   GraduationCap,
   Ticket,
   MessageSquare,
-  Image as ImageIcon,
   Users,
   Presentation,
   BarChart3,
+  ShieldCheck,
   Menu,
   X,
 } from "lucide-react";
@@ -33,13 +32,12 @@ const links = [
   { href: "/admin/products", label: "Products", icon: Package },
   { href: "/admin/categories", label: "Categories", icon: FolderTree },
   { href: "/admin/customers", label: "Customers", icon: Users },
-  { href: "/admin/bulk-orders", label: "Bulk Orders", icon: Building2 },
   { href: "/admin/pre-orders", label: "Pre Orders", icon: CalendarCheck },
   { href: "/admin/training", label: "Training", icon: GraduationCap },
   { href: "/admin/coupons", label: "Coupons", icon: Ticket },
   { href: "/admin/reviews", label: "Reviews", icon: MessageSquare },
-  { href: "/admin/gallery", label: "Gallery", icon: ImageIcon },
   { href: "/admin/hero-slides", label: "Hero Slides", icon: Presentation },
+  { href: "/admin/admins", label: "Admin Users", icon: ShieldCheck },
 ];
 
 export function AdminSidebar() {
@@ -109,13 +107,13 @@ export function AdminSidebar() {
         <Link href="/" className="flex items-center gap-2">
           <Image
             src="/gallery/Logo.png"
-            alt="Vellimalai Farms"
+            alt="Sri Amman Mushroom Farms"
             width={32}
             height={32}
             className="h-8 w-8 object-contain"
           />
           <span className="text-base font-bold tracking-tight font-heading text-white">
-            Vellimalai<span className="text-secondary">Admin</span>
+            Sri Amman <span className="text-secondary">Admin</span>
           </span>
         </Link>
         <button
@@ -146,13 +144,13 @@ export function AdminSidebar() {
           <Link href="/" className="flex items-center gap-2.5">
             <Image
               src="/gallery/Logo.png"
-              alt="Vellimalai Farms"
+              alt="Sri Amman Mushroom Farms"
               width={36}
               height={36}
               className="h-9 w-9 object-contain"
             />
             <span className="text-base font-bold tracking-tight font-heading">
-              Vellimalai<span className="text-secondary">Admin</span>
+              Sri Amman <span className="text-secondary">Admin</span>
             </span>
           </Link>
           <button
@@ -172,13 +170,13 @@ export function AdminSidebar() {
           <Link href="/" className="flex items-center gap-2.5">
             <Image
               src="/gallery/Logo.png"
-              alt="Vellimalai Farms"
+              alt="Sri Amman Mushroom Farms"
               width={40}
               height={40}
               className="h-10 w-10 object-contain"
             />
             <span className="text-lg font-bold tracking-tight font-heading">
-              Vellimalai<span className="text-secondary">Admin</span>
+              Sri Amman <span className="text-secondary">Admin</span>
             </span>
           </Link>
         </div>

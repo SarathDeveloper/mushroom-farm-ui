@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { CldUploadWidget, type CloudinaryUploadWidgetResults } from "next-cloudinary";
+import toast from "react-hot-toast";
 import { ImagePlus, Loader2, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SafeImage } from "@/components/SafeImage";
@@ -35,7 +36,11 @@ export function CloudinaryUpload({
   label = "Upload images",
 }: CloudinaryUploadProps) {
   const [pending, setPending] = useState(false);
-  const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET;
+  const rawPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET;
+  const uploadPreset =
+    rawPreset && !rawPreset.includes("://") && !rawPreset.includes("=")
+      ? rawPreset
+      : undefined;
   const hasNonCloudinary = value.some((src) => src && !isCloudinarySrc(src));
 
   function handleSuccess(results: CloudinaryUploadWidgetResults) {
@@ -140,6 +145,14 @@ export function CloudinaryUpload({
           maxFileSize: 5_000_000,
         }}
         onSuccess={handleSuccess}
+        onError={(error) => {
+          setPending(false);
+          const msg =
+            error && typeof error === "object" && "statusText" in error
+              ? String((error as { statusText: string }).statusText)
+              : "Upload failed. Please try again.";
+          toast.error(msg);
+        }}
         onQueuesStart={() => setPending(true)}
         onQueuesEnd={(_result, { widget }) => {
           setPending(false);

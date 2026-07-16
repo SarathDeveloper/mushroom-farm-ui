@@ -49,19 +49,11 @@ export function normalizeCloudinaryImages(images: string[]): {
     const src = typeof raw === "string" ? raw.trim() : "";
     if (!src) continue;
 
-    if (!isCloudinarySrc(src)) {
-      return {
-        ok: false,
-        error:
-          "All product images must be uploaded to Cloudinary. Remove external image URLs and upload via the image uploader.",
-      };
-    }
-
     publicIds.push(toCloudinaryPublicId(src));
   }
 
   if (publicIds.length === 0) {
-    return { ok: false, error: "At least one Cloudinary image is required." };
+    return { ok: false, error: "At least one image is required." };
   }
 
   return { ok: true, publicIds };

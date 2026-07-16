@@ -30,7 +30,7 @@ export async function GET(request: Request) {
     const res = await fetch(url, {
       headers: {
         Accept: "application/json",
-        "User-Agent": "VellimalaiMushroomsCheckout/1.0 (checkout address autofill)",
+        "User-Agent": "SriAmmanMushroomFarmsCheckout/1.0 (checkout address autofill)",
       },
       next: { revalidate: 0 },
     });

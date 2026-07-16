@@ -158,7 +158,7 @@ export async function sendOtpSms(
   phone: string,
   otp: string,
 ): Promise<{ delivered: boolean; mode: "sms" | "dev" }> {
-  const message = `Your Vellimalai Mushrooms verification code is ${otp}. Valid for 10 minutes.`;
+  const message = `Your Sri Amman Mushroom Farms verification code is ${otp}. Valid for 10 minutes.`;
 
   const result = await sendTwilioSms(phone, message);
   if (result.delivered) {

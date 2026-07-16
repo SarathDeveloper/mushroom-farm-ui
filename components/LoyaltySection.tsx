@@ -4,7 +4,7 @@ import Link from "next/link";
 
 const WHATSAPP_NUMBER = "919876543210";
 const WHATSAPP_MESSAGE =
-  "Hi! I'd like to start my mushroom farming journey with Vellimalai Farms.";
+  "Hi! I'd like to start my mushroom farming journey with Sri Amman Mushroom Farms.";
 
 const benefits = [
   "Join India's largest mushroom farming community",

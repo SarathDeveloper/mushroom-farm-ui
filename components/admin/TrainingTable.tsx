@@ -30,7 +30,7 @@ type Registration = {
   status: PaymentStatus;
   paymentId: string | null;
   createdAt: Date;
-  user: { id: string; name: string | null; email: string; phone: string | null };
+  user: { id: string; name: string | null; email: string | null; phone: string | null };
 };
 
 type Training = {
@@ -478,7 +478,7 @@ export function TrainingTable({ programs }: { programs: Training[] }) {
                       <td className="py-3 font-medium">{reg.user.name || "—"}</td>
                       <td className="py-3">
                         <div className="text-xs">
-                          <p>{reg.user.email}</p>
+                          {reg.user.email && <p>{reg.user.email}</p>}
                           {reg.user.phone && <p className="text-muted-foreground">{reg.user.phone}</p>}
                         </div>
                       </td>
