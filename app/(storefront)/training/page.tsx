@@ -46,7 +46,7 @@ export default async function TrainingPage() {
         image="https://images.unsplash.com/photo-1574316071802-0d684efa7ea5?q=80&w=2000&auto=format&fit=crop"
       />
 
-      <section className="py-20 bg-background">
+      <section className="py-24 sm:py-32 bg-background">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
           <FadeIn className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-20">
             {highlights.map((h) => (
@@ -54,15 +54,15 @@ export default async function TrainingPage() {
                 <div className="w-14 h-14 rounded-xl bg-card text-primary flex items-center justify-center mx-auto mb-4">
                   <h.icon size={26} strokeWidth={1.75} />
                 </div>
-                <h3 className="font-bold text-foreground mb-1">{h.title}</h3>
+                <h3 className="font-bold text-foreground mb-1 text-base">{h.title}</h3>
                 <p className="text-sm text-[var(--color-body)]">{h.desc}</p>
               </div>
             ))}
           </FadeIn>
 
           <FadeIn>
-            <h2 className="text-3xl font-bold font-heading text-foreground mb-2 text-center">Upcoming Programs</h2>
-            <p className="text-[var(--color-body)] text-center max-w-xl mx-auto mb-12">
+            <h2 className="text-2xl md:text-3xl font-bold font-heading text-foreground mb-2 text-center">Upcoming Programs</h2>
+            <p className="text-[var(--color-body)] text-center max-w-xl mx-auto mb-12 text-sm sm:text-base">
               Choose a program that matches your goals — from a weekend hobby to a full commercial venture.
             </p>
           </FadeIn>

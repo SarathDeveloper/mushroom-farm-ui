@@ -6,6 +6,8 @@ import { prisma } from "@/lib/prisma";
 import { verifyPhoneVerificationToken } from "@/lib/otp";
 import { INDIAN_MOBILE_REGEX } from "@/lib/phone";
 import { getRazorpay, computeOrderTotals, VALID_COUPONS } from "@/lib/razorpay";
+import { errorResponse } from "@/lib/api-utils";
+import { notifyOrderConfirmation } from "@/lib/notifications";
 
 const cartLineSchema = z.object({
   productId: z.string().uuid(),
@@ -28,38 +30,32 @@ const createOrderSchema = z.object({
 export async function POST(request: Request) {
   const session = await getServerSession(authOptions);
   if (!session?.user?.id) {
-    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+    return errorResponse("Unauthorized", 401);
   }
 
   let body: unknown;
   try {
     body = await request.json();
   } catch {
-    return NextResponse.json({ message: "Invalid request body." }, { status: 400 });
+    return errorResponse("Invalid request body.", 400);
   }
 
   const parsed = createOrderSchema.safeParse(body);
   if (!parsed.success) {
-    return NextResponse.json(
-      { message: parsed.error.issues[0]?.message ?? "Invalid input." },
-      { status: 400 },
-    );
+    return errorResponse(parsed.error.issues[0]?.message ?? "Invalid input.", 400);
   }
   const { items, couponCode, paymentMethod, phoneVerifiedToken, ...addressFields } =
     parsed.data;
 
   if (!verifyPhoneVerificationToken(phoneVerifiedToken, addressFields.phone)) {
-    return NextResponse.json(
-      { message: "Please verify your mobile number with OTP before placing the order." },
-      { status: 400 },
-    );
+    return errorResponse("Please verify your mobile number with OTP before placing the order.", 400);
   }
 
   // Validate coupon code if provided
   if (couponCode) {
     const normalized = couponCode.toUpperCase().trim();
     if (!VALID_COUPONS[normalized]) {
-      return NextResponse.json({ message: "Invalid coupon code" }, { status: 400 });
+      return errorResponse("Invalid coupon code", 400);
     }
   }
 
@@ -70,10 +66,7 @@ export async function POST(request: Request) {
   });
 
   if (products.length !== productIds.length) {
-    return NextResponse.json(
-      { message: "One or more products not found." },
-      { status: 400 },
-    );
+    return errorResponse("One or more products not found.", 400);
   }
 
   const productMap = new Map(products.map((p) => [p.id, p]));
@@ -81,10 +74,7 @@ export async function POST(request: Request) {
   for (const item of items) {
     const product = productMap.get(item.productId)!;
     if (product.stock < item.quantity) {
-      return NextResponse.json(
-        { message: `${product.name} only has ${product.stock} left in stock.` },
-        { status: 400 },
-      );
+      return errorResponse(`${product.name} only has ${product.stock} left in stock.`, 400);
     }
   }
 
@@ -124,6 +114,15 @@ export async function POST(request: Request) {
     });
 
     if (isCod) {
+      if (addressFields.phone) {
+        await notifyOrderConfirmation({
+          phone: addressFields.phone,
+          fullName: addressFields.fullName,
+          orderId: order.id,
+          totalAmount: total,
+        });
+      }
+
       return NextResponse.json({
         orderId: order.id,
         paymentMethod: "cod",
@@ -159,9 +158,6 @@ export async function POST(request: Request) {
     });
   } catch (error) {
     console.error("Order creation error:", error);
-    return NextResponse.json(
-      { message: "Failed to create order. Please try again." },
-      { status: 500 },
-    );
+    return errorResponse("Failed to create order. Please try again.", 500);
   }
 }

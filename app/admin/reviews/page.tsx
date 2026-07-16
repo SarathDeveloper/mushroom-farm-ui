@@ -1,30 +1,46 @@
 import { MessageSquare } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import { ReviewsTable } from "@/components/admin/ReviewsTable";
+import { Pagination } from "@/components/admin/Pagination";
 
 export const metadata = {
   title: "Reviews · Admin",
 };
 
-export default async function AdminReviewsPage() {
-  const reviews = await prisma.review.findMany({
-    include: {
-      user: { select: { id: true, name: true, email: true } },
-      product: { select: { id: true, name: true, slug: true, images: true } },
-    },
-    orderBy: { createdAt: "desc" },
-  });
+export default async function AdminReviewsPage(props: {
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  const searchParams = await props.searchParams;
+  const page = Math.max(1, Number(searchParams?.page) || 1);
+  const perPage = 20;
+
+  const [reviews, totalCount, pendingCount, approvedCount] = await Promise.all([
+    prisma.review.findMany({
+      include: {
+        user: { select: { id: true, name: true, email: true } },
+        product: { select: { id: true, name: true, slug: true, images: true } },
+      },
+      orderBy: { createdAt: "desc" },
+      skip: (page - 1) * perPage,
+      take: perPage,
+    }),
+    prisma.review.count(),
+    prisma.review.count({ where: { isApproved: false } }),
+    prisma.review.count({ where: { isApproved: true } }),
+  ]);
+
+  const totalPages = Math.ceil(totalCount / perPage);
 
   const stats = {
-    total: reviews.length,
-    pending: reviews.filter((r) => !r.isApproved).length,
-    approved: reviews.filter((r) => r.isApproved).length,
+    total: totalCount,
+    pending: pendingCount,
+    approved: approvedCount,
   };
 
   return (
     <div className="p-4 sm:p-6 lg:p-10">
       <header className="mb-6 sm:mb-8">
-        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold font-heading text-foreground">
+        <h1 className="text-xl md:text-2xl font-bold font-heading text-foreground">
           Reviews
         </h1>
         <p className="text-[var(--color-body)] mt-1 text-xs sm:text-sm">
@@ -43,7 +59,10 @@ export default async function AdminReviewsPage() {
           </p>
         </div>
       ) : (
-        <ReviewsTable reviews={reviews} />
+        <>
+          <ReviewsTable reviews={reviews} />
+          <Pagination currentPage={page} totalPages={totalPages} />
+        </>
       )}
     </div>
   );

@@ -1,12 +1,14 @@
 import { createHash, createHmac, randomInt, timingSafeEqual } from "crypto";
 import { prisma } from "@/lib/prisma";
 import { isValidIndianMobile } from "@/lib/phone";
+import { sendTwilioSms } from "@/lib/notifications";
 
 const OTP_TTL_MS = 10 * 60 * 1000;
 const VERIFY_TTL_MS = 60 * 60 * 1000;
 const RESEND_COOLDOWN_MS = 45 * 1000;
 const MAX_ATTEMPTS = 5;
-/** Temporary fixed OTP for testing — remove before production. */
+
+const IS_PRODUCTION = process.env.NODE_ENV === "production";
 const TEST_OTP = "1234";
 
 function otpIdentifier(phone: string) {
@@ -104,8 +106,7 @@ export async function verifyStoredOtp(
 
   const identifier = otpIdentifier(phone);
 
-  // Temporary test bypass — accepts without a stored OTP.
-  if (otp === TEST_OTP) {
+  if (!IS_PRODUCTION && otp === TEST_OTP) {
     await prisma.verificationToken.deleteMany({ where: { identifier } });
     return { ok: true };
   }
@@ -153,33 +154,21 @@ export async function verifyStoredOtp(
   return { ok: true };
 }
 
-/** Optional Fast2SMS; otherwise logs OTP (dev) / fails gracefully. */
 export async function sendOtpSms(
   phone: string,
   otp: string,
 ): Promise<{ delivered: boolean; mode: "sms" | "dev" }> {
-  const apiKey = process.env.FAST2SMS_API_KEY;
   const message = `Your Vellimalai Mushrooms verification code is ${otp}. Valid for 10 minutes.`;
 
-  if (apiKey) {
-    const res = await fetch("https://www.fast2sms.com/dev/bulkV2", {
-      method: "POST",
-      headers: {
-        authorization: apiKey,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        route: "q",
-        message,
-        numbers: phone,
-      }),
-    });
-    if (!res.ok) {
-      throw new Error("Failed to send OTP SMS.");
-    }
+  const result = await sendTwilioSms(phone, message);
+  if (result.delivered) {
     return { delivered: true, mode: "sms" };
   }
 
-  console.info(`[OTP] ${phone} => ${otp}`);
+  if (IS_PRODUCTION) {
+    throw new Error("SMS delivery failed — Twilio not configured in production.");
+  }
+
+  console.info(`[OTP-DEV] ${phone} => ${otp}`);
   return { delivered: true, mode: "dev" };
 }

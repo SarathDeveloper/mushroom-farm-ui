@@ -61,8 +61,8 @@ export default function RegisterPage() {
             <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[var(--color-primary-dark)] text-white mb-4">
               <Leaf size={28} />
             </div>
-            <h1 className="text-2xl font-bold font-heading text-foreground">Create Your Account</h1>
-            <p className="text-[var(--color-body)] mt-1">Join us for fresh mushrooms, delivered.</p>
+            <h1 className="text-xl md:text-2xl font-bold font-heading text-foreground">Create Your Account</h1>
+            <p className="text-[var(--color-body)] mt-1 text-sm sm:text-base">Join us for fresh mushrooms, delivered.</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">

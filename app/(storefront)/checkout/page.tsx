@@ -8,6 +8,7 @@ import Script from "next/script";
 import {
   Banknote,
   CheckCircle2,
+  ChevronDown,
   CreditCard,
   Loader2,
   LocateFixed,
@@ -29,7 +30,7 @@ import {
 } from "@/lib/phone";
 import { useCartStore } from "@/lib/store";
 import { useHasMounted } from "@/lib/useHasMounted";
-import { cn } from "@/lib/utils";
+import { cn, formatCurrency } from "@/lib/utils";
 
 declare global {
   interface Window {
@@ -92,6 +93,7 @@ export default function CheckoutPage() {
   const [verifiedPhone, setVerifiedPhone] = useState<string | null>(null);
   const [locating, setLocating] = useState(false);
   const [locationMsg, setLocationMsg] = useState("");
+  const [summaryOpen, setSummaryOpen] = useState(false);
 
   const phoneVerified = Boolean(
     phoneVerifiedToken && verifiedPhone === phone && isValidIndianMobile(phone),
@@ -151,7 +153,7 @@ export default function CheckoutPage() {
       setOtpCooldown(Math.max(45, Math.ceil(Number(data.cooldownMs ?? 45000) / 1000)));
       setOtpMsg(
         data.devOtp
-          ? `OTP sent. Dev code: ${data.devOtp}`
+          ? `OTP sent to your mobile. Dev code: ${data.devOtp}`
           : (data.message ?? "OTP sent to your mobile."),
       );
     } catch {
@@ -268,11 +270,11 @@ export default function CheckoutPage() {
     const code = couponCode.toUpperCase().trim();
     const coupon = validCoupons[code];
     if (!coupon) {
-      setCouponError("Invalid coupon code");
+      setCouponError("Oops! That doesn't look like a valid coupon code.");
       return;
     }
     if (subtotal < coupon.minOrder) {
-      setCouponError(`Minimum order ₹${coupon.minOrder} required`);
+      setCouponError(`You need to spend ${formatCurrency(coupon.minOrder)} to use this coupon.`);
       return;
     }
     const discountAmt = coupon.isPercent
@@ -336,7 +338,7 @@ export default function CheckoutPage() {
           email,
           contact: phone,
         },
-        theme: { color: "#16a34a" },
+        theme: { color: "hsl(var(--primary))" },
         modal: {
           ondismiss: () => setSubmitting(false),
         },
@@ -432,21 +434,21 @@ export default function CheckoutPage() {
     return (
       <div className="flex flex-col min-h-[70vh] items-center justify-center px-4 py-24 text-center">
         <FadeIn>
-          <div className="w-20 h-20 rounded-full bg-[var(--color-success)]/15 text-[var(--color-success)] flex items-center justify-center mx-auto mb-6">
+          <div className="w-20 h-20 rounded-full bg-[hsl(var(--success))]/15 text-[hsl(var(--success))] flex items-center justify-center mx-auto mb-6">
             <PartyPopper size={36} />
           </div>
-          <h1 className="text-3xl font-bold font-heading text-foreground mb-3">
+          <h1 className="text-xl md:text-2xl font-bold font-heading text-foreground mb-3">
             Order Placed Successfully!
           </h1>
-          <p className="text-[var(--color-body)] max-w-md mx-auto mb-2">
+            <p className="text-sm text-[hsl(var(--foreground))] max-w-md mx-auto mb-2">
             Thank you for your order. Your order ID is:
           </p>
-          <p className="text-xl font-bold text-primary mb-2">
+          <p className="text-lg font-bold text-primary mb-2">
             #{orderId.slice(0, 8).toUpperCase()}
           </p>
           {paymentMethod === "cod" && (
-            <p className="text-sm text-[var(--color-body)] mb-8">
-              Please keep ₹{total.toFixed(0)} ready for cash on delivery.
+            <p className="text-xs text-[hsl(var(--foreground))] mb-8">
+              Please keep ${formatCurrency(total)} ready for cash on delivery.
             </p>
           )}
           {paymentMethod !== "cod" && <div className="mb-8" />}
@@ -472,10 +474,10 @@ export default function CheckoutPage() {
     return (
       <div className="flex flex-col min-h-[60vh] items-center justify-center text-center px-4 py-24">
         <ShoppingBag size={36} className="text-muted-foreground mb-4" />
-        <h1 className="text-2xl font-bold font-heading text-foreground mb-2">
+        <h1 className="text-xl md:text-2xl font-bold font-heading text-foreground mb-2">
           Nothing to checkout
         </h1>
-        <p className="text-[var(--color-body)] mb-6">
+        <p className="text-sm text-[hsl(var(--foreground))] mb-6">
           Your cart is empty. Add some products first.
         </p>
         <Button asChild className="rounded-full px-8">
@@ -495,7 +497,7 @@ export default function CheckoutPage() {
         image="https://images.unsplash.com/photo-1497515114629-f71d768fd07c?q=80&w=2000&auto=format&fit=crop"
       />
 
-      <section className="py-16 bg-background">
+      <section className="py-20 sm:py-28 bg-background">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
           <FadeIn className="mb-10">
             <div className="flex items-center justify-center gap-2 text-sm">
@@ -542,7 +544,7 @@ export default function CheckoutPage() {
               {step === 0 && (
                 <form onSubmit={goToPayment}>
                   <div className="rounded-2xl border border-border bg-card p-6 sm:p-8 space-y-5">
-                    <h2 className="text-xl font-bold font-heading text-foreground flex items-center gap-2">
+                    <h2 className="text-lg md:text-xl font-bold font-heading text-foreground flex items-center gap-2">
                       <MapPin size={20} className="text-primary" />
                       Delivery Address
                     </h2>
@@ -616,8 +618,8 @@ export default function CheckoutPage() {
                         </p>
                       )}
                       {phoneVerified && (
-                        <p className="text-xs text-[var(--color-success)] flex items-center gap-1">
-                          <CheckCircle2 size={12} /> Mobile number verified
+                        <p className="text-xs text-[hsl(var(--success))] flex items-center gap-1">
+                          <CheckCircle2 size={16} /> Mobile number verified
                         </p>
                       )}
 
@@ -659,8 +661,8 @@ export default function CheckoutPage() {
                           className={cn(
                             "text-xs",
                             phoneVerified
-                              ? "text-[var(--color-success)]"
-                              : "text-[var(--color-body)]",
+                              ? "text-[hsl(var(--success))]"
+                              : "text-[hsl(var(--foreground))]",
                           )}
                         >
                           {otpMsg}
@@ -744,7 +746,7 @@ export default function CheckoutPage() {
                     </div>
 
                     {errorMsg && (
-                      <p className="text-sm text-[var(--color-error)] bg-[var(--color-error)]/10 rounded-xl px-4 py-3">
+                      <p className="text-sm text-[hsl(var(--destructive))] bg-[hsl(var(--destructive))]/10 rounded-xl px-4 py-3">
                         {errorMsg}
                       </p>
                     )}
@@ -759,7 +761,7 @@ export default function CheckoutPage() {
               {/* Step 1: Payment */}
               {step === 1 && (
                 <div className="rounded-2xl border border-border bg-card p-6 sm:p-8 space-y-5">
-                  <h2 className="text-xl font-bold font-heading text-foreground flex items-center gap-2">
+                  <h2 className="text-lg md:text-xl font-bold font-heading text-foreground flex items-center gap-2">
                     <CreditCard size={20} className="text-primary" />
                     Payment Method
                   </h2>
@@ -833,7 +835,7 @@ export default function CheckoutPage() {
                   </div>
 
                   {paymentMethod === "online" && (
-                    <div className="rounded-2xl border border-border bg-secondary/50 p-4 flex items-center gap-3 text-sm text-[var(--color-body)]">
+                    <div className="rounded-2xl border border-border bg-secondary/50 p-4 flex items-center gap-3 text-sm text-[hsl(var(--foreground))]">
                       <ShieldCheck size={18} className="text-primary shrink-0" />
                       Secure payment powered by Razorpay. Your card details are
                       never stored on our servers.
@@ -865,7 +867,7 @@ export default function CheckoutPage() {
               {/* Step 2: Review & Place Order */}
               {step === 2 && (
                 <div className="rounded-2xl border border-border bg-card p-6 sm:p-8 space-y-6">
-                  <h2 className="text-xl font-bold font-heading text-foreground flex items-center gap-2">
+                  <h2 className="text-lg md:text-xl font-bold font-heading text-foreground flex items-center gap-2">
                     <CheckCircle2 size={20} className="text-primary" />
                     Review &amp; Place Order
                   </h2>
@@ -907,7 +909,7 @@ export default function CheckoutPage() {
                           {item.name} × {item.quantity}
                         </span>
                         <span className="text-foreground font-medium">
-                          ₹{item.price * item.quantity}
+                          {formatCurrency(item.price * item.quantity)}
                         </span>
                       </div>
                     ))}
@@ -943,7 +945,7 @@ export default function CheckoutPage() {
                           Placing Order...
                         </>
                       ) : (
-                        `Place Order – ₹${total.toFixed(0)}`
+                        `Place Order – ${formatCurrency(total)}`
                       )}
                     </Button>
                   </div>
@@ -953,51 +955,65 @@ export default function CheckoutPage() {
 
             <FadeIn direction="left" className="lg:col-span-1 order-1 lg:order-2">
               <div className="sticky top-24 space-y-4">
-                <div className="rounded-2xl border border-border bg-card p-6 space-y-4">
-                  <h3 className="text-lg font-bold font-heading text-foreground">
+                {/* Mobile collapsible summary */}
+                <div className="rounded-2xl border border-border bg-card lg:p-6 space-y-0 lg:space-y-4">
+                  <button
+                    type="button"
+                    className="w-full flex items-center justify-between p-4 lg:hidden"
+                    onClick={() => setSummaryOpen(!summaryOpen)}
+                  >
+                    <h3 className="text-sm font-bold font-heading text-foreground">
+                      Order Summary ({itemCount} items)
+                    </h3>
+                    <div className="flex items-center gap-2">
+                      <span className="font-semibold text-foreground text-base">{formatCurrency(total)}</span>
+                      <ChevronDown size={18} className={cn("text-muted-foreground transition-transform", summaryOpen && "rotate-180")} />
+                    </div>
+                  </button>
+                  <h3 className="text-base font-bold font-heading text-foreground hidden lg:block">
                     Order Summary
                   </h3>
-                  <div className="border-t border-border pt-4 space-y-2">
-                    <div className="flex justify-between text-sm text-[var(--color-body)]">
+                  <div className={cn("border-t border-border pt-4 space-y-2 px-4 pb-4 lg:px-0 lg:pb-0", !summaryOpen && "hidden lg:block")}>
+                    <div className="flex justify-between text-sm text-[hsl(var(--foreground))]">
                       <span>Items ({itemCount})</span>
-                      <span>₹{subtotal.toFixed(2)}</span>
+                      <span>{formatCurrency(subtotal)}</span>
                     </div>
-                    <div className="flex justify-between text-sm text-[var(--color-body)]">
+                    <div className="flex justify-between text-sm text-[hsl(var(--foreground))]">
                       <span>GST</span>
-                      <span>₹{gst.toFixed(2)}</span>
+                      <span>{formatCurrency(gst)}</span>
                     </div>
-                    <div className="flex justify-between text-sm text-[var(--color-body)]">
+                    <div className="flex justify-between text-sm text-[hsl(var(--foreground))]">
                       <span>Delivery</span>
                       <span>
                         {shipping === 0 ? (
-                          <span className="text-[var(--color-success)] font-medium">
+                          <span className="text-[hsl(var(--success))] font-medium">
                             FREE
                           </span>
                         ) : (
-                          `₹${shipping.toFixed(2)}`
+                          `${formatCurrency(shipping)}`
                         )}
                       </span>
                     </div>
                     {appliedCoupon && (
-                      <div className="flex justify-between text-sm text-[var(--color-success)]">
+                      <div className="flex justify-between text-sm text-[hsl(var(--success))]">
                         <span>Discount ({appliedCoupon.code})</span>
-                        <span>-₹{appliedCoupon.discount.toFixed(2)}</span>
+                        <span>-{formatCurrency(appliedCoupon.discount)}</span>
                       </div>
                     )}
-                    <div className="flex justify-between font-bold text-foreground text-lg pt-2 border-t border-border">
+                    <div className="flex justify-between font-bold text-foreground text-base pt-2 border-t border-border">
                       <span>Total</span>
-                      <span>₹{total.toFixed(2)}</span>
+                      <span>{formatCurrency(total)}</span>
                     </div>
                   </div>
                 </div>
 
-                <div className="rounded-2xl border border-border bg-card p-5">
+                <div className={cn("rounded-2xl border border-border bg-card p-5", !summaryOpen && "hidden lg:block")}>
                   <h4 className="text-sm font-bold text-foreground mb-3 flex items-center gap-2">
                     <Tag size={14} className="text-primary" /> Apply Coupon
                   </h4>
                   {appliedCoupon ? (
-                    <div className="flex items-center justify-between bg-[var(--color-success)]/10 rounded-lg px-3 py-2">
-                      <span className="text-sm font-semibold text-[var(--color-success)]">
+                    <div className="flex items-center justify-between bg-[hsl(var(--success))]/10 rounded-lg px-3 py-2">
+                      <span className="text-sm font-semibold text-[hsl(var(--success))]">
                         {appliedCoupon.code} applied!
                       </span>
                       <button
@@ -1029,11 +1045,11 @@ export default function CheckoutPage() {
                         </Button>
                       </div>
                       {couponError && (
-                        <p className="text-xs text-[var(--color-error)] mt-2">
+                        <p className="text-xs text-[hsl(var(--destructive))] mt-2">
                           {couponError}
                         </p>
                       )}
-                      <p className="text-[11px] text-muted-foreground mt-2">
+                      <p className="text-xs text-muted-foreground mt-2">
                         Try: FRESH10, WELCOME50, MUSHROOM15
                       </p>
                     </>
@@ -1041,9 +1057,9 @@ export default function CheckoutPage() {
                 </div>
 
                 {shipping === 0 && subtotal > 0 && (
-                  <div className="rounded-xl bg-[var(--color-success)]/10 border border-[var(--color-success)]/20 p-3 text-center">
-                    <p className="text-xs font-semibold text-[var(--color-success)]">
-                      <CheckCircle2 size={12} className="inline mr-1" /> You
+                  <div className={cn("rounded-xl bg-[hsl(var(--success))]/10 border border-[hsl(var(--success))]/20 p-3 text-center", !summaryOpen && "hidden lg:block")}>
+                    <p className="text-xs font-semibold text-[hsl(var(--success))]">
+                      <CheckCircle2 size={16} className="inline mr-1" /> You
                       qualify for free delivery!
                     </p>
                   </div>

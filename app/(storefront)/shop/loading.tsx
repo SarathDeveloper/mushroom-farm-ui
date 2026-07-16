@@ -4,7 +4,7 @@ export default function ShopLoading() {
   return (
     <div className="flex flex-col min-h-screen">
       <div className="h-[45vh] min-h-[320px] bg-[var(--color-primary-dark)]" />
-      <section className="py-16 bg-background">
+      <section className="py-20 sm:py-28 bg-background">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
           <div className="flex flex-wrap items-center justify-center gap-3 mb-12">
             {Array.from({ length: 6 }).map((_, i) => (

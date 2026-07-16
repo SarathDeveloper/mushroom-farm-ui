@@ -93,7 +93,7 @@ export default async function ProductDetailPage(props: {
     <div className="flex flex-col min-h-screen">
       {/* Breadcrumb */}
       <div className="bg-secondary py-4">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl flex items-center gap-2 text-sm text-[var(--color-body)]">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl flex items-center gap-2 text-sm text-[hsl(var(--foreground))]">
           <Link href="/" className="hover:text-primary">Home</Link>
           <ChevronRight size={14} />
           <Link href="/shop" className="hover:text-primary">Shop</Link>
@@ -119,7 +119,7 @@ export default async function ProductDetailPage(props: {
               <span className="text-sm font-semibold text-primary uppercase tracking-wider mb-2">
                 {product.category} Mushroom
               </span>
-              <h1 className="text-3xl md:text-4xl font-bold font-heading text-foreground mb-3">
+              <h1 className="text-xl md:text-2xl font-bold font-heading text-foreground mb-3">
                 {product.name}
               </h1>
               <div className="flex items-center gap-2 mb-4">
@@ -140,10 +140,10 @@ export default async function ProductDetailPage(props: {
                 <span
                   className={
                     product.stock <= 0
-                      ? "inline-flex px-2.5 py-1 rounded-full bg-[#E56D6D] text-white text-xs font-semibold"
+                      ? "inline-flex px-2.5 py-1 rounded-full bg-[hsl(var(--destructive))] text-white text-xs font-semibold"
                       : product.stock <= 20
-                        ? "inline-flex px-2.5 py-1 rounded-full bg-[#E5B06D] text-white text-xs font-semibold"
-                        : "inline-flex px-2.5 py-1 rounded-full bg-[#2B7A5D] text-white text-xs font-semibold"
+                        ? "inline-flex px-2.5 py-1 rounded-full bg-[hsl(var(--warning))] text-white text-xs font-semibold"
+                        : "inline-flex px-2.5 py-1 rounded-full bg-[hsl(var(--primary-600))] text-white text-xs font-semibold"
                   }
                 >
                   {product.stock <= 0
@@ -153,18 +153,18 @@ export default async function ProductDetailPage(props: {
                       : "In Stock"}
                 </span>
                 {product.stock > 0 && product.stock <= 20 && (
-                  <span className="text-xs font-semibold text-[#E5B06D]">
+                  <span className="text-xs font-semibold text-[hsl(var(--warning))]">
                     Only {product.stock} left!
                   </span>
                 )}
               </div>
 
               <div className="flex items-baseline gap-2 mb-6 flex-wrap">
-                <span className="text-3xl font-bold text-[#1A4938]">
+                <span className="text-xl md:text-2xl font-bold text-[#1A4938]">
                   ₹{product.price.toLocaleString("en-IN")}
                 </span>
                 {product.compareAtPrice && (
-                  <span className="text-lg text-muted-foreground line-through">
+                  <span className="text-sm sm:text-base text-muted-foreground line-through">
                     ₹{product.compareAtPrice.toLocaleString("en-IN")}
                   </span>
                 )}
@@ -176,7 +176,7 @@ export default async function ProductDetailPage(props: {
                 )}
               </div>
 
-              <p className="text-[var(--color-body)] leading-relaxed mb-6">{product.description}</p>
+              <p className="text-xs sm:text-sm text-[hsl(var(--foreground))] leading-relaxed mb-6">{product.description}</p>
 
               <div className="flex flex-wrap gap-2 mb-6">
                 {product.highlights.map((h: string) => (
@@ -234,12 +234,12 @@ export default async function ProductDetailPage(props: {
       </section>
 
       {/* Nutrition & Storage Tabs */}
-      <section className="py-12 bg-secondary">
+      <section className="py-16 sm:py-20 bg-secondary">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <FadeIn>
               <div className="bg-card rounded-2xl border border-border p-6">
-                <h3 className="font-bold text-foreground font-heading mb-4 flex items-center gap-2">
+                <h3 className="text-base md:text-lg font-bold text-foreground font-heading mb-4 flex items-center gap-2">
                   <Clock size={18} className="text-primary" /> Nutrition Facts (per 100g)
                 </h3>
                 <div className="space-y-3">
@@ -251,8 +251,8 @@ export default async function ProductDetailPage(props: {
                     { label: "Iron", value: nutrition.iron },
                   ].map((item) => (
                     <div key={item.label} className="flex items-center justify-between py-2 border-b border-border last:border-0">
-                      <span className="text-sm text-[var(--color-body)]">{item.label}</span>
-                      <span className="text-sm font-semibold text-foreground">{item.value}</span>
+                      <span className="text-xs text-[hsl(var(--foreground))]">{item.label}</span>
+                      <span className="text-xs font-semibold text-foreground">{item.value}</span>
                     </div>
                   ))}
                 </div>
@@ -264,13 +264,13 @@ export default async function ProductDetailPage(props: {
 
             <FadeIn delay={0.1}>
               <div className="bg-card rounded-2xl border border-border p-6">
-                <h3 className="font-bold text-foreground font-heading mb-4 flex items-center gap-2">
+                <h3 className="text-base md:text-lg font-bold text-foreground font-heading mb-4 flex items-center gap-2">
                   <ShieldCheck size={18} className="text-primary" /> Storage Instructions
                 </h3>
-                <p className="text-sm text-[var(--color-body)] leading-relaxed mb-4">{storage}</p>
+                <p className="text-xs text-[hsl(var(--foreground))] leading-relaxed mb-4">{storage}</p>
                 <div className="bg-primary/5 rounded-xl p-4 border border-primary/10">
                   <h4 className="text-xs font-bold text-primary mb-2">Pro Tips:</h4>
-                  <ul className="space-y-1.5 text-xs text-[var(--color-body)]">
+                  <ul className="space-y-1.5 text-xs text-[hsl(var(--foreground))]">
                     <li>• Never wash mushrooms before storing — moisture causes spoilage</li>
                     <li>• Use a paper bag, not plastic, to allow airflow</li>
                     <li>• Bring to room temperature before cooking for best texture</li>
@@ -284,10 +284,10 @@ export default async function ProductDetailPage(props: {
 
       {/* Related Products */}
       {related.length > 0 && (
-        <section className="py-16 bg-background">
+        <section className="py-20 sm:py-28 bg-background">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
             <FadeIn>
-              <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-10 font-heading">You Might Also Like</h2>
+              <h2 className="text-xl md:text-2xl font-bold text-foreground mb-10 font-heading">You Might Also Like</h2>
             </FadeIn>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
               {related.map((p, i) => (

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { Pencil, Trash2, Loader2, Plus, ImageIcon } from "lucide-react";
+import { Pencil, Trash2, Loader2, Plus, ImageIcon, Presentation } from "lucide-react";
 import toast from "react-hot-toast";
 
 import { SafeImage } from "@/components/SafeImage";
@@ -182,85 +182,165 @@ export function HeroSlidesTable({ slides }: { slides: HeroSlide[] }) {
         </Button>
       </div>
 
-      <div className="bg-card rounded-2xl border border-border shadow-[0_4px_12px_rgba(0,0,0,0.04)] overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-sm">
-            <thead>
-              <tr className="border-b border-border bg-secondary/50 text-[var(--color-body)]">
-                <th className="font-semibold px-6 py-4 w-10">#</th>
-                <th className="font-semibold px-6 py-4">Slide</th>
-                <th className="font-semibold px-6 py-4">Badge</th>
-                <th className="font-semibold px-6 py-4">Primary CTA</th>
-                <th className="font-semibold px-6 py-4 text-center">Status</th>
-                <th className="font-semibold px-6 py-4 text-right">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-border">
-              {slides.map((slide) => (
-                <tr key={slide.id} className="hover:bg-secondary/30 transition-colors">
-                  <td className="px-6 py-4 text-muted-foreground">{slide.sortOrder}</td>
-                  <td className="px-6 py-4">
-                    <div className="flex items-center gap-3">
-                      {slide.image ? (
-                        <div className="relative h-12 w-20 rounded-lg overflow-hidden shrink-0 bg-secondary">
-                          <SafeImage
-                            src={slide.image}
-                            alt={slide.headline}
-                            fill
-                            sizes="80px"
-                            className="object-cover"
-                          />
-                        </div>
-                      ) : (
-                        <div className="h-12 w-20 rounded-lg bg-secondary flex items-center justify-center text-muted-foreground">
-                          <ImageIcon size={16} />
-                        </div>
-                      )}
-                      <div className="min-w-0">
-                        <span className="font-semibold text-foreground line-clamp-1">
-                          {slide.headline.replace(/\n/g, " ")}
-                        </span>
-                        <p className="text-xs text-muted-foreground line-clamp-1">{slide.subtitle}</p>
-                      </div>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 text-muted-foreground text-xs">{slide.badge}</td>
-                  <td className="px-6 py-4">
-                    <span className="text-xs text-muted-foreground">
-                      {slide.primaryCtaLabel} &rarr; <code className="font-mono">{slide.primaryCtaHref}</code>
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 text-center">
-                    <Badge variant={slide.isActive ? "default" : "secondary"}>
-                      {slide.isActive ? "Active" : "Draft"}
-                    </Badge>
-                  </td>
-                  <td className="px-6 py-4">
-                    <div className="flex items-center justify-end gap-2">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="h-8 w-8 p-0"
-                        onClick={() => openEdit(slide)}
-                      >
-                        <Pencil size={14} />
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="h-8 w-8 p-0 text-destructive hover:text-destructive"
-                        onClick={() => setDeleteTarget(slide)}
-                      >
-                        <Trash2 size={14} />
-                      </Button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+      {slides.length === 0 ? (
+        <div className="bg-card rounded-2xl border border-border shadow-[0_4px_12px_rgba(0,0,0,0.04)] flex flex-col items-center text-center py-16 px-6">
+          <div className="w-16 h-16 rounded-full bg-secondary flex items-center justify-center mb-5">
+            <Presentation size={30} className="text-primary" />
+          </div>
+          <h2 className="text-xl font-bold font-heading text-foreground mb-1">No hero slides yet</h2>
+          <p className="text-[var(--color-body)] max-w-sm">
+            Create slides to showcase on your homepage hero carousel.
+          </p>
         </div>
-      </div>
+      ) : (
+      <>
+        {/* Mobile card view */}
+        <div className="space-y-3 md:hidden">
+          {slides.map((slide) => (
+            <div key={slide.id} className="bg-card rounded-xl border border-border overflow-hidden shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
+              <div className="relative aspect-[16/7] bg-secondary">
+                {slide.image ? (
+                  <SafeImage
+                    src={slide.image}
+                    alt={slide.headline}
+                    fill
+                    sizes="(max-width: 768px) 100vw"
+                    className="object-cover"
+                  />
+                ) : (
+                  <div className="absolute inset-0 flex items-center justify-center text-muted-foreground">
+                    <ImageIcon size={24} />
+                  </div>
+                )}
+                <div className="absolute top-2 right-2">
+                  <Badge variant={slide.isActive ? "default" : "secondary"}>
+                    {slide.isActive ? "Active" : "Draft"}
+                  </Badge>
+                </div>
+                <div className="absolute top-2 left-2">
+                  <span className="bg-black/60 text-white text-xs px-2 py-0.5 rounded font-mono">
+                    #{slide.sortOrder}
+                  </span>
+                </div>
+              </div>
+              <div className="p-4">
+                <p className="font-semibold text-foreground text-sm line-clamp-1 mb-1">
+                  {slide.headline.replace(/\n/g, " ")}
+                </p>
+                <p className="text-xs text-muted-foreground line-clamp-1 mb-1">{slide.subtitle}</p>
+                {slide.badge && (
+                  <p className="text-xs text-muted-foreground">Badge: {slide.badge}</p>
+                )}
+                <div className="flex items-center justify-between pt-3 mt-3 border-t border-border">
+                  <span className="text-xs text-muted-foreground">
+                    {slide.primaryCtaLabel && <>{slide.primaryCtaLabel} &rarr; {slide.primaryCtaHref}</>}
+                  </span>
+                  <div className="flex items-center gap-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="h-8 w-8 p-0"
+                      onClick={() => openEdit(slide)}
+                    >
+                      <Pencil size={14} />
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="h-8 w-8 p-0 text-destructive hover:text-destructive"
+                      onClick={() => setDeleteTarget(slide)}
+                    >
+                      <Trash2 size={14} />
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Desktop table view */}
+        <div className="hidden md:block bg-card rounded-2xl border border-border shadow-[0_4px_12px_rgba(0,0,0,0.04)] overflow-hidden">
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-sm">
+              <thead>
+                <tr className="border-b border-border bg-secondary/50 text-[var(--color-body)]">
+                  <th className="font-semibold px-6 py-4 w-10">#</th>
+                  <th className="font-semibold px-6 py-4">Slide</th>
+                  <th className="font-semibold px-6 py-4">Badge</th>
+                  <th className="font-semibold px-6 py-4">Primary CTA</th>
+                  <th className="font-semibold px-6 py-4 text-center">Status</th>
+                  <th className="font-semibold px-6 py-4 text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-border">
+                {slides.map((slide) => (
+                  <tr key={slide.id} className="hover:bg-secondary/30 transition-colors">
+                    <td className="px-6 py-4 text-muted-foreground">{slide.sortOrder}</td>
+                    <td className="px-6 py-4">
+                      <div className="flex items-center gap-3">
+                        {slide.image ? (
+                          <div className="relative h-12 w-20 rounded-lg overflow-hidden shrink-0 bg-secondary">
+                            <SafeImage
+                              src={slide.image}
+                              alt={slide.headline}
+                              fill
+                              sizes="80px"
+                              className="object-cover"
+                            />
+                          </div>
+                        ) : (
+                          <div className="h-12 w-20 rounded-lg bg-secondary flex items-center justify-center text-muted-foreground">
+                            <ImageIcon size={16} />
+                          </div>
+                        )}
+                        <div className="min-w-0">
+                          <span className="font-semibold text-foreground line-clamp-1">
+                            {slide.headline.replace(/\n/g, " ")}
+                          </span>
+                          <p className="text-xs text-muted-foreground line-clamp-1">{slide.subtitle}</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 text-muted-foreground text-xs">{slide.badge}</td>
+                    <td className="px-6 py-4">
+                      <span className="text-xs text-muted-foreground">
+                        {slide.primaryCtaLabel} &rarr; <code className="font-mono">{slide.primaryCtaHref}</code>
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 text-center">
+                      <Badge variant={slide.isActive ? "default" : "secondary"}>
+                        {slide.isActive ? "Active" : "Draft"}
+                      </Badge>
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="flex items-center justify-end gap-2">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="h-8 w-8 p-0"
+                          onClick={() => openEdit(slide)}
+                        >
+                          <Pencil size={14} />
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="h-8 w-8 p-0 text-destructive hover:text-destructive"
+                          onClick={() => setDeleteTarget(slide)}
+                        >
+                          <Trash2 size={14} />
+                        </Button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </>
+      )}
 
       {/* Create / Edit Dialog */}
       <Dialog
@@ -313,7 +393,7 @@ export function HeroSlidesTable({ slides }: { slides: HeroSlide[] }) {
             </div>
 
             {/* Primary CTA */}
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="primaryCtaLabel">Primary CTA Label</Label>
                 <Input
@@ -335,7 +415,7 @@ export function HeroSlidesTable({ slides }: { slides: HeroSlide[] }) {
             </div>
 
             {/* Secondary CTA */}
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="secondaryCtaLabel">Secondary CTA Label</Label>
                 <Input
@@ -368,7 +448,7 @@ export function HeroSlidesTable({ slides }: { slides: HeroSlide[] }) {
             </div>
 
             {/* Sort Order & Active */}
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="sortOrder">Sort Order</Label>
                 <Input
@@ -379,7 +459,7 @@ export function HeroSlidesTable({ slides }: { slides: HeroSlide[] }) {
                   onChange={(e) => update("sortOrder", parseInt(e.target.value) || 0)}
                 />
               </div>
-              <div className="flex items-center gap-3 pt-7">
+              <div className="flex items-center gap-3 sm:pt-7">
                 <Switch
                   checked={formData.isActive}
                   onCheckedChange={(checked) => update("isActive", checked)}

@@ -11,7 +11,7 @@ export default function Footer() {
           <div className="space-y-4 col-span-2 lg:col-span-2">
             <Link href="/" className="flex items-center gap-2 text-white">
                <Leaf size={28} />
-               <span className="text-2xl font-bold tracking-tight font-heading">Vellimalai<span className="text-secondary">Farms</span></span>
+               <span className="text-xl font-bold tracking-tight font-heading">Vellimalai<span className="text-secondary">Farms</span></span>
             </Link>
             <p className="text-sm text-white/80 max-w-xs">
               Premium, organic mushrooms grown in the pristine Kalvarayan Hills, Vellimalai. We offer farm-fresh mushrooms, pre-orders, and expert farming training.
@@ -31,7 +31,7 @@ export default function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-lg font-semibold text-white mb-4">Shop</h3>
+            <h3 className="text-base font-semibold text-white mb-4">Shop</h3>
             <ul className="space-y-3 text-sm text-secondary">
               <li><Link href="/shop" className="hover:text-white transition-colors">All Products</Link></li>
               <li><Link href="/pre-order" className="hover:text-white transition-colors">Pre-Order Mushrooms</Link></li>
@@ -42,7 +42,7 @@ export default function Footer() {
 
           {/* Company */}
           <div>
-            <h3 className="text-lg font-semibold text-white mb-4">Company</h3>
+            <h3 className="text-base font-semibold text-white mb-4">Company</h3>
             <ul className="space-y-3 text-sm text-secondary">
               <li><Link href="/about" className="hover:text-white transition-colors">About Us</Link></li>
               <li><Link href="/training" className="hover:text-white transition-colors">Training Programs</Link></li>
@@ -52,7 +52,7 @@ export default function Footer() {
 
           {/* Contact Info */}
           <div className="col-span-2 sm:col-span-1">
-            <h3 className="text-lg font-semibold text-white mb-4">Reach Us</h3>
+            <h3 className="text-base font-semibold text-white mb-4">Reach Us</h3>
             <ul className="space-y-4 text-sm text-white/90">
               <li className="flex items-start gap-3">
                 <MapPin size={18} className="shrink-0 text-secondary" />

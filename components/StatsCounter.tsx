@@ -45,7 +45,7 @@ export function StatsCounter() {
           transition={{ duration: 0.5, delay: i * 0.1 }}
           className="text-center"
         >
-          <div className="text-3xl md:text-5xl font-bold text-white font-heading mb-2">
+          <div className="text-xl md:text-3xl font-bold text-white font-heading mb-2">
             <Counter value={stat.value} suffix={stat.suffix} />
           </div>
           <p className="text-white/70 text-sm md:text-base">{stat.label}</p>

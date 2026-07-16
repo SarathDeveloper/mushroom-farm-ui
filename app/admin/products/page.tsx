@@ -3,12 +3,19 @@ import { Plus } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import { Button } from "@/components/ui/button";
 import { ProductsTable } from "@/components/admin/ProductsTable";
+import { Pagination } from "@/components/admin/Pagination";
 
 export const metadata = {
   title: "Products · Admin",
 };
 
-export default async function AdminProductsPage() {
+export default async function AdminProductsPage(props: {
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  const searchParams = await props.searchParams;
+  const page = Math.max(1, Number(searchParams?.page) || 1);
+  const perPage = 20;
+
   let products: {
     id: string;
     name: string;
@@ -26,42 +33,49 @@ export default async function AdminProductsPage() {
     harvestDate: Date | null;
     category: { id: string; name: string };
   }[] = [];
+  let totalCount = 0;
 
   try {
-    products = await prisma.product.findMany({
-      select: {
-        id: true,
-        name: true,
-        slug: true,
-        description: true,
-        price: true,
-        weight: true,
-        stock: true,
-        lowStockThreshold: true,
-        isActive: true,
-        isFeatured: true,
-        images: true,
-        highlights: true,
-        rating: true,
-        harvestDate: true,
-        category: { select: { id: true, name: true } },
-      },
-      orderBy: { createdAt: "desc" },
-    });
+    [products, totalCount] = await Promise.all([
+      prisma.product.findMany({
+        select: {
+          id: true,
+          name: true,
+          slug: true,
+          description: true,
+          price: true,
+          weight: true,
+          stock: true,
+          lowStockThreshold: true,
+          isActive: true,
+          isFeatured: true,
+          images: true,
+          highlights: true,
+          rating: true,
+          harvestDate: true,
+          category: { select: { id: true, name: true } },
+        },
+        orderBy: { createdAt: "desc" },
+        skip: (page - 1) * perPage,
+        take: perPage,
+      }),
+      prisma.product.count(),
+    ]);
   } catch (error) {
     console.error("Failed to fetch products:", error);
   }
+
+  const totalPages = Math.ceil(totalCount / perPage);
 
   return (
     <div className="p-4 sm:p-6 lg:p-10">
       <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6 sm:mb-8">
         <div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold font-heading text-foreground">
+          <h1 className="text-xl md:text-2xl font-bold font-heading text-foreground">
             Products
           </h1>
           <p className="text-[var(--color-body)] mt-1 text-sm">
-            {products.length} product{products.length !== 1 && "s"} in your
-            catalog.
+            {totalCount} product{totalCount !== 1 && "s"} in your catalog.
           </p>
         </div>
         <Link href="/admin/products/new">
@@ -72,6 +86,7 @@ export default async function AdminProductsPage() {
       </header>
 
       <ProductsTable products={products} />
+      <Pagination currentPage={page} totalPages={totalPages} />
     </div>
   );
 }

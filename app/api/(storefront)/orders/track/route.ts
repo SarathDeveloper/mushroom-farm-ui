@@ -1,12 +1,13 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { errorResponse } from "@/lib/api-utils";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const id = searchParams.get("id")?.trim();
 
   if (!id) {
-    return NextResponse.json({ message: "Order ID is required." }, { status: 400 });
+    return errorResponse("Order ID is required.", 400);
   }
 
   const order = await prisma.order.findUnique({
@@ -29,7 +30,7 @@ export async function GET(request: Request) {
   });
 
   if (!order) {
-    return NextResponse.json({ message: "Order not found." }, { status: 404 });
+    return errorResponse("Order not found.", 404);
   }
 
   let city = "";

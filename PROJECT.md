@@ -113,6 +113,11 @@ Create a `.env` in the project root (do not commit secrets):
 | `RAZORPAY_KEY_ID` | Razorpay key id (server) |
 | `RAZORPAY_KEY_SECRET` | Razorpay secret (server) |
 | `NEXT_PUBLIC_RAZORPAY_KEY_ID` | Razorpay key id (client checkout) |
+| `TWILIO_ACCOUNT_SID` | Twilio account SID (required for SMS/WhatsApp) |
+| `TWILIO_AUTH_TOKEN` | Twilio auth token (required for SMS/WhatsApp) |
+| `TWILIO_SMS_FROM` | Twilio SMS sender number (e.g. `+1xxxxxxxxxx`) |
+| `TWILIO_WHATSAPP_FROM` | Twilio WhatsApp sender (e.g. `+1xxxxxxxxxx`) |
+| `APP_BASE_URL` | Public app URL for tracking links in notifications |
 
 ---
 
@@ -138,6 +143,16 @@ App: [http://localhost:3000](http://localhost:3000)
 | Dev | `npm run dev` |
 | Production build | `npm run build` then `npm run start` |
 | Lint | `npm run lint` |
+
+---
+
+## Production checklist (SMS / WhatsApp)
+
+1. Set `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN`, `TWILIO_SMS_FROM`, and `TWILIO_WHATSAPP_FROM` in the production `.env`.
+2. Enable the WhatsApp sender in the Twilio console (request a WhatsApp-enabled number or connect your business profile).
+3. Verify `APP_BASE_URL` is set to the public domain (e.g. `https://vellimalaifarms.in`) so order tracking links appear in notifications.
+4. The test OTP bypass (`1234`) is disabled in production (`NODE_ENV=production`). OTP delivery requires Twilio credentials.
+5. `devOtp` is never returned in API responses when `NODE_ENV=production`.
 
 ---
 

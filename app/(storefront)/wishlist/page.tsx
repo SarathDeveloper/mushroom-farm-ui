@@ -24,7 +24,7 @@ export default async function WishlistPage() {
         image="https://images.unsplash.com/photo-1518977956812-cd3dbadaaf31?q=80&w=2000&auto=format&fit=crop"
       />
 
-      <section className="py-16 bg-background">
+      <section className="py-20 sm:py-28 bg-background">
         <WishlistClient products={products} />
       </section>
     </div>

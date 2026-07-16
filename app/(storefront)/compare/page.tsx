@@ -47,7 +47,7 @@ const mushrooms = [
   {
     name: "Button",
     slug: "organic-button-mushroom",
-    image: "https://images.unsplash.com/photo-1611105637889-3fa70db2b271?q=80&w=400&auto=format&fit=crop",
+    image: "/gallery/products/button-mushrooms-Dj92oXDo.jpg",
     calories: 22,
     protein: "3.1g",
     fiber: "1.0g",
@@ -96,7 +96,7 @@ export default function ComparePage() {
         image="https://images.unsplash.com/photo-1445282768818-728615cc910a?q=80&w=2000&auto=format&fit=crop"
       />
 
-      <section className="py-16 bg-background">
+      <section className="py-20 sm:py-28 bg-background">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
           {/* Comparison Cards */}
           <FadeIn className="mb-16">
@@ -109,8 +109,8 @@ export default function ComparePage() {
                   </div>
                   <div className="p-5 space-y-3">
                     <div className="flex items-center justify-between text-sm">
-                      <span className="text-muted-foreground">Calories</span>
-                      <span className="font-bold text-foreground">{m.calories} kcal</span>
+                      <span className="text-muted-foreground text-xs">Calories</span>
+                      <span className="font-bold text-foreground text-xs">{m.calories} kcal</span>
                     </div>
                     <div className="flex items-center justify-between text-sm">
                       <span className="text-muted-foreground">Protein</span>
@@ -158,7 +158,7 @@ export default function ComparePage() {
 
           {/* Recommendation by Goal */}
           <FadeIn>
-            <h2 className="text-2xl md:text-3xl font-bold font-heading text-foreground text-center mb-8">
+            <h2 className="text-xl md:text-2xl font-bold font-heading text-foreground text-center mb-8">
               Which Mushroom For Your Goal?
             </h2>
             <div className="max-w-3xl mx-auto space-y-4">
@@ -169,16 +169,16 @@ export default function ComparePage() {
                   </div>
                   <div className="flex-1">
                     <h3 className="font-bold text-foreground text-sm">{uc.goal}</h3>
-                    <p className="text-xs text-[var(--color-body)]">{uc.reason}</p>
+                    <p className="text-sm text-[var(--color-body)]">{uc.reason}</p>
                   </div>
-                  <Badge className="bg-primary/10 text-primary font-bold shrink-0">{uc.recommended}</Badge>
+                  <Badge className="bg-primary/10 text-primary font-bold shrink-0 text-xs">{uc.recommended}</Badge>
                 </div>
               ))}
             </div>
           </FadeIn>
 
           <FadeIn className="text-center mt-16">
-            <p className="text-sm text-muted-foreground mb-4">All values per 100g of raw mushroom. Individual results may vary.</p>
+            <p className="text-xs text-muted-foreground mb-4">All values per 100g of raw mushroom. Individual results may vary.</p>
             <Button asChild className="rounded-full px-8">
               <Link href="/shop">Shop All Mushrooms</Link>
             </Button>

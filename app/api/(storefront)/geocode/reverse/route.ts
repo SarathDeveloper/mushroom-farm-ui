@@ -1,11 +1,12 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import { errorResponse } from "@/lib/api-utils";
 
 export async function GET(request: Request) {
   const session = await getServerSession(authOptions);
   if (!session?.user?.id) {
-    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+    return errorResponse("Unauthorized", 401);
   }
 
   const { searchParams } = new URL(request.url);
@@ -13,10 +14,10 @@ export async function GET(request: Request) {
   const lon = Number(searchParams.get("lon"));
 
   if (!Number.isFinite(lat) || !Number.isFinite(lon)) {
-    return NextResponse.json({ message: "Invalid coordinates." }, { status: 400 });
+    return errorResponse("Invalid coordinates.", 400);
   }
   if (lat < -90 || lat > 90 || lon < -180 || lon > 180) {
-    return NextResponse.json({ message: "Coordinates out of range." }, { status: 400 });
+    return errorResponse("Coordinates out of range.", 400);
   }
 
   try {
@@ -35,19 +36,13 @@ export async function GET(request: Request) {
     });
 
     if (!res.ok) {
-      return NextResponse.json(
-        { message: "Could not look up address for this location." },
-        { status: 502 },
-      );
+      return errorResponse("Could not look up address for this location.", 502);
     }
 
     const data = await res.json();
     return NextResponse.json(data);
   } catch (error) {
     console.error("Reverse geocode error:", error);
-    return NextResponse.json(
-      { message: "Address lookup failed. Please try again." },
-      { status: 500 },
-    );
+    return errorResponse("Address lookup failed. Please try again.", 500);
   }
 }

@@ -20,8 +20,8 @@ export function WishlistClient({ products }: { products: any[] }) {
           <div className="w-20 h-20 rounded-full bg-secondary flex items-center justify-center mb-6">
             <Heart size={36} className="text-primary" />
           </div>
-          <h2 className="text-2xl font-bold font-heading text-foreground mb-2">Your wishlist is empty</h2>
-          <p className="text-[var(--color-body)] mb-8 max-w-sm">
+          <h2 className="text-xl md:text-2xl font-bold font-heading text-foreground mb-2">Your wishlist is empty</h2>
+          <p className="text-[var(--color-body)] mb-8 max-w-sm text-sm sm:text-base">
             Tap the heart icon on any product to save it here for later.
           </p>
           <Button asChild size="lg" className="rounded-full px-8">

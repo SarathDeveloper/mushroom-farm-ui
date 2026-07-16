@@ -1,43 +1,14 @@
 import Link from "next/link";
-import { PackageSearch, Eye } from "lucide-react";
+import { PackageSearch, Plus } from "lucide-react";
 import { prisma } from "@/lib/prisma";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { OrderStatusSelect } from "@/components/admin/OrderStatusSelect";
 import { OrderFilters } from "@/components/admin/OrderFilters";
+import { OrderBulkActions } from "@/components/admin/OrderBulkActions";
+import { Pagination } from "@/components/admin/Pagination";
 
 export const metadata = {
   title: "Orders · Admin",
 };
-
-const statusVariant: Record<
-  string,
-  "default" | "secondary" | "success" | "warning" | "destructive"
-> = {
-  PENDING: "warning",
-  PROCESSING: "secondary",
-  SHIPPED: "default",
-  DELIVERED: "success",
-  CANCELLED: "destructive",
-};
-
-const paymentVariant: Record<
-  string,
-  "default" | "secondary" | "success" | "warning" | "destructive"
-> = {
-  PENDING: "warning",
-  COMPLETED: "success",
-  FAILED: "destructive",
-  REFUNDED: "secondary",
-};
-
-function formatDate(date: Date) {
-  return new Date(date).toLocaleDateString("en-IN", {
-    day: "numeric",
-    month: "short",
-    year: "numeric",
-  });
-}
 
 function parseShippingAddress(json: string): { city?: string } {
   try {
@@ -54,40 +25,64 @@ export default async function AdminOrdersPage(props: {
   const statusFilter = searchParams?.status as string | undefined;
   const dateFilter = searchParams?.date as string | undefined;
   const cityFilter = searchParams?.city as string | undefined;
+  const searchQuery = searchParams?.q as string | undefined;
+  const page = Math.max(1, Number(searchParams?.page) || 1);
+  const perPage = 20;
 
-  let orders: any[] = [];
-  try {
-    orders = await prisma.order.findMany({
-      orderBy: { createdAt: "desc" },
-      include: {
-        user: { select: { name: true, email: true, phone: true } },
-        orderItems: { include: { product: { select: { name: true, images: true } } } },
-      },
-    });
-  } catch {
-    orders = [];
+  // Build Prisma where clause for database-level filtering
+  const where: Record<string, unknown> = {};
+
+  if (searchQuery) {
+    where.OR = [
+      { id: { contains: searchQuery, mode: "insensitive" } },
+      { user: { name: { contains: searchQuery, mode: "insensitive" } } },
+      { user: { email: { contains: searchQuery, mode: "insensitive" } } },
+    ];
   }
 
-  // Apply filters
-  let filtered = orders;
   if (statusFilter && statusFilter !== "all") {
-    filtered = filtered.filter((o) => o.status === statusFilter);
+    where.status = statusFilter;
   }
+
   if (dateFilter) {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     if (dateFilter === "today") {
-      filtered = filtered.filter((o) => new Date(o.createdAt) >= today);
+      where.createdAt = { gte: today };
     } else if (dateFilter === "week") {
       const weekAgo = new Date(today);
       weekAgo.setDate(weekAgo.getDate() - 7);
-      filtered = filtered.filter((o) => new Date(o.createdAt) >= weekAgo);
+      where.createdAt = { gte: weekAgo };
     } else if (dateFilter === "month") {
       const monthAgo = new Date(today);
       monthAgo.setMonth(monthAgo.getMonth() - 1);
-      filtered = filtered.filter((o) => new Date(o.createdAt) >= monthAgo);
+      where.createdAt = { gte: monthAgo };
     }
   }
+
+  let orders: any[] = [];
+  let totalCount = 0;
+  try {
+    [orders, totalCount] = await Promise.all([
+      prisma.order.findMany({
+        where,
+        orderBy: { createdAt: "desc" },
+        skip: (page - 1) * perPage,
+        take: perPage,
+        include: {
+          user: { select: { name: true, email: true, phone: true } },
+          orderItems: { include: { product: { select: { name: true, images: true } } } },
+        },
+      }),
+      prisma.order.count({ where }),
+    ]);
+  } catch {
+    orders = [];
+  }
+  const totalPages = Math.ceil(totalCount / perPage);
+
+  // City filtering stays client-side (requires JSON parsing of shippingAddress)
+  let filtered = orders;
   if (cityFilter && cityFilter !== "all") {
     filtered = filtered.filter((o) => {
       const addr = parseShippingAddress(o.shippingAddress);
@@ -95,7 +90,7 @@ export default async function AdminOrdersPage(props: {
     });
   }
 
-  // Get unique cities for filter
+  // Get unique cities for filter (from all fetched orders)
   const cities = [
     ...new Set(
       orders
@@ -104,20 +99,55 @@ export default async function AdminOrdersPage(props: {
     ),
   ];
 
+  // Stats from unfiltered count (for the header summary)
+  let totalOrders = 0;
+  let pendingOrders = 0;
+  let processingOrders = 0;
+  let shippedOrders = 0;
+  try {
+    [totalOrders, pendingOrders, processingOrders, shippedOrders] = await Promise.all([
+      prisma.order.count(),
+      prisma.order.count({ where: { status: "PENDING" } }),
+      prisma.order.count({ where: { status: "PROCESSING" } }),
+      prisma.order.count({ where: { status: "SHIPPED" } }),
+    ]);
+  } catch {
+    // fallback to 0
+  }
+
   const stats = {
-    total: orders.length,
-    pending: orders.filter((o) => o.status === "PENDING").length,
-    processing: orders.filter((o) => o.status === "PROCESSING").length,
-    shipped: orders.filter((o) => o.status === "SHIPPED").length,
+    total: totalOrders,
+    pending: pendingOrders,
+    processing: processingOrders,
+    shipped: shippedOrders,
   };
+
+  // Serialize orders for client component
+  const serializedOrders = filtered.map((o: any) => ({
+    id: o.id,
+    status: o.status,
+    paymentStatus: o.paymentStatus,
+    totalAmount: o.totalAmount as number,
+    createdAt: o.createdAt.toISOString(),
+    shippingAddress: o.shippingAddress,
+    user: o.user ? { name: o.user.name, email: o.user.email } : null,
+    orderItems: o.orderItems.map((item: any) => ({ id: item.id })),
+  }));
 
   return (
     <div className="p-4 sm:p-6 lg:p-10">
-      <header className="mb-6 sm:mb-8">
-        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold font-heading text-foreground">Orders</h1>
-        <p className="text-[var(--color-body)] mt-1 text-xs sm:text-sm">
-          {orders.length} total · {stats.pending} pending · {stats.processing} processing · {stats.shipped} shipped
-        </p>
+      <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6 sm:mb-8">
+        <div>
+          <h1 className="text-xl md:text-2xl font-bold font-heading text-foreground">Orders</h1>
+          <p className="text-[var(--color-body)] mt-1 text-xs sm:text-sm">
+            {stats.total} total · {stats.pending} pending · {stats.processing} processing · {stats.shipped} shipped
+          </p>
+        </div>
+        <Link href="/admin/orders/new">
+          <Button className="gap-2 w-full sm:w-auto">
+            <Plus size={18} /> Create Order
+          </Button>
+        </Link>
       </header>
 
       <OrderFilters cities={cities} />
@@ -129,127 +159,15 @@ export default async function AdminOrdersPage(props: {
           </div>
           <h2 className="text-xl font-bold font-heading text-foreground mb-1">No orders found</h2>
           <p className="text-[var(--color-body)] max-w-sm">
-            {statusFilter || dateFilter || cityFilter
+            {statusFilter || dateFilter || cityFilter || searchQuery
               ? "Try adjusting your filters."
               : "Orders will appear here once customers start buying."}
           </p>
         </div>
       ) : (
         <>
-          {/* Mobile card view */}
-          <div className="space-y-3 md:hidden">
-            {filtered.map((order: any) => {
-              const addr = parseShippingAddress(order.shippingAddress);
-              return (
-                <div key={order.id} className="bg-card rounded-xl border border-border p-4 shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="font-bold text-foreground text-sm">
-                      #{order.id.slice(0, 8).toUpperCase()}
-                    </span>
-                    <Badge variant={statusVariant[order.status] ?? "secondary"} className="text-[10px]">
-                      {order.status}
-                    </Badge>
-                  </div>
-                  <div className="space-y-1.5 text-sm mb-3">
-                    <p className="text-foreground font-medium">{order.user?.name || "Guest"}</p>
-                    <p className="text-xs text-muted-foreground">{order.user?.email}</p>
-                    <div className="flex items-center gap-3 text-xs text-muted-foreground">
-                      <span>{formatDate(order.createdAt)}</span>
-                      {addr.city && <span>· {addr.city}</span>}
-                      <span>· {order.orderItems.length} items</span>
-                    </div>
-                  </div>
-                  <div className="flex items-center justify-between pt-3 border-t border-border">
-                    <div className="flex items-center gap-2">
-                      <span className="font-bold text-foreground">₹{order.totalAmount.toLocaleString("en-IN")}</span>
-                      <Badge variant={paymentVariant[order.paymentStatus] ?? "secondary"} className="text-[10px]">
-                        {order.paymentStatus}
-                      </Badge>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <OrderStatusSelect orderId={order.id} currentStatus={order.status} />
-                      <Link href={`/admin/orders/${order.id}`}>
-                        <Button variant="outline" size="sm" className="h-8 w-8 p-0">
-                          <Eye size={14} />
-                        </Button>
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-
-          {/* Desktop table view */}
-          <div className="hidden md:block bg-card rounded-2xl border border-border shadow-[0_4px_12px_rgba(0,0,0,0.04)] overflow-hidden">
-            <div className="overflow-x-auto">
-              <table className="w-full text-left text-sm">
-                <thead>
-                  <tr className="border-b border-border bg-secondary/50 text-[var(--color-body)]">
-                    <th className="font-semibold px-6 py-4">Order</th>
-                    <th className="font-semibold px-6 py-4">Customer</th>
-                    <th className="font-semibold px-6 py-4">City</th>
-                    <th className="font-semibold px-6 py-4">Date</th>
-                    <th className="font-semibold px-6 py-4">Items</th>
-                    <th className="font-semibold px-6 py-4">Total</th>
-                    <th className="font-semibold px-6 py-4">Payment</th>
-                    <th className="font-semibold px-6 py-4">Status</th>
-                    <th className="font-semibold px-6 py-4 text-right">Actions</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-border">
-                  {filtered.map((order: any) => {
-                    const addr = parseShippingAddress(order.shippingAddress);
-                    return (
-                      <tr key={order.id} className="hover:bg-secondary/30 transition-colors">
-                        <td className="px-6 py-4 font-semibold text-foreground">
-                          #{order.id.slice(0, 8).toUpperCase()}
-                        </td>
-                        <td className="px-6 py-4">
-                          <div>
-                            <p className="font-medium text-foreground">
-                              {order.user?.name || "Guest"}
-                            </p>
-                            <p className="text-xs text-muted-foreground">{order.user?.email}</p>
-                          </div>
-                        </td>
-                        <td className="px-6 py-4 text-[var(--color-body)]">
-                          {addr.city || "—"}
-                        </td>
-                        <td className="px-6 py-4 text-[var(--color-body)]">
-                          {formatDate(order.createdAt)}
-                        </td>
-                        <td className="px-6 py-4 text-[var(--color-body)]">
-                          {order.orderItems.length}
-                        </td>
-                        <td className="px-6 py-4 font-semibold text-foreground">
-                          ₹{order.totalAmount.toLocaleString("en-IN")}
-                        </td>
-                        <td className="px-6 py-4">
-                          <Badge variant={paymentVariant[order.paymentStatus] ?? "secondary"}>
-                            {order.paymentStatus}
-                          </Badge>
-                        </td>
-                        <td className="px-6 py-4">
-                          <OrderStatusSelect
-                            orderId={order.id}
-                            currentStatus={order.status}
-                          />
-                        </td>
-                        <td className="px-6 py-4 text-right">
-                          <Link href={`/admin/orders/${order.id}`}>
-                            <Button variant="outline" size="sm" className="h-8 gap-1.5">
-                              <Eye size={14} /> View
-                            </Button>
-                          </Link>
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
-          </div>
+          <OrderBulkActions orders={serializedOrders} />
+          <Pagination currentPage={page} totalPages={totalPages} />
         </>
       )}
     </div>

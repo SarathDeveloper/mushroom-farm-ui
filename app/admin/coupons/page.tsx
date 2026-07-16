@@ -1,18 +1,32 @@
 import { Ticket } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import { CouponsTable } from "@/components/admin/CouponsTable";
+import { Pagination } from "@/components/admin/Pagination";
 
 export const metadata = {
   title: "Coupons · Admin",
 };
 
-export default async function AdminCouponsPage() {
-  const coupons = await prisma.coupon.findMany({
-    orderBy: { createdAt: "desc" },
-  });
+export default async function AdminCouponsPage(props: {
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  const searchParams = await props.searchParams;
+  const page = Math.max(1, Number(searchParams?.page) || 1);
+  const perPage = 20;
+
+  const [coupons, totalCount] = await Promise.all([
+    prisma.coupon.findMany({
+      orderBy: { createdAt: "desc" },
+      skip: (page - 1) * perPage,
+      take: perPage,
+    }),
+    prisma.coupon.count(),
+  ]);
+
+  const totalPages = Math.ceil(totalCount / perPage);
 
   const stats = {
-    total: coupons.length,
+    total: totalCount,
     active: coupons.filter((c) => c.isActive && new Date(c.expiryDate) > new Date()).length,
     expired: coupons.filter((c) => new Date(c.expiryDate) <= new Date()).length,
   };
@@ -20,7 +34,7 @@ export default async function AdminCouponsPage() {
   return (
     <div className="p-4 sm:p-6 lg:p-10">
       <header className="mb-6 sm:mb-8">
-        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold font-heading text-foreground">
+        <h1 className="text-xl md:text-2xl font-bold font-heading text-foreground">
           Coupons & Promotions
         </h1>
         <p className="text-[var(--color-body)] mt-1 text-xs sm:text-sm">
@@ -39,7 +53,10 @@ export default async function AdminCouponsPage() {
           </p>
         </div>
       ) : (
-        <CouponsTable coupons={coupons} />
+        <>
+          <CouponsTable coupons={coupons} />
+          <Pagination currentPage={page} totalPages={totalPages} />
+        </>
       )}
     </div>
   );

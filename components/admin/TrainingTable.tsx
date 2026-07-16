@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { Pencil, Trash2, Loader2, Users, Plus, Calendar, IndianRupee } from "lucide-react";
+import { Pencil, Trash2, Loader2, Users, Plus, Calendar, IndianRupee, GraduationCap } from "lucide-react";
 import toast from "react-hot-toast";
 
 import { SafeImage } from "@/components/SafeImage";
@@ -228,6 +228,17 @@ export function TrainingTable({ programs }: { programs: Training[] }) {
         </Button>
       </div>
 
+      {programs.length === 0 ? (
+        <div className="bg-card rounded-2xl border border-border shadow-[0_4px_12px_rgba(0,0,0,0.04)] flex flex-col items-center text-center py-16 px-6">
+          <div className="w-16 h-16 rounded-full bg-secondary flex items-center justify-center mb-5">
+            <GraduationCap size={30} className="text-primary" />
+          </div>
+          <h2 className="text-xl font-bold font-heading text-foreground mb-1">No training programs</h2>
+          <p className="text-[var(--color-body)] max-w-sm">
+            Create training programs for mushroom farming education.
+          </p>
+        </div>
+      ) : (
       <div className="grid gap-6">
         {programs.map((prog) => (
           <div
@@ -300,6 +311,7 @@ export function TrainingTable({ programs }: { programs: Training[] }) {
           </div>
         ))}
       </div>
+      )}
 
       {/* Create/Edit Dialog */}
       <Dialog open={dialogOpen} onOpenChange={(open) => {
@@ -312,7 +324,7 @@ export function TrainingTable({ programs }: { programs: Training[] }) {
         <DialogContent className="sm:max-w-xl max-h-[90vh] overflow-y-auto">
           <DialogTitle>{editTarget ? "Edit Program" : "Add Program"}</DialogTitle>
           <div className="space-y-4 mt-4">
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="title">Title *</Label>
                 <Input
@@ -352,7 +364,7 @@ export function TrainingTable({ programs }: { programs: Training[] }) {
               />
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="fees">Fees (₹) *</Label>
                 <Input
@@ -374,7 +386,7 @@ export function TrainingTable({ programs }: { programs: Training[] }) {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="trainer">Trainer</Label>
                 <Input
@@ -395,7 +407,7 @@ export function TrainingTable({ programs }: { programs: Training[] }) {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="startDate">Start Date *</Label>
                 <Input

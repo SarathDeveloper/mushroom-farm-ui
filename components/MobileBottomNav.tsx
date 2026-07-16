@@ -41,7 +41,7 @@ export function MobileBottomNav() {
                   </span>
                 )}
               </div>
-              <span className="text-[10px] font-medium">{tab.label}</span>
+              <span className="text-xs font-medium">{tab.label}</span>
               {isActive && (
                 <span className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-0.5 rounded-full bg-primary" />
               )}

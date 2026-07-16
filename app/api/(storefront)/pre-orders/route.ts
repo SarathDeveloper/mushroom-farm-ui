@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
+import { errorResponse } from "@/lib/api-utils";
 
 const preOrderSchema = z.object({
   name: z.string().min(2, "Name is required"),
@@ -18,15 +19,12 @@ export async function POST(request: Request) {
   try {
     body = await request.json();
   } catch {
-    return NextResponse.json({ message: "Invalid request body." }, { status: 400 });
+    return errorResponse("Invalid request body.", 400);
   }
 
   const parsed = preOrderSchema.safeParse(body);
   if (!parsed.success) {
-    return NextResponse.json(
-      { message: parsed.error.issues[0]?.message ?? "Invalid input." },
-      { status: 400 }
-    );
+    return errorResponse(parsed.error.issues[0]?.message ?? "Invalid input.", 400);
   }
 
   try {
@@ -37,12 +35,6 @@ export async function POST(request: Request) {
     );
   } catch (error) {
     console.error("Pre-order submission error:", error);
-    return NextResponse.json(
-      {
-        message:
-          "We couldn't submit your pre-order right now. Please ensure the database is configured and try again.",
-      },
-      { status: 500 }
-    );
+    return errorResponse("We couldn't submit your pre-order right now. Please ensure the database is configured and try again.", 500);
   }
 }

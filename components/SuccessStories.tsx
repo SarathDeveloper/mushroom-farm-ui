@@ -38,14 +38,14 @@ const stories = [
 
 export function SuccessStories() {
   return (
-    <section className="py-20 bg-background">
+    <section className="py-24 sm:py-32 bg-background">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         <FadeIn className="text-center mb-14">
           <span className="text-xs font-bold text-[#2B7A5D] uppercase tracking-wider bg-[#E8F2EC] px-3.5 py-1.5 rounded-full">Real Results</span>
-          <h2 className="text-3xl md:text-4xl font-extrabold text-foreground mt-4 font-heading">
+          <h2 className="text-2xl md:text-3xl font-extrabold text-foreground mt-4 font-heading">
             Success Stories
           </h2>
-          <p className="text-[var(--color-body)] max-w-2xl mx-auto mt-4 text-base">
+          <p className="text-[var(--color-body)] max-w-2xl mx-auto mt-4 text-xs sm:text-sm">
             From restaurant owners to first-time farmers — see how Vellimalai Farms creates real impact.
           </p>
         </FadeIn>
@@ -61,7 +61,7 @@ export function SuccessStories() {
               className="bg-card rounded-3xl border border-border p-8 flex flex-col hover:shadow-[0_12px_30px_rgba(0,0,0,0.04)] transition-all duration-300 hover:-translate-y-1"
             >
               <div className="flex items-center justify-between mb-5">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-[#2B7A5D] bg-[#E8F2EC] px-3.5 py-1 rounded-full">
+                <span className="text-xs font-bold uppercase tracking-wider text-[#2B7A5D] bg-[#E8F2EC] px-3.5 py-1 rounded-full">
                   {story.type}
                 </span>
                 <Quote size={28} className="text-[#F4F0E6]" />
@@ -77,7 +77,7 @@ export function SuccessStories() {
                 </div>
                 <div>
                   <p className="font-extrabold text-foreground text-sm">{story.metric}</p>
-                  <p className="text-[11px] text-[#5C6370]">{story.metricLabel}</p>
+                  <p className="text-xs text-muted-foreground">{story.metricLabel}</p>
                 </div>
               </div>
 
@@ -86,7 +86,7 @@ export function SuccessStories() {
                   <SafeImage src={story.image} alt={story.name} fill sizes="44px" className="object-cover" />
                 </div>
                 <div>
-                  <h4 className="font-bold text-[#0B0B0B] text-sm">{story.name}</h4>
+                  <h4 className="font-bold text-foreground text-sm">{story.name}</h4>
                   <p className="text-xs text-muted-foreground">{story.role}</p>
                 </div>
               </div>

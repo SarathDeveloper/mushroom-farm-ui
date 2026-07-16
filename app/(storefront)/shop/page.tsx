@@ -3,10 +3,13 @@ import { PageHero } from "@/components/PageHero";
 import { ProductCard } from "@/components/ProductCard";
 import { FadeIn } from "@/components/FadeIn";
 import { ShopControls } from "@/components/ShopControls";
+import { Pagination } from "@/components/admin/Pagination";
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import type { Product } from "@/lib/data";
+
+const PRODUCTS_PER_PAGE = 12;
 
 type DbProduct = Omit<Product, "category" | "image" | "gallery"> & {
   images: string[];
@@ -56,8 +59,7 @@ export default async function ShopPage(props: {
   const activeCategorySlug = searchParams?.category as string | undefined;
   const sort = searchParams?.sort as string | undefined;
   const query = searchParams?.q as string | undefined;
-
-  const categories: ShopCategory[] = await prisma.category.findMany();
+  const page = Math.max(1, Number(searchParams?.page) || 1);
 
   const where: ProductWhere = {
     isActive: true,
@@ -74,12 +76,19 @@ export default async function ShopPage(props: {
     ];
   }
 
-  const prismaProducts = await prisma.product.findMany({
-    where,
-    include: { category: true },
-    orderBy: getOrderBy(sort),
-  });
+  const [categories, prismaProducts, totalCount] = await Promise.all([
+    prisma.category.findMany() as Promise<ShopCategory[]>,
+    prisma.product.findMany({
+      where,
+      include: { category: true },
+      orderBy: getOrderBy(sort),
+      skip: (page - 1) * PRODUCTS_PER_PAGE,
+      take: PRODUCTS_PER_PAGE,
+    }),
+    prisma.product.count({ where }),
+  ]);
 
+  const totalPages = Math.ceil(totalCount / PRODUCTS_PER_PAGE);
   const products: Product[] = prismaProducts.map((product: DbProduct) =>
     mapProduct(product)
   );
@@ -93,34 +102,36 @@ export default async function ShopPage(props: {
         image="https://images.unsplash.com/photo-1518977676601-b53f82aba655?q=80&w=2000&auto=format&fit=crop"
       />
 
-      <section className="py-16 bg-background">
+      <section className="py-20 sm:py-28 bg-background">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-          <FadeIn className="flex flex-wrap items-center justify-center gap-3 mb-8">
-            <Link
-              href="/shop"
-              className={cn(
-                "px-5 py-2.5 rounded-full text-sm font-semibold transition-colors border",
-                !activeCategorySlug || activeCategorySlug === "all"
-                  ? "bg-primary text-white border-primary"
-                  : "bg-secondary text-secondary-foreground border-border hover:border-primary hover:text-primary"
-              )}
-            >
-              All
-            </Link>
-            {categories.map((category) => (
+          <FadeIn className="mb-8 -mx-4 sm:mx-0">
+            <div className="flex sm:flex-wrap sm:justify-center gap-3 overflow-x-auto scrollbar-hide px-4 sm:px-0 pb-2 sm:pb-0">
               <Link
-                key={category.id}
-                href={`/shop?category=${category.slug}`}
+                href="/shop"
                 className={cn(
-                  "px-5 py-2.5 rounded-full text-sm font-semibold transition-colors border",
-                  activeCategorySlug === category.slug
+                  "px-5 py-2.5 rounded-full text-sm font-semibold transition-colors border whitespace-nowrap shrink-0",
+                  !activeCategorySlug || activeCategorySlug === "all"
                     ? "bg-primary text-white border-primary"
                     : "bg-secondary text-secondary-foreground border-border hover:border-primary hover:text-primary"
                 )}
               >
-                {category.name}
+                All
               </Link>
-            ))}
+              {categories.map((category) => (
+                <Link
+                  key={category.id}
+                  href={`/shop?category=${category.slug}`}
+                  className={cn(
+                    "px-5 py-2.5 rounded-full text-sm font-semibold transition-colors border whitespace-nowrap shrink-0",
+                    activeCategorySlug === category.slug
+                      ? "bg-primary text-white border-primary"
+                      : "bg-secondary text-secondary-foreground border-border hover:border-primary hover:text-primary"
+                  )}
+                >
+                  {category.name}
+                </Link>
+              ))}
+            </div>
           </FadeIn>
 
           <Suspense>
@@ -128,7 +139,7 @@ export default async function ShopPage(props: {
           </Suspense>
 
           <FadeIn className="mb-8 text-center text-sm text-muted-foreground">
-            Showing {products.length} product{products.length !== 1 && "s"}
+            Showing {products.length} of {totalCount} product{totalCount !== 1 && "s"}
             {query && (
               <span>
                 {" "}
@@ -138,14 +149,21 @@ export default async function ShopPage(props: {
           </FadeIn>
 
           {products.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-              {products.map((product, i) => (
-                <FadeIn key={product.id} delay={(i % 3) * 0.08}>
-                  {/* @ts-ignore */}
-                  <ProductCard product={product} priority={i < 3} />
-                </FadeIn>
-              ))}
-            </div>
+            <>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+                {products.map((product, i) => (
+                  <FadeIn key={product.id} delay={(i % 3) * 0.08}>
+                    {/* @ts-ignore */}
+                    <ProductCard product={product} priority={i < 3} />
+                  </FadeIn>
+                ))}
+              </div>
+              {totalPages > 1 && (
+                <div className="mt-12">
+                  <Pagination currentPage={page} totalPages={totalPages} />
+                </div>
+              )}
+            </>
           ) : (
             <div className="text-center py-20 text-muted-foreground">
               {query

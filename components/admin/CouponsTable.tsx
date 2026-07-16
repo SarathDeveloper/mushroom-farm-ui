@@ -176,7 +176,79 @@ export function CouponsTable({ coupons }: { coupons: Coupon[] }) {
         </Button>
       </div>
 
-      <div className="bg-card rounded-2xl border border-border shadow-[0_4px_12px_rgba(0,0,0,0.04)] overflow-hidden">
+      {/* Mobile card view */}
+      <div className="space-y-3 md:hidden">
+        {coupons.map((coupon) => {
+          const isExpired = new Date(coupon.expiryDate) <= now;
+          return (
+            <div
+              key={coupon.id}
+              className={`bg-card rounded-xl border border-border p-4 shadow-[0_2px_8px_rgba(0,0,0,0.04)] ${!coupon.isActive || isExpired ? "opacity-60" : ""}`}
+            >
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-2">
+                  <span className="font-mono font-bold text-foreground bg-secondary px-2 py-1 rounded text-sm">
+                    {coupon.code}
+                  </span>
+                  <CopyButton text={coupon.code} />
+                </div>
+                {isExpired ? (
+                  <Badge variant="destructive">Expired</Badge>
+                ) : coupon.isActive ? (
+                  <Badge variant="success">Active</Badge>
+                ) : (
+                  <Badge variant="secondary">Inactive</Badge>
+                )}
+              </div>
+              <div className="space-y-1.5 text-sm mb-3">
+                <p className="font-semibold text-primary">
+                  {coupon.isPercentage ? (
+                    <>
+                      {coupon.discountValue}% off
+                      {coupon.maxDiscount && (
+                        <span className="text-xs text-muted-foreground ml-1">
+                          (max ₹{coupon.maxDiscount})
+                        </span>
+                      )}
+                    </>
+                  ) : (
+                    <>₹{coupon.discountValue} off</>
+                  )}
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  {coupon.minOrderValue ? `Min order: ₹${coupon.minOrderValue}` : "No minimum order"}
+                </p>
+              </div>
+              <div className="flex items-center justify-between pt-3 border-t border-border">
+                <span className="text-xs text-muted-foreground">
+                  Expires: {formatDate(coupon.expiryDate)}
+                </span>
+                <div className="flex items-center gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="h-8 w-8 p-0"
+                    onClick={() => openEdit(coupon)}
+                  >
+                    <Pencil size={14} />
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="h-8 w-8 p-0 text-destructive hover:text-destructive"
+                    onClick={() => setDeleteTarget(coupon)}
+                  >
+                    <Trash2 size={14} />
+                  </Button>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Desktop table view */}
+      <div className="hidden md:block bg-card rounded-2xl border border-border shadow-[0_4px_12px_rgba(0,0,0,0.04)] overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm">
             <thead>
@@ -290,7 +362,7 @@ export function CouponsTable({ coupons }: { coupons: Coupon[] }) {
               />
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="discountValue">Discount Value *</Label>
                 <div className="relative">
@@ -319,7 +391,7 @@ export function CouponsTable({ coupons }: { coupons: Coupon[] }) {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="minOrderValue">Min Order (₹)</Label>
                 <Input
@@ -346,7 +418,7 @@ export function CouponsTable({ coupons }: { coupons: Coupon[] }) {
               )}
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="expiryDate">Expiry Date *</Label>
                 <Input

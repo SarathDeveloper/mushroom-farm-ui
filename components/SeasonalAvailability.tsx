@@ -34,7 +34,7 @@ const seasonalItems = [
   {
     name: "Button Mushroom",
     status: "available" as const,
-    image: "https://images.unsplash.com/photo-1611105637889-3fa70db2b271?q=80&w=400&auto=format&fit=crop",
+    image: "/gallery/products/button-mushrooms-Dj92oXDo.jpg",
     badge: "Available",
     note: "Year-round supply",
     slug: "organic-button-mushroom",
@@ -51,16 +51,16 @@ export function SeasonalAvailability() {
   const currentMonth = new Date().toLocaleString("en-IN", { month: "long" });
 
   return (
-    <section className="py-20 bg-secondary">
+    <section className="py-24 sm:py-32 bg-secondary">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         <FadeIn className="text-center mb-12">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#E8F2EC] text-[#2B7A5D] text-xs font-bold uppercase tracking-wider mb-4">
             <Calendar size={16} /> {currentMonth} Harvest Status
           </div>
-          <h2 className="text-3xl md:text-4xl font-extrabold text-foreground font-heading">
+          <h2 className="text-2xl md:text-3xl font-extrabold text-foreground font-heading">
             What&apos;s Fresh Right Now
           </h2>
-          <p className="text-[var(--color-body)] max-w-2xl mx-auto mt-4 text-base">
+          <p className="text-[var(--color-body)] max-w-2xl mx-auto mt-4 text-sm sm:text-base">
             Our seasonal availability — order what&apos;s at its peak for the best flavor and nutrition.
           </p>
         </FadeIn>
@@ -84,13 +84,13 @@ export function SeasonalAvailability() {
                       sizes="(max-width: 640px) 100vw, 25vw"
                       className="object-cover group-hover:scale-105 transition-transform duration-700"
                     />
-                    <span className={`absolute top-3 left-3 px-2.5 py-1 rounded-full text-[11px] font-bold border ${statusStyles[item.status]}`}>
+                    <span className={`absolute top-3 left-3 px-2.5 py-1 rounded-full text-xs font-bold border ${statusStyles[item.status]}`}>
                       {item.badge}
                     </span>
                   </div>
                   <div className="p-5">
                     <h3 className="font-bold text-foreground font-heading group-hover:text-primary transition-colors text-base">{item.name}</h3>
-                    <p className="text-xs text-[var(--color-body)] mt-2 flex items-center gap-1.5">
+                    <p className="text-sm text-[var(--color-body)] mt-2 flex items-center gap-1.5">
                       {item.status === "limited" ? <AlertCircle size={12} className="text-[#F76B46]" /> : <TrendingUp size={12} className="text-[#2B7A5D]" />}
                       {item.note}
                     </p>

@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
-import { Inter, Poppins } from "next/font/google";
+import { Inter, Poppins, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import Providers from "@/components/Providers";
+import { formatCurrency } from "@/lib/utils";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -12,6 +13,12 @@ const poppins = Poppins({
   subsets: ["latin"],
   weight: ["500", "600", "700"],
   variable: "--font-heading",
+});
+
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  weight: ["400", "700", "800"],
+  variable: "--font-display",
 });
 
 export const metadata: Metadata = {
@@ -40,7 +47,7 @@ export default function RootLayout({
     <html
       lang="en"
       data-scroll-behavior="smooth"
-      className={`${inter.variable} ${poppins.variable} h-full antialiased`}
+      className={`${inter.variable} ${poppins.variable} ${playfair.variable} h-full antialiased`}
     >
       <head>
         <script
@@ -67,7 +74,7 @@ export default function RootLayout({
                 longitude: "78.5580",
               },
               openingHours: "Mo-Sa 08:00-18:00",
-              priceRange: "₹120 - ₹520",
+              priceRange: `${formatCurrency(120)} - ${formatCurrency(520)}`,
               aggregateRating: {
                 "@type": "AggregateRating",
                 ratingValue: "4.9",

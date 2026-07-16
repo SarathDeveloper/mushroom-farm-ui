@@ -20,6 +20,7 @@ import {
   Image as ImageIcon,
   Users,
   Presentation,
+  BarChart3,
   Menu,
   X,
 } from "lucide-react";
@@ -27,6 +28,7 @@ import { cn } from "@/lib/utils";
 
 const links = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/admin/analytics", label: "Analytics", icon: BarChart3 },
   { href: "/admin/orders", label: "Orders", icon: ShoppingBag },
   { href: "/admin/products", label: "Products", icon: Package },
   { href: "/admin/categories", label: "Categories", icon: FolderTree },

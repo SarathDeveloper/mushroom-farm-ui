@@ -86,7 +86,7 @@ export function SubscriptionToggle({ price, onSelect }: SubscriptionToggleProps)
             <span className="text-xs text-[var(--color-body)]">Subscription price:</span>
             <span className="font-bold text-primary">₹{discountedPrice} <span className="text-xs line-through text-muted-foreground">₹{price}</span></span>
           </div>
-          <p className="text-[11px] text-muted-foreground">Cancel anytime. No commitment required.</p>
+          <p className="text-xs text-muted-foreground">Cancel anytime. No commitment required.</p>
         </div>
       )}
     </div>

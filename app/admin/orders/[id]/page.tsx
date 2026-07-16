@@ -7,6 +7,7 @@ import { SafeImage } from "@/components/SafeImage";
 import { OrderStatusSelect } from "@/components/admin/OrderStatusSelect";
 import { PaymentStatusSelect } from "@/components/admin/PaymentStatusSelect";
 import { OrderActions } from "@/components/admin/OrderActions";
+import { OrderNotes } from "@/components/admin/OrderNotes";
 
 export async function generateMetadata(props: { params: Promise<{ id: string }> }) {
   const { id } = await props.params;
@@ -45,6 +46,7 @@ export default async function OrderDetailPage(props: {
           product: { select: { id: true, name: true, slug: true, images: true, weight: true } },
         },
       },
+      notes: { orderBy: { createdAt: "desc" } },
     },
   });
 
@@ -63,7 +65,7 @@ export default async function OrderDetailPage(props: {
         </Link>
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
           <div>
-            <h1 className="text-xl sm:text-2xl md:text-3xl font-bold font-heading text-foreground">
+            <h1 className="text-xl md:text-2xl font-bold font-heading text-foreground">
               Order #{order.id.slice(0, 8).toUpperCase()}
             </h1>
             <p className="text-[var(--color-body)] mt-1 text-xs sm:text-sm">
@@ -247,6 +249,16 @@ export default async function OrderDetailPage(props: {
               </div>
             </div>
           </section>
+
+          {/* Admin Notes */}
+          <OrderNotes
+            orderId={order.id}
+            notes={order.notes.map((n) => ({
+              id: n.id,
+              content: n.content,
+              createdAt: n.createdAt.toISOString(),
+            }))}
+          />
         </div>
       </div>
     </div>

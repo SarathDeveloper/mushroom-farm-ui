@@ -62,6 +62,10 @@ model User {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([email])
+  @@index([role])
+  @@index([createdAt])
 }
 
 model Account {
@@ -159,6 +163,13 @@ model Product {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([categoryId])
+  @@index([isActive])
+  @@index([isFeatured])
+  @@index([createdAt])
+  @@index([price])
+  @@index([stock])
 }
 
 model Order {
@@ -174,10 +185,25 @@ model Order {
   shippingAddress String        // JSON: address fields + delivery slot + notes
 
   orderItems    OrderItem[]
+  notes         OrderNote[]
   couponCode    String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([status])
+  @@index([paymentStatus])
+  @@index([createdAt])
+  @@index([status, createdAt])
+}
+
+model OrderNote {
+  id        String   @id @default(uuid())
+  orderId   String
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  content   String
+  createdAt DateTime @default(now())
 }
 
 model OrderItem {
@@ -190,6 +216,9 @@ model OrderItem {
   price     Float   // Price at the time of purchase
 
   createdAt DateTime @default(now())
+
+  @@index([orderId])
+  @@index([productId])
 }
 
 model CartItem {
@@ -230,6 +259,10 @@ model Review {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([productId])
+  @@index([userId])
+  @@index([isApproved])
 }
 
 model Gallery {

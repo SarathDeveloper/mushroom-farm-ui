@@ -34,7 +34,7 @@ const trustItems = [
     label: "24/7 Support",
     iconBg: "bg-[#3A5A8C]",
     icon: (
-      <span className="text-[10px] font-bold text-white leading-none">24</span>
+      <span className="text-xs font-bold text-white leading-none">24</span>
     ),
   },
 ];
@@ -68,19 +68,19 @@ export function LoyaltySection() {
       />
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(45,106,79,0.45)_0%,_transparent_65%)]" />
 
-      <div className="container relative z-10 mx-auto max-w-3xl px-4 py-20 sm:px-6 lg:px-8 lg:py-24">
+      <div className="container relative z-10 mx-auto max-w-3xl px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
         <FadeIn className="text-center">
           <span className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#95D5B2]/35 bg-white/5 px-4 py-1.5 text-sm font-medium text-white backdrop-blur-sm">
             <Sparkles size={14} className="text-[#E9A86B]" fill="#E9A86B" />
             Trusted by 1000+ Growers
           </span>
 
-          <h2 className="font-heading text-3xl font-extrabold leading-tight tracking-tight text-white sm:text-4xl md:text-[2.75rem]">
+          <h2 className="font-heading text-2xl md:text-3xl font-extrabold leading-tight tracking-tight text-white mb-4 sm:mb-6">
             Start your mushroom farming
             <br className="hidden sm:block" /> journey today
           </h2>
 
-          <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-white/85 sm:text-[17px]">
+          <p className="mx-auto mt-5 max-w-xl text-sm leading-relaxed text-white/85 sm:text-base">
             Join thousands of successful mushroom growers who are learning,
             producing, and profiting through our comprehensive platform.
           </p>
@@ -93,7 +93,7 @@ export function LoyaltySection() {
                 <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#C0702F] shadow-sm shadow-black/20">
                   <Check size={14} strokeWidth={3} className="text-white" />
                 </span>
-                <span className="text-[15px] leading-snug sm:text-base">
+                <span className="text-sm leading-snug sm:text-base">
                   {item}
                 </span>
               </li>

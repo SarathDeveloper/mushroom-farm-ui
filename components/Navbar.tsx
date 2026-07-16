@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useSession, signOut } from "next-auth/react";
 import { ShoppingCart, Menu, Heart, Leaf, User, LogOut, Package } from "lucide-react";
@@ -41,8 +42,15 @@ export default function Navbar() {
         <div className="flex h-16 sm:h-20 items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#2B7A5D] text-white">
-              <Leaf size={24} />
+            <div className="relative h-10 w-10 shrink-0">
+              <Image
+                src="/gallery/Logo.png"
+                alt="Vellimalai Farms"
+                fill
+                sizes="40px"
+                className="object-contain"
+                priority
+              />
             </div>
             <span className="text-xl font-bold text-[#1A4938] tracking-tight font-heading">
               Vellimalai<span className="text-[#2B7A5D]">Farms</span>
@@ -132,16 +140,19 @@ export default function Navbar() {
                 <SheetContent>
                   <SheetHeader>
                     <SheetTitle className="text-left font-heading text-[#1A4938] font-bold text-xl flex items-center gap-2">
-                      <Leaf size={20} className="text-[#2B7A5D]" /> Vellimalai Farms
+                      <div className="relative h-7 w-7">
+                        <Image src="/gallery/Logo.png" alt="Logo" fill sizes="28px" className="object-contain" />
+                      </div>
+                      Vellimalai Farms
                     </SheetTitle>
                   </SheetHeader>
                   <div className="mt-8 flex flex-col gap-4 px-4">
                     {navLinks.map((link) => {
                       const isActive = link.href === "/" ? pathname === "/" : pathname.startsWith(link.href);
                       return (
-                        <Link 
-                          key={link.href} 
-                          href={link.href} 
+                        <Link
+                          key={link.href}
+                          href={link.href}
                           className={cn(
                             "text-lg font-medium transition-colors hover:text-[#2B7A5D]",
                             isActive ? "text-[#2B7A5D]" : "text-[#5C6370]"

@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
+import { errorResponse } from "@/lib/api-utils";
 
 const registerSchema = z.object({
   name: z.string().min(2, "Name is too short"),
@@ -15,26 +16,19 @@ export async function POST(request: Request) {
   try {
     body = await request.json();
   } catch {
-    return NextResponse.json({ message: "Invalid request body." }, { status: 400 });
+    return errorResponse("Invalid request body.", 400);
   }
 
   const parsed = registerSchema.safeParse(body);
   if (!parsed.success) {
-    return NextResponse.json(
-      { message: parsed.error.issues[0]?.message ?? "Invalid input." },
-      { status: 400 }
-    );
-  }
+    return errorResponse(parsed.error.issues[0]?.message ?? "Invalid input.", 400);  }
 
   const { name, email, phone, password } = parsed.data;
 
   try {
     const existingUser = await prisma.user.findUnique({ where: { email } });
     if (existingUser) {
-      return NextResponse.json(
-        { message: "An account with this email already exists." },
-        { status: 409 }
-      );
+      return errorResponse("An account with this email already exists.", 409);
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -49,12 +43,6 @@ export async function POST(request: Request) {
     );
   } catch (error) {
     console.error("Registration error:", error);
-    return NextResponse.json(
-      {
-        message:
-          "We couldn't create your account right now. Please ensure the database is configured and try again.",
-      },
-      { status: 500 }
-    );
+    return errorResponse("We couldn't create your account right now. Please ensure the database is configured and try again.", 500);
   }
 }

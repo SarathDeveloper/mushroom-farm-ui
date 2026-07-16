@@ -96,7 +96,7 @@ export function SearchDialog() {
       <button
         onClick={() => setOpen(true)}
         aria-label="Search products (Ctrl+K)"
-        className="text-[#5C6370] hover:text-[#2B7A5D] transition-colors"
+        className="text-muted-foreground hover:text-primary transition-colors"
       >
         <Search size={20} />
       </button>
@@ -165,7 +165,7 @@ export function SearchDialog() {
               <div className="p-2">
                 {results.length > 0 && (
                   <div className="mb-2">
-                    <h4 className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider px-2.5 py-1.5">
+                    <h4 className="text-xs font-bold text-muted-foreground uppercase tracking-wider px-2.5 py-1.5">
                       Products ({results.length})
                     </h4>
                     {results.map((product) => (
@@ -188,7 +188,7 @@ export function SearchDialog() {
 
                 {hasSearched && !isSearching && results.length === 0 && (
                   <div className="text-center py-10">
-                    <p className="text-sm text-[#5C6370]">
+                    <p className="text-sm text-muted-foreground">
                       No results for &ldquo;{query}&rdquo;
                     </p>
                     <p className="text-xs text-muted-foreground mt-1">

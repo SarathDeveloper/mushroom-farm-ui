@@ -79,15 +79,15 @@ export default function PreOrderPage() {
         image="https://images.unsplash.com/photo-1466637574441-749b8f19452f?q=80&w=2000&auto=format&fit=crop"
       />
 
-      <section className="py-20 bg-background">
+      <section className="py-24 sm:py-32 bg-background">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
             <div className="lg:col-span-1 space-y-8">
               <FadeIn direction="right">
-                <h2 className="text-2xl font-bold font-heading text-foreground mb-2">
+                <h2 className="text-base md:text-lg font-bold font-heading text-foreground mb-2">
                   Why Pre-Order?
                 </h2>
-                <p className="text-[var(--color-body)] mb-8">
+                <p className="text-[var(--color-body)] mb-8 text-xs sm:text-sm">
                   Seasonal and specialty mushrooms move quickly. Pre-ordering ensures you get the
                   harvest you want without last-minute stockouts.
                 </p>
@@ -98,7 +98,7 @@ export default function PreOrderPage() {
                         <b.icon size={22} strokeWidth={1.75} />
                       </div>
                       <div>
-                        <h3 className="font-bold text-foreground mb-1">{b.title}</h3>
+                        <h3 className="font-bold text-foreground mb-1 text-sm">{b.title}</h3>
                         <p className="text-sm text-[var(--color-body)]">{b.desc}</p>
                       </div>
                     </div>
@@ -113,10 +113,10 @@ export default function PreOrderPage() {
                   <div className="w-16 h-16 rounded-full bg-[var(--color-success)]/15 text-[var(--color-success)] flex items-center justify-center mb-6">
                     <MailCheck size={32} />
                   </div>
-                  <h3 className="text-2xl font-bold font-heading text-foreground mb-2">
+                  <h3 className="text-base md:text-lg font-bold font-heading text-foreground mb-2">
                     Pre-Order Received!
                   </h3>
-                  <p className="text-[var(--color-body)] max-w-sm mb-6">
+                  <p className="text-[var(--color-body)] max-w-sm mb-6 text-xs sm:text-sm">
                     Thank you. Our team will confirm availability and contact you within 24 hours
                     about the next steps.
                   </p>
@@ -136,7 +136,7 @@ export default function PreOrderPage() {
                   onSubmit={handleSubmit}
                   className="bg-card rounded-2xl p-8 border border-border space-y-5"
                 >
-                  <h2 className="text-xl font-bold font-heading text-foreground">
+                  <h2 className="text-base md:text-lg font-bold font-heading text-foreground">
                     Place a Pre-Order
                   </h2>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

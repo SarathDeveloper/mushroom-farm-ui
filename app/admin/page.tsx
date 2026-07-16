@@ -153,7 +153,7 @@ export default async function AdminDashboardPage() {
   return (
     <div className="p-4 sm:p-6 lg:p-10">
       <header className="mb-6 sm:mb-8">
-        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold font-heading text-foreground">
+        <h1 className="text-xl md:text-2xl font-bold font-heading text-foreground">
           Dashboard
         </h1>
         <p className="text-[var(--color-body)] mt-1 text-sm sm:text-base">
@@ -296,7 +296,7 @@ export default async function AdminDashboardPage() {
             </div>
             <Badge variant="success" className="text-[10px] sm:text-xs">{data.todayOrders} today</Badge>
           </div>
-          <p className="text-xl sm:text-2xl font-bold font-heading text-foreground">{data.totalOrders}</p>
+          <p className="text-lg md:text-xl font-bold font-heading text-foreground">{data.totalOrders}</p>
           <p className="text-xs sm:text-sm text-[var(--color-body)] mt-0.5 sm:mt-1">Total Orders</p>
         </div>
 
@@ -316,7 +316,7 @@ export default async function AdminDashboardPage() {
               {Math.abs(data.revenueChange).toFixed(0)}%
             </div>
           </div>
-          <p className="text-xl sm:text-2xl font-bold font-heading text-foreground">
+          <p className="text-lg md:text-xl font-bold font-heading text-foreground">
             ₹{data.thisWeekRevenue.toLocaleString("en-IN")}
           </p>
           <p className="text-xs sm:text-sm text-[var(--color-body)] mt-0.5 sm:mt-1">
@@ -331,7 +331,7 @@ export default async function AdminDashboardPage() {
               <Package size={18} strokeWidth={1.75} />
             </div>
           </div>
-          <p className="text-xl sm:text-2xl font-bold font-heading text-foreground">{data.totalProducts}</p>
+          <p className="text-lg md:text-xl font-bold font-heading text-foreground">{data.totalProducts}</p>
           <p className="text-xs sm:text-sm text-[var(--color-body)] mt-0.5 sm:mt-1">Products</p>
         </div>
 
@@ -341,7 +341,7 @@ export default async function AdminDashboardPage() {
               <Users size={18} strokeWidth={1.75} />
             </div>
           </div>
-          <p className="text-xl sm:text-2xl font-bold font-heading text-foreground">{data.totalUsers}</p>
+          <p className="text-lg md:text-xl font-bold font-heading text-foreground">{data.totalUsers}</p>
           <p className="text-xs sm:text-sm text-[var(--color-body)] mt-0.5 sm:mt-1">Customers</p>
         </div>
       </div>

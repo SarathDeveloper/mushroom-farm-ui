@@ -37,7 +37,7 @@ export function WhatsAppWidget() {
           >
             <div className="bg-[#25D366] px-4 py-3 text-white">
               <h3 className="font-bold text-sm">Chat with us</h3>
-              <p className="text-[11px] text-white/80">Typically replies within minutes</p>
+              <p className="text-xs text-white/80">Typically replies within minutes</p>
             </div>
             <div className="p-3 space-y-2">
               {quickMessages.map((msg) => (

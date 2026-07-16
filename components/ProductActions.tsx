@@ -52,7 +52,7 @@ export function ProductActions({ product }: { product: Product }) {
           onClick={() => {
             addItem(product, qty);
             const msg = purchaseMode === "subscription"
-              ? `${qty} × ${product.name} subscription (${subscriptionFreq}) added`
+              ? `${qty} × ${product.name} added to subscription (${subscriptionFreq})`
               : `${qty} × ${product.name} added to cart`;
             toast.success(msg);
             setQty(1);
@@ -66,9 +66,7 @@ export function ProductActions({ product }: { product: Product }) {
         <Button
           onClick={() => {
             toggleWish(product.id);
-            toast(wished ? "Removed from wishlist" : "Added to wishlist", {
-              icon: wished ? "💔" : "❤️",
-            });
+            toast.success(wished ? "Removed from wishlist!" : "Added to wishlist!");
           }}
           variant="outline"
           size="lg"

@@ -173,7 +173,7 @@ export function GalleryManager({
               sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
               className="object-cover"
             />
-            <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-3">
+            <div className="absolute inset-0 bg-black/60 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity flex flex-col justify-end p-3">
               <p className="text-white font-semibold text-sm truncate">{item.title}</p>
               {item.category && (
                 <Badge variant="secondary" className="mt-1 w-fit text-xs">
@@ -204,8 +204,16 @@ export function GalleryManager({
       </div>
 
       {filtered.length === 0 && (
-        <div className="text-center py-16 text-muted-foreground">
-          No images found for this category.
+        <div className="bg-card rounded-2xl border border-border shadow-[0_4px_12px_rgba(0,0,0,0.04)] flex flex-col items-center text-center py-16 px-6">
+          <div className="w-16 h-16 rounded-full bg-secondary flex items-center justify-center mb-5">
+            <Plus size={30} className="text-primary" />
+          </div>
+          <h2 className="text-xl font-bold font-heading text-foreground mb-1">
+            {filter !== "all" ? "No images in this category" : "No gallery items yet"}
+          </h2>
+          <p className="text-[var(--color-body)] max-w-sm">
+            {filter !== "all" ? "Try a different category filter." : "Add photos and videos of your farm for marketing."}
+          </p>
         </div>
       )}
 

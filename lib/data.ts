@@ -68,9 +68,9 @@ export const products: Product[] = [
     price: 120,
     weight: "200g",
     image:
-      "https://images.unsplash.com/photo-1611105637889-3fa70db2b271?q=80&w=1000&auto=format&fit=crop",
+      "/gallery/products/button-mushrooms-Dj92oXDo.jpg",
     gallery: [
-      "https://images.unsplash.com/photo-1611105637889-3fa70db2b271?q=80&w=1000&auto=format&fit=crop",
+      "/gallery/products/button-mushrooms-Dj92oXDo.jpg",
       "https://images.unsplash.com/photo-1497515114629-f71d768fd07c?q=80&w=1000&auto=format&fit=crop",
     ],
     rating: 4.6,
@@ -265,7 +265,7 @@ export const trainingPrograms: TrainingProgram[] = [
     title: "Oyster Mushroom Crash Course",
     duration: "1 Day",
     fee: 1500,
-    trainer: "Murugan Selvam",
+    trainer: "Mathesh",
     startDate: "2026-07-18",
     seatsLeft: 6,
     level: "Beginner",

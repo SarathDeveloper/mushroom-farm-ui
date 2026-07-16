@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Search, Phone, Mail, ShoppingBag, Calendar } from "lucide-react";
 import { SafeImage } from "@/components/SafeImage";
 import { Badge } from "@/components/ui/badge";
@@ -33,6 +35,7 @@ function getInitials(name: string | null, email: string): string {
 }
 
 export function CustomersTable({ customers }: { customers: Customer[] }) {
+  const router = useRouter();
   const [search, setSearch] = useState("");
 
   const filtered = customers.filter(
@@ -61,7 +64,7 @@ export function CustomersTable({ customers }: { customers: Customer[] }) {
       {/* Mobile card view */}
       <div className="space-y-3 md:hidden">
         {filtered.map((customer) => (
-          <div key={customer.id} className="bg-card rounded-xl border border-border p-4 shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
+          <Link key={customer.id} href={`/admin/customers/${customer.id}`} className="block bg-card rounded-xl border border-border p-4 shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:border-primary/50 transition-colors">
             <div className="flex items-center gap-3 mb-3">
               {customer.image ? (
                 <div className="relative h-10 w-10 rounded-full overflow-hidden shrink-0 bg-secondary">
@@ -91,13 +94,13 @@ export function CustomersTable({ customers }: { customers: Customer[] }) {
             <div className="flex items-center justify-between text-xs text-muted-foreground pt-3 border-t border-border">
               <div className="flex items-center gap-3">
                 {customer.phone && (
-                  <a href={`tel:${customer.phone}`} className="flex items-center gap-1 hover:text-primary">
+                  <span className="flex items-center gap-1">
                     <Phone size={11} /> {customer.phone}
-                  </a>
+                  </span>
                 )}
-                <a href={`mailto:${customer.email}`} className="flex items-center gap-1 hover:text-primary">
+                <span className="flex items-center gap-1">
                   <Mail size={11} /> Email
-                </a>
+                </span>
               </div>
               {customer.lastOrder && (
                 <span className="font-medium text-foreground">
@@ -105,7 +108,7 @@ export function CustomersTable({ customers }: { customers: Customer[] }) {
                 </span>
               )}
             </div>
-          </div>
+          </Link>
         ))}
       </div>
 
@@ -124,7 +127,11 @@ export function CustomersTable({ customers }: { customers: Customer[] }) {
             </thead>
             <tbody className="divide-y divide-border">
               {filtered.map((customer) => (
-                <tr key={customer.id} className="hover:bg-secondary/30 transition-colors">
+                <tr
+                  key={customer.id}
+                  className="hover:bg-secondary/30 transition-colors cursor-pointer"
+                  onClick={() => router.push(`/admin/customers/${customer.id}`)}
+                >
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-3">
                       {customer.image ? (

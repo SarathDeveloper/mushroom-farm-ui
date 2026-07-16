@@ -48,12 +48,12 @@ const recognitionPhotos = [
 
 export function PressAndRecognition({ compact = false }: { compact?: boolean }) {
   return (
-    <section className={compact ? "py-20 bg-background" : undefined}>
+    <section className={compact ? "py-24 sm:py-32 bg-background" : undefined}>
       <div className={compact ? "container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl" : undefined}>
         <FadeIn className="text-center mb-12">
           <span className="text-sm font-semibold text-primary uppercase tracking-wider">Press</span>
-          <h2 className="text-3xl font-bold font-heading text-foreground mt-2 mb-4">In the News</h2>
-          <p className="text-[var(--color-body)] max-w-2xl mx-auto">
+          <h2 className="text-2xl md:text-3xl font-bold font-heading text-foreground mt-2 mb-4">In the News</h2>
+          <p className="text-[var(--color-body)] max-w-2xl mx-auto text-sm sm:text-base">
             Our farm has been featured in leading Tamil newspapers for our innovative mushroom cultivation practices.
           </p>
         </FadeIn>
@@ -85,8 +85,8 @@ export function PressAndRecognition({ compact = false }: { compact?: boolean }) 
 
         <FadeIn className="text-center mb-12">
           <span className="text-sm font-semibold text-primary uppercase tracking-wider">Trust</span>
-          <h2 className="text-3xl font-bold font-heading text-foreground mt-2 mb-4">Recognition &amp; Support</h2>
-          <p className="text-[var(--color-body)] max-w-2xl mx-auto">
+          <h2 className="text-2xl md:text-3xl font-bold font-heading text-foreground mt-2 mb-4">Recognition &amp; Support</h2>
+          <p className="text-[var(--color-body)] max-w-2xl mx-auto text-sm sm:text-base">
             Endorsed by district administration and supported by the Tamil Nadu Horticulture Department.
           </p>
         </FadeIn>
@@ -104,7 +104,7 @@ export function PressAndRecognition({ compact = false }: { compact?: boolean }) 
                   />
                 </div>
                 <div className="p-6">
-                  <h3 className="font-bold text-lg text-foreground font-heading mb-1">{photo.title}</h3>
+                  <h3 className="font-bold text-base text-foreground font-heading mb-1">{photo.title}</h3>
                   <p className="text-sm text-[var(--color-body)]">{photo.desc}</p>
                 </div>
               </div>

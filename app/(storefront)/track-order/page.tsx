@@ -104,10 +104,10 @@ export default function TrackOrderPage() {
         image="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=2000&auto=format&fit=crop"
       />
 
-      <section className="py-16 bg-background">
+      <section className="py-20 sm:py-28 bg-background">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-3xl">
           <FadeIn>
-            <form onSubmit={handleTrack} className="flex gap-3 mb-12">
+            <form onSubmit={handleTrack} className="flex flex-col sm:flex-row gap-3 mb-12">
               <div className="relative flex-1">
                 <Search
                   size={18}
@@ -123,7 +123,7 @@ export default function TrackOrderPage() {
               <Button
                 type="submit"
                 disabled={loading || !orderId.trim()}
-                className="h-12 px-6 rounded-xl"
+                className="h-12 px-6 rounded-xl w-full sm:w-auto"
               >
                 {loading ? (
                   <Loader2 size={18} className="animate-spin" />
@@ -145,19 +145,19 @@ export default function TrackOrderPage() {
 
           {order && !isCancelled && (
             <FadeIn>
-              <div className="bg-card rounded-2xl border border-border p-8">
-                <div className="flex items-center justify-between mb-8">
+              <div className="bg-card rounded-2xl border border-border p-5 sm:p-8">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-8">
                   <div>
-                    <h2 className="text-lg font-bold font-heading text-foreground">
+                    <h2 className="text-lg md:text-xl font-bold font-heading text-foreground">
                       Order #{order.id.slice(0, 8).toUpperCase()}
                     </h2>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-xs sm:text-sm text-muted-foreground">
                       Placed on {placedDate}
                     </p>
                   </div>
                   <div
                     className={cn(
-                      "px-3 py-1.5 rounded-full text-xs font-bold",
+                      "px-3 py-1.5 rounded-full text-xs font-bold w-fit",
                       currentStep >= 4
                         ? "bg-[var(--color-success)]/10 text-[var(--color-success)]"
                         : "bg-primary/10 text-primary",
@@ -208,7 +208,7 @@ export default function TrackOrderPage() {
                         <div className="pt-2 pb-4">
                           <h3
                             className={cn(
-                              "font-semibold text-sm",
+                              "font-semibold text-xs",
                               isCompleted || isCurrent
                                 ? "text-foreground"
                                 : "text-muted-foreground",
@@ -243,7 +243,7 @@ export default function TrackOrderPage() {
                     {order.items.map((item, i) => (
                       <div
                         key={i}
-                        className="flex items-center justify-between gap-3 text-sm text-[var(--color-body)]"
+                        className="flex items-center justify-between gap-3 text-xs text-[var(--color-body)]"
                       >
                         <div className="flex items-center gap-3 min-w-0">
                           {item.image && (
@@ -261,12 +261,12 @@ export default function TrackOrderPage() {
                             {item.name} × {item.quantity}
                           </span>
                         </div>
-                        <span className="font-medium text-foreground shrink-0">
+                        <span className="font-medium text-foreground shrink-0 text-xs">
                           ₹{item.price * item.quantity}
                         </span>
                       </div>
                     ))}
-                    <div className="flex justify-between font-bold text-foreground pt-2 border-t border-border">
+                    <div className="flex justify-between font-bold text-foreground pt-2 border-t border-border text-xs">
                       <span>Total</span>
                       <span>₹{order.totalAmount}</span>
                     </div>
@@ -279,7 +279,7 @@ export default function TrackOrderPage() {
                       <p className="text-xs text-muted-foreground mb-1">
                         Delivery Partner
                       </p>
-                      <p className="text-sm font-semibold text-foreground">
+                      <p className="text-xs font-semibold text-foreground">
                         Vellimalai Express
                       </p>
                     </div>
@@ -288,7 +288,7 @@ export default function TrackOrderPage() {
                         <p className="text-xs text-muted-foreground mb-1">
                           Delivering to
                         </p>
-                        <p className="text-sm font-semibold text-foreground">
+                        <p className="text-xs font-semibold text-foreground">
                           {order.city}
                         </p>
                       </div>
@@ -318,10 +318,10 @@ export default function TrackOrderPage() {
                   size={36}
                   className="mx-auto mb-4 text-[var(--color-error)]"
                 />
-                <h2 className="text-xl font-bold font-heading text-foreground mb-2">
+                <h2 className="text-lg font-bold font-heading text-foreground mb-2">
                   Order Cancelled
                 </h2>
-                <p className="text-sm text-[var(--color-body)]">
+                <p className="text-xs text-[var(--color-body)]">
                   Order #{order.id.slice(0, 8).toUpperCase()} has been cancelled.
                 </p>
               </div>
@@ -331,7 +331,7 @@ export default function TrackOrderPage() {
           {!order && !error && !loading && (
             <FadeIn className="text-center text-muted-foreground">
               <Package size={48} className="mx-auto mb-4 opacity-30" />
-              <p className="text-sm">
+              <p className="text-xs">
                 Enter your order ID above to track your delivery status.
               </p>
               <p className="text-xs mt-2">

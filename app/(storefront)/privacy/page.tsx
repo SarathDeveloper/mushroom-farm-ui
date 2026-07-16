@@ -48,14 +48,14 @@ export default function PrivacyPolicyPage() {
         eyebrow="Legal"
         title="Privacy Policy"
         description="Last updated: June 1, 2026"
-        image="https://images.unsplash.com/photo-1611105637889-3fa70db2b271?q=80&w=2000&auto=format&fit=crop"
+        image="/gallery/farm/oyster-mushroom-growing.png"
       />
-      <section className="py-16 bg-background">
+      <section className="py-20 sm:py-28 bg-background">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-3xl space-y-10">
           {sections.map((section, i) => (
             <FadeIn key={section.title} delay={Math.min(i * 0.05, 0.3)}>
-              <h2 className="text-xl font-bold font-heading text-foreground mb-3">{section.title}</h2>
-              <p className="text-[var(--color-body)] leading-relaxed">{section.body}</p>
+              <h2 className="text-base md:text-lg font-bold font-heading text-foreground mb-3">{section.title}</h2>
+              <p className="text-[var(--color-body)] text-xs sm:text-sm leading-relaxed">{section.body}</p>
             </FadeIn>
           ))}
         </div>

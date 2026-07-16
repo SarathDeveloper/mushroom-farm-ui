@@ -1,12 +1,15 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import useEmblaCarousel from "embla-carousel-react";
 import {
   ArrowRight,
   ChevronLeft,
   ChevronRight,
+  ShieldCheck,
+  Leaf,
+  Clock,
 } from "lucide-react";
 import { SafeImage } from "@/components/SafeImage";
 import { cn } from "@/lib/utils";
@@ -20,6 +23,7 @@ export type HeroSlideData = {
   secondaryCtaLabel: string;
   secondaryCtaHref: string;
   image: string;
+  video?: string;
 };
 
 const fallbackSlides: HeroSlideData[] = [
@@ -57,6 +61,40 @@ const fallbackSlides: HeroSlideData[] = [
     image: "/gallery/farm/growing-shed-interior.png",
   },
 ];
+
+const trustBadges = [
+  { icon: ShieldCheck, label: "FSSAI Certified" },
+  { icon: Leaf, label: "100% Organic" },
+  { icon: Clock, label: "Same-Day Harvest" },
+];
+
+function VideoBackground({ src, isActive }: { src: string; isActive: boolean }) {
+  const ref = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    if (!ref.current) return;
+    if (isActive) {
+      ref.current.play().catch(() => {});
+    } else {
+      ref.current.pause();
+    }
+  }, [isActive]);
+
+  return (
+    <video
+      ref={ref}
+      src={src}
+      muted
+      loop
+      playsInline
+      preload="metadata"
+      className={cn(
+        "absolute inset-0 w-full h-full object-cover transition-transform duration-[8000ms] ease-out",
+        isActive ? "scale-105" : "scale-100",
+      )}
+    />
+  );
+}
 
 export function HomeHero({ slides }: { slides?: HeroSlideData[] }) {
   const data = slides && slides.length > 0 ? slides : fallbackSlides;
@@ -96,26 +134,34 @@ export function HomeHero({ slides }: { slides?: HeroSlideData[] }) {
         <div className="flex">
           {data.map((slide, i) => {
             const isActive = i === activeIndex;
+            const hasVideo = !!slide.video;
 
             return (
               <div
                 key={i}
-                className="relative min-h-[70vh] sm:min-h-[80vh] lg:min-h-[90vh] flex-[0_0_100%] flex flex-col"
+                className="relative min-h-[85svh] sm:min-h-[80vh] lg:min-h-[90vh] flex-[0_0_100%] flex flex-col"
               >
-                {/* Background image */}
-                <div className="absolute inset-0">
-                  <SafeImage
-                    src={slide.image}
-                    alt={slide.headline.replace(/\n/g, " ")}
-                    fill
-                    priority={i === 0}
-                    sizes="100vw"
-                    className="object-cover"
-                  />
+                {/* Background: video or image with Ken Burns */}
+                <div className="absolute inset-0 overflow-hidden">
+                  {hasVideo ? (
+                    <VideoBackground src={slide.video!} isActive={isActive} />
+                  ) : (
+                    <SafeImage
+                      src={slide.image}
+                      alt={slide.headline.replace(/\n/g, " ")}
+                      fill
+                      priority={i === 0}
+                      sizes="100vw"
+                      className={cn(
+                        "object-cover object-center transition-transform duration-[8000ms] ease-out",
+                        isActive ? "scale-110" : "scale-100",
+                      )}
+                    />
+                  )}
                 </div>
 
-                {/* Gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-r from-[#0A1F17]/95 via-[#0F2E24]/70 to-[#0F2E24]/30 lg:to-transparent" />
+                {/* Gradient overlay — lighter for photo-forward look */}
+                <div className="absolute inset-0 bg-gradient-to-r from-[#0A1F17]/80 via-[#0F2E24]/55 to-[#0F2E24]/20 lg:to-transparent" />
 
                 {/* Slide content */}
                 <div className="relative z-10 flex-1 flex flex-col justify-center container mx-auto px-5 sm:px-8 lg:px-12 max-w-7xl pt-12 sm:pt-16 pb-16 sm:pb-24">
@@ -123,7 +169,7 @@ export function HomeHero({ slides }: { slides?: HeroSlideData[] }) {
                     {/* Badge pill */}
                     <div
                       className={cn(
-                        "inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#1A4938] text-white text-xs font-semibold tracking-wide mb-6 transition-all duration-700",
+                        "inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/15 backdrop-blur-md text-white text-xs font-semibold tracking-wide mb-6 border border-white/20 transition-all duration-700",
                         isActive
                           ? "opacity-100 translate-y-0"
                           : "opacity-0 translate-y-4"
@@ -134,15 +180,18 @@ export function HomeHero({ slides }: { slides?: HeroSlideData[] }) {
                       {slide.badge}
                     </div>
 
-                    {/* Headline */}
+                    {/* Headline — using display serif font */}
                     <h1
                       className={cn(
-                        "text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold text-white leading-[1.08] font-heading mb-4 sm:mb-5 tracking-tight whitespace-pre-line transition-all duration-700",
+                        "text-3xl md:text-4xl lg:text-5xl font-extrabold text-white leading-[1.08] mb-4 sm:mb-5 tracking-tight whitespace-pre-line transition-all duration-700",
                         isActive
                           ? "opacity-100 translate-y-0"
                           : "opacity-0 translate-y-6"
                       )}
-                      style={{ transitionDelay: isActive ? "350ms" : "0ms" }}
+                      style={{
+                        fontFamily: "var(--font-display)",
+                        transitionDelay: isActive ? "350ms" : "0ms",
+                      }}
                     >
                       {slide.headline}
                     </h1>
@@ -150,7 +199,7 @@ export function HomeHero({ slides }: { slides?: HeroSlideData[] }) {
                     {/* Subtitle */}
                     <p
                       className={cn(
-                        "text-white/80 text-base sm:text-lg lg:text-xl leading-relaxed max-w-lg mb-8 transition-all duration-700",
+                        "text-white/85 text-sm md:text-base leading-relaxed max-w-lg mb-8 transition-all duration-700",
                         isActive
                           ? "opacity-100 translate-y-0"
                           : "opacity-0 translate-y-6"
@@ -173,7 +222,7 @@ export function HomeHero({ slides }: { slides?: HeroSlideData[] }) {
                       {slide.primaryCtaLabel && slide.primaryCtaHref && (
                         <Link
                           href={slide.primaryCtaHref}
-                          className="inline-flex items-center justify-center gap-2.5 rounded-lg bg-[#1A4938] text-white font-semibold px-7 py-3.5 text-sm sm:text-base hover:bg-[#143D2E] transition-colors shadow-lg shadow-black/20"
+                          className="inline-flex items-center justify-center gap-2.5 rounded-lg bg-[#1A4938] text-white font-semibold px-7 py-3.5 text-xs sm:text-sm hover:bg-[#143D2E] transition-colors shadow-lg shadow-black/20"
                         >
                           {slide.primaryCtaLabel}
                           <ArrowRight size={16} />
@@ -182,7 +231,7 @@ export function HomeHero({ slides }: { slides?: HeroSlideData[] }) {
                       {slide.secondaryCtaLabel && slide.secondaryCtaHref && (
                         <Link
                           href={slide.secondaryCtaHref}
-                          className="inline-flex items-center justify-center gap-2 rounded-lg border border-white/40 text-white font-semibold px-7 py-3.5 text-sm sm:text-base hover:bg-white/10 transition-colors backdrop-blur-sm"
+                          className="inline-flex items-center justify-center gap-2 rounded-lg border border-white/40 text-white font-semibold px-7 py-3.5 text-xs sm:text-sm hover:bg-white/10 transition-colors backdrop-blur-sm"
                         >
                           {slide.secondaryCtaLabel}
                           <ArrowRight size={16} />
@@ -197,24 +246,40 @@ export function HomeHero({ slides }: { slides?: HeroSlideData[] }) {
         </div>
       </div>
 
+      {/* Trust indicator badges */}
+      <div className="absolute bottom-16 sm:bottom-20 left-1/2 -translate-x-1/2 z-20 flex items-center gap-4 sm:gap-6">
+        {trustBadges.map((badge) => (
+          <div
+            key={badge.label}
+            className="flex items-center gap-1.5 text-white/70 text-[11px] sm:text-xs font-medium"
+          >
+            <badge.icon size={14} strokeWidth={1.5} className="text-emerald-400" />
+            <span className="hidden sm:inline">{badge.label}</span>
+            <span className="sm:hidden">{badge.label.split(" ").slice(-1)[0]}</span>
+          </div>
+        ))}
+      </div>
+
       {/* Prev / Next arrows */}
       <button
         onClick={() => emblaApi?.scrollPrev()}
-        className="absolute left-3 sm:left-5 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/30 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-black/50 transition-colors cursor-pointer"
+        className="absolute left-3 sm:left-5 bottom-14 sm:bottom-auto sm:top-1/2 sm:-translate-y-1/2 z-20 w-8 h-8 sm:w-12 sm:h-12 rounded-full bg-black/30 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-black/50 transition-colors cursor-pointer"
         aria-label="Previous slide"
       >
-        <ChevronLeft size={20} />
+        <ChevronLeft size={16} className="sm:hidden" />
+        <ChevronLeft size={20} className="hidden sm:block" />
       </button>
       <button
         onClick={() => emblaApi?.scrollNext()}
-        className="absolute right-3 sm:right-5 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/30 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-black/50 transition-colors cursor-pointer"
+        className="absolute right-3 sm:right-5 bottom-14 sm:bottom-auto sm:top-1/2 sm:-translate-y-1/2 z-20 w-8 h-8 sm:w-12 sm:h-12 rounded-full bg-black/30 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-black/50 transition-colors cursor-pointer"
         aria-label="Next slide"
       >
-        <ChevronRight size={20} />
+        <ChevronRight size={16} className="sm:hidden" />
+        <ChevronRight size={20} className="hidden sm:block" />
       </button>
 
       {/* Pagination dots */}
-      <div className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2">
+      <div className="absolute bottom-5 sm:bottom-8 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2">
         {data.map((_, i) => (
           <button
             key={i}

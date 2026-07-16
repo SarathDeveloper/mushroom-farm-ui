@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { Pencil, Trash2, Loader2, GripVertical, Plus, X } from "lucide-react";
+import { Pencil, Trash2, Loader2, GripVertical, Plus, X, FolderTree } from "lucide-react";
 import toast from "react-hot-toast";
 
 import { SafeImage } from "@/components/SafeImage";
@@ -149,81 +149,153 @@ export function CategoriesTable({ categories }: { categories: Category[] }) {
         </Button>
       </div>
 
-      <div className="bg-card rounded-2xl border border-border shadow-[0_4px_12px_rgba(0,0,0,0.04)] overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-sm">
-            <thead>
-              <tr className="border-b border-border bg-secondary/50 text-[var(--color-body)]">
-                <th className="font-semibold px-6 py-4 w-10">#</th>
-                <th className="font-semibold px-6 py-4">Category</th>
-                <th className="font-semibold px-6 py-4">Slug</th>
-                <th className="font-semibold px-6 py-4 text-center">Products</th>
-                <th className="font-semibold px-6 py-4 text-right">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-border">
-              {categories.map((cat) => (
-                <tr key={cat.id} className="hover:bg-secondary/30 transition-colors">
-                  <td className="px-6 py-4 text-muted-foreground">{cat.sortOrder}</td>
-                  <td className="px-6 py-4">
-                    <div className="flex items-center gap-3">
-                      {cat.image ? (
-                        <div className="relative h-10 w-10 rounded-lg overflow-hidden shrink-0 bg-secondary">
-                          <SafeImage
-                            src={cat.image}
-                            alt={cat.name}
-                            fill
-                            sizes="40px"
-                            className="object-cover"
-                          />
-                        </div>
-                      ) : (
-                        <div className="h-10 w-10 rounded-lg bg-secondary flex items-center justify-center text-muted-foreground">
-                          <GripVertical size={16} />
-                        </div>
-                      )}
-                      <div>
-                        <span className="font-semibold text-foreground">{cat.name}</span>
-                        {cat.description && (
-                          <p className="text-xs text-muted-foreground line-clamp-1">{cat.description}</p>
-                        )}
-                      </div>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 text-muted-foreground font-mono text-xs">{cat.slug}</td>
-                  <td className="px-6 py-4 text-center">
-                    <Badge variant={cat.productCount > 0 ? "default" : "secondary"}>
-                      {cat.productCount}
-                    </Badge>
-                  </td>
-                  <td className="px-6 py-4">
-                    <div className="flex items-center justify-end gap-2">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="h-8 w-8 p-0"
-                        onClick={() => openEdit(cat)}
-                      >
-                        <Pencil size={14} />
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="h-8 w-8 p-0 text-destructive hover:text-destructive"
-                        onClick={() => setDeleteTarget(cat)}
-                        disabled={cat.productCount > 0}
-                        title={cat.productCount > 0 ? "Cannot delete category with products" : undefined}
-                      >
-                        <Trash2 size={14} />
-                      </Button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+      {categories.length === 0 ? (
+        <div className="bg-card rounded-2xl border border-border shadow-[0_4px_12px_rgba(0,0,0,0.04)] flex flex-col items-center text-center py-16 px-6">
+          <div className="w-16 h-16 rounded-full bg-secondary flex items-center justify-center mb-5">
+            <FolderTree size={30} className="text-primary" />
+          </div>
+          <h2 className="text-xl font-bold font-heading text-foreground mb-1">No categories yet</h2>
+          <p className="text-[var(--color-body)] max-w-sm">
+            Create categories to organize your products.
+          </p>
         </div>
-      </div>
+      ) : (
+      <>
+        {/* Mobile card view */}
+        <div className="space-y-3 md:hidden">
+          {categories.map((cat) => (
+            <div key={cat.id} className="bg-card rounded-xl border border-border p-4 shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
+              <div className="flex items-center gap-3 mb-3">
+                {cat.image ? (
+                  <div className="relative h-12 w-12 rounded-lg overflow-hidden shrink-0 bg-secondary">
+                    <SafeImage
+                      src={cat.image}
+                      alt={cat.name}
+                      fill
+                      sizes="48px"
+                      className="object-cover"
+                    />
+                  </div>
+                ) : (
+                  <div className="h-12 w-12 rounded-lg bg-secondary flex items-center justify-center text-muted-foreground">
+                    <GripVertical size={18} />
+                  </div>
+                )}
+                <div className="flex-1 min-w-0">
+                  <p className="font-semibold text-foreground text-sm truncate">{cat.name}</p>
+                  {cat.description && (
+                    <p className="text-xs text-muted-foreground line-clamp-1">{cat.description}</p>
+                  )}
+                </div>
+                <Badge variant={cat.productCount > 0 ? "default" : "secondary"} className="shrink-0">
+                  {cat.productCount} products
+                </Badge>
+              </div>
+              <div className="flex items-center justify-between pt-3 border-t border-border">
+                <span className="text-xs text-muted-foreground font-mono">{cat.slug}</span>
+                <div className="flex items-center gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="h-8 w-8 p-0"
+                    onClick={() => openEdit(cat)}
+                  >
+                    <Pencil size={14} />
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="h-8 w-8 p-0 text-destructive hover:text-destructive"
+                    onClick={() => setDeleteTarget(cat)}
+                    disabled={cat.productCount > 0}
+                    title={cat.productCount > 0 ? "Cannot delete category with products" : undefined}
+                  >
+                    <Trash2 size={14} />
+                  </Button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Desktop table view */}
+        <div className="hidden md:block bg-card rounded-2xl border border-border shadow-[0_4px_12px_rgba(0,0,0,0.04)] overflow-hidden">
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-sm">
+              <thead>
+                <tr className="border-b border-border bg-secondary/50 text-[var(--color-body)]">
+                  <th className="font-semibold px-6 py-4 w-10">#</th>
+                  <th className="font-semibold px-6 py-4">Category</th>
+                  <th className="font-semibold px-6 py-4">Slug</th>
+                  <th className="font-semibold px-6 py-4 text-center">Products</th>
+                  <th className="font-semibold px-6 py-4 text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-border">
+                {categories.map((cat) => (
+                  <tr key={cat.id} className="hover:bg-secondary/30 transition-colors">
+                    <td className="px-6 py-4 text-muted-foreground">{cat.sortOrder}</td>
+                    <td className="px-6 py-4">
+                      <div className="flex items-center gap-3">
+                        {cat.image ? (
+                          <div className="relative h-10 w-10 rounded-lg overflow-hidden shrink-0 bg-secondary">
+                            <SafeImage
+                              src={cat.image}
+                              alt={cat.name}
+                              fill
+                              sizes="40px"
+                              className="object-cover"
+                            />
+                          </div>
+                        ) : (
+                          <div className="h-10 w-10 rounded-lg bg-secondary flex items-center justify-center text-muted-foreground">
+                            <GripVertical size={16} />
+                          </div>
+                        )}
+                        <div>
+                          <span className="font-semibold text-foreground">{cat.name}</span>
+                          {cat.description && (
+                            <p className="text-xs text-muted-foreground line-clamp-1">{cat.description}</p>
+                          )}
+                        </div>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 text-muted-foreground font-mono text-xs">{cat.slug}</td>
+                    <td className="px-6 py-4 text-center">
+                      <Badge variant={cat.productCount > 0 ? "default" : "secondary"}>
+                        {cat.productCount}
+                      </Badge>
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="flex items-center justify-end gap-2">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="h-8 w-8 p-0"
+                          onClick={() => openEdit(cat)}
+                        >
+                          <Pencil size={14} />
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="h-8 w-8 p-0 text-destructive hover:text-destructive"
+                          onClick={() => setDeleteTarget(cat)}
+                          disabled={cat.productCount > 0}
+                          title={cat.productCount > 0 ? "Cannot delete category with products" : undefined}
+                        >
+                          <Trash2 size={14} />
+                        </Button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </>
+      )}
 
       {/* Create/Edit Dialog */}
       <Dialog open={dialogOpen} onOpenChange={(open) => {
@@ -236,7 +308,7 @@ export function CategoriesTable({ categories }: { categories: Category[] }) {
         <DialogContent className="sm:max-w-lg">
           <DialogTitle>{editTarget ? "Edit Category" : "Add Category"}</DialogTitle>
           <div className="space-y-4 mt-4">
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="name">Name *</Label>
                 <Input

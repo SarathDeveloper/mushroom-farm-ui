@@ -20,7 +20,7 @@ export default async function AdminBulkOrdersPage() {
   return (
     <div className="p-4 sm:p-6 lg:p-10">
       <header className="mb-6 sm:mb-8">
-        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold font-heading text-foreground">
+        <h1 className="text-xl md:text-2xl font-bold font-heading text-foreground">
           Bulk Orders (B2B)
         </h1>
         <p className="text-[var(--color-body)] mt-1 text-xs sm:text-sm">

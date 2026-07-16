@@ -63,13 +63,13 @@ export default function ContactPage() {
         image="https://images.unsplash.com/photo-1516571748831-5d81767b788d?q=80&w=2000&auto=format&fit=crop"
       />
 
-      <section className="py-14 sm:py-20 bg-background">
+      <section className="py-20 sm:py-28 bg-background">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
             {/* Contact info */}
             <FadeIn direction="right" className="space-y-8">
               <div>
-                <h2 className="text-2xl md:text-3xl font-bold font-heading text-foreground mb-3">
+                <h2 className="text-xl md:text-2xl font-bold font-heading text-foreground mb-3">
                   We&apos;re here to help
                 </h2>
                 <p className="text-[var(--color-body)] max-w-md">

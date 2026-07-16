@@ -14,14 +14,14 @@ const steps = [
 
 export function FarmToTable() {
   return (
-    <section className="py-20 bg-background">
+    <section className="py-24 sm:py-32 bg-background grain-overlay">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         <FadeIn className="text-center mb-16">
           <span className="text-xs font-bold text-[#2B7A5D] uppercase tracking-wider bg-[#E8F2EC] px-3.5 py-1.5 rounded-full">Our Process</span>
-          <h2 className="text-3xl md:text-4xl font-extrabold text-foreground mt-4 font-heading">
+          <h2 className="text-2xl md:text-3xl font-extrabold text-foreground mt-4 font-heading">
             Farm to Table in Hours, Not Days
           </h2>
-          <p className="text-[var(--color-body)] max-w-2xl mx-auto mt-4 text-base">
+          <p className="text-[var(--color-body)] max-w-2xl mx-auto mt-4 text-sm sm:text-base">
             From the moment we harvest to the moment it arrives at your door — freshness guaranteed.
           </p>
         </FadeIn>
@@ -44,8 +44,8 @@ export function FarmToTable() {
                   <step.icon size={26} strokeWidth={1.5} />
                 </div>
                 <span className="text-xs font-extrabold text-[#2B7A5D] uppercase tracking-wide mb-1">{step.time}</span>
-                <h3 className="font-bold text-foreground text-base font-heading mb-1">{step.title}</h3>
-                <p className="text-xs text-[var(--color-body)] leading-relaxed">{step.desc}</p>
+                <h3 className="font-bold text-foreground text-sm sm:text-base font-heading mb-1">{step.title}</h3>
+                <p className="text-sm text-[var(--color-body)] leading-relaxed">{step.desc}</p>
               </motion.div>
             ))}
           </div>

@@ -1,24 +1,44 @@
 import { Users } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import { CustomersTable } from "@/components/admin/CustomersTable";
+import { Pagination } from "@/components/admin/Pagination";
 
 export const metadata = {
   title: "Customers · Admin",
 };
 
-export default async function AdminCustomersPage() {
-  const customers = await prisma.user.findMany({
-    where: { role: "USER" },
-    include: {
-      _count: { select: { orders: true } },
-      orders: {
-        orderBy: { createdAt: "desc" },
-        take: 1,
-        select: { createdAt: true, totalAmount: true },
+export default async function AdminCustomersPage(props: {
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  const searchParams = await props.searchParams;
+  const page = Math.max(1, Number(searchParams?.page) || 1);
+  const perPage = 20;
+
+  const where = { role: "USER" as const };
+
+  const [customers, totalCount, totalRevenue] = await Promise.all([
+    prisma.user.findMany({
+      where,
+      include: {
+        _count: { select: { orders: true } },
+        orders: {
+          orderBy: { createdAt: "desc" },
+          take: 1,
+          select: { createdAt: true, totalAmount: true },
+        },
       },
-    },
-    orderBy: { createdAt: "desc" },
-  });
+      orderBy: { createdAt: "desc" },
+      skip: (page - 1) * perPage,
+      take: perPage,
+    }),
+    prisma.user.count({ where }),
+    prisma.order.aggregate({
+      _sum: { totalAmount: true },
+      where: { paymentStatus: "COMPLETED" },
+    }),
+  ]);
+
+  const totalPages = Math.ceil(totalCount / perPage);
 
   const customersWithData = customers.map((c) => ({
     id: c.id,
@@ -31,22 +51,18 @@ export default async function AdminCustomersPage() {
     createdAt: c.createdAt,
   }));
 
-  // Calculate stats
-  const totalRevenue = await prisma.order.aggregate({
-    _sum: { totalAmount: true },
-    where: { paymentStatus: "COMPLETED" },
-  });
+  const withOrders = customers.filter((c) => c._count.orders > 0).length;
 
   const stats = {
-    total: customers.length,
-    withOrders: customers.filter((c) => c._count.orders > 0).length,
+    total: totalCount,
+    withOrders,
     totalRevenue: totalRevenue._sum.totalAmount || 0,
   };
 
   return (
     <div className="p-4 sm:p-6 lg:p-10">
       <header className="mb-6 sm:mb-8">
-        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold font-heading text-foreground">
+        <h1 className="text-xl md:text-2xl font-bold font-heading text-foreground">
           Customers
         </h1>
         <p className="text-[var(--color-body)] mt-1 text-xs sm:text-sm">
@@ -66,7 +82,10 @@ export default async function AdminCustomersPage() {
           </p>
         </div>
       ) : (
-        <CustomersTable customers={customersWithData} />
+        <>
+          <CustomersTable customers={customersWithData} />
+          <Pagination currentPage={page} totalPages={totalPages} />
+        </>
       )}
     </div>
   );
