@@ -19,8 +19,17 @@ import { prisma } from "@/lib/prisma";
 import { type Product } from "@/lib/data";
 
 export default async function Home() {
-  const [dbProducts, dbSlides] = await Promise.all([
+  const [dbProducts, dbValueAdded, dbSlides] = await Promise.all([
     prisma.product.findMany({ take: 3, include: { category: true } }),
+    prisma.product.findMany({
+      where: {
+        isActive: true,
+        slug: {
+          in: ["mushroom-masala-powder", "mushroom-soup-mix", "mushroom-pickle"],
+        },
+      },
+      include: { category: true },
+    }),
     prisma.heroSlide.findMany({
       where: { isActive: true },
       orderBy: { sortOrder: "asc" },
@@ -42,12 +51,18 @@ export default async function Home() {
     highlights: string[];
     category: { name: string };
   };
-  const featuredProducts: Product[] = dbProducts.map((p: FeaturedProduct) => ({
+  const mapProduct = (p: FeaturedProduct): Product => ({
     ...p,
     category: p.category.name,
     image: p.images[0] || "",
     gallery: p.images,
-  }));
+  });
+  const featuredProducts: Product[] = dbProducts.map(mapProduct);
+  const valueAddedOrder = ["mushroom-masala-powder", "mushroom-soup-mix", "mushroom-pickle"];
+  const valueAddedProducts: Product[] = valueAddedOrder
+    .map((slug) => dbValueAdded.find((p) => p.slug === slug))
+    .filter((p): p is NonNullable<typeof p> => p != null)
+    .map(mapProduct);
 
   type DbHeroSlide = {
     badge: string;
@@ -118,6 +133,40 @@ export default async function Home() {
           </FadeIn>
         </div>
       </section>
+
+      {valueAddedProducts.length > 0 && (
+        <>
+          <SectionDivider variant="leaf" />
+
+          {/* VALUE-ADDED PRODUCTS */}
+          <section className="py-20 sm:py-28 bg-secondary grain-overlay">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+              <FadeIn className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 sm:mb-12 gap-3 sm:gap-4">
+                <div>
+                  <div className="flex items-center gap-3 mb-3">
+                    <span className="hidden sm:block h-px w-8 bg-border" />
+                    <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Ready to Cook</span>
+                    <span className="hidden sm:block h-px w-8 bg-border" />
+                  </div>
+                  <h2 className="text-xl sm:text-2xl font-extrabold text-foreground tracking-tight font-heading">Kitchen Essentials</h2>
+                  <p className="text-[var(--color-body)] text-sm mt-1.5">Powders, mixes, and preserves made from our farm harvest.</p>
+                </div>
+                <Link href="/shop?category=value-added" className="group inline-flex items-center gap-2 text-primary font-semibold text-base">
+                  View All <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+                </Link>
+              </FadeIn>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+                {valueAddedProducts.map((product, i) => (
+                  <FadeIn key={product.id} delay={i * 0.1}>
+                    <ProductCard product={product} />
+                  </FadeIn>
+                ))}
+              </div>
+            </div>
+          </section>
+        </>
+      )}
 
       <SectionDivider variant="leaf" />
 

@@ -46,11 +46,10 @@ export const products: Product[] = [
     category: "Milky",
     price: 180,
     weight: "250g",
-    image:
-      "https://images.unsplash.com/photo-1508216127116-43b98c56cc19?q=80&w=1000&auto=format&fit=crop",
+    image: "/gallery/products/mixed-mushrooms-CNX65Zqk.jpg",
     gallery: [
+      "/gallery/products/mixed-mushrooms-CNX65Zqk.jpg",
       "https://images.unsplash.com/photo-1508216127116-43b98c56cc19?q=80&w=1000&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1000&auto=format&fit=crop",
     ],
     rating: 4.9,
     reviewCount: 98,
@@ -129,11 +128,8 @@ export const products: Product[] = [
     category: "Value-Added",
     price: 220,
     weight: "200g Jar",
-    image:
-      "https://images.unsplash.com/photo-1552825896-01c6f4d0d2c1?q=80&w=1000&auto=format&fit=crop",
-    gallery: [
-      "https://images.unsplash.com/photo-1552825896-01c6f4d0d2c1?q=80&w=1000&auto=format&fit=crop",
-    ],
+    image: "/gallery/products/mushroom-pickle.jpg",
+    gallery: ["/gallery/products/mushroom-pickle.jpg"],
     rating: 4.5,
     reviewCount: 39,
     tag: "New",
@@ -149,10 +145,10 @@ export const products: Product[] = [
     category: "Value-Added",
     price: 320,
     weight: "100g",
-    image:
-      "https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1000&auto=format&fit=crop",
+    image: "/gallery/products/dried-shiitake.jpg",
     gallery: [
-      "https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1000&auto=format&fit=crop",
+      "/gallery/products/dried-shiitake.jpg",
+      "/gallery/products/shiitake-mushrooms-BMfvtmoS.jpg",
     ],
     rating: 4.8,
     reviewCount: 21,
@@ -169,11 +165,11 @@ export const products: Product[] = [
     price: 450,
     compareAtPrice: 520,
     weight: "4 x 200g",
-    image:
-      "https://images.unsplash.com/photo-1445282768818-728615cc910a?q=80&w=1000&auto=format&fit=crop",
+    image: "/gallery/products/mixed-mushrooms-CNX65Zqk.jpg",
     gallery: [
-      "https://images.unsplash.com/photo-1445282768818-728615cc910a?q=80&w=1000&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1497515114629-f71d768fd07c?q=80&w=1000&auto=format&fit=crop",
+      "/gallery/products/mixed-mushrooms-CNX65Zqk.jpg",
+      "/gallery/products/oyster-mushrooms-DUuUKbNY.jpg",
+      "/gallery/products/button-mushrooms-Dj92oXDo.jpg",
     ],
     rating: 4.9,
     reviewCount: 63,
@@ -211,11 +207,10 @@ export const products: Product[] = [
     category: "Oyster",
     price: 210,
     weight: "250g",
-    image:
-      "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?q=80&w=1000&auto=format&fit=crop",
+    image: "/gallery/products/oyster-mushrooms-DUuUKbNY.jpg",
     gallery: [
-      "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?q=80&w=1000&auto=format&fit=crop",
       "/gallery/products/oyster-mushrooms-DUuUKbNY.jpg",
+      "https://images.unsplash.com/photo-1518977676601-b53f82aba655?q=80&w=1000&auto=format&fit=crop",
     ],
     rating: 4.9,
     reviewCount: 88,
@@ -272,11 +267,10 @@ export const products: Product[] = [
     price: 320,
     compareAtPrice: 360,
     weight: "500g",
-    image:
-      "https://images.unsplash.com/photo-1508216127116-43b98c56cc19?q=80&w=1000&auto=format&fit=crop",
+    image: "/gallery/products/mixed-mushrooms-CNX65Zqk.jpg",
     gallery: [
-      "https://images.unsplash.com/photo-1508216127116-43b98c56cc19?q=80&w=1000&auto=format&fit=crop",
       "/gallery/products/mixed-mushrooms-CNX65Zqk.jpg",
+      "https://images.unsplash.com/photo-1508216127116-43b98c56cc19?q=80&w=1000&auto=format&fit=crop",
     ],
     rating: 4.8,
     reviewCount: 41,
@@ -312,11 +306,8 @@ export const products: Product[] = [
     category: "Value-Added",
     price: 180,
     weight: "100g Pack",
-    image:
-      "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?q=80&w=1000&auto=format&fit=crop",
-    gallery: [
-      "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?q=80&w=1000&auto=format&fit=crop",
-    ],
+    image: "/gallery/products/mushroom-masala-powder.jpg",
+    gallery: ["/gallery/products/mushroom-masala-powder.jpg"],
     rating: 4.6,
     reviewCount: 73,
     tag: "New",
@@ -332,11 +323,8 @@ export const products: Product[] = [
     category: "Value-Added",
     price: 150,
     weight: "50g Pack",
-    image:
-      "https://images.unsplash.com/photo-1547592166-23ac45744acd?q=80&w=1000&auto=format&fit=crop",
-    gallery: [
-      "https://images.unsplash.com/photo-1547592166-23ac45744acd?q=80&w=1000&auto=format&fit=crop",
-    ],
+    image: "/gallery/products/creamy-mushroom-soup.jpg",
+    gallery: ["/gallery/products/creamy-mushroom-soup.jpg"],
     rating: 4.5,
     reviewCount: 29,
     stock: 45,
