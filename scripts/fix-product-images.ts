@@ -2,6 +2,10 @@ import "dotenv/config";
 import { prisma } from "../lib/prisma";
 
 const IMAGE_UPDATES: Record<string, string[]> = {
+  "organic-button-mushroom": [
+    "/gallery/products/organic-button-mushroom.jpg",
+    "/gallery/products/button-mushrooms-Dj92oXDo.jpg",
+  ],
   "mushroom-masala-powder": ["/gallery/products/mushroom-masala-powder.jpg"],
   "mushroom-soup-mix": ["/gallery/products/creamy-mushroom-soup.jpg"],
   "mushroom-pickle": ["/gallery/products/mushroom-pickle.jpg"],

@@ -29,7 +29,11 @@ export function ProductCard({
   const [qty, setQty] = useState(1);
 
   const stock = stockLabel(product.stock);
-  const tags = product.highlights.slice(0, 4);
+  const highlights = product.highlights ?? [];
+  const tags = [
+    ...(product.tag ? [product.tag] : []),
+    ...highlights.filter(Boolean).slice(0, product.tag ? 3 : 4),
+  ];
   const outOfStock = product.stock <= 0;
 
   const handleAddToCart = () => {

@@ -66,18 +66,18 @@ export const products: Product[] = [
     category: "Button",
     price: 120,
     weight: "200g",
-    image:
-      "/gallery/products/button-mushrooms-Dj92oXDo.jpg",
+    image: "/gallery/products/organic-button-mushroom.jpg",
     gallery: [
+      "/gallery/products/organic-button-mushroom.jpg",
       "/gallery/products/button-mushrooms-Dj92oXDo.jpg",
-      "https://images.unsplash.com/photo-1497515114629-f71d768fd07c?q=80&w=1000&auto=format&fit=crop",
     ],
     rating: 4.6,
     reviewCount: 210,
+    tag: "Everyday Staple",
     stock: 65,
     description:
       "Classic white button mushrooms with a mild, earthy flavor that works in nearly every dish. A pantry staple, delivered fresh from farm to doorstep within hours of harvest.",
-    highlights: ["Everyday essential", "Mild, versatile flavor", "Low calorie", "Kid-friendly"],
+    highlights: ["Ready to cook", "Farm-fresh harvest", "Low calorie", "Vegetarian"],
   },
   {
     id: "4",
@@ -327,6 +327,7 @@ export const products: Product[] = [
     gallery: ["/gallery/products/creamy-mushroom-soup.jpg"],
     rating: 4.5,
     reviewCount: 29,
+    tag: "Quick Cook",
     stock: 45,
     description:
       "A ready-to-cook soup base made from our dried oyster and button mushrooms. Just add milk or coconut milk and simmer for a cozy bowl.",
