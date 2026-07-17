@@ -23,7 +23,7 @@ export function AboutPreview() {
           direction="left"
           className="flex flex-col justify-center px-8 sm:px-12 md:px-16 xl:px-24 py-20 lg:py-28"
         >
-          <h2 className="text-2xl md:text-3xl font-bold font-heading text-primary leading-tight">
+          <h2 className="text-xl sm:text-2xl font-extrabold font-heading text-primary leading-tight tracking-tight">
             Meet Mathesh
           </h2>
           <div className="w-14 h-0.5 bg-[#3d7a5f] mt-5 mb-8" aria-hidden="true" />

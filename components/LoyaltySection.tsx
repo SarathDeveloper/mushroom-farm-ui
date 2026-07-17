@@ -1,4 +1,4 @@
-import { Check, Sparkles, Star, Truck } from "lucide-react";
+import { Check, Star, Truck } from "lucide-react";
 import { FadeIn } from "@/components/FadeIn";
 import Link from "next/link";
 
@@ -70,12 +70,15 @@ export function LoyaltySection() {
 
       <div className="container relative z-10 mx-auto max-w-3xl px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
         <FadeIn className="text-center">
-          <span className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#95D5B2]/35 bg-white/5 px-4 py-1.5 text-sm font-medium text-white backdrop-blur-sm">
-            <Sparkles size={14} className="text-[#E9A86B]" fill="#E9A86B" />
-            Trusted by 1000+ Growers
-          </span>
+          <div className="flex items-center justify-center gap-3 mb-5">
+            <span className="hidden sm:block h-px w-10 bg-white/25" />
+            <span className="text-xs font-bold uppercase tracking-[0.2em] text-[#95D5B2]">
+              Join Our Community
+            </span>
+            <span className="hidden sm:block h-px w-10 bg-white/25" />
+          </div>
 
-          <h2 className="font-heading text-2xl md:text-3xl font-extrabold leading-tight tracking-tight text-white mb-4 sm:mb-6">
+          <h2 className="font-heading text-xl sm:text-2xl font-extrabold leading-tight tracking-tight text-white mb-4 sm:mb-6">
             Start your mushroom farming
             <br className="hidden sm:block" /> journey today
           </h2>

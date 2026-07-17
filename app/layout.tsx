@@ -1,18 +1,26 @@
 import type { Metadata } from "next";
-import { Inter, Poppins, Playfair_Display } from "next/font/google";
+import localFont from "next/font/local";
+import { Playfair_Display } from "next/font/google";
 import "./globals.css";
 import Providers from "@/components/Providers";
 import { formatCurrency } from "@/lib/utils";
 
-const inter = Inter({
-  subsets: ["latin"],
+const effra = localFont({
+  src: [
+    {
+      path: "./fonts/effra/EffraVF_Trial_Wght.ttf",
+      weight: "100 900",
+      style: "normal",
+    },
+    {
+      path: "./fonts/effra/EffraVF_Trial_WghtItal.ttf",
+      weight: "100 900",
+      style: "italic",
+    },
+  ],
   variable: "--font-sans",
-});
-
-const poppins = Poppins({
-  subsets: ["latin"],
-  weight: ["500", "600", "700"],
-  variable: "--font-heading",
+  display: "swap",
+  fallback: ["system-ui", "sans-serif"],
 });
 
 const playfair = Playfair_Display({
@@ -47,7 +55,8 @@ export default function RootLayout({
     <html
       lang="en"
       data-scroll-behavior="smooth"
-      className={`${inter.variable} ${poppins.variable} ${playfair.variable} h-full antialiased`}
+      className={`${effra.variable} ${playfair.variable} h-full antialiased`}
+      style={{ ["--font-heading" as string]: "var(--font-sans)" }}
     >
       <head>
         <script

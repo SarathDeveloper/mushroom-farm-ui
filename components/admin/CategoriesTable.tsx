@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { Pencil, Trash2, Loader2, GripVertical, Plus, X, FolderTree } from "lucide-react";
+import { Pencil, Trash2, Loader2, GripVertical, Plus, X, FolderTree, Home } from "lucide-react";
 import toast from "react-hot-toast";
 
 import { SafeImage } from "@/components/SafeImage";
@@ -30,6 +30,7 @@ type Category = {
   description: string | null;
   image: string | null;
   sortOrder: number;
+  showOnHomepage: boolean;
   productCount: number;
 };
 
@@ -39,6 +40,7 @@ type CategoryFormData = {
   description: string;
   image: string;
   sortOrder: number;
+  showOnHomepage: boolean;
 };
 
 const emptyForm: CategoryFormData = {
@@ -47,6 +49,7 @@ const emptyForm: CategoryFormData = {
   description: "",
   image: "",
   sortOrder: 0,
+  showOnHomepage: false,
 };
 
 export function CategoriesTable({ categories }: { categories: Category[] }) {
@@ -68,6 +71,7 @@ export function CategoriesTable({ categories }: { categories: Category[] }) {
       description: cat.description || "",
       image: cat.image || "",
       sortOrder: cat.sortOrder,
+      showOnHomepage: cat.showOnHomepage,
     });
     setEditTarget(cat);
   }
@@ -92,6 +96,7 @@ export function CategoriesTable({ categories }: { categories: Category[] }) {
         description: formData.description.trim() || undefined,
         image: formData.image || undefined,
         sortOrder: formData.sortOrder,
+        showOnHomepage: formData.showOnHomepage,
       });
       if (result.success) {
         toast.success("Category created!");
@@ -115,6 +120,7 @@ export function CategoriesTable({ categories }: { categories: Category[] }) {
         description: formData.description.trim() || undefined,
         image: formData.image || undefined,
         sortOrder: formData.sortOrder,
+        showOnHomepage: formData.showOnHomepage,
       });
       if (result.success) {
         toast.success("Category updated!");
@@ -187,9 +193,16 @@ export function CategoriesTable({ categories }: { categories: Category[] }) {
                     <p className="text-xs text-muted-foreground line-clamp-1">{cat.description}</p>
                   )}
                 </div>
-                <Badge variant={cat.productCount > 0 ? "default" : "secondary"} className="shrink-0">
-                  {cat.productCount} products
-                </Badge>
+                <div className="flex items-center gap-2 shrink-0">
+                  {cat.showOnHomepage && (
+                    <Badge variant="outline" className="gap-1 text-primary border-primary/30">
+                      <Home size={10} /> Homepage
+                    </Badge>
+                  )}
+                  <Badge variant={cat.productCount > 0 ? "default" : "secondary"}>
+                    {cat.productCount} products
+                  </Badge>
+                </div>
               </div>
               <div className="flex items-center justify-between pt-3 border-t border-border">
                 <span className="text-xs text-muted-foreground font-mono">{cat.slug}</span>
@@ -227,6 +240,7 @@ export function CategoriesTable({ categories }: { categories: Category[] }) {
                   <th className="font-semibold px-6 py-4 w-10">#</th>
                   <th className="font-semibold px-6 py-4">Category</th>
                   <th className="font-semibold px-6 py-4">Slug</th>
+                  <th className="font-semibold px-6 py-4 text-center">Homepage</th>
                   <th className="font-semibold px-6 py-4 text-center">Products</th>
                   <th className="font-semibold px-6 py-4 text-right">Actions</th>
                 </tr>
@@ -261,6 +275,15 @@ export function CategoriesTable({ categories }: { categories: Category[] }) {
                       </div>
                     </td>
                     <td className="px-6 py-4 text-muted-foreground font-mono text-xs">{cat.slug}</td>
+                    <td className="px-6 py-4 text-center">
+                      {cat.showOnHomepage ? (
+                        <Badge variant="outline" className="gap-1 text-primary border-primary/30">
+                          <Home size={10} /> Visible
+                        </Badge>
+                      ) : (
+                        <span className="text-xs text-muted-foreground">—</span>
+                      )}
+                    </td>
                     <td className="px-6 py-4 text-center">
                       <Badge variant={cat.productCount > 0 ? "default" : "secondary"}>
                         {cat.productCount}
@@ -349,6 +372,29 @@ export function CategoriesTable({ categories }: { categories: Category[] }) {
                 value={formData.sortOrder}
                 onChange={(e) => setFormData((prev) => ({ ...prev, sortOrder: parseInt(e.target.value) || 0 }))}
               />
+            </div>
+
+            <div className="flex items-center justify-between rounded-lg border border-border p-3">
+              <div className="space-y-0.5">
+                <Label htmlFor="showOnHomepage" className="text-sm font-medium cursor-pointer">Show on Homepage</Label>
+                <p className="text-xs text-muted-foreground">Display this category in the &quot;Shop by Category&quot; section</p>
+              </div>
+              <button
+                id="showOnHomepage"
+                type="button"
+                role="switch"
+                aria-checked={formData.showOnHomepage}
+                onClick={() => setFormData((prev) => ({ ...prev, showOnHomepage: !prev.showOnHomepage }))}
+                className={`relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
+                  formData.showOnHomepage ? "bg-primary" : "bg-input"
+                }`}
+              >
+                <span
+                  className={`pointer-events-none block h-4 w-4 rounded-full bg-background shadow-lg ring-0 transition-transform ${
+                    formData.showOnHomepage ? "translate-x-4" : "translate-x-0"
+                  }`}
+                />
+              </button>
             </div>
 
             <div className="space-y-2">

@@ -4,7 +4,8 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
-import { Leaf, Loader2, Lock, Phone } from "lucide-react";
+import Image from "next/image";
+import { Loader2, Lock, Phone } from "lucide-react";
 import toast from "react-hot-toast";
 import { FadeIn } from "@/components/FadeIn";
 import { Button } from "@/components/ui/button";
@@ -44,8 +45,14 @@ export default function LoginPage() {
       <FadeIn className="w-full max-w-md">
         <div className="bg-card rounded-2xl shadow-[0_8px_20px_rgba(0,0,0,0.06)] border border-border p-8 sm:p-10">
           <div className="flex flex-col items-center text-center mb-8">
-            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[var(--color-primary-dark)] text-white mb-4">
-              <Leaf size={28} />
+            <div className="relative mb-4 h-16 w-16 overflow-hidden rounded-full ring-1 ring-[var(--color-primary-dark)]/20">
+              <Image
+                src="/gallery/brand-logo.png"
+                alt="Sri Amman Mushroom Farms"
+                fill
+                sizes="64px"
+                className="object-cover"
+              />
             </div>
             <h1 className="text-lg md:text-xl font-bold font-heading text-foreground">Welcome Back</h1>
             <p className="text-[var(--color-body)] mt-1 text-xs sm:text-sm">Sign in to manage your orders and wishlist.</p>

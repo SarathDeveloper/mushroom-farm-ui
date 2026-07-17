@@ -20,6 +20,7 @@ export default async function AdminCategoriesPage() {
     description: c.description,
     image: c.image,
     sortOrder: c.sortOrder,
+    showOnHomepage: c.showOnHomepage,
     productCount: c._count.products,
   }));
 

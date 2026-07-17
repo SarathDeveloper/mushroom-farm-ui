@@ -222,6 +222,7 @@ export async function createCategory(data: {
   description?: string;
   image?: string;
   sortOrder?: number;
+  showOnHomepage?: boolean;
 }): Promise<ActionResult<{ id: string }>> {
   try {
     await requireAdmin();
@@ -247,6 +248,7 @@ export async function updateCategory(
     description?: string;
     image?: string;
     sortOrder?: number;
+    showOnHomepage?: boolean;
   }
 ): Promise<ActionResult> {
   try {

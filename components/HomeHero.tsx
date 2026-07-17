@@ -139,7 +139,7 @@ export function HomeHero({ slides }: { slides?: HeroSlideData[] }) {
             return (
               <div
                 key={i}
-                className="relative min-h-[85svh] sm:min-h-[80vh] lg:min-h-[90vh] flex-[0_0_100%] flex flex-col"
+                className="relative min-h-[26rem] h-[min(58svh,34rem)] sm:h-[min(55svh,36rem)] flex-[0_0_100%] flex flex-col"
               >
                 {/* Background: video or image with Ken Burns */}
                 <div className="absolute inset-0 overflow-hidden">
@@ -154,7 +154,7 @@ export function HomeHero({ slides }: { slides?: HeroSlideData[] }) {
                       sizes="100vw"
                       className={cn(
                         "object-cover object-center transition-transform duration-[8000ms] ease-out",
-                        isActive ? "scale-110" : "scale-100",
+                        isActive ? "scale-105" : "scale-100",
                       )}
                     />
                   )}
@@ -164,7 +164,7 @@ export function HomeHero({ slides }: { slides?: HeroSlideData[] }) {
                 <div className="absolute inset-0 bg-gradient-to-r from-[#0A1F17]/80 via-[#0F2E24]/55 to-[#0F2E24]/20 lg:to-transparent" />
 
                 {/* Slide content */}
-                <div className="relative z-10 flex-1 flex flex-col justify-center container mx-auto px-5 sm:px-8 lg:px-12 max-w-7xl pt-12 sm:pt-16 pb-16 sm:pb-24">
+                <div className="relative z-10 flex-1 flex flex-col justify-center container mx-auto px-5 sm:px-8 lg:px-12 max-w-7xl pt-8 sm:pt-10 pb-20 sm:pb-24">
                   <div className="max-w-xl lg:max-w-2xl">
                     {/* Badge pill */}
                     <div

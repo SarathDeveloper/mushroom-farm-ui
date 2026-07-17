@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, ShieldCheck, Clock, Truck, Quote, Send, Star } from "lucide-react";
+import { ArrowRight, ShieldCheck, Clock, Truck, Send } from "lucide-react";
 import { FadeIn } from "@/components/FadeIn";
 import { HomeHero, type HeroSlideData } from "@/components/HomeHero";
 import { FarmToTable } from "@/components/FarmToTable";
@@ -8,14 +8,15 @@ import { PressAndRecognition } from "@/components/PressAndRecognition";
 import { SeasonalAvailability } from "@/components/SeasonalAvailability";
 import { SuccessStories } from "@/components/SuccessStories";
 import { LoyaltySection } from "@/components/LoyaltySection";
+import { HomeContactSection } from "@/components/HomeContactSection";
 import { ProductCard } from "@/components/ProductCard";
 import { Certifications } from "@/components/Certifications";
 import { NewsletterForm } from "@/components/NewsletterForm";
 import { SectionDivider } from "@/components/SectionDivider";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { ShopByCategory } from "@/components/ShopByCategory";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { prisma } from "@/lib/prisma";
-import { testimonials, type Product } from "@/lib/data";
+import { type Product } from "@/lib/data";
 
 export default async function Home() {
   const [dbProducts, dbSlides] = await Promise.all([
@@ -77,13 +78,22 @@ export default async function Home() {
 
       <HomeHero slides={heroSlides} />
 
+      <ShopByCategory />
+
+      <SectionDivider variant="leaf" />
+
       {/* FEATURED PRODUCTS */}
       <section className="py-20 sm:py-28 bg-background grain-overlay">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
           <FadeIn className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 sm:mb-12 gap-3 sm:gap-4">
             <div>
-              <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-2 font-heading">Fresh Harvest</h2>
-              <p className="text-[var(--color-body)] text-sm md:text-base">Explore our premium selection, harvested today.</p>
+              <div className="flex items-center gap-3 mb-3">
+                <span className="hidden sm:block h-px w-8 bg-border" />
+                <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Farm Fresh</span>
+                <span className="hidden sm:block h-px w-8 bg-border" />
+              </div>
+              <h2 className="text-xl sm:text-2xl font-extrabold text-foreground tracking-tight font-heading">Fresh Harvest</h2>
+              <p className="text-[var(--color-body)] text-sm mt-1.5">Explore our premium selection, harvested today.</p>
             </div>
             <Link href="/shop" className="group inline-flex items-center gap-2 text-primary font-semibold text-base">
               View All Products <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
@@ -132,40 +142,6 @@ export default async function Home() {
       {/* SUCCESS STORIES */}
       <SuccessStories />
 
-      <SectionDivider variant="leaf" />
-
-      {/* TESTIMONIALS */}
-      <section className="py-20 sm:py-28 bg-secondary">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl text-center">
-          <FadeIn>
-             <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-8 sm:mb-12 font-heading">What Our Customers Say</h2>
-          </FadeIn>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-8">
-            {testimonials.map((t, i) => (
-              <FadeIn key={i} delay={i * 0.1} direction="up" className="bg-card p-5 sm:p-8 rounded-2xl border border-border shadow-[0_4px_12px_rgba(0,0,0,0.04)] relative text-left">
-                <Quote className="absolute top-4 sm:top-6 right-4 sm:right-6 text-secondary" size={36} />
-                <div className="flex gap-1 text-[#c4a96a] mb-4 sm:mb-6">
-                  {[1,2,3,4,5].map(star => (
-                    <Star key={star} size={16} className={star <= t.rating ? "fill-[#c4a96a]" : "fill-border text-border"} />
-                  ))}
-                </div>
-                <p className="text-[var(--color-body)] italic mb-4 sm:mb-6 leading-relaxed text-sm">&ldquo;{t.review}&rdquo;</p>
-                <div className="flex items-center gap-3">
-                  <Avatar size="lg">
-                    <AvatarImage src={t.avatar} alt={t.name} />
-                    <AvatarFallback>{t.name.charAt(0)}</AvatarFallback>
-                  </Avatar>
-                  <div>
-                    <h4 className="font-bold text-foreground text-sm">{t.name}</h4>
-                    <span className="text-xs text-muted-foreground">{t.role}</span>
-                  </div>
-                </div>
-              </FadeIn>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* LOYALTY PROGRAM */}
       <LoyaltySection />
 
@@ -177,34 +153,39 @@ export default async function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
 
             <FadeIn direction="right">
-              <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-6 sm:mb-8 font-heading">Frequently Asked Questions</h2>
+              <div className="flex items-center gap-3 mb-4">
+                <span className="hidden sm:block h-px w-8 bg-border" />
+                <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">FAQ</span>
+                <span className="hidden sm:block h-px w-8 bg-border" />
+              </div>
+              <h2 className="text-xl sm:text-2xl font-extrabold text-foreground tracking-tight font-heading mb-6 sm:mb-8">Frequently Asked Questions</h2>
               <Accordion className="w-full">
                 <AccordionItem value="item-1">
-                  <AccordionTrigger className="text-base md:text-lg font-medium">How do you ensure freshness?</AccordionTrigger>
+                  <AccordionTrigger className="text-sm sm:text-base font-medium">How do you ensure freshness?</AccordionTrigger>
                   <AccordionContent className="text-[var(--color-body)] text-sm">
                     We harvest early morning and dispatch immediately using temperature-controlled packaging to ensure the mushrooms reach you as fresh as possible.
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="item-2">
-                  <AccordionTrigger className="text-lg font-medium">Do you use pesticides?</AccordionTrigger>
+                  <AccordionTrigger className="text-sm sm:text-base font-medium">Do you use pesticides?</AccordionTrigger>
                   <AccordionContent className="text-[var(--color-body)] text-sm">
                     Absolutely not. Our farming methods are 100% organic and natural, utilizing clean agricultural practices without any synthetic chemicals.
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="item-3">
-                  <AccordionTrigger className="text-lg font-medium">How long is the training program?</AccordionTrigger>
+                  <AccordionTrigger className="text-sm sm:text-base font-medium">How long is the training program?</AccordionTrigger>
                   <AccordionContent className="text-[var(--color-body)] text-sm">
                     We offer both 1-day crash courses and comprehensive 2-week programs depending on your needs. Check our Training page for details.
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="item-4">
-                  <AccordionTrigger className="text-lg font-medium">What areas do you deliver to?</AccordionTrigger>
+                  <AccordionTrigger className="text-sm sm:text-base font-medium">What areas do you deliver to?</AccordionTrigger>
                   <AccordionContent className="text-[var(--color-body)] text-sm">
                     We deliver across Salem, Namakkal, Erode, Coimbatore, Trichy, Madurai, Chennai, and Bangalore. Use our pincode checker on product pages to confirm delivery to your area.
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="item-5">
-                  <AccordionTrigger className="text-lg font-medium">Do you offer subscriptions?</AccordionTrigger>
+                  <AccordionTrigger className="text-sm sm:text-base font-medium">Do you offer subscriptions?</AccordionTrigger>
                   <AccordionContent className="text-[var(--color-body)] text-sm">
                     Yes! Subscribe for weekly, bi-weekly, or monthly deliveries and save up to 15%. You can cancel anytime with no commitment.
                   </AccordionContent>
@@ -216,7 +197,7 @@ export default async function Home() {
               <div className="w-14 h-14 sm:w-16 sm:h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-5 sm:mb-6">
                 <Send size={28} />
               </div>
-              <h2 className="text-xl md:text-2xl font-bold mb-3 sm:mb-4 font-heading">Stay Freshly Updated</h2>
+              <h2 className="text-lg sm:text-xl font-extrabold mb-3 sm:mb-4 font-heading">Stay Freshly Updated</h2>
               <p className="text-white/80 mb-6 sm:mb-8 max-w-sm mx-auto text-sm sm:text-base">
                 Subscribe to our newsletter for exclusive offers and farm updates.
               </p>
@@ -229,11 +210,21 @@ export default async function Home() {
 
       <SectionDivider variant="leaf" />
 
+      {/* CONTACT SECTION */}
+      <HomeContactSection />
+
+      <SectionDivider variant="leaf" />
+
       {/* WHY CHOOSE US / CORE VALUES */}
       <section className="py-24 sm:py-32 bg-background grain-overlay">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl text-center">
           <FadeIn>
-            <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3 sm:mb-4 font-heading">The Sri Amman Promise</h2>
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <span className="hidden sm:block h-px w-10 bg-border" />
+              <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Why Choose Us</span>
+              <span className="hidden sm:block h-px w-10 bg-border" />
+            </div>
+            <h2 className="text-xl sm:text-2xl font-extrabold text-foreground tracking-tight font-heading mb-3 sm:mb-4">The Sri Amman Promise</h2>
             <p className="text-[var(--color-body)] max-w-2xl mx-auto mb-12 sm:mb-20 text-sm sm:text-base">
               We bridge the gap between traditional organic farming and modern quality standards. Our mushrooms are cultivated in the pristine climate of Kalvarayan Hills.
             </p>
@@ -260,7 +251,7 @@ export default async function Home() {
                 }`}>
                   <feature.icon size={32} strokeWidth={1.5} />
                 </div>
-                <h3 className={`text-lg md:text-xl font-bold mb-3 font-heading ${
+                <h3 className={`text-base sm:text-lg font-bold mb-3 font-heading ${
                   feature.accent ? "text-white" : "text-foreground"
                 }`}>{feature.title}</h3>
                 <p className={`leading-relaxed text-sm ${

@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Calendar, TrendingUp, AlertCircle } from "lucide-react";
+import { TrendingUp, AlertCircle } from "lucide-react";
 import { FadeIn } from "@/components/FadeIn";
 import { SafeImage } from "@/components/SafeImage";
 import Link from "next/link";
@@ -54,13 +54,17 @@ export function SeasonalAvailability() {
     <section className="py-24 sm:py-32 bg-secondary">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         <FadeIn className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#E8F2EC] text-[#2B7A5D] text-xs font-bold uppercase tracking-wider mb-4">
-            <Calendar size={16} /> {currentMonth} Harvest Status
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <span className="hidden sm:block h-px w-10 bg-border" />
+            <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">
+              {currentMonth} Harvest Status
+            </span>
+            <span className="hidden sm:block h-px w-10 bg-border" />
           </div>
-          <h2 className="text-2xl md:text-3xl font-extrabold text-foreground font-heading">
+          <h2 className="text-xl sm:text-2xl font-extrabold text-foreground tracking-tight font-heading">
             What&apos;s Fresh Right Now
           </h2>
-          <p className="text-[var(--color-body)] max-w-2xl mx-auto mt-4 text-sm sm:text-base">
+          <p className="text-[var(--color-body)] max-w-2xl mx-auto mt-3 text-sm sm:text-base">
             Our seasonal availability — order what&apos;s at its peak for the best flavor and nutrition.
           </p>
         </FadeIn>

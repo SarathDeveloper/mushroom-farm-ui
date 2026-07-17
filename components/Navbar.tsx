@@ -41,19 +41,24 @@ export default function Navbar() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         <div className="flex h-16 sm:h-20 items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2">
-            <div className="relative h-10 w-10 shrink-0">
+          <Link href="/" className="flex items-center gap-2.5 min-w-0">
+            <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full ring-1 ring-[#1A4938]/20">
               <Image
-                src="/gallery/Logo.png"
+                src="/gallery/brand-logo.png"
                 alt="Sri Amman Mushroom Farms"
                 fill
                 sizes="40px"
-                className="object-contain"
+                className="object-cover"
                 priority
               />
             </div>
-            <span className="text-xl font-bold text-[#1A4938] tracking-tight font-heading">
-              Sri Amman <span className="text-[#2B7A5D]">Farms</span>
+            <span className="font-heading leading-tight min-w-0">
+              <span className="block text-base sm:text-lg font-semibold tracking-[0.04em] uppercase text-[#1A4938]">
+                Sri Amman
+              </span>
+              <span className="block text-[11px] sm:text-xs font-medium tracking-[0.08em] uppercase text-[#2B7A5D]">
+                Mushroom Farms
+              </span>
             </span>
           </Link>
 
@@ -139,11 +144,18 @@ export default function Navbar() {
                 </SheetTrigger>
                 <SheetContent>
                   <SheetHeader>
-                    <SheetTitle className="text-left font-heading text-[#1A4938] font-bold text-xl flex items-center gap-2">
-                      <div className="relative h-7 w-7">
-                        <Image src="/gallery/Logo.png" alt="Logo" fill sizes="28px" className="object-contain" />
+                    <SheetTitle className="text-left font-heading flex items-center gap-2.5">
+                      <div className="relative h-8 w-8 shrink-0 overflow-hidden rounded-full ring-1 ring-[#1A4938]/20">
+                        <Image src="/gallery/brand-logo.png" alt="Logo" fill sizes="32px" className="object-cover" />
                       </div>
-                      Sri Amman Farms
+                      <span className="leading-tight">
+                        <span className="block text-base font-semibold tracking-[0.04em] uppercase text-[#1A4938]">
+                          Sri Amman
+                        </span>
+                        <span className="block text-[11px] font-medium tracking-[0.08em] uppercase text-[#2B7A5D]">
+                          Mushroom Farms
+                        </span>
+                      </span>
                     </SheetTitle>
                   </SheetHeader>
                   <div className="mt-8 flex flex-col gap-4 px-4">

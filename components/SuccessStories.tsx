@@ -41,11 +41,15 @@ export function SuccessStories() {
     <section className="py-24 sm:py-32 bg-background">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         <FadeIn className="text-center mb-14">
-          <span className="text-xs font-bold text-[#2B7A5D] uppercase tracking-wider bg-[#E8F2EC] px-3.5 py-1.5 rounded-full">Real Results</span>
-          <h2 className="text-2xl md:text-3xl font-extrabold text-foreground mt-4 font-heading">
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <span className="hidden sm:block h-px w-10 bg-border" />
+            <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Real Results</span>
+            <span className="hidden sm:block h-px w-10 bg-border" />
+          </div>
+          <h2 className="text-xl sm:text-2xl font-extrabold text-foreground tracking-tight font-heading">
             Success Stories
           </h2>
-          <p className="text-[var(--color-body)] max-w-2xl mx-auto mt-4 text-xs sm:text-sm">
+          <p className="text-[var(--color-body)] max-w-2xl mx-auto mt-3 text-sm sm:text-base">
             From restaurant owners to first-time farmers — see how Sri Amman Mushroom Farms creates real impact.
           </p>
         </FadeIn>

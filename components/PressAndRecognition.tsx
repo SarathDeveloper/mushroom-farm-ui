@@ -51,8 +51,12 @@ export function PressAndRecognition({ compact = false }: { compact?: boolean }) 
     <section className={compact ? "py-24 sm:py-32 bg-background" : undefined}>
       <div className={compact ? "container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl" : undefined}>
         <FadeIn className="text-center mb-12">
-          <span className="text-sm font-semibold text-primary uppercase tracking-wider">Press</span>
-          <h2 className="text-2xl md:text-3xl font-bold font-heading text-foreground mt-2 mb-4">In the News</h2>
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <span className="hidden sm:block h-px w-10 bg-border" />
+            <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Press</span>
+            <span className="hidden sm:block h-px w-10 bg-border" />
+          </div>
+          <h2 className="text-xl sm:text-2xl font-extrabold text-foreground tracking-tight font-heading mb-3">In the News</h2>
           <p className="text-[var(--color-body)] max-w-2xl mx-auto text-sm sm:text-base">
             Our farm has been featured in leading Tamil newspapers for our innovative mushroom cultivation practices.
           </p>
@@ -84,8 +88,12 @@ export function PressAndRecognition({ compact = false }: { compact?: boolean }) 
         </div>
 
         <FadeIn className="text-center mb-12">
-          <span className="text-sm font-semibold text-primary uppercase tracking-wider">Trust</span>
-          <h2 className="text-2xl md:text-3xl font-bold font-heading text-foreground mt-2 mb-4">Recognition &amp; Support</h2>
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <span className="hidden sm:block h-px w-10 bg-border" />
+            <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Trust</span>
+            <span className="hidden sm:block h-px w-10 bg-border" />
+          </div>
+          <h2 className="text-xl sm:text-2xl font-extrabold text-foreground tracking-tight font-heading mb-3">Recognition &amp; Support</h2>
           <p className="text-[var(--color-body)] max-w-2xl mx-auto text-sm sm:text-base">
             Endorsed by district administration and supported by the Tamil Nadu Horticulture Department.
           </p>

@@ -106,14 +106,14 @@ export function AdminSidebar() {
       <div className="sticky top-0 z-40 flex items-center justify-between bg-[var(--color-primary-dark)] px-4 py-3 lg:hidden">
         <Link href="/" className="flex items-center gap-2">
           <Image
-            src="/gallery/Logo.png"
+            src="/gallery/brand-logo.png"
             alt="Sri Amman Mushroom Farms"
             width={32}
             height={32}
-            className="h-8 w-8 object-contain"
+            className="h-8 w-8 rounded-full object-cover ring-1 ring-white/20"
           />
           <span className="text-base font-bold tracking-tight font-heading text-white">
-            Sri Amman <span className="text-secondary">Admin</span>
+            Sri Amman Mushroom Farms <span className="text-secondary">Admin</span>
           </span>
         </Link>
         <button
@@ -143,14 +143,14 @@ export function AdminSidebar() {
         <div className="p-5 border-b border-white/10 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2.5">
             <Image
-              src="/gallery/Logo.png"
+              src="/gallery/brand-logo.png"
               alt="Sri Amman Mushroom Farms"
               width={36}
               height={36}
-              className="h-9 w-9 object-contain"
+              className="h-9 w-9 rounded-full object-cover ring-1 ring-white/20"
             />
             <span className="text-base font-bold tracking-tight font-heading">
-              Sri Amman <span className="text-secondary">Admin</span>
+              Sri Amman Mushroom Farms <span className="text-secondary">Admin</span>
             </span>
           </Link>
           <button
@@ -169,14 +169,14 @@ export function AdminSidebar() {
         <div className="p-6 border-b border-white/10">
           <Link href="/" className="flex items-center gap-2.5">
             <Image
-              src="/gallery/Logo.png"
+              src="/gallery/brand-logo.png"
               alt="Sri Amman Mushroom Farms"
               width={40}
               height={40}
-              className="h-10 w-10 object-contain"
+              className="h-10 w-10 rounded-full object-cover ring-1 ring-white/20"
             />
             <span className="text-lg font-bold tracking-tight font-heading">
-              Sri Amman <span className="text-secondary">Admin</span>
+              Sri Amman Mushroom Farms <span className="text-secondary">Admin</span>
             </span>
           </Link>
         </div>

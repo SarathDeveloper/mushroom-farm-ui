@@ -1,13 +1,20 @@
 import Link from "next/link";
-import { ArrowRight, Leaf, Search } from "lucide-react";
+import Image from "next/image";
+import { ArrowRight, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function NotFound() {
   return (
     <div className="min-h-[calc(100vh-5rem)] flex items-center justify-center bg-secondary px-4 py-24">
       <div className="text-center max-w-lg">
-        <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-[var(--color-primary-dark)] text-white mx-auto mb-8">
-          <Leaf size={32} />
+        <div className="relative mx-auto mb-8 h-16 w-16 overflow-hidden rounded-full ring-1 ring-[var(--color-primary-dark)]/20">
+          <Image
+            src="/gallery/brand-logo.png"
+            alt="Sri Amman Mushroom Farms"
+            fill
+            sizes="64px"
+            className="object-cover"
+          />
         </div>
         <p className="text-8xl font-bold font-heading text-primary/20 mb-2">404</p>
         <h1 className="text-3xl font-bold font-heading text-foreground mb-3">This patch hasn&apos;t sprouted yet</h1>
