@@ -463,48 +463,83 @@ export function TrainingTable({ programs }: { programs: Training[] }) {
           <DialogTitle>Registrations: {viewRegistrations?.title}</DialogTitle>
           {viewRegistrations && (
             <div className="mt-4 max-h-96 overflow-y-auto">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="border-b text-left text-muted-foreground">
-                    <th className="pb-2 font-semibold">Name</th>
-                    <th className="pb-2 font-semibold">Contact</th>
-                    <th className="pb-2 font-semibold">Date</th>
-                    <th className="pb-2 font-semibold">Status</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y">
-                  {viewRegistrations.registrations.map((reg) => (
-                    <tr key={reg.id}>
-                      <td className="py-3 font-medium">{reg.user.name || "—"}</td>
-                      <td className="py-3">
-                        <div className="text-xs">
-                          {reg.user.email && <p>{reg.user.email}</p>}
-                          {reg.user.phone && <p className="text-muted-foreground">{reg.user.phone}</p>}
-                        </div>
-                      </td>
-                      <td className="py-3 text-muted-foreground">{formatDate(reg.createdAt)}</td>
-                      <td className="py-3">
-                        <select
-                          value={reg.status}
-                          onChange={(e) => handleRegistrationStatus(reg.id, e.target.value as PaymentStatus)}
-                          disabled={isPending}
-                          className={`text-xs px-2 py-1 rounded-full border font-bold ${
-                            reg.status === "COMPLETED" ? "bg-green-100 text-green-800 border-green-200" :
-                            reg.status === "PENDING" ? "bg-yellow-100 text-yellow-800 border-yellow-200" :
-                            reg.status === "FAILED" ? "bg-red-100 text-red-800 border-red-200" :
-                            "bg-gray-100 text-gray-800 border-gray-200"
-                          }`}
-                        >
-                          <option value="PENDING">PENDING</option>
-                          <option value="COMPLETED">COMPLETED</option>
-                          <option value="FAILED">FAILED</option>
-                          <option value="REFUNDED">REFUNDED</option>
-                        </select>
-                      </td>
+              {/* Mobile stacked view */}
+              <div className="space-y-3 sm:hidden">
+                {viewRegistrations.registrations.map((reg) => (
+                  <div key={reg.id} className="rounded-lg border border-border p-3">
+                    <div className="flex items-center justify-between gap-2 mb-2">
+                      <p className="font-medium text-sm truncate">{reg.user.name || "—"}</p>
+                      <select
+                        value={reg.status}
+                        onChange={(e) => handleRegistrationStatus(reg.id, e.target.value as PaymentStatus)}
+                        disabled={isPending}
+                        className={`text-xs px-2 py-1 rounded-full border font-bold shrink-0 ${
+                          reg.status === "COMPLETED" ? "bg-green-100 text-green-800 border-green-200" :
+                          reg.status === "PENDING" ? "bg-yellow-100 text-yellow-800 border-yellow-200" :
+                          reg.status === "FAILED" ? "bg-red-100 text-red-800 border-red-200" :
+                          "bg-gray-100 text-gray-800 border-gray-200"
+                        }`}
+                      >
+                        <option value="PENDING">PENDING</option>
+                        <option value="COMPLETED">COMPLETED</option>
+                        <option value="FAILED">FAILED</option>
+                        <option value="REFUNDED">REFUNDED</option>
+                      </select>
+                    </div>
+                    <div className="text-xs text-muted-foreground space-y-0.5">
+                      {reg.user.email && <p>{reg.user.email}</p>}
+                      {reg.user.phone && <p>{reg.user.phone}</p>}
+                      <p>{formatDate(reg.createdAt)}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Desktop table view */}
+              <div className="hidden sm:block overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b text-left text-muted-foreground">
+                      <th className="pb-2 font-semibold">Name</th>
+                      <th className="pb-2 font-semibold">Contact</th>
+                      <th className="pb-2 font-semibold">Date</th>
+                      <th className="pb-2 font-semibold">Status</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody className="divide-y">
+                    {viewRegistrations.registrations.map((reg) => (
+                      <tr key={reg.id}>
+                        <td className="py-3 font-medium">{reg.user.name || "—"}</td>
+                        <td className="py-3">
+                          <div className="text-xs">
+                            {reg.user.email && <p>{reg.user.email}</p>}
+                            {reg.user.phone && <p className="text-muted-foreground">{reg.user.phone}</p>}
+                          </div>
+                        </td>
+                        <td className="py-3 text-muted-foreground">{formatDate(reg.createdAt)}</td>
+                        <td className="py-3">
+                          <select
+                            value={reg.status}
+                            onChange={(e) => handleRegistrationStatus(reg.id, e.target.value as PaymentStatus)}
+                            disabled={isPending}
+                            className={`text-xs px-2 py-1 rounded-full border font-bold ${
+                              reg.status === "COMPLETED" ? "bg-green-100 text-green-800 border-green-200" :
+                              reg.status === "PENDING" ? "bg-yellow-100 text-yellow-800 border-yellow-200" :
+                              reg.status === "FAILED" ? "bg-red-100 text-red-800 border-red-200" :
+                              "bg-gray-100 text-gray-800 border-gray-200"
+                            }`}
+                          >
+                            <option value="PENDING">PENDING</option>
+                            <option value="COMPLETED">COMPLETED</option>
+                            <option value="FAILED">FAILED</option>
+                            <option value="REFUNDED">REFUNDED</option>
+                          </select>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
           )}
         </DialogContent>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import { X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
@@ -16,6 +17,8 @@ const quickMessages = [
 
 export function WhatsAppWidget() {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+  const isCartPage = pathname === "/cart";
 
   const sendMessage = (message: string) => {
     window.open(
@@ -26,7 +29,7 @@ export function WhatsAppWidget() {
   };
 
   return (
-    <div className="fixed bottom-20 right-4 z-50 md:bottom-8 md:right-8">
+    <div className={`fixed right-4 z-50 md:bottom-8 md:right-8 ${isCartPage ? "bottom-36" : "bottom-20"}`}>
       <AnimatePresence>
         {open && (
           <motion.div

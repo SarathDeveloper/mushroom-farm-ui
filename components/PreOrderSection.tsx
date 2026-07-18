@@ -74,9 +74,9 @@ export function PreOrderSection() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         <FadeIn className="text-center mb-12">
           <div className="flex items-center justify-center gap-3 mb-3">
-            <span className="hidden sm:block h-px w-8 bg-border" />
+            <span className="h-px w-6 sm:w-8 bg-border" />
             <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Book Early</span>
-            <span className="hidden sm:block h-px w-8 bg-border" />
+            <span className="h-px w-6 sm:w-8 bg-border" />
           </div>
           <h2 className="text-xl sm:text-2xl font-extrabold text-foreground tracking-tight font-heading">
             Pre-Order Fresh Mushrooms
@@ -89,7 +89,7 @@ export function PreOrderSection() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
           <div className="lg:col-span-1 space-y-8">
             <FadeIn direction="right">
-              <h2 className="text-base md:text-lg font-bold font-heading text-foreground mb-2">
+              <h2 className="text-base sm:text-lg font-bold font-heading text-foreground mb-2">
                 Why Pre-Order?
               </h2>
               <p className="text-[var(--color-body)] mb-8 text-xs sm:text-sm">
@@ -114,11 +114,11 @@ export function PreOrderSection() {
 
           <FadeIn direction="left" className="lg:col-span-2">
             {submitted ? (
-              <div className="h-full flex flex-col items-center justify-center text-center bg-card rounded-2xl p-12 border border-border">
+              <div className="h-full flex flex-col items-center justify-center text-center bg-card rounded-2xl p-8 sm:p-12 border border-border">
                 <div className="w-16 h-16 rounded-full bg-[var(--color-success)]/15 text-[var(--color-success)] flex items-center justify-center mb-6">
                   <MailCheck size={32} />
                 </div>
-                <h3 className="text-base md:text-lg font-bold font-heading text-foreground mb-2">
+                <h3 className="text-base sm:text-lg font-bold font-heading text-foreground mb-2">
                   Pre-Order Received!
                 </h3>
                 <p className="text-[var(--color-body)] max-w-sm mb-6 text-xs sm:text-sm">
@@ -139,9 +139,9 @@ export function PreOrderSection() {
             ) : (
               <form
                 onSubmit={handleSubmit}
-                className="bg-card rounded-2xl p-8 border border-border space-y-5"
+                className="bg-card rounded-2xl p-6 sm:p-8 border border-border space-y-5"
               >
-                <h2 className="text-base md:text-lg font-bold font-heading text-foreground">
+                <h2 className="text-base sm:text-lg font-bold font-heading text-foreground">
                   Place a Pre-Order
                 </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

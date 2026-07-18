@@ -52,9 +52,9 @@ export function PressAndRecognition({ compact = false }: { compact?: boolean }) 
       <div className={compact ? "container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl" : undefined}>
         <FadeIn className="text-center mb-12">
           <div className="flex items-center justify-center gap-3 mb-4">
-            <span className="hidden sm:block h-px w-8 bg-border" />
+            <span className="h-px w-6 sm:w-8 bg-border" />
             <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">News</span>
-            <span className="hidden sm:block h-px w-8 bg-border" />
+            <span className="h-px w-6 sm:w-8 bg-border" />
           </div>
           <h2 className="text-xl sm:text-2xl font-extrabold text-foreground tracking-tight font-heading mb-3">We Are in the News</h2>
           <p className="text-[var(--color-body)] max-w-2xl mx-auto text-sm sm:text-base">
@@ -89,11 +89,11 @@ export function PressAndRecognition({ compact = false }: { compact?: boolean }) 
 
         <FadeIn className="text-center mb-12">
           <div className="flex items-center justify-center gap-3 mb-4">
-            <span className="hidden sm:block h-px w-8 bg-border" />
+            <span className="h-px w-6 sm:w-8 bg-border" />
             <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Trust</span>
-            <span className="hidden sm:block h-px w-8 bg-border" />
+            <span className="h-px w-6 sm:w-8 bg-border" />
           </div>
-          <h2 className="text-xl sm:text-2xl font-extrabold text-foreground tracking-tight font-heading mb-3">Awards &amp; Support</h2>
+          <h2 className="text-xl sm:text-2xl font-extrabold text-foreground tracking-tight font-heading mb-3">Recognition &amp; Support</h2>
           <p className="text-[var(--color-body)] max-w-2xl mx-auto text-sm sm:text-base">
             The District office and Tamil Nadu Horticulture Department support our farm.
           </p>

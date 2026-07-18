@@ -38,7 +38,7 @@ export async function updateOrderStatus(
     const order = await prisma.order.update({
       where: { id: orderId },
       data: { status },
-      select: { id: true, status: true, shippingAddress: true },
+      select: { id: true, status: true, userId: true, shippingAddress: true, orderItems: { select: { productId: true, product: { select: { name: true } } } } },
     });
     const contact = parseShippingContact(order.shippingAddress);
     if (contact.phone) {
@@ -49,6 +49,19 @@ export async function updateOrderStatus(
         status: order.status,
       });
     }
+
+    if (status === "DELIVERED") {
+      const productNames = order.orderItems.map((i) => i.product.name).slice(0, 3).join(", ");
+      await prisma.notification.create({
+        data: {
+          userId: order.userId,
+          title: "How were your mushrooms?",
+          message: `Your order with ${productNames} has been delivered. We'd love to hear your feedback!`,
+          link: `/orders?review=${order.id}`,
+        },
+      });
+    }
+
     revalidatePath("/admin/orders");
     revalidatePath(`/admin/orders/${orderId}`);
     revalidatePath("/orders");

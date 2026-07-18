@@ -22,9 +22,9 @@ export function MobileBottomNav() {
   const tabs = [
     ...baseTabs,
     {
-      href: session?.user ? "/orders" : "/login",
+      href: session?.user ? "/account" : "/login",
       icon: User,
-      label: session?.user ? "Orders" : "Account",
+      label: session?.user ? "Account" : "Account",
     },
   ];
 

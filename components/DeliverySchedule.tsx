@@ -18,7 +18,7 @@ const slots = [
 
 export function DeliverySchedule() {
   return (
-    <section className="py-5 sm:py-6 bg-secondary">
+    <section className="pt-2 pb-8 sm:py-6 bg-secondary">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
         <FadeIn>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">

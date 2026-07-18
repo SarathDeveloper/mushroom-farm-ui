@@ -7,8 +7,8 @@ import { Button } from "@/components/ui/button";
 export function AboutPreview() {
   return (
     <section className="bg-secondary overflow-hidden">
-      <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[600px] lg:min-h-[720px]">
-        <FadeIn direction="right" className="relative min-h-[480px] lg:min-h-full overflow-hidden group/image">
+      <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[400px] sm:min-h-[600px] lg:min-h-[720px]">
+        <FadeIn direction="right" className="relative min-h-[320px] sm:min-h-[480px] lg:min-h-full overflow-hidden group/image">
           {/* Subtle warm organic ambient layer behind the image */}
           <div className="absolute inset-0 bg-[#1A4938]/5" />
           
@@ -45,7 +45,7 @@ export function AboutPreview() {
 
         <FadeIn
           direction="left"
-          className="flex flex-col justify-center px-8 sm:px-12 md:px-16 xl:px-24 py-20 lg:py-28"
+          className="flex flex-col justify-center px-4 sm:px-6 lg:px-8 xl:px-24 py-20 lg:py-28"
         >
           <h2 className="text-xl sm:text-2xl font-extrabold font-heading text-foreground leading-tight tracking-tight">
             Meet Mathesh

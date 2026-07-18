@@ -81,7 +81,7 @@ export function ContactForm({
 
   if (submitted) {
     return (
-      <div className={`flex flex-col items-center justify-center text-center bg-card rounded-2xl border border-border ${compact ? "p-8" : "p-12 min-h-[520px]"}`}>
+      <div className={`flex flex-col items-center justify-center text-center bg-card rounded-2xl border border-border ${compact ? "p-8" : "p-8 sm:p-12 min-h-[520px]"}`}>
         <div className="w-16 h-16 rounded-full bg-[var(--color-success)]/15 text-[var(--color-success)] flex items-center justify-center mb-6">
           <MailCheck size={32} />
         </div>

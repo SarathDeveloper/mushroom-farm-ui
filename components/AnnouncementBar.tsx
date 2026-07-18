@@ -12,7 +12,7 @@ export function AnnouncementBar() {
     <div className="relative bg-[#1A4938] text-white">
       <div className="container mx-auto flex items-center justify-center px-4 py-1.5 text-xs sm:text-sm font-medium tracking-wide">
         <Truck size={14} className="mr-2 shrink-0 opacity-80" />
-        <span>
+        <span className="pr-8">
           Free Delivery for orders above{" "}
           <span className="font-bold">₹500</span>{" "}
           <span className="hidden sm:inline">— Fresh to your home</span>

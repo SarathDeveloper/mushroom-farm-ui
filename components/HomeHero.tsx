@@ -139,7 +139,7 @@ export function HomeHero({ slides }: { slides?: HeroSlideData[] }) {
             return (
               <div
                 key={i}
-                className="relative min-h-[26rem] h-[min(58svh,34rem)] sm:h-[min(55svh,36rem)] flex-[0_0_100%] flex flex-col"
+                className="relative min-h-[30rem] h-[min(70svh,38rem)] sm:h-[min(55svh,36rem)] flex-[0_0_100%] flex flex-col"
               >
                 {/* Background: video or image with Ken Burns */}
                 <div className="absolute inset-0 overflow-hidden">
@@ -164,12 +164,12 @@ export function HomeHero({ slides }: { slides?: HeroSlideData[] }) {
                 <div className="absolute inset-0 bg-gradient-to-r from-[#0A1F17]/80 via-[#0F2E24]/55 to-[#0F2E24]/20 lg:to-transparent" />
 
                 {/* Slide content */}
-                <div className="relative z-10 flex-1 flex flex-col justify-center container mx-auto px-5 sm:px-8 lg:px-12 max-w-7xl pt-8 sm:pt-10 pb-20 sm:pb-24">
+                <div className="relative z-10 flex-1 flex flex-col justify-center container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl pt-8 sm:pt-10 pb-24 sm:pb-28">
                   <div className="max-w-xl lg:max-w-2xl">
                     {/* Badge pill */}
                     <div
                       className={cn(
-                        "inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/15 backdrop-blur-md text-white text-xs font-semibold tracking-wide mb-6 border border-white/20 transition-all duration-700",
+                        "inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/15 backdrop-blur-md text-white text-xs font-semibold tracking-wide mb-4 sm:mb-6 border border-white/20 transition-all duration-700",
                         isActive
                           ? "opacity-100 translate-y-0"
                           : "opacity-0 translate-y-4"
@@ -183,7 +183,7 @@ export function HomeHero({ slides }: { slides?: HeroSlideData[] }) {
                     {/* Headline — using display serif font */}
                     <h1
                       className={cn(
-                        "text-3xl md:text-4xl lg:text-5xl font-extrabold text-white leading-[1.08] mb-4 sm:mb-5 tracking-tight whitespace-pre-line transition-all duration-700",
+                        "text-2xl sm:text-3xl font-extrabold text-white leading-[1.08] mb-3 sm:mb-5 tracking-tight whitespace-pre-line transition-all duration-700",
                         isActive
                           ? "opacity-100 translate-y-0"
                           : "opacity-0 translate-y-6"
@@ -199,7 +199,7 @@ export function HomeHero({ slides }: { slides?: HeroSlideData[] }) {
                     {/* Subtitle */}
                     <p
                       className={cn(
-                        "text-white/85 text-sm md:text-base leading-relaxed max-w-lg mb-8 transition-all duration-700",
+                        "text-white/85 text-sm md:text-base leading-relaxed max-w-lg mb-6 sm:mb-8 transition-all duration-700",
                         isActive
                           ? "opacity-100 translate-y-0"
                           : "opacity-0 translate-y-6"
@@ -212,7 +212,7 @@ export function HomeHero({ slides }: { slides?: HeroSlideData[] }) {
                     {/* CTA buttons */}
                     <div
                       className={cn(
-                        "flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 transition-all duration-700",
+                        "flex flex-row flex-wrap items-center gap-3 sm:gap-4 transition-all duration-700",
                         isActive
                           ? "opacity-100 translate-y-0"
                           : "opacity-0 translate-y-6"
@@ -222,7 +222,7 @@ export function HomeHero({ slides }: { slides?: HeroSlideData[] }) {
                       {slide.primaryCtaLabel && slide.primaryCtaHref && (
                         <Link
                           href={slide.primaryCtaHref}
-                          className="inline-flex items-center justify-center gap-2.5 rounded-full bg-primary text-white font-semibold px-7 py-3.5 text-xs sm:text-sm hover:bg-primary/90 transition-colors shadow-lg shadow-black/20"
+                          className="inline-flex items-center justify-center gap-2 rounded-full bg-primary text-white font-semibold px-5 sm:px-7 py-3 sm:py-3.5 text-xs sm:text-sm hover:bg-primary/90 transition-colors shadow-lg shadow-black/20"
                         >
                           {slide.primaryCtaLabel}
                           <ArrowRight size={16} />
@@ -231,7 +231,7 @@ export function HomeHero({ slides }: { slides?: HeroSlideData[] }) {
                       {slide.secondaryCtaLabel && slide.secondaryCtaHref && (
                         <Link
                           href={slide.secondaryCtaHref}
-                          className="inline-flex items-center justify-center gap-2 rounded-full border border-white/40 text-white font-semibold px-7 py-3.5 text-xs sm:text-sm hover:bg-white/10 transition-colors backdrop-blur-sm"
+                          className="inline-flex items-center justify-center gap-2 rounded-full border border-white/40 text-white font-semibold px-5 sm:px-7 py-3 sm:py-3.5 text-xs sm:text-sm hover:bg-white/10 transition-colors backdrop-blur-sm"
                         >
                           {slide.secondaryCtaLabel}
                           <ArrowRight size={16} />
@@ -246,53 +246,50 @@ export function HomeHero({ slides }: { slides?: HeroSlideData[] }) {
         </div>
       </div>
 
-      {/* Trust indicator badges */}
-      <div className="absolute bottom-16 sm:bottom-20 left-1/2 -translate-x-1/2 z-20 flex items-center gap-4 sm:gap-6">
-        {trustBadges.map((badge) => (
-          <div
-            key={badge.label}
-            className="flex items-center gap-1.5 text-white/70 text-[11px] sm:text-xs font-medium"
-          >
-            <badge.icon size={14} strokeWidth={1.5} className="text-emerald-400" />
-            <span className="hidden sm:inline">{badge.label}</span>
-            <span className="sm:hidden">{badge.label.split(" ").slice(-1)[0]}</span>
-          </div>
-        ))}
-      </div>
-
-      {/* Prev / Next arrows */}
+      {/* Prev / Next arrows — desktop/tablet only; mobile uses swipe + dots */}
       <button
         onClick={() => emblaApi?.scrollPrev()}
-        className="absolute left-3 sm:left-5 bottom-14 sm:bottom-auto sm:top-1/2 sm:-translate-y-1/2 z-20 w-8 h-8 sm:w-12 sm:h-12 rounded-full bg-black/30 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-black/50 transition-colors cursor-pointer"
+        className="hidden sm:flex absolute left-5 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-black/30 backdrop-blur-md border border-white/20 items-center justify-center text-white hover:bg-black/50 transition-colors cursor-pointer"
         aria-label="Previous slide"
       >
-        <ChevronLeft size={16} className="sm:hidden" />
-        <ChevronLeft size={20} className="hidden sm:block" />
+        <ChevronLeft size={20} />
       </button>
       <button
         onClick={() => emblaApi?.scrollNext()}
-        className="absolute right-3 sm:right-5 bottom-14 sm:bottom-auto sm:top-1/2 sm:-translate-y-1/2 z-20 w-8 h-8 sm:w-12 sm:h-12 rounded-full bg-black/30 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-black/50 transition-colors cursor-pointer"
+        className="hidden sm:flex absolute right-5 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-black/30 backdrop-blur-md border border-white/20 items-center justify-center text-white hover:bg-black/50 transition-colors cursor-pointer"
         aria-label="Next slide"
       >
-        <ChevronRight size={16} className="sm:hidden" />
-        <ChevronRight size={20} className="hidden sm:block" />
+        <ChevronRight size={20} />
       </button>
 
-      {/* Pagination dots */}
-      <div className="absolute bottom-5 sm:bottom-8 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2">
-        {data.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => emblaApi?.scrollTo(i)}
-            aria-label={`Go to slide ${i + 1}`}
-            className={cn(
-              "rounded-full transition-all duration-300 h-2.5 cursor-pointer",
-              i === activeIndex
-                ? "w-8 bg-emerald-500"
-                : "w-2.5 bg-white/40 hover:bg-white/60"
-            )}
-          />
-        ))}
+      {/* Bottom chrome: trust badges + dots in one clear band */}
+      <div className="absolute bottom-0 inset-x-0 z-20 flex flex-col items-center gap-3 pb-4 sm:pb-6 pt-8 bg-gradient-to-t from-black/40 to-transparent pointer-events-none">
+        <div className="hidden sm:flex items-center gap-6 pointer-events-auto">
+          {trustBadges.map((badge) => (
+            <div
+              key={badge.label}
+              className="flex items-center gap-1.5 text-white/70 text-xs font-medium"
+            >
+              <badge.icon size={14} strokeWidth={1.5} className="text-emerald-400" />
+              <span>{badge.label}</span>
+            </div>
+          ))}
+        </div>
+        <div className="flex items-center gap-2 pointer-events-auto">
+          {data.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => emblaApi?.scrollTo(i)}
+              aria-label={`Go to slide ${i + 1}`}
+              className={cn(
+                "rounded-full transition-all duration-300 h-2.5 cursor-pointer",
+                i === activeIndex
+                  ? "w-8 bg-emerald-500"
+                  : "w-2.5 bg-white/40 hover:bg-white/60"
+              )}
+            />
+          ))}
+        </div>
       </div>
     </section>
   );

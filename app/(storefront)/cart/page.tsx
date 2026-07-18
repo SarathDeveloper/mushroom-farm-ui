@@ -37,7 +37,7 @@ export default function CartPage() {
               <div className="w-20 h-20 rounded-full bg-secondary flex items-center justify-center mb-6">
                 <ShoppingBag size={36} className="text-primary" />
               </div>
-              <h2 className="text-xl md:text-2xl font-bold font-heading text-foreground mb-2">Your cart is empty</h2>
+              <h2 className="text-xl sm:text-2xl font-bold font-heading text-foreground mb-2">Your cart is empty</h2>
               <p className="text-[var(--color-body)] mb-8 max-w-sm text-sm sm:text-base">
                 Looks like you haven&apos;t added any fresh mushrooms yet. Let&apos;s fix that.
               </p>
@@ -65,7 +65,7 @@ export default function CartPage() {
                         <button
                           onClick={() => setQuantity(item.productId, item.quantity - 1)}
                           aria-label={`Decrease quantity of ${item.name}`}
-                          className="w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center text-[var(--color-body)] hover:text-primary"
+                          className="w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center text-[var(--color-body)] hover:text-primary"
                         >
                           <Minus size={14} />
                         </button>
@@ -73,7 +73,7 @@ export default function CartPage() {
                         <button
                           onClick={() => setQuantity(item.productId, item.quantity + 1)}
                           aria-label={`Increase quantity of ${item.name}`}
-                          className="w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center text-[var(--color-body)] hover:text-primary"
+                          className="w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center text-[var(--color-body)] hover:text-primary"
                         >
                           <Plus size={14} />
                         </button>
@@ -81,7 +81,7 @@ export default function CartPage() {
                       <button
                         onClick={() => removeItem(item.productId)}
                         aria-label={`Remove ${item.name} from cart`}
-                        className="text-muted-foreground hover:text-destructive transition-colors shrink-0"
+                        className="flex items-center justify-center w-9 h-9 text-muted-foreground hover:text-destructive transition-colors shrink-0"
                       >
                         <Trash2 size={16} />
                       </button>
@@ -122,7 +122,7 @@ export default function CartPage() {
               </div>
 
               {/* Mobile sticky checkout bar */}
-              <div className="fixed bottom-16 left-0 right-0 z-40 lg:hidden bg-card border-t border-border px-4 py-3 shadow-[0_-4px_12px_rgba(0,0,0,0.08)]">
+              <div className="fixed bottom-16 left-0 right-0 z-40 lg:hidden bg-card border-t border-border px-4 py-3 shadow-[0_-4px_12px_rgba(0,0,0,0.08)] safe-area-bottom">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-xs text-[var(--color-body)]">Total ({items.length} items)</span>
                   <span className="font-bold text-foreground text-base">₹{total.toFixed(0)}</span>

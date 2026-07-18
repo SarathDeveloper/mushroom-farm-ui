@@ -109,9 +109,9 @@ export default async function Home() {
           <FadeIn className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 sm:mb-12 gap-3 sm:gap-4">
             <div>
               <div className="flex items-center gap-3 mb-3">
-                <span className="hidden sm:block h-px w-8 bg-border" />
+                <span className="h-px w-6 sm:w-8 bg-border" />
                 <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Fresh From Farm</span>
-                <span className="hidden sm:block h-px w-8 bg-border" />
+                <span className="h-px w-6 sm:w-8 bg-border" />
               </div>
               <h2 className="text-xl sm:text-2xl font-extrabold text-foreground tracking-tight font-heading">Today&apos;s Fresh Mushrooms</h2>
               <p className="text-[var(--color-body)] text-sm mt-1.5">Picked this morning. Ready to buy now.</p>
@@ -121,7 +121,7 @@ export default async function Home() {
             </Link>
           </FadeIn>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-5">
+          <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 lg:gap-5">
             {featuredProducts.map((product, i) => (
               <FadeIn key={product.id} delay={i * 0.1}>
                 <ProductCard product={product} priority={i === 0} />
@@ -150,9 +150,9 @@ export default async function Home() {
               <FadeIn className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 sm:mb-12 gap-3 sm:gap-4">
                 <div>
                   <div className="flex items-center gap-3 mb-3">
-                    <span className="hidden sm:block h-px w-8 bg-border" />
+                    <span className="h-px w-6 sm:w-8 bg-border" />
                     <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Easy to Cook</span>
-                    <span className="hidden sm:block h-px w-8 bg-border" />
+                    <span className="h-px w-6 sm:w-8 bg-border" />
                   </div>
                   <h2 className="text-xl sm:text-2xl font-extrabold text-foreground tracking-tight font-heading">Ready-Made Products</h2>
                   <p className="text-[var(--color-body)] text-sm mt-1.5">Mushroom powder, soup mix, and pickle. Made from our fresh mushrooms.</p>
@@ -162,7 +162,7 @@ export default async function Home() {
                 </Link>
               </FadeIn>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-5">
+              <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 lg:gap-5">
                 {valueAddedProducts.map((product, i) => (
                   <FadeIn key={product.id} delay={i * 0.1}>
                     <ProductCard product={product} />
@@ -235,9 +235,9 @@ export default async function Home() {
 
             <FadeIn direction="right">
               <div className="flex items-center gap-3 mb-4">
-                <span className="hidden sm:block h-px w-8 bg-border" />
+                <span className="h-px w-6 sm:w-8 bg-border" />
                 <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Questions</span>
-                <span className="hidden sm:block h-px w-8 bg-border" />
+                <span className="h-px w-6 sm:w-8 bg-border" />
               </div>
               <h2 className="text-xl sm:text-2xl font-extrabold text-foreground tracking-tight font-heading mb-6 sm:mb-8">Common Questions</h2>
               <Accordion className="w-full">
@@ -301,9 +301,9 @@ export default async function Home() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl text-center">
           <FadeIn>
             <div className="flex items-center justify-center gap-3 mb-4">
-              <span className="hidden sm:block h-px w-8 bg-border" />
+              <span className="h-px w-6 sm:w-8 bg-border" />
               <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Why Buy From Us</span>
-              <span className="hidden sm:block h-px w-8 bg-border" />
+              <span className="h-px w-6 sm:w-8 bg-border" />
             </div>
             <h2 className="text-xl sm:text-2xl font-extrabold text-foreground tracking-tight font-heading mb-3 sm:mb-4">Our Promise to You</h2>
             <p className="text-[var(--color-body)] max-w-2xl mx-auto mb-12 sm:mb-20 text-sm sm:text-base">

@@ -149,7 +149,7 @@ export default function TrackOrderPage() {
               <div className="bg-card rounded-2xl border border-border p-5 sm:p-8">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-8">
                   <div>
-                    <h2 className="text-lg md:text-xl font-bold font-heading text-foreground">
+                    <h2 className="text-lg sm:text-xl font-bold font-heading text-foreground">
                       Order #{order.id.slice(0, 8).toUpperCase()}
                     </h2>
                     <p className="text-xs sm:text-sm text-muted-foreground">

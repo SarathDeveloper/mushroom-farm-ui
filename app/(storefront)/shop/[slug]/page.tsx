@@ -130,17 +130,17 @@ export default async function ProductDetailPage(props: {
     <div className="flex flex-col min-h-screen">
       {/* Breadcrumb */}
       <div className="bg-secondary py-4">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl flex items-center gap-2 text-sm text-muted-foreground">
-          <Link href="/" className="hover:text-primary">Home</Link>
-          <ChevronRight size={14} />
-          <Link href="/shop" className="hover:text-primary">Shop</Link>
-          <ChevronRight size={14} />
-          <span className="text-foreground font-medium">{product.name}</span>
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl flex items-center gap-2 text-sm text-muted-foreground min-w-0">
+          <Link href="/" className="hover:text-primary shrink-0">Home</Link>
+          <ChevronRight size={14} className="shrink-0" />
+          <Link href="/shop" className="hover:text-primary shrink-0">Shop</Link>
+          <ChevronRight size={14} className="shrink-0" />
+          <span className="text-foreground font-medium truncate min-w-0">{product.name}</span>
         </div>
       </div>
 
       {/* Product Detail */}
-      <section className="py-16">
+      <section className="py-20 sm:py-28">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             <FadeIn direction="right">
@@ -156,7 +156,7 @@ export default async function ProductDetailPage(props: {
               <span className="text-sm font-semibold text-primary uppercase tracking-wider mb-2">
                 {product.category} Mushroom
               </span>
-              <h1 className="text-xl md:text-2xl font-bold font-heading text-foreground mb-3">
+              <h1 className="text-xl sm:text-2xl font-bold font-heading text-foreground mb-3">
                 {product.name}
               </h1>
               <div className="flex items-center gap-2 mb-4">
@@ -206,7 +206,7 @@ export default async function ProductDetailPage(props: {
               )}
 
               <div className="flex items-baseline gap-2 mb-6 flex-wrap">
-                <span className="text-xl md:text-2xl font-bold text-primary">
+                <span className="text-xl sm:text-2xl font-bold text-primary">
                   ₹{product.price.toLocaleString("en-IN")}
                 </span>
                 {product.compareAtPrice && (
@@ -261,7 +261,7 @@ export default async function ProductDetailPage(props: {
               </div>
 
               {/* Trust badges */}
-              <div className="grid grid-cols-3 gap-4 mt-8 pt-8 border-t border-border">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-8 pt-8 border-t border-border">
                 <div className="flex flex-col items-center text-center gap-2">
                   <Truck size={22} className="text-primary" />
                   <span className="text-xs text-muted-foreground">Free delivery over ₹500</span>
@@ -286,7 +286,7 @@ export default async function ProductDetailPage(props: {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <FadeIn>
               <div className="bg-card rounded-2xl border border-border p-6 h-full">
-                <h3 className="text-base md:text-lg font-bold text-foreground font-heading mb-4">
+                <h3 className="text-base sm:text-lg font-bold text-foreground font-heading mb-4">
                   Freshness Information
                 </h3>
                 <div className="space-y-3 text-xs">
@@ -316,7 +316,7 @@ export default async function ProductDetailPage(props: {
 
             <FadeIn>
               <div className="bg-card rounded-2xl border border-border p-6">
-                <h3 className="text-base md:text-lg font-bold text-foreground font-heading mb-4 flex items-center gap-2">
+                <h3 className="text-base sm:text-lg font-bold text-foreground font-heading mb-4 flex items-center gap-2">
                   <Clock size={18} className="text-primary" /> Nutrition Facts (per 100g)
                 </h3>
                 <div className="space-y-3">
@@ -341,7 +341,7 @@ export default async function ProductDetailPage(props: {
 
             <FadeIn delay={0.1}>
               <div className="bg-card rounded-2xl border border-border p-6">
-                <h3 className="text-base md:text-lg font-bold text-foreground font-heading mb-4 flex items-center gap-2">
+                <h3 className="text-base sm:text-lg font-bold text-foreground font-heading mb-4 flex items-center gap-2">
                   <ShieldCheck size={18} className="text-primary" /> Storage Instructions
                 </h3>
                 <p className="text-xs text-foreground leading-relaxed mb-4">{storage}</p>
@@ -366,9 +366,9 @@ export default async function ProductDetailPage(props: {
             <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-8">
               <div>
                 <div className="flex items-center gap-3 mb-2">
-                  <span className="hidden sm:block h-px w-8 bg-border" />
+                  <span className="h-px w-6 sm:w-8 bg-border" />
                   <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Customer feedback</span>
-                  <span className="hidden sm:block h-px w-8 bg-border" />
+                  <span className="h-px w-6 sm:w-8 bg-border" />
                 </div>
                 <h2 className="text-xl sm:text-2xl font-extrabold text-foreground font-heading tracking-tight">Reviews for {product.name}</h2>
               </div>
@@ -416,9 +416,9 @@ export default async function ProductDetailPage(props: {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
           <FadeIn>
             <div className="flex items-center gap-3 mb-2">
-              <span className="hidden sm:block h-px w-8 bg-border" />
+              <span className="h-px w-6 sm:w-8 bg-border" />
               <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Cook something good</span>
-              <span className="hidden sm:block h-px w-8 bg-border" />
+              <span className="h-px w-6 sm:w-8 bg-border" />
             </div>
             <h2 className="text-xl sm:text-2xl font-extrabold text-foreground font-heading tracking-tight mb-8">
               Recipe ideas for {product.name}
@@ -448,13 +448,13 @@ export default async function ProductDetailPage(props: {
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
             <FadeIn>
               <div className="flex items-center justify-center gap-3 mb-3">
-                <span className="hidden sm:block h-px w-8 bg-border" />
+                <span className="h-px w-6 sm:w-8 bg-border" />
                 <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">More Options</span>
-                <span className="hidden sm:block h-px w-8 bg-border" />
+                <span className="h-px w-6 sm:w-8 bg-border" />
               </div>
               <h2 className="text-xl sm:text-2xl font-extrabold text-foreground mb-10 font-heading tracking-tight text-center">You Might Also Like</h2>
             </FadeIn>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-5">
+            <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 lg:gap-5">
               {related.map((p, i) => (
                 <FadeIn key={p.id} delay={i * 0.08}>
                   {/* @ts-ignore */}

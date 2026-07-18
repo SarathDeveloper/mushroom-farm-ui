@@ -37,9 +37,9 @@ export function SuccessStories() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         <FadeIn className="text-center mb-14">
           <div className="flex items-center justify-center gap-3 mb-4">
-            <span className="hidden sm:block h-px w-8 bg-border" />
+            <span className="h-px w-6 sm:w-8 bg-border" />
             <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Happy Customers</span>
-            <span className="hidden sm:block h-px w-8 bg-border" />
+            <span className="h-px w-6 sm:w-8 bg-border" />
           </div>
           <h2 className="text-xl sm:text-2xl font-extrabold text-foreground tracking-tight font-heading">
             What People Say
@@ -55,7 +55,7 @@ export function SuccessStories() {
               key={story.name}
               delay={i * 0.1}
               direction="up"
-              className="bg-card rounded-2xl border border-border p-8 flex flex-col hover:shadow-[0_12px_30px_rgba(0,0,0,0.04)] transition-all duration-300 hover:-translate-y-1"
+              className="bg-card rounded-2xl border border-border p-6 sm:p-8 flex flex-col hover:shadow-[0_12px_30px_rgba(0,0,0,0.04)] transition-all duration-300 hover:-translate-y-1"
             >
               <div className="flex items-center justify-between mb-5">
                 <span className="text-xs font-bold uppercase tracking-wider text-primary bg-primary/10 px-3.5 py-1 rounded-full">

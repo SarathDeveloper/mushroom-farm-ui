@@ -33,7 +33,7 @@ export default function AboutPage() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center mb-16 sm:mb-24">
             <FadeIn direction="right">
-              <div className="relative h-[420px] rounded-2xl overflow-hidden">
+              <div className="relative h-[280px] sm:h-[360px] lg:h-[420px] rounded-2xl overflow-hidden">
                 <SafeImage
                   src="/gallery/farm/oyster-mushroom-growing.png"
                   alt="Fresh oyster mushrooms growing on substrate at our farm"
@@ -67,7 +67,7 @@ export default function AboutPage() {
           {/* Founder Spotlight */}
           <div className="relative rounded-3xl bg-secondary overflow-hidden mb-16 sm:mb-24">
             <div className="grid grid-cols-1 lg:grid-cols-5 gap-0">
-              <FadeIn direction="right" className="lg:col-span-2 relative min-h-[400px] lg:min-h-[520px] overflow-hidden group/image">
+              <FadeIn direction="right" className="lg:col-span-2 relative min-h-[300px] sm:min-h-[400px] lg:min-h-[520px] overflow-hidden group/image">
                 {/* Subtle warm organic ambient layer behind the image */}
                 <div className="absolute inset-0 bg-[#1A4938]/5" />
 
@@ -129,9 +129,9 @@ export default function AboutPage() {
 
           <FadeIn className="text-center mb-12">
             <div className="flex items-center justify-center gap-3 mb-3">
-              <span className="hidden sm:block h-px w-8 bg-border" />
+              <span className="h-px w-6 sm:w-8 bg-border" />
               <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Values</span>
-              <span className="hidden sm:block h-px w-8 bg-border" />
+              <span className="h-px w-6 sm:w-8 bg-border" />
             </div>
             <h2 className="text-xl sm:text-2xl font-extrabold font-heading text-foreground tracking-tight mb-4">What We Believe In</h2>
             <p className="text-[var(--color-body)] max-w-2xl mx-auto text-sm sm:text-base">

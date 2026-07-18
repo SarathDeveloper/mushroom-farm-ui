@@ -196,38 +196,42 @@ export function ManualOrderForm({
         {items.length > 0 ? (
           <div className="space-y-3">
             {items.map((item) => (
-              <div key={item.productId} className="flex items-center gap-3 p-3 rounded-lg bg-secondary/50">
-                <div className="flex-1 min-w-0">
-                  <p className="font-medium text-foreground text-sm truncate">{item.name}</p>
-                  <p className="text-xs text-muted-foreground">₹{item.price} each</p>
+              <div key={item.productId} className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 p-3 rounded-lg bg-secondary/50">
+                <div className="flex items-center gap-3 flex-1 min-w-0">
+                  <div className="flex-1 min-w-0">
+                    <p className="font-medium text-foreground text-sm truncate">{item.name}</p>
+                    <p className="text-xs text-muted-foreground">₹{item.price} each</p>
+                  </div>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 sm:gap-3">
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => updateQuantity(item.productId, -1)}
+                      className="h-7 w-7 rounded-md border border-border flex items-center justify-center hover:bg-secondary"
+                    >
+                      <Minus size={12} />
+                    </button>
+                    <span className="w-8 text-center font-medium text-sm">{item.quantity}</span>
+                    <button
+                      type="button"
+                      onClick={() => updateQuantity(item.productId, 1)}
+                      className="h-7 w-7 rounded-md border border-border flex items-center justify-center hover:bg-secondary"
+                    >
+                      <Plus size={12} />
+                    </button>
+                  </div>
+                  <span className="font-semibold text-foreground text-sm w-20 text-right ml-auto sm:ml-0">
+                    ₹{(item.price * item.quantity).toLocaleString("en-IN")}
+                  </span>
                   <button
                     type="button"
-                    onClick={() => updateQuantity(item.productId, -1)}
-                    className="h-7 w-7 rounded-md border border-border flex items-center justify-center hover:bg-secondary"
+                    onClick={() => removeItem(item.productId)}
+                    className="p-1 text-muted-foreground hover:text-destructive"
                   >
-                    <Minus size={12} />
-                  </button>
-                  <span className="w-8 text-center font-medium text-sm">{item.quantity}</span>
-                  <button
-                    type="button"
-                    onClick={() => updateQuantity(item.productId, 1)}
-                    className="h-7 w-7 rounded-md border border-border flex items-center justify-center hover:bg-secondary"
-                  >
-                    <Plus size={12} />
+                    <Trash2 size={14} />
                   </button>
                 </div>
-                <span className="font-semibold text-foreground text-sm w-20 text-right">
-                  ₹{(item.price * item.quantity).toLocaleString("en-IN")}
-                </span>
-                <button
-                  type="button"
-                  onClick={() => removeItem(item.productId)}
-                  className="p-1 text-muted-foreground hover:text-destructive"
-                >
-                  <Trash2 size={14} />
-                </button>
               </div>
             ))}
             <div className="flex justify-between items-center pt-3 border-t border-border">

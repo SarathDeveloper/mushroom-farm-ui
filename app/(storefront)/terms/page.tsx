@@ -62,8 +62,8 @@ export default function TermsOfServicePage() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-3xl space-y-10">
           {sections.map((section, i) => (
             <FadeIn key={section.title} delay={Math.min(i * 0.05, 0.3)}>
-              <h2 className="text-xl font-bold font-heading text-foreground mb-3">{section.title}</h2>
-              <p className="text-[var(--color-body)] leading-relaxed">{section.body}</p>
+              <h2 className="text-lg sm:text-xl font-bold font-heading text-foreground mb-3">{section.title}</h2>
+              <p className="text-[var(--color-body)] text-sm sm:text-base leading-relaxed">{section.body}</p>
             </FadeIn>
           ))}
         </div>

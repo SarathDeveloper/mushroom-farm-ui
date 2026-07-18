@@ -4,6 +4,7 @@ import { MapPin, Phone, Mail, ExternalLink } from "lucide-react";
 import { FadeIn } from "@/components/FadeIn";
 import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
 import { ContactForm } from "@/components/ContactForm";
+import { PageHero } from "@/components/PageHero";
 
 const PHONE = "+91 93855 26105";
 const ADDITIONAL_PHONES = ["+91 89031 56142", "+91 63833 61207"];
@@ -18,28 +19,11 @@ const MAPS_LINK = `https://www.google.com/maps/search/?api=1&query=${LAT},${LNG}
 export default function ContactPage() {
   return (
     <div className="flex flex-col min-h-screen bg-background">
-      {/* ───── Centered header ───── */}
-      <FadeIn className="pt-28 sm:pt-36 pb-10 sm:pb-14 text-center px-4">
-        <div className="flex items-center justify-center gap-3 mb-5">
-          <span className="hidden sm:block h-px w-8 bg-border" />
-          <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">
-            Talk to Us
-          </span>
-          <span className="hidden sm:block h-px w-8 bg-border" />
-        </div>
-        <h1
-          className="text-2xl sm:text-3xl font-extrabold text-foreground tracking-tight font-heading"
-        >
-          Contact Us
-        </h1>
-        <p className="text-[var(--color-body)] max-w-xl mx-auto mt-4 text-sm sm:text-base leading-relaxed">
-          Want to buy mushrooms? Want to learn farming? Want to visit our farm? 
-          Call us, WhatsApp us, or send a message. We will help you.
-        </p>
-        <p className="text-muted-foreground text-xs mt-3">
-          Sri Amman Mushroom Farms
-        </p>
-      </FadeIn>
+      <PageHero
+        eyebrow="Talk to Us"
+        title="Contact Us"
+        description="Want to buy mushrooms? Want to learn farming? Want to visit our farm? Call us, WhatsApp us, or send a message. We will help you."
+      />
 
       {/* ───── Two-column body ───── */}
       <section className="pb-20 sm:pb-28">
@@ -81,9 +65,9 @@ export default function ContactPage() {
                   {/* Email */}
                   <a
                     href={`mailto:${EMAIL}`}
-                    className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-5 py-2.5 text-sm font-medium text-foreground hover:bg-secondary transition-colors"
+                    className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-5 py-2.5 text-sm font-medium text-foreground hover:bg-secondary transition-colors break-all"
                   >
-                    <Mail size={15} />
+                    <Mail size={15} className="shrink-0" />
                     {EMAIL}
                   </a>
                 </div>

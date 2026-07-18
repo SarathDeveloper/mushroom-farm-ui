@@ -444,7 +444,7 @@ export default function CheckoutPage() {
           <div className="w-20 h-20 rounded-full bg-[hsl(var(--success))]/15 text-[hsl(var(--success))] flex items-center justify-center mx-auto mb-6">
             <PartyPopper size={36} />
           </div>
-          <h1 className="text-xl md:text-2xl font-bold font-heading text-foreground mb-3">
+          <h1 className="text-xl sm:text-2xl font-bold font-heading text-foreground mb-3">
             Order Placed Successfully!
           </h1>
             <p className="text-sm text-[hsl(var(--foreground))] max-w-md mx-auto mb-2">
@@ -481,7 +481,7 @@ export default function CheckoutPage() {
     return (
       <div className="flex flex-col min-h-[60vh] items-center justify-center text-center px-4 py-24">
         <ShoppingBag size={36} className="text-muted-foreground mb-4" />
-        <h1 className="text-xl md:text-2xl font-bold font-heading text-foreground mb-2">
+        <h1 className="text-xl sm:text-2xl font-bold font-heading text-foreground mb-2">
           Nothing to checkout
         </h1>
         <p className="text-sm text-[hsl(var(--foreground))] mb-6">
@@ -551,7 +551,7 @@ export default function CheckoutPage() {
               {step === 0 && (
                 <form onSubmit={goToPayment}>
                   <div className="rounded-2xl border border-border bg-card p-6 sm:p-8 space-y-5">
-                    <h2 className="text-lg md:text-xl font-bold font-heading text-foreground flex items-center gap-2">
+                    <h2 className="text-lg sm:text-xl font-bold font-heading text-foreground flex items-center gap-2">
                       <MapPin size={20} className="text-primary" />
                       Delivery Address
                     </h2>
@@ -768,7 +768,7 @@ export default function CheckoutPage() {
               {/* Step 1: Payment */}
               {step === 1 && (
                 <div className="rounded-2xl border border-border bg-card p-6 sm:p-8 space-y-5">
-                  <h2 className="text-lg md:text-xl font-bold font-heading text-foreground flex items-center gap-2">
+                  <h2 className="text-lg sm:text-xl font-bold font-heading text-foreground flex items-center gap-2">
                     <CreditCard size={20} className="text-primary" />
                     Payment Method
                   </h2>
@@ -874,7 +874,7 @@ export default function CheckoutPage() {
               {/* Step 2: Review & Place Order */}
               {step === 2 && (
                 <div className="rounded-2xl border border-border bg-card p-6 sm:p-8 space-y-6">
-                  <h2 className="text-lg md:text-xl font-bold font-heading text-foreground flex items-center gap-2">
+                  <h2 className="text-lg sm:text-xl font-bold font-heading text-foreground flex items-center gap-2">
                     <CheckCircle2 size={20} className="text-primary" />
                     Review &amp; Place Order
                   </h2>

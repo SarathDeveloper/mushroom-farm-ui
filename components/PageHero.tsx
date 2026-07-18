@@ -24,7 +24,7 @@ export function PageHero({
               {eyebrow}
             </span>
           )}
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-foreground leading-[1.15] font-heading mb-4 sm:mb-5">
+          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-foreground leading-[1.15] font-heading mb-4 sm:mb-5">
             {title}
           </h1>
           {description && (

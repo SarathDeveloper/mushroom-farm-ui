@@ -52,7 +52,7 @@ export default async function OrdersPage() {
               <div className="w-20 h-20 rounded-full bg-secondary flex items-center justify-center mb-6">
                 <PackageSearch size={36} className="text-primary" />
               </div>
-              <h2 className="text-xl md:text-2xl font-bold font-heading text-foreground mb-2">No orders yet</h2>
+              <h2 className="text-xl sm:text-2xl font-bold font-heading text-foreground mb-2">No orders yet</h2>
               <p className="text-[var(--color-body)] mb-8 max-w-sm text-xs sm:text-sm">
                 Once you place an order, you&apos;ll be able to track its status here.
               </p>

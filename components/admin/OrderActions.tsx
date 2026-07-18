@@ -115,7 +115,7 @@ ${address.deliverySlot ? `\n🕐 Slot: ${address.deliverySlot}` : ""}`;
   }
 
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-2 flex-wrap">
       <Button variant="outline" size="sm" className="gap-1.5" onClick={handlePrint}>
         <Printer size={14} /> Print
       </Button>

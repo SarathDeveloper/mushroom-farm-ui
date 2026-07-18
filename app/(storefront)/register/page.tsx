@@ -55,7 +55,7 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-[calc(100vh-5rem)] flex items-center justify-center bg-secondary py-16 px-4">
+    <div className="min-h-[calc(100vh-5rem)] flex items-center justify-center bg-secondary py-20 sm:py-28 px-4">
       <FadeIn className="w-full max-w-md">
         <div className="bg-card rounded-2xl shadow-[0_8px_20px_rgba(0,0,0,0.06)] border border-border p-8 sm:p-10">
           <div className="flex flex-col items-center text-center mb-8">
@@ -68,8 +68,8 @@ export default function RegisterPage() {
                 className="object-cover"
               />
             </div>
-            <h1 className="text-xl md:text-2xl font-bold font-heading text-foreground">Create Your Account</h1>
-            <p className="text-[var(--color-body)] mt-1 text-sm sm:text-base">Join us for fresh mushrooms, delivered.</p>
+            <h1 className="text-xl sm:text-2xl font-bold font-heading text-foreground">Create Your Account</h1>
+            <p className="text-[var(--color-body)] mt-1 text-xs sm:text-sm">Join us for fresh mushrooms, delivered.</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">

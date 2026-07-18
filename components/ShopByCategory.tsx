@@ -40,15 +40,15 @@ const HARDCODED_CATEGORIES = [
 
 export function ShopByCategory() {
   return (
-    <section className="py-20 sm:py-28 bg-secondary grain-overlay">
+    <section className="pt-16 pb-8 sm:py-20 lg:py-28 bg-secondary grain-overlay">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-        <FadeIn className="text-center mb-10 sm:mb-14">
+        <FadeIn className="text-center mb-8 sm:mb-14">
           <div className="flex items-center justify-center gap-3 mb-3">
-            <span className="hidden sm:block h-px w-8 bg-border" />
+            <span className="h-px w-6 sm:w-8 bg-border" />
             <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">
               Shop
             </span>
-            <span className="hidden sm:block h-px w-8 bg-border" />
+            <span className="h-px w-6 sm:w-8 bg-border" />
           </div>
           <h2 className="text-xl sm:text-2xl font-extrabold text-foreground tracking-tight font-heading">
             Shop by Category
@@ -58,10 +58,15 @@ export function ShopByCategory() {
           </p>
         </FadeIn>
 
-        <div className="flex justify-center gap-6 sm:gap-10 md:gap-14 lg:gap-16 overflow-x-auto scrollbar-hide pb-2 -mx-4 px-4 sm:mx-0 sm:px-0">
-          {HARDCODED_CATEGORIES.map((category, i) => (
-            <FadeIn key={category.id} delay={i * 0.08} direction="up">
+        {/*
+          overflow-y-hidden is required: overflow-x-auto otherwise forces overflow-y:auto,
+          and vertical swipe / FadeIn translateY can clip the circular images into semicircles.
+        */}
+        <FadeIn direction="none">
+          <div className="flex justify-center gap-6 sm:gap-10 md:gap-14 lg:gap-16 overflow-x-auto overflow-y-hidden scrollbar-hide py-1 -mx-4 px-4 sm:mx-0 sm:px-0">
+            {HARDCODED_CATEGORIES.map((category) => (
               <Link
+                key={category.id}
                 href={`/shop?category=${category.slug}`}
                 className="group flex flex-col items-center gap-3 sm:gap-4 shrink-0"
               >
@@ -78,9 +83,9 @@ export function ShopByCategory() {
                   {category.name}
                 </span>
               </Link>
-            </FadeIn>
-          ))}
-        </div>
+            ))}
+          </div>
+        </FadeIn>
       </div>
     </section>
   );

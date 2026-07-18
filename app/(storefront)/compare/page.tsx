@@ -159,9 +159,9 @@ export default function ComparePage() {
           {/* Recommendation by Goal */}
           <FadeIn>
             <div className="flex items-center justify-center gap-3 mb-3">
-              <span className="hidden sm:block h-px w-8 bg-border" />
+              <span className="h-px w-6 sm:w-8 bg-border" />
               <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Recommendation</span>
-              <span className="hidden sm:block h-px w-8 bg-border" />
+              <span className="h-px w-6 sm:w-8 bg-border" />
             </div>
             <h2 className="text-xl sm:text-2xl font-extrabold font-heading text-foreground text-center tracking-tight mb-8">
               Which Mushroom For Your Goal?

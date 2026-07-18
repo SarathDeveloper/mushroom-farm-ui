@@ -17,9 +17,9 @@ export function FarmToTable() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         <FadeIn className="text-center mb-16">
           <div className="flex items-center justify-center gap-3 mb-4">
-            <span className="hidden sm:block h-px w-8 bg-border" />
+            <span className="h-px w-6 sm:w-8 bg-border" />
             <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">How We Work</span>
-            <span className="hidden sm:block h-px w-8 bg-border" />
+            <span className="h-px w-6 sm:w-8 bg-border" />
           </div>
           <h2 className="text-xl sm:text-2xl font-extrabold text-foreground tracking-tight font-heading">
             From Farm to Your Home in One Day

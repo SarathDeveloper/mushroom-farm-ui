@@ -21,7 +21,7 @@ export function ProductGallery({ images, name }: { images: string[]; name: strin
         />
       </div>
       {images.length > 1 && (
-        <div className="flex gap-3">
+        <div className="flex gap-3 overflow-x-auto scrollbar-hide">
           {images.map((img, i) => (
             <button
               key={img}

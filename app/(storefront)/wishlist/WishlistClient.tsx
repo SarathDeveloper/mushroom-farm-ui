@@ -20,7 +20,7 @@ export function WishlistClient({ products }: { products: any[] }) {
           <div className="w-20 h-20 rounded-full bg-secondary flex items-center justify-center mb-6">
             <Heart size={36} className="text-primary" />
           </div>
-          <h2 className="text-xl md:text-2xl font-bold font-heading text-foreground mb-2">Your wishlist is empty</h2>
+          <h2 className="text-xl sm:text-2xl font-bold font-heading text-foreground mb-2">Your wishlist is empty</h2>
           <p className="text-[var(--color-body)] mb-8 max-w-sm text-sm sm:text-base">
             Tap the heart icon on any product to save it here for later.
           </p>
@@ -29,7 +29,7 @@ export function WishlistClient({ products }: { products: any[] }) {
           </Button>
         </FadeIn>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-5">
+        <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 lg:gap-5">
           {wishlistedProducts.map((product, i) => (
             <FadeIn key={product.id} delay={i * 0.08}>
               {/* @ts-ignore */}

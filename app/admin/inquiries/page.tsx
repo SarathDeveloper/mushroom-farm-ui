@@ -1,4 +1,3 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { prisma } from "@/lib/prisma";
 import { InquiriesTable } from "@/components/admin/InquiriesTable";
 
@@ -14,52 +13,30 @@ export default async function InquiriesPage() {
   const unhandledCount = inquiries.filter((i: any) => !i.isHandled).length;
 
   return (
-    <div className="space-y-6">
+    <div className="p-4 sm:p-6 lg:p-10 space-y-6">
       <div>
-        <h1 className="text-2xl font-bold tracking-tight">Inquiries & Leads</h1>
-        <p className="text-muted-foreground">
+        <h1 className="text-xl md:text-2xl font-bold font-heading text-foreground">Inquiries & Leads</h1>
+        <p className="text-sm text-muted-foreground mt-1">
           Manage contact form submissions and training registrations.
         </p>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-3">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium">Total Inquiries</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{inquiries.length}</div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium text-amber-600">Pending Follow-up</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-amber-600">{unhandledCount}</div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium text-green-600">Handled</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-green-600">{inquiries.length - unhandledCount}</div>
-          </CardContent>
-        </Card>
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <div className="bg-card rounded-2xl border border-border shadow-[0_4px_12px_rgba(0,0,0,0.04)] p-4">
+          <p className="text-xs font-medium text-muted-foreground mb-1">Total Inquiries</p>
+          <p className="text-base md:text-lg font-bold text-foreground truncate">{inquiries.length}</p>
+        </div>
+        <div className="bg-card rounded-2xl border border-border shadow-[0_4px_12px_rgba(0,0,0,0.04)] p-4">
+          <p className="text-xs font-medium text-amber-600 mb-1">Pending Follow-up</p>
+          <p className="text-base md:text-lg font-bold text-amber-600 truncate">{unhandledCount}</p>
+        </div>
+        <div className="bg-card rounded-2xl border border-border shadow-[0_4px_12px_rgba(0,0,0,0.04)] p-4">
+          <p className="text-xs font-medium text-green-600 mb-1">Handled</p>
+          <p className="text-base md:text-lg font-bold text-green-600 truncate">{inquiries.length - unhandledCount}</p>
+        </div>
       </div>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>All Inquiries</CardTitle>
-          <CardDescription>
-            A list of all messages received from the website contact forms.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <InquiriesTable initialData={inquiries} />
-        </CardContent>
-      </Card>
+      <InquiriesTable initialData={inquiries} />
     </div>
   );
 }

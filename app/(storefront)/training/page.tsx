@@ -58,9 +58,9 @@ export default async function TrainingPage() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
           <FadeIn className="text-center mb-12">
             <div className="flex items-center justify-center gap-3 mb-3">
-              <span className="hidden sm:block h-px w-8 bg-border" />
+              <span className="h-px w-6 sm:w-8 bg-border" />
               <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Your Team</span>
-              <span className="hidden sm:block h-px w-8 bg-border" />
+              <span className="h-px w-6 sm:w-8 bg-border" />
             </div>
             <h2 className="text-xl sm:text-2xl font-extrabold text-foreground tracking-tight font-heading mb-3 sm:mb-4">
               Who Helps You Succeed
@@ -204,9 +204,9 @@ export default async function TrainingPage() {
             <FadeIn direction="right">
               <div className="space-y-5">
                 <div className="flex items-center gap-3 mb-3">
-                  <span className="hidden sm:block h-px w-8 bg-border" />
+                  <span className="h-px w-6 sm:w-8 bg-border" />
                   <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Get Started</span>
-                  <span className="hidden sm:block h-px w-8 bg-border" />
+                  <span className="h-px w-6 sm:w-8 bg-border" />
                 </div>
                 <h2 className="text-xl sm:text-2xl font-extrabold text-foreground tracking-tight font-heading">
                   Ready to Start? Talk to Mathesh.
