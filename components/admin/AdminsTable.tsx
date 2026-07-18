@@ -384,7 +384,7 @@ export function AdminsTable({
                 <Input
                   id="admin-phone"
                   type="tel"
-                  placeholder="+91 98765 43210"
+                  placeholder="+91 93855 26105"
                   value={formData.phone}
                   onChange={(e) =>
                     setFormData((prev) => ({ ...prev, phone: e.target.value }))

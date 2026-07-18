@@ -31,18 +31,18 @@ const playfair = Playfair_Display({
 
 export const metadata: Metadata = {
   title: {
-    default: "Sri Amman Mushroom Farms | Premium Organic Mushrooms",
+    default: "Sri Amman Mushroom Farms | Fresh Farm Mushrooms",
     template: "%s | Sri Amman Mushroom Farms",
   },
-  description: "Fresh, premium mushrooms grown in the pristine Kalvarayan Hills. We offer farm-fresh delivery, pre-orders, and mushroom farming training.",
-  keywords: ["organic mushrooms", "fresh mushrooms delivery", "mushroom farming training", "mushroom pre-order", "oyster mushroom", "milky mushroom", "Salem", "Tamil Nadu"],
+  description: "Fresh mushrooms from the Kalvarayan Hills with delivery, pre-orders, and mushroom farming training.",
+  keywords: ["fresh mushrooms delivery", "mushroom farming training", "mushroom pre-order", "oyster mushroom", "milky mushroom", "Salem", "Tamil Nadu"],
   openGraph: {
     type: "website",
     locale: "en_IN",
     url: "https://vellimalaifarms.in",
     siteName: "Sri Amman Mushroom Farms",
-    title: "Sri Amman Mushroom Farms | Premium Organic Mushrooms",
-    description: "Fresh, premium mushrooms grown in the pristine Kalvarayan Hills.",
+    title: "Sri Amman Mushroom Farms | Fresh Farm Mushrooms",
+    description: "Fresh mushrooms from the Kalvarayan Hills with delivery, pre-orders, and farming training.",
   },
 };
 
@@ -66,15 +66,15 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "LocalBusiness",
               name: "Sri Amman Mushroom Farms",
-              description: "Premium organic mushrooms grown in the Kalvarayan Hills, Tamil Nadu",
+              description: "Fresh mushrooms grown and packed in the Kalvarayan Hills, Tamil Nadu",
               url: "https://vellimalaifarms.in",
-              telephone: "+919876543210",
+              telephone: "+919385526105",
               address: {
                 "@type": "PostalAddress",
-                streetAddress: "Vellimalai, Kalvarayan Hills",
-                addressLocality: "Salem",
+                streetAddress: "Vellimalai, Melsathanur",
+                addressLocality: "Kallakurichi",
                 addressRegion: "Tamil Nadu",
-                postalCode: "636001",
+                postalCode: "606209",
                 addressCountry: "IN",
               },
               geo: {
@@ -84,11 +84,6 @@ export default function RootLayout({
               },
               openingHours: "Mo-Sa 08:00-18:00",
               priceRange: `${formatCurrency(120)} - ${formatCurrency(520)}`,
-              aggregateRating: {
-                "@type": "AggregateRating",
-                ratingValue: "4.9",
-                reviewCount: "432",
-              },
             }),
           }}
         />

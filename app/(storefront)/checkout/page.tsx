@@ -9,6 +9,7 @@ import {
   Banknote,
   CheckCircle2,
   ChevronDown,
+  Clock,
   CreditCard,
   Loader2,
   LocateFixed,
@@ -17,6 +18,8 @@ import {
   ShoppingBag,
   Tag,
   ShieldCheck,
+  Timer,
+  Truck,
 } from "lucide-react";
 import { PageHero } from "@/components/PageHero";
 import { FadeIn } from "@/components/FadeIn";
@@ -264,6 +267,10 @@ export default function CheckoutPage() {
   const total = subtotal + shipping + gst - discount;
   const email = session?.user?.email ?? "";
   const itemCount = items.reduce((sum, i) => sum + i.quantity, 0);
+  const shelfDays = items
+    .map((i) => i.shelfLifeDays)
+    .filter((d): d is number => d != null && d > 0);
+  const minShelfLife = shelfDays.length > 0 ? Math.min(...shelfDays) : null;
 
   const applyCoupon = () => {
     setCouponError("");
@@ -1064,6 +1071,36 @@ export default function CheckoutPage() {
                     </p>
                   </div>
                 )}
+
+                {minShelfLife != null && (
+                  <div className={cn("rounded-xl bg-amber-50 border border-amber-200 p-3 space-y-1.5", !summaryOpen && "hidden lg:block")}>
+                    <p className="text-xs font-semibold text-amber-700 flex items-center gap-1.5">
+                      <Timer size={14} className="shrink-0" />
+                      Your order includes items best consumed within {minShelfLife} day{minShelfLife > 1 ? "s" : ""}
+                    </p>
+                    <p className="text-[11px] text-amber-600">
+                      We&apos;ll pick and deliver as fast as possible to ensure peak freshness.
+                    </p>
+                  </div>
+                )}
+
+                <div className={cn("rounded-xl bg-primary/5 border border-primary/15 p-3 space-y-2", !summaryOpen && "hidden lg:block")}>
+                  <p className="text-xs font-semibold text-primary flex items-center gap-1.5">
+                    <Truck size={14} className="shrink-0" />
+                    Delivery Schedule
+                  </p>
+                  <div className="space-y-1">
+                    <p className="text-[11px] text-[var(--color-body)]">
+                      <span className="font-semibold text-foreground">Before 7 AM</span> &mdash; We pick fresh today and deliver to your door
+                    </p>
+                    <p className="text-[11px] text-[var(--color-body)]">
+                      <span className="font-semibold text-foreground">After 7 AM</span> &mdash; We pick tomorrow morning, pack and send
+                    </p>
+                  </div>
+                  <p className="text-[10px] text-muted-foreground">
+                    Mushrooms are picked only after your order &mdash; never sitting in storage.
+                  </p>
+                </div>
               </div>
             </FadeIn>
           </div>

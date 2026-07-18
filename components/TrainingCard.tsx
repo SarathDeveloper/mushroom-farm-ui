@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { SafeImage } from "@/components/SafeImage";
-import { Calendar, Loader2, Sparkles, Users } from "lucide-react";
+import { Calendar, Loader2, Package, Sparkles, Users } from "lucide-react";
 import toast from "react-hot-toast";
 import type { TrainingProgram } from "@/lib/data";
 import { Button } from "@/components/ui/button";
@@ -46,36 +46,40 @@ export function TrainingCard({ program }: { program: TrainingProgram }) {
   return (
     <>
       <div className="group flex flex-col bg-card rounded-2xl overflow-hidden border border-border hover:shadow-[0_8px_20px_rgba(0,0,0,0.06)] hover:-translate-y-1 transition-all duration-300 ease-out">
-        <div className="relative h-48 overflow-hidden">
+        <div className="relative h-36 overflow-hidden">
           <SafeImage
             src={program.image}
             alt={program.title}
             fill
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
             className="object-cover group-hover:scale-105 transition-transform duration-700"
           />
-          <span className={`absolute top-4 left-4 px-3 py-1 rounded-full text-white text-xs font-bold uppercase tracking-wide ${levelColor[program.level]}`}>
+          <span className={`absolute top-3 left-3 px-2.5 py-1 rounded-full text-white text-xs font-bold uppercase tracking-wide ${levelColor[program.level]}`}>
             {program.level}
           </span>
         </div>
-        <div className="p-6 flex-1 flex flex-col">
-          <h3 className="font-bold text-xl text-foreground mb-2 font-heading">{program.title}</h3>
+        <div className="p-4 flex-1 flex flex-col">
+          <h3 className="font-bold text-lg text-foreground mb-1.5 font-heading">{program.title}</h3>
           <p className="text-sm text-[var(--color-body)] mb-4 line-clamp-2">{program.description}</p>
-          <div className="flex flex-wrap gap-x-4 gap-y-2 text-xs text-muted-foreground mb-6">
+          <div className="flex flex-wrap gap-x-4 gap-y-2 text-xs text-muted-foreground mb-3">
             <span className="flex items-center gap-1.5"><Calendar size={14} /> {startDate}</span>
             <span className="flex items-center gap-1.5"><Sparkles size={14} /> {program.duration}</span>
-            <span className="flex items-center gap-1.5"><Users size={14} /> {program.seatsLeft} seats left</span>
+            <span className="flex items-center gap-1.5"><Users size={14} /> {program.seatsLeft} seats</span>
           </div>
-          <div className="mt-auto flex items-center justify-between">
-            <span className="text-xl font-bold text-primary">₹{program.fee.toLocaleString("en-IN")}</span>
+          <div className="flex items-center gap-1.5 text-xs text-primary font-medium mb-4">
+            <Package size={13} />
+            <span>Includes bags + materials + ongoing support</span>
+          </div>
+          <div className="mt-auto flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <span className="text-sm text-muted-foreground">From <span className="font-semibold text-foreground">₹{program.fee.toLocaleString("en-IN")}</span></span>
             <Button
               onClick={() => {
                 setOpen(true);
                 setSubmitted(false);
               }}
-              className="rounded-full px-5 h-10"
+              className="rounded-full px-5 h-9 w-full sm:w-auto"
             >
-              Register Interest
+              Start Your Journey
             </Button>
           </div>
         </div>
@@ -115,10 +119,10 @@ export function TrainingCard({ program }: { program: TrainingProgram }) {
                 </div>
                 <div className="space-y-1.5">
                   <Label htmlFor={`phone-${program.id}`}>Phone Number</Label>
-                  <Input id={`phone-${program.id}`} type="tel" required placeholder="+91 98765 43210" />
+                  <Input id={`phone-${program.id}`} type="tel" required placeholder="+91 93855 26105" />
                 </div>
                 <Button type="submit" disabled={loading} className="w-full rounded-full h-11">
-                  {loading ? <Loader2 size={16} className="animate-spin" /> : "Confirm Interest"}
+                  {loading ? <Loader2 size={16} className="animate-spin" /> : "Start My Journey"}
                 </Button>
               </form>
             </>

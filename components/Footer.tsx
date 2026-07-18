@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
+import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
 
 const navigationLinks = [
   { href: "/", label: "Home" },
@@ -17,28 +18,28 @@ const productLinks = [
   { href: "/training", label: "Farm Training" },
 ];
 
+const phoneNumbers = [
+  { value: "+91 93855 26105", href: "tel:+919385526105" },
+  { value: "+91 89031 56142", href: "tel:+918903156142" },
+  { value: "+91 63833 61207", href: "tel:+916383361207" },
+];
+
 const contactItems = [
   {
-    icon: Phone,
-    label: "Phone",
-    value: "+91 98765 43210",
-    href: "tel:+919876543210",
-  },
-  {
     icon: Mail,
-    label: "Email",
+    label: "Email Us",
     value: "hello@vellimalaifarms.in",
     href: "mailto:hello@vellimalaifarms.in",
   },
   {
     icon: MapPin,
-    label: "Address",
-    value: "Vellimalai, Kalvarayan Hills, Tamil Nadu, India",
+    label: "Our Location",
+    value: "Sari Amman Oyster Mushroom Farm\nVellimalai, Melsathanur\nKallakurichi – 606 209, Tamil Nadu",
   },
   {
     icon: Clock,
-    label: "Working Hours",
-    value: "Monday–Saturday: 8:00 – 18:00\nSunday: Closed",
+    label: "Open Hours",
+    value: "Monday–Saturday: 8:00 AM – 6:00 PM\nSunday: Closed",
   },
 ];
 
@@ -49,8 +50,8 @@ export default function Footer() {
         <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-4 lg:gap-10">
           {/* Brand */}
           <div className="space-y-5 max-w-sm">
-            <Link href="/" className="inline-flex flex-col gap-3">
-              <div className="relative h-20 w-20 overflow-hidden rounded-full ring-1 ring-white/20">
+            <Link href="/" className="inline-flex flex-col gap-3 group">
+              <div className="relative h-20 w-20 overflow-hidden rounded-full ring-2 ring-white/10 transition-transform duration-300 group-hover:scale-105">
                 <Image
                   src="/gallery/brand-logo.png"
                   alt="Sri Amman Mushroom Farms"
@@ -59,17 +60,24 @@ export default function Footer() {
                   className="object-cover"
                 />
               </div>
-              <span className="text-lg font-heading font-semibold tracking-[0.08em] uppercase text-white">
-                Sri Amman Mushroom Farms
+              <span className="leading-none flex flex-col">
+                <span className="block font-display text-xl sm:text-2xl font-extrabold tracking-[0.01em] text-white transition-colors duration-300 group-hover:text-white/90">
+                  Sri Amman
+                </span>
+                <span className="block font-sans text-[10px] sm:text-[11px] font-semibold tracking-[0.22em] uppercase text-white/60 mt-1.5">
+                  Mushroom Farms
+                </span>
+                <svg className="w-8 h-2 text-white/30 mt-2 transition-all duration-300 group-hover:w-12 group-hover:text-[#2B7A5D]" viewBox="0 0 32 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M1 4.5C8 2 24 1.5 31 3.5" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
+                </svg>
               </span>
             </Link>
             <p className="text-sm leading-relaxed text-white/75">
-              Premium, organic mushrooms grown in the pristine Kalvarayan Hills,
-              Vellimalai. Farm-fresh harvests, pre-orders, and expert farming
-              training.
+              Fresh mushrooms from Kalvarayan Hills, Vellimalai. Buy fresh,
+              book early, or learn farming with us.
             </p>
             <p className="text-xs text-white/45">
-              Grown with care — Trusted for quality and freshness
+              Grown with care — Fresh and healthy
             </p>
             <Link
               href="/contact"
@@ -123,6 +131,29 @@ export default function Footer() {
               Get in Touch
             </h3>
             <ul className="space-y-5">
+              <li className="flex items-start gap-3">
+                <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/15 bg-white/5 text-white/70">
+                  <Phone size={15} strokeWidth={1.75} />
+                </span>
+                <div className="min-w-0">
+                  <p className="mb-0.5 text-[10px] font-semibold tracking-[0.16em] uppercase text-white/40">
+                    Call Us
+                  </p>
+                  <div className="flex flex-wrap items-center gap-x-1.5 text-sm leading-relaxed text-white/90">
+                    {phoneNumbers.map((phone, i) => (
+                      <span key={phone.href} className="inline-flex items-center gap-x-1.5">
+                        {i > 0 && <span className="text-white/35 select-none" aria-hidden>/</span>}
+                        <a
+                          href={phone.href}
+                          className="transition-colors hover:text-white"
+                        >
+                          {phone.value}
+                        </a>
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </li>
               {contactItems.map((item) => {
                 const Icon = item.icon;
                 const value = (
@@ -157,15 +188,13 @@ export default function Footer() {
 
             <div className="mt-6 flex items-center gap-3">
               <a
-                href="https://wa.me/919876543210"
+              href="https://wa.me/916380687811"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 bg-white/5 text-white/80 transition-colors hover:bg-[#25D366] hover:border-transparent hover:text-white"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 bg-white/5 text-white/80 transition-colors hover:bg-whatsapp hover:border-transparent hover:text-white"
                 aria-label="WhatsApp"
               >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-                </svg>
+                <WhatsAppIcon className="size-4" />
               </a>
               <a
                 href="https://instagram.com/vellimalaifarms"
@@ -196,7 +225,7 @@ export default function Footer() {
         <div className="mt-16 border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between text-xs text-white/45 gap-4">
           <p>
             &copy; {new Date().getFullYear()} Sri Amman Mushroom Farms. All rights
-            reserved. FSSAI Lic: 12421033000123
+            reserved. FSSAI Lic: 22424356000315
           </p>
           <div className="flex gap-5">
             <Link href="/privacy" className="hover:text-white transition-colors">

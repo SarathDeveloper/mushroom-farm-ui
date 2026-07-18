@@ -45,7 +45,7 @@ const sections = [
   },
   {
     title: "10. Contact Us",
-    body: "For any questions regarding these Terms of Service, please contact us at hello@vellimalaifarms.in or +91 98765 43210.",
+    body: "For any questions regarding these Terms of Service, please contact us at hello@vellimalaifarms.in or +91 93855 26105.",
   },
 ];
 

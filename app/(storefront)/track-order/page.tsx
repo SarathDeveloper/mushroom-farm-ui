@@ -17,6 +17,7 @@ import { FadeIn } from "@/components/FadeIn";
 import { SafeImage } from "@/components/SafeImage";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
 import { cn } from "@/lib/utils";
 
 interface OrderData {
@@ -123,7 +124,7 @@ export default function TrackOrderPage() {
               <Button
                 type="submit"
                 disabled={loading || !orderId.trim()}
-                className="h-12 px-6 rounded-xl w-full sm:w-auto"
+                className="h-12 px-6 rounded-full w-full sm:w-auto"
               >
                 {loading ? (
                   <Loader2 size={18} className="animate-spin" />
@@ -300,9 +301,10 @@ export default function TrackOrderPage() {
                   <p className="text-xs text-muted-foreground">
                     Need help?{" "}
                     <a
-                      href="https://wa.me/919876543210"
-                      className="text-primary font-semibold hover:underline"
+                      href="https://wa.me/916380687811"
+                      className="inline-flex items-center gap-1.5 text-whatsapp font-semibold hover:underline"
                     >
+                      <WhatsAppIcon className="size-3.5" />
                       Chat on WhatsApp
                     </a>
                   </p>

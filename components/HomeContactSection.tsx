@@ -8,22 +8,17 @@ import { FadeIn } from "@/components/FadeIn";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
 
-const PHONE = "+91 98765 43210";
+const PHONE = "+91 93855 26105";
+const ADDITIONAL_PHONES = ["+91 89031 56142", "+91 63833 61207"];
 const EMAIL = "hello@vellimalaifarms.in";
-const WHATSAPP_NUMBER = "919876543210";
+const WHATSAPP_NUMBER = "916380687811";
+const ADDRESS_LINE = "Sari Amman Oyster Mushroom Farm, Vellimalai, Melsathanur, Kallakurichi - 606 209, Tamil Nadu, India";
 const LAT = 11.786746298281923;
 const LNG = 78.71029442669108;
 const MAPS_EMBED_URL = `https://www.google.com/maps?q=${LAT},${LNG}&z=14&output=embed`;
 const MAPS_LINK = `https://www.google.com/maps/search/?api=1&query=${LAT},${LNG}`;
-
-function WhatsAppIcon({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">
-      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.435 9.884-9.85 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-    </svg>
-  );
-}
 
 const contactMethods = ["WhatsApp", "Phone", "Email"] as const;
 type ContactMethod = (typeof contactMethods)[number];
@@ -65,22 +60,22 @@ export function HomeContactSection() {
   };
 
   return (
-    <section className="py-20 sm:py-28 bg-secondary">
+    <section className="py-20 sm:py-28 bg-secondary grain-overlay">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
         {/* Section header */}
         <FadeIn className="text-center mb-10 sm:mb-14">
           <div className="flex items-center justify-center gap-3 mb-4">
-            <span className="hidden sm:block h-px w-10 bg-border" />
+            <span className="hidden sm:block h-px w-8 bg-border" />
             <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">
-              Get in Touch
+              Talk to Us
             </span>
-            <span className="hidden sm:block h-px w-10 bg-border" />
+            <span className="hidden sm:block h-px w-8 bg-border" />
           </div>
           <h2 className="text-xl sm:text-2xl font-extrabold text-foreground tracking-tight font-heading">
-            Contact us
+            Contact Us
           </h2>
           <p className="text-[var(--color-body)] max-w-lg mx-auto mt-3 text-sm sm:text-base leading-relaxed">
-            Have a question about our mushrooms, training, or farm visits? Reach out and we&apos;ll get back to you.
+            Have questions about mushrooms, training, or visiting our farm? Write to us and we will reply.
           </p>
         </FadeIn>
 
@@ -91,18 +86,18 @@ export function HomeContactSection() {
             {/* Reach us directly */}
             <div className="rounded-2xl border border-border bg-card p-6 sm:p-8">
               <h3 className="text-lg font-bold font-heading text-foreground mb-1">
-                Reach us directly
-              </h3>
-              <p className="text-sm text-muted-foreground mb-5">
-                Prefer a quick conversation? Choose how you&apos;d like to connect.
-              </p>
+                  Call or Message Us
+                </h3>
+                <p className="text-sm text-muted-foreground mb-5">
+                  Want to talk now? Pick how you want to reach us.
+                </p>
 
               <div className="flex flex-wrap gap-3">
                 <a
                   href={`https://wa.me/${WHATSAPP_NUMBER}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full bg-[#25D366] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#1ebe57] transition-colors"
+                  className="inline-flex items-center gap-2 rounded-full bg-whatsapp px-5 py-2.5 text-sm font-semibold text-white hover:bg-whatsapp-hover transition-colors"
                 >
                   <WhatsAppIcon className="size-4" />
                   WhatsApp
@@ -124,37 +119,44 @@ export function HomeContactSection() {
                   {EMAIL}
                 </a>
               </div>
+              <div className="flex flex-wrap gap-x-4 gap-y-1 mt-3 text-sm text-muted-foreground">
+                {ADDITIONAL_PHONES.map((phone) => (
+                  <a key={phone} href={`tel:${phone.replace(/\s/g, "")}`} className="hover:text-foreground transition-colors">
+                    {phone}
+                  </a>
+                ))}
+              </div>
 
-              <p className="text-xs text-muted-foreground mt-4">
-                Typically respond within 24 hours
-              </p>
+                <p className="text-xs text-muted-foreground mt-4">
+                  We usually reply within 24 hours
+                </p>
             </div>
 
             {/* Visit us + map */}
             <div className="rounded-2xl border border-border bg-card p-6 sm:p-8">
               <div className="flex items-start justify-between mb-4">
-                <h3 className="text-lg font-bold font-heading text-foreground">
-                  Visit us
-                </h3>
-                <a
-                  href={MAPS_LINK}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline"
-                >
-                  Open in Google Maps
-                  <ExternalLink size={14} />
-                </a>
+                  <h3 className="text-lg font-bold font-heading text-foreground">
+                    Come Visit Us
+                  </h3>
+                  <a
+                    href={MAPS_LINK}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline"
+                  >
+                    See on Google Maps
+                    <ExternalLink size={14} />
+                  </a>
               </div>
 
               <div className="flex items-start gap-2.5 mb-5">
                 <MapPin size={18} className="text-primary shrink-0 mt-0.5" />
                 <div>
                   <p className="font-semibold text-sm text-foreground">
-                    Vellimalai, Kalvarayan Hills
+                    Sari Amman Oyster Mushroom Farm
                   </p>
                   <p className="text-sm text-muted-foreground">
-                    Tamil Nadu, India
+                    {ADDRESS_LINE.replace("Sari Amman Oyster Mushroom Farm, ", "")}
                   </p>
                 </div>
               </div>
@@ -174,7 +176,7 @@ export function HomeContactSection() {
                 href="/contact"
                 className="group inline-flex items-center gap-2 text-sm font-semibold text-primary hover:underline mt-4"
               >
-                View full contact details
+                See All Contact Info
                 <ArrowRight size={16} className="group-hover:translate-x-0.5 transition-transform" />
               </Link>
             </div>
@@ -188,11 +190,11 @@ export function HomeContactSection() {
                   <MailCheck size={28} />
                 </div>
                 <h3 className="text-xl font-bold font-heading text-foreground mb-2">
-                  Message Sent!
-                </h3>
-                <p className="text-[var(--color-body)] max-w-sm mb-5 text-sm">
-                  Thank you for reaching out. We&apos;ll get back to you within one business day.
-                </p>
+                    Message Sent!
+                  </h3>
+                  <p className="text-[var(--color-body)] max-w-sm mb-5 text-sm">
+                    Thank you! We will reply to you within one day.
+                  </p>
                 <Button
                   variant="outline"
                   className="rounded-full"
@@ -205,18 +207,18 @@ export function HomeContactSection() {
                 </Button>
               </div>
             ) : (
-              <form
-                onSubmit={handleSubmit}
-                className="bg-card rounded-2xl border border-border p-6 sm:p-8 space-y-4"
-              >
-                <div>
-                  <h3 className="text-lg font-bold font-heading text-foreground">
-                    Send us a message
-                  </h3>
-                  <p className="text-sm text-muted-foreground mt-0.5">
-                    Tell us about your query and we&apos;ll respond within 24 hours.
-                  </p>
-                </div>
+                <form
+                  onSubmit={handleSubmit}
+                  className="bg-card rounded-2xl border border-border p-6 sm:p-8 space-y-4"
+                >
+                  <div>
+                    <h3 className="text-lg font-bold font-heading text-foreground">
+                      Send Us a Message
+                    </h3>
+                    <p className="text-sm text-muted-foreground mt-0.5">
+                      Tell us what you need and we will reply within 24 hours.
+                    </p>
+                  </div>
 
                 {/* Full Name */}
                 <div className="space-y-1.5">
@@ -255,9 +257,9 @@ export function HomeContactSection() {
                   </div>
                 </div>
 
-                {/* Inquiry type */}
-                <div className="space-y-1.5">
-                  <Label htmlFor="home-inquiry-type">Inquiry type</Label>
+                  {/* Inquiry type */}
+                  <div className="space-y-1.5">
+                    <Label htmlFor="home-inquiry-type">What do you need?</Label>
                   <select
                     id="home-inquiry-type"
                     value={form.inquiryType}
@@ -272,7 +274,7 @@ export function HomeContactSection() {
                     }}
                   >
                     <option value="" disabled className="text-muted-foreground">
-                      Select inquiry type...
+                      Choose one...
                     </option>
                     {inquiryTypes.map((t) => (
                       <option key={t} value={t}>
@@ -282,9 +284,9 @@ export function HomeContactSection() {
                   </select>
                 </div>
 
-                {/* Preferred contact */}
-                <div className="space-y-2">
-                  <Label>Preferred Contact</Label>
+                  {/* Preferred contact */}
+                  <div className="space-y-2">
+                    <Label>How should we contact you?</Label>
                   <div className="flex gap-2">
                     {contactMethods.map((method) => {
                       const active = form.preferredContact === method;
@@ -306,14 +308,14 @@ export function HomeContactSection() {
                   </div>
                 </div>
 
-                {/* Message */}
-                <div className="space-y-1.5">
-                  <Label htmlFor="home-message">Message (optional)</Label>
-                  <textarea
-                    id="home-message"
-                    value={form.message}
-                    onChange={(e) => set("message", e.target.value)}
-                    placeholder="Tell us more about your needs..."
+                  {/* Message */}
+                  <div className="space-y-1.5">
+                    <Label htmlFor="home-message">Your Message (optional)</Label>
+                    <textarea
+                      id="home-message"
+                      value={form.message}
+                      onChange={(e) => set("message", e.target.value)}
+                      placeholder="Tell us more about what you need..."
                     rows={3}
                     className="w-full rounded-xl border border-border bg-card px-3.5 py-2.5 text-sm outline-none focus-visible:border-primary focus-visible:ring-3 focus-visible:ring-primary/20 resize-none"
                   />

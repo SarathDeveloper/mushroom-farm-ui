@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { SafeImage } from "@/components/SafeImage";
-import { Heart, Star, ShoppingCart, Minus, Plus } from "lucide-react";
+import { Heart, Star, ShoppingCart, Minus, Plus, Clock } from "lucide-react";
 import toast from "react-hot-toast";
 import type { Product } from "@/lib/data";
 import { useCartStore, useWishlistStore } from "@/lib/store";
@@ -52,13 +52,13 @@ export function ProductCard({
 
   return (
     <div className="group flex flex-col bg-card rounded-2xl overflow-hidden border border-border/80 shadow-[0_8px_24px_rgba(0,0,0,0.06)] hover:shadow-[0_14px_36px_rgba(0,0,0,0.08)] hover:-translate-y-0.5 transition-all duration-300 ease-out">
-      <div className="relative aspect-[4/3] overflow-hidden bg-secondary">
+      <div className="relative aspect-[3/2] overflow-hidden bg-secondary">
         <Link href={`/shop/${product.slug}`} className="relative block h-full w-full">
           <SafeImage
             src={product.image}
             alt={product.name}
             fill
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
             priority={priority}
             className="object-cover group-hover:scale-105 transition-transform duration-700"
           />
@@ -67,7 +67,7 @@ export function ProductCard({
         <span
           className={cn(
             "absolute top-3 right-3 px-2.5 py-1 rounded-full text-[11px] font-semibold text-white shadow-sm",
-            stock.tone === "in" && "bg-[#2B7A5D]",
+            stock.tone === "in" && "bg-primary",
             stock.tone === "low" && "bg-[#E5B06D]",
             stock.tone === "out" && "bg-[#E56D6D]"
           )}
@@ -87,12 +87,12 @@ export function ProductCard({
         >
           <Heart
             size={16}
-            className={cn(wished && "fill-[#2B7A5D] text-[#2B7A5D]")}
+            className={cn(wished && "fill-primary text-primary")}
           />
         </button>
       </div>
 
-      <div className="p-4 sm:p-5 flex-1 flex flex-col gap-2.5 sm:gap-3">
+      <div className="p-3 sm:p-4 flex-1 flex flex-col gap-2">
         <div className="flex items-start justify-between gap-3">
           <Link href={`/shop/${product.slug}`} className="min-w-0">
             <h3 className="font-bold text-[15px] leading-snug text-foreground line-clamp-2 font-heading hover:text-primary transition-colors">
@@ -107,16 +107,23 @@ export function ProductCard({
           </div>
         </div>
 
-        <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3">
+        <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2">
           {product.description}
         </p>
+
+        {product.shelfLifeDays != null && product.shelfLifeDays > 0 && (
+          <div className="flex items-center gap-1.5 text-[11px] font-medium text-amber-700">
+            <Clock size={12} className="shrink-0" />
+            Best within {product.shelfLifeDays} day{product.shelfLifeDays > 1 ? "s" : ""}
+          </div>
+        )}
 
         {tags.length > 0 && (
           <div className="flex flex-wrap gap-1.5">
             {tags.map((tag) => (
               <span
                 key={tag}
-                className="inline-flex items-center rounded-full bg-[#E8F2EC] px-2.5 py-0.5 text-[11px] font-medium text-[#2B7A5D] border border-[#2B7A5D]/10"
+                className="inline-flex items-center rounded-full bg-primary/10 px-2.5 py-0.5 text-[11px] font-medium text-primary border border-primary/10"
               >
                 {tag}
               </span>
@@ -124,8 +131,8 @@ export function ProductCard({
           </div>
         )}
 
-        <div className="mt-auto pt-1 flex items-baseline gap-1.5">
-          <span className="text-xl font-extrabold text-[#1A4938] tabular-nums">
+        <div className="mt-auto pt-1 flex flex-wrap items-baseline gap-1.5">
+          <span className="text-lg font-extrabold text-primary tabular-nums">
             ₹{product.price.toLocaleString("en-IN")}
           </span>
           {product.compareAtPrice && (
@@ -138,14 +145,14 @@ export function ProductCard({
           </span>
         </div>
 
-        <div className="flex items-center gap-2 sm:gap-2.5 pt-1">
-          <div className="flex items-center rounded-lg border border-border bg-secondary/60 h-10 shrink-0">
+        <div className="flex flex-wrap items-center gap-2 pt-1">
+          <div className="flex items-center rounded-lg border border-border bg-secondary/60 h-9 shrink-0">
             <button
               type="button"
               onClick={() => setQty((q) => Math.max(1, q - 1))}
               disabled={outOfStock}
               aria-label="Decrease quantity"
-              className="w-9 sm:w-8 h-full flex items-center justify-center text-muted-foreground hover:text-foreground disabled:opacity-40"
+              className="w-9 h-full flex items-center justify-center text-muted-foreground hover:text-foreground disabled:opacity-40"
             >
               <Minus size={14} />
             </button>
@@ -159,20 +166,17 @@ export function ProductCard({
               }
               disabled={outOfStock}
               aria-label="Increase quantity"
-              className="w-9 sm:w-8 h-full flex items-center justify-center text-muted-foreground hover:text-foreground disabled:opacity-40"
+              className="w-9 h-full flex items-center justify-center text-muted-foreground hover:text-foreground disabled:opacity-40"
             >
               <Plus size={14} />
             </button>
-            <span className="hidden sm:inline pr-2.5 text-xs text-muted-foreground border-l border-border ml-0.5 pl-2">
-              {product.weight}
-            </span>
           </div>
 
           <Button
             onClick={handleAddToCart}
             disabled={outOfStock}
             aria-label={`Add ${product.name} to cart`}
-            className="flex-1 h-10 rounded-lg bg-[#1A4938] hover:bg-[#14392c] text-white text-sm font-semibold gap-1.5 disabled:opacity-50"
+            className="flex-1 min-w-0 h-9 rounded-full bg-primary hover:bg-primary/90 text-white text-sm font-semibold gap-1.5 disabled:opacity-50"
           >
             <ShoppingCart size={15} />
             <span className="hidden sm:inline">Add to Cart</span>

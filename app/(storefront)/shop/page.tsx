@@ -98,7 +98,7 @@ export default async function ShopPage(props: {
       <PageHero
         eyebrow="Shop"
         title="Fresh From Our Farm"
-        description="Hand-picked, organically grown mushrooms delivered straight to your doorstep."
+        description="Hand-picked mushrooms from our farm, delivered straight to your doorstep."
         image="https://images.unsplash.com/photo-1518977676601-b53f82aba655?q=80&w=2000&auto=format&fit=crop"
       />
 
@@ -150,7 +150,7 @@ export default async function ShopPage(props: {
 
           {products.length > 0 ? (
             <>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-5">
                 {products.map((product, i) => (
                   <FadeIn key={product.id} delay={(i % 3) * 0.08}>
                     {/* @ts-ignore */}

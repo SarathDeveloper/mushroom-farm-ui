@@ -32,7 +32,7 @@ const HARDCODED_CATEGORIES = [
   },
   {
     id: "value-added",
-    name: "Value-Added",
+    name: "Ready-Made",
     slug: "value-added",
     image: "/gallery/products/mixed-mushrooms-CNX65Zqk.jpg",
   },
@@ -40,13 +40,13 @@ const HARDCODED_CATEGORIES = [
 
 export function ShopByCategory() {
   return (
-    <section className="py-16 sm:py-24 bg-secondary grain-overlay">
+    <section className="py-20 sm:py-28 bg-secondary grain-overlay">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         <FadeIn className="text-center mb-10 sm:mb-14">
           <div className="flex items-center justify-center gap-3 mb-3">
             <span className="hidden sm:block h-px w-8 bg-border" />
             <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">
-              Explore
+              Shop
             </span>
             <span className="hidden sm:block h-px w-8 bg-border" />
           </div>
@@ -54,7 +54,7 @@ export function ShopByCategory() {
             Shop by Category
           </h2>
           <p className="text-[var(--color-body)] text-sm mt-1.5 max-w-md mx-auto">
-            Browse our freshly harvested mushroom varieties
+            Find the mushrooms you&apos;re looking for
           </p>
         </FadeIn>
 

@@ -9,14 +9,14 @@ import { Button } from "@/components/ui/button";
 
 export const metadata = {
   title: "About Us",
-  description: "Learn the story behind Sri Amman Mushroom Farms and our mission for sustainable, organic farming in the Kalvarayan Hills.",
+  description: "Know about Sri Amman Mushroom Farms. We grow natural mushrooms in Kalvarayan Hills and teach farmers how to grow.",
 };
 
 const values = [
-  { icon: Leaf, title: "Organic First", desc: "Every decision starts with the question: is this good for the soil, the mushroom, and the customer?" },
-  { icon: Droplets, title: "Sustainable Farming", desc: "We recycle agricultural waste into growing substrate and manage water responsibly." },
-  { icon: Users, title: "Community Empowerment", desc: "We train and employ local farmers, keeping economic value within the Kalvarayan Hills community." },
-  { icon: HeartHandshake, title: "Radical Transparency", desc: "From farm practices to pricing, we believe our customers deserve to know exactly what they're getting." },
+  { icon: Leaf, title: "Natural First", desc: "We always ask: Is this good for the soil? Good for mushrooms? Good for our customers?" },
+  { icon: Droplets, title: "Good for Earth", desc: "We use farm waste to grow mushrooms. We don't waste water. We care for our land." },
+  { icon: Users, title: "Help Local People", desc: "We teach local farmers and give them jobs. Money stays in our Kalvarayan Hills area." },
+  { icon: HeartHandshake, title: "We Are Honest", desc: "We tell you everything - how we farm, what we charge. No secrets." },
 ];
 
 export default function AboutPage() {
@@ -24,8 +24,8 @@ export default function AboutPage() {
     <div className="flex flex-col min-h-screen">
       <PageHero
         eyebrow="Our Story"
-        title="Rooted in the Kalvarayan Hills"
-        description="Nine years of sustainable mushroom farming, one harvest at a time."
+        title="From Kalvarayan Hills"
+        description="We have been growing mushrooms for 9 years. Natural farming, fresh mushrooms."
         image="/gallery/farm/growing-shed-interior.png"
       />
 
@@ -44,18 +44,22 @@ export default function AboutPage() {
               </div>
             </FadeIn>
             <FadeIn direction="left" className="space-y-5">
-              <span className="text-sm font-semibold text-primary uppercase tracking-wider">How it started</span>
-              <h2 className="text-2xl md:text-3xl font-bold font-heading text-foreground">
-                A small experiment that grew into a movement
+              <div className="flex items-center gap-3 mb-3">
+                <span className="h-px w-8 bg-border" />
+                <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">How We Started</span>
+                <span className="h-px w-8 bg-border" />
+              </div>
+              <h2 className="text-xl sm:text-2xl font-extrabold font-heading text-foreground tracking-tight">
+                Started small, grew big
               </h2>
               <p className="text-[var(--color-body)] leading-relaxed text-sm sm:text-base">
-                In 2017, our founder began cultivating oyster mushrooms in a single bamboo shed as a way to supplement his family&apos;s income. What started as a small side project quickly revealed something bigger: the Kalvarayan Hills&apos; cool, humid climate was perfect for mushroom cultivation.
+                In 2017, Mathesh started growing oyster mushrooms in one bamboo shed to earn extra money for his family. He found that the cool weather of Kalvarayan Hills was perfect for growing mushrooms.
               </p>
               <p className="text-[var(--color-body)] leading-relaxed text-sm sm:text-base">
-                Today, Sri Amman Mushroom Farms spans several growing units, supplies restaurants and retailers across Tamil Nadu, and has trained hundreds of aspiring farmers through hands-on workshops — all while staying true to our founding promise: 100% organic, chemical-free cultivation.
+                Today, Sri Amman Mushroom Farms has many growing sheds. We sell to restaurants and shops across Tamil Nadu. We have taught hundreds of farmers how to grow mushrooms. And we still keep our promise: No chemicals, only natural farming.
               </p>
               <Button asChild size="lg" className="rounded-full px-8 mt-2">
-                <Link href="/shop">Taste the Difference <ArrowRight className="ml-2" size={18} /></Link>
+                <Link href="/shop">Try Our Mushrooms <ArrowRight className="ml-2" size={18} /></Link>
               </Button>
             </FadeIn>
           </div>
@@ -63,15 +67,34 @@ export default function AboutPage() {
           {/* Founder Spotlight */}
           <div className="relative rounded-3xl bg-secondary overflow-hidden mb-16 sm:mb-24">
             <div className="grid grid-cols-1 lg:grid-cols-5 gap-0">
-              <FadeIn direction="right" className="lg:col-span-2 relative min-h-[400px] lg:min-h-[520px]">
+              <FadeIn direction="right" className="lg:col-span-2 relative min-h-[400px] lg:min-h-[520px] overflow-hidden group/image">
+                {/* Subtle warm organic ambient layer behind the image */}
+                <div className="absolute inset-0 bg-[#1A4938]/5" />
+
                 <SafeImage
                   src="/gallery/mathesh-owner.png"
                   alt="Mathesh — Owner & Head Farmer"
                   fill
                   sizes="(max-width: 1024px) 100vw, 40vw"
-                  className="object-cover object-top"
+                  className="object-cover object-top brightness-[0.97] contrast-[1.05] saturate-[1.03] transition-transform duration-700 group-hover/image:scale-[1.02]"
                 />
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6 lg:hidden">
+
+                {/* Elegant warm rustic gradient vignette overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#102B20]/80 via-transparent to-[#102B20]/20 pointer-events-none" />
+
+                {/* Beautiful inset double framing border */}
+                <div className="absolute inset-4 sm:inset-6 border border-white/20 pointer-events-none rounded-2xl transition-all duration-500 group-hover/image:inset-3 sm:group-hover/image:inset-5 group-hover/image:border-white/35" />
+                <div className="absolute inset-5 sm:inset-7 border border-dashed border-white/10 pointer-events-none rounded-xl" />
+
+                {/* Desktop floating stamp label */}
+                <div className="hidden lg:flex absolute top-6 left-6 bg-white/95 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-primary/20 shadow-md items-center gap-2 pointer-events-none">
+                  <span className="flex h-2 w-2 rounded-full bg-primary" />
+                  <span className="text-[10px] font-extrabold tracking-wider uppercase text-primary">
+                    Head Farmer
+                  </span>
+                </div>
+
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent p-6 lg:hidden">
                   <span className="text-white/80 text-sm font-medium uppercase tracking-wider">Owner</span>
                   <h3 className="text-2xl font-bold text-white font-heading">Mathesh</h3>
                 </div>
@@ -81,22 +104,22 @@ export default function AboutPage() {
                   <div className="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center">
                     <Award size={20} strokeWidth={1.75} />
                   </div>
-                  <span className="text-sm font-semibold text-primary uppercase tracking-wider">Meet Our Owner</span>
+                  <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Meet Our Owner</span>
                 </div>
-                <h2 className="text-2xl md:text-3xl font-bold font-heading text-foreground mb-2">
+                <h2 className="text-xl sm:text-2xl font-extrabold font-heading text-foreground tracking-tight mb-2">
                   Mathesh
                 </h2>
-                <p className="text-sm text-muted-foreground font-medium mb-6">Owner &amp; Head Farmer</p>
+                <p className="text-sm text-muted-foreground font-medium mb-6">Owner &amp; Main Farmer</p>
                 <p className="text-[var(--color-body)] leading-relaxed mb-4">
-                  Growing up in the Kalvarayan Hills of Tamil Nadu, Mathesh witnessed firsthand how tribal farming communities struggled with limited income options. In 2017, with little more than determination and a single bamboo shed, he began experimenting with oyster mushroom cultivation — a crop uniquely suited to the region&apos;s cool, misty climate.
+                  Mathesh grew up in Kalvarayan Hills of Tamil Nadu. He saw that farmers in his area had very few ways to earn money. In 2017, with just one bamboo shed, he started growing oyster mushrooms. The cool, misty weather of the hills was perfect for mushroom farming.
                 </p>
                 <p className="text-[var(--color-body)] leading-relaxed mb-6">
-                  What started as a modest side project has since grown into Sri Amman Mushroom Farms, a thriving enterprise that supplies fresh and dried mushrooms to restaurants and retailers across Tamil Nadu. More importantly, Mathesh has trained hundreds of local farmers, empowering them to build their own mushroom-growing businesses and create sustainable livelihoods in the hills.
+                  What started as a small project is now Sri Amman Mushroom Farms. We sell fresh and dry mushrooms to restaurants and shops across Tamil Nadu. More than that, Mathesh has taught hundreds of local farmers how to grow mushrooms and start their own business.
                 </p>
                 <div className="relative bg-card rounded-2xl p-6 border border-border">
                   <Quote size={32} className="text-primary/20 absolute top-4 left-4" />
                   <p className="text-foreground font-medium italic pl-8 leading-relaxed text-sm sm:text-base">
-                    &ldquo;I didn&apos;t start with a business plan — I started with a belief that the hills could give our people more. The mushrooms proved me right.&rdquo;
+                    &ldquo;I did not start with a plan. I just believed our hills could help our people earn more. The mushrooms showed I was right.&rdquo;
                   </p>
                   <p className="text-xs text-muted-foreground mt-3 pl-8">— Mathesh</p>
                 </div>
@@ -105,9 +128,14 @@ export default function AboutPage() {
           </div>
 
           <FadeIn className="text-center mb-12">
-            <h2 className="text-2xl md:text-3xl font-bold font-heading text-foreground mb-4">What We Stand For</h2>
+            <div className="flex items-center justify-center gap-3 mb-3">
+              <span className="hidden sm:block h-px w-8 bg-border" />
+              <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Values</span>
+              <span className="hidden sm:block h-px w-8 bg-border" />
+            </div>
+            <h2 className="text-xl sm:text-2xl font-extrabold font-heading text-foreground tracking-tight mb-4">What We Believe In</h2>
             <p className="text-[var(--color-body)] max-w-2xl mx-auto text-sm sm:text-base">
-              Our values guide every decision, from how we grow to how we grow our community.
+              These are the things we care about most. They guide everything we do.
             </p>
           </FadeIn>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-8 mb-16 sm:mb-24">

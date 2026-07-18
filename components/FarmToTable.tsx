@@ -1,15 +1,14 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { Scissors, ShieldCheck, Package, Truck, Home } from "lucide-react";
 import { FadeIn } from "@/components/FadeIn";
 
 const steps = [
-  { time: "5:00 AM", title: "Harvested Fresh", icon: Scissors, desc: "Hand-picked at peak ripeness" },
-  { time: "6:30 AM", title: "Quality Checked", icon: ShieldCheck, desc: "Inspected for perfection" },
-  { time: "7:00 AM", title: "Packed Hygienically", icon: Package, desc: "Temperature-controlled packing" },
-  { time: "8:00 AM", title: "Out for Delivery", icon: Truck, desc: "Same-day dispatch" },
-  { time: "By Evening", title: "At Your Doorstep", icon: Home, desc: "Fresh to your kitchen" },
+  { time: "5:00 AM", title: "We Pick Fresh", icon: Scissors, desc: "Mushrooms picked by hand early morning" },
+  { time: "6:30 AM", title: "We Check Quality", icon: ShieldCheck, desc: "Only the best ones selected" },
+  { time: "7:00 AM", title: "We Pack Clean", icon: Package, desc: "Packed in cool boxes to stay fresh" },
+  { time: "8:00 AM", title: "We Send Out", icon: Truck, desc: "Delivery starts same day" },
+  { time: "By Evening", title: "You Get It", icon: Home, desc: "Fresh mushrooms at your door" },
 ];
 
 export function FarmToTable() {
@@ -18,15 +17,15 @@ export function FarmToTable() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         <FadeIn className="text-center mb-16">
           <div className="flex items-center justify-center gap-3 mb-4">
-            <span className="hidden sm:block h-px w-10 bg-border" />
-            <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Our Process</span>
-            <span className="hidden sm:block h-px w-10 bg-border" />
+            <span className="hidden sm:block h-px w-8 bg-border" />
+            <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">How We Work</span>
+            <span className="hidden sm:block h-px w-8 bg-border" />
           </div>
           <h2 className="text-xl sm:text-2xl font-extrabold text-foreground tracking-tight font-heading">
-            Farm to Table in Hours, Not Days
+            From Farm to Your Home in One Day
           </h2>
           <p className="text-[var(--color-body)] max-w-2xl mx-auto mt-3 text-sm sm:text-base">
-            From the moment we harvest to the moment it arrives at your door — freshness guaranteed.
+            We pick mushrooms in the morning and deliver to you by evening. Always fresh.
           </p>
         </FadeIn>
 
@@ -36,32 +35,30 @@ export function FarmToTable() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-4 relative z-10">
             {steps.map((step, i) => (
-              <motion.div
+              <FadeIn
                 key={step.title}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
+                delay={i * 0.1}
+                direction="up"
                 className="flex flex-col items-center text-center group"
               >
-                <div className="w-16 h-16 rounded-full bg-[#E8F2EC] border-4 border-background shadow-[0_4px_15px_rgba(43,122,93,0.1)] text-[#2B7A5D] flex items-center justify-center mb-4 group-hover:scale-105 transition-transform duration-300">
+                <div className="w-16 h-16 rounded-full bg-primary/10 border-4 border-background shadow-[0_4px_15px_rgba(43,122,93,0.1)] text-primary flex items-center justify-center mb-4 group-hover:scale-105 transition-transform duration-300">
                   <step.icon size={26} strokeWidth={1.5} />
                 </div>
-                <span className="text-xs font-extrabold text-[#2B7A5D] uppercase tracking-wide mb-1">{step.time}</span>
+                <span className="text-xs font-extrabold text-primary uppercase tracking-wide mb-1">{step.time}</span>
                 <h3 className="font-bold text-foreground text-sm sm:text-base font-heading mb-1">{step.title}</h3>
                 <p className="text-sm text-[var(--color-body)] leading-relaxed">{step.desc}</p>
-              </motion.div>
+              </FadeIn>
             ))}
           </div>
         </div>
 
         <FadeIn className="mt-12 text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#E8F2EC] text-[#2B7A5D] text-sm font-semibold">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-semibold">
             <span className="relative flex h-2.5 w-2.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#2B7A5D] opacity-75" />
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#2B7A5D]" />
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-primary" />
             </span>
-            Today&apos;s harvest completed at 5:30 AM
+            Today&apos;s picking done at 5:30 AM
           </div>
         </FadeIn>
       </div>

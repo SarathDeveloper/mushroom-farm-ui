@@ -37,7 +37,7 @@ export function NewsletterForm() {
       <Button
         type="submit"
         disabled={loading}
-        className="h-12 rounded-full bg-white text-[var(--color-primary-dark)] hover:bg-secondary hover:scale-[1.02] px-8 font-bold"
+        className="h-12 rounded-full bg-white text-primary hover:bg-secondary px-8 font-bold"
       >
         {loading ? "Subscribing..." : "Subscribe"}
       </Button>

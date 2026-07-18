@@ -13,9 +13,9 @@ export function AnnouncementBar() {
       <div className="container mx-auto flex items-center justify-center px-4 py-1.5 text-xs sm:text-sm font-medium tracking-wide">
         <Truck size={14} className="mr-2 shrink-0 opacity-80" />
         <span>
-          Free Delivery on orders above{" "}
+          Free Delivery for orders above{" "}
           <span className="font-bold">₹500</span>{" "}
-          <span className="hidden sm:inline">— Farm-fresh to your doorstep</span>
+          <span className="hidden sm:inline">— Fresh to your home</span>
         </span>
         <button
           onClick={() => setVisible(false)}

@@ -3,7 +3,7 @@ import bcrypt from 'bcryptjs';
 
 async function main() {
   const email = 'admin@vellimalaifarms.in';
-  const phone = '+919876543210';
+  const phone = '+919385526105';
   const password = 'admin';
   const hashedPassword = await bcrypt.hash(password, 10);
 

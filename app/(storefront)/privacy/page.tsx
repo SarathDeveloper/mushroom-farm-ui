@@ -37,7 +37,7 @@ const sections = [
   },
   {
     title: "8. Contact Us",
-    body: "If you have any questions about this Privacy Policy, please contact us at hello@vellimalaifarms.in or +91 98765 43210.",
+    body: "If you have any questions about this Privacy Policy, please contact us at hello@vellimalaifarms.in or +91 93855 26105.",
   },
 ];
 

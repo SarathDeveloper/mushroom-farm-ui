@@ -12,6 +12,9 @@
   --color-warning: #e5b06d;
   --color-error: #e56d6d;
 
+  --color-whatsapp: #25D366;
+  --color-whatsapp-hover: #1ebe57;
+
   --font-sans: var(--font-sans);
   --font-heading: var(--font-heading);
   --font-display: var(--font-display);

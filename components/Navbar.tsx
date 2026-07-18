@@ -41,24 +41,27 @@ export default function Navbar() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         <div className="flex h-16 sm:h-20 items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2.5 min-w-0">
-            <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full ring-1 ring-[#1A4938]/20">
+          <Link href="/" className="flex items-center gap-3 min-w-0 group">
+            <div className="relative h-12 w-12 sm:h-14 sm:w-14 shrink-0 overflow-hidden rounded-full ring-2 ring-primary/10 transition-transform duration-300 group-hover:scale-105">
               <Image
                 src="/gallery/brand-logo.png"
                 alt="Sri Amman Mushroom Farms"
                 fill
-                sizes="40px"
+                sizes="56px"
                 className="object-cover"
                 priority
               />
             </div>
-            <span className="font-heading leading-tight min-w-0">
-              <span className="block text-base sm:text-lg font-semibold tracking-[0.04em] uppercase text-[#1A4938]">
+            <span className="leading-none min-w-0 flex flex-col justify-center">
+              <span className="block font-display text-[17px] sm:text-[21px] font-extrabold tracking-[0.01em] text-primary transition-colors duration-300 group-hover:text-primary/90">
                 Sri Amman
               </span>
-              <span className="block text-[11px] sm:text-xs font-medium tracking-[0.08em] uppercase text-[#2B7A5D]">
+              <span className="block font-sans text-[9px] sm:text-[10px] font-semibold tracking-[0.22em] uppercase text-primary/90 mt-1">
                 Mushroom Farms
               </span>
+              <svg className="w-7 h-1.5 text-primary/40 mt-1 transition-all duration-300 group-hover:w-11 group-hover:text-primary" viewBox="0 0 32 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 4.5C8 2 24 1.5 31 3.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+              </svg>
             </span>
           </Link>
 
@@ -71,8 +74,8 @@ export default function Navbar() {
                   key={link.href}
                   href={link.href}
                   className={cn(
-                    "text-sm font-medium transition-colors hover:text-[#2B7A5D]",
-                    isActive ? "text-[#2B7A5D]" : "text-[#5C6370]"
+                    "text-sm font-medium transition-colors hover:text-primary",
+                    isActive ? "text-primary" : "text-muted-foreground"
                   )}
                 >
                   {link.label}
@@ -85,7 +88,7 @@ export default function Navbar() {
           <div className="flex items-center gap-4">
             <SearchDialog />
 
-            <Link href="/wishlist" aria-label="View wishlist" className="relative text-[#5C6370] hover:text-[#2B7A5D] transition-colors">
+            <Link href="/wishlist" aria-label="View wishlist" className="relative text-muted-foreground hover:text-primary transition-colors">
               <Heart size={20} />
               {mounted && wishlistCount > 0 && (
                 <span className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-[#F76B46] text-[10px] font-bold text-white">
@@ -94,7 +97,7 @@ export default function Navbar() {
               )}
             </Link>
 
-            <Link href="/cart" aria-label="View cart" className="relative text-[#5C6370] hover:text-[#2B7A5D] transition-colors">
+            <Link href="/cart" aria-label="View cart" className="relative text-muted-foreground hover:text-primary transition-colors">
               <ShoppingCart size={20} />
               {mounted && cartCount > 0 && (
                 <span className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-[#F76B46] text-[10px] font-bold text-white">
@@ -108,7 +111,7 @@ export default function Navbar() {
                 <DropdownMenu>
                   <DropdownMenuTrigger
                     render={
-                      <Button variant="ghost" size="icon" className="rounded-full bg-[#E8F2EC] text-[#2B7A5D] hover:bg-[#2B7A5D] hover:text-white" />
+                      <Button variant="ghost" size="icon" className="rounded-full bg-primary/10 text-primary hover:bg-primary hover:text-white" />
                     }
                   >
                     <User size={18} />
@@ -130,7 +133,7 @@ export default function Navbar() {
                   </DropdownMenuContent>
                 </DropdownMenu>
               ) : (
-                <Button asChild className="bg-[#2B7A5D] hover:bg-[#1A4938] text-white font-medium">
+                <Button asChild className="bg-primary hover:bg-primary/90 text-white font-medium">
                   <Link href="/login">Sign In</Link>
                 </Button>
               )}
@@ -139,22 +142,25 @@ export default function Navbar() {
             {/* Mobile Menu */}
             <div className="md:hidden">
               <Sheet>
-                <SheetTrigger aria-label="Open menu" className="text-[#5C6370] hover:text-[#2B7A5D]">
+                <SheetTrigger aria-label="Open menu" className="text-muted-foreground hover:text-primary">
                   <Menu size={24} />
                 </SheetTrigger>
                 <SheetContent>
                   <SheetHeader>
-                    <SheetTitle className="text-left font-heading flex items-center gap-2.5">
-                      <div className="relative h-8 w-8 shrink-0 overflow-hidden rounded-full ring-1 ring-[#1A4938]/20">
+                    <SheetTitle className="text-left flex items-center gap-2.5">
+                      <div className="relative h-8 w-8 shrink-0 overflow-hidden rounded-full ring-2 ring-primary/10">
                         <Image src="/gallery/brand-logo.png" alt="Logo" fill sizes="32px" className="object-cover" />
                       </div>
-                      <span className="leading-tight">
-                        <span className="block text-base font-semibold tracking-[0.04em] uppercase text-[#1A4938]">
+                      <span className="leading-none flex flex-col justify-center">
+                        <span className="block font-display text-base font-extrabold tracking-[0.01em] text-primary">
                           Sri Amman
                         </span>
-                        <span className="block text-[11px] font-medium tracking-[0.08em] uppercase text-[#2B7A5D]">
+                        <span className="block font-sans text-[9px] font-semibold tracking-[0.2em] uppercase text-primary/90 mt-0.5">
                           Mushroom Farms
                         </span>
+                        <svg className="w-6 h-1 text-primary/40 mt-1" viewBox="0 0 32 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M1 4.5C8 2 24 1.5 31 3.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                        </svg>
                       </span>
                     </SheetTitle>
                   </SheetHeader>
@@ -166,23 +172,26 @@ export default function Navbar() {
                           key={link.href}
                           href={link.href}
                           className={cn(
-                            "text-lg font-medium transition-colors hover:text-[#2B7A5D]",
-                            isActive ? "text-[#2B7A5D]" : "text-[#5C6370]"
+                            "text-lg font-medium transition-colors hover:text-primary",
+                            isActive ? "text-primary" : "text-muted-foreground"
                           )}
                         >
                           {link.label}
                         </Link>
                       );
                     })}
-                    <Link href="/track-order" className="text-lg font-medium text-[#5C6370] hover:text-[#2B7A5D]">Track Order</Link>
-                    <Link href="/compare" className="text-lg font-medium text-[#5C6370] hover:text-[#2B7A5D]">Compare</Link>
-                    <Link href="/wishlist" className="text-lg font-medium text-[#5C6370] hover:text-[#2B7A5D]">Wishlist</Link>
-                    <Link href="/cart" className="text-lg font-medium text-[#5C6370] hover:text-[#2B7A5D]">Cart</Link>
+                    <Link href="/track-order" className="text-lg font-medium text-muted-foreground hover:text-primary">Track Order</Link>
+                    <Link href="/compare" className="text-lg font-medium text-muted-foreground hover:text-primary">Compare</Link>
+                    <Link href="/wishlist" className="text-lg font-medium text-muted-foreground hover:text-primary">Wishlist</Link>
+                    <Link href="/cart" className="text-lg font-medium text-muted-foreground hover:text-primary">Cart</Link>
                     <div className="mt-4 border-t pt-4">
                       {session?.user ? (
                         <>
+                          <Link href="/orders" className="block text-lg font-medium text-muted-foreground hover:text-primary mb-4">
+                            My Orders
+                          </Link>
                           {session.user.role === "ADMIN" && (
-                            <Link href="/admin" className="block text-lg font-medium text-[#2B7A5D] mb-4">
+                            <Link href="/admin" className="block text-lg font-medium text-primary mb-4">
                               Admin Dashboard
                             </Link>
                           )}
@@ -191,7 +200,7 @@ export default function Navbar() {
                           </Button>
                         </>
                       ) : (
-                        <Button asChild className="w-full bg-[#2B7A5D] hover:bg-[#1A4938] text-white">
+                        <Button asChild className="w-full bg-primary hover:bg-primary/90 text-white">
                           <Link href="/login">Sign In</Link>
                         </Button>
                       )}

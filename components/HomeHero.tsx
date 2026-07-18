@@ -28,44 +28,44 @@ export type HeroSlideData = {
 
 const fallbackSlides: HeroSlideData[] = [
   {
-    badge: "Free Delivery above ₹500",
-    headline: "Fresh Mushroom\nMarketplace",
+    badge: "Free Delivery for ₹500+ Orders",
+    headline: "Fresh Mushrooms\nFrom Our Farm",
     subtitle:
-      "Farm-fresh oyster, shiitake & button mushrooms delivered to your doorstep",
-    primaryCtaLabel: "Shop Fresh Now",
+      "We grow oyster, shiitake & button mushrooms. Pick today, deliver today. Direct from Kalvarayan Hills to your home.",
+    primaryCtaLabel: "Buy Now",
     primaryCtaHref: "/shop",
-    secondaryCtaLabel: "Pre-Order",
+    secondaryCtaLabel: "Book Early",
     secondaryCtaHref: "/pre-order",
     image: "/gallery/products/oyster-mushrooms-DUuUKbNY.jpg",
   },
   {
-    badge: "Certificate Included",
-    headline: "Start Mushroom\nFarming",
+    badge: "Certificate Given",
+    headline: "Learn Mushroom\nFarming",
     subtitle:
-      "Complete training from cultivation to marketing by industry experts",
-    primaryCtaLabel: "View Courses",
+      "We teach you how to grow mushrooms and earn money. Easy training with hands-on practice.",
+    primaryCtaLabel: "See Courses",
     primaryCtaHref: "/training",
-    secondaryCtaLabel: "Book Consultation",
+    secondaryCtaLabel: "Talk to Us",
     secondaryCtaHref: "/contact",
     image: "/gallery/recognition/community-meeting.png",
   },
   {
-    badge: "Reserve Your Harvest",
-    headline: "Pre-Order Fresh\nMushrooms",
+    badge: "Book Before It's Gone",
+    headline: "Pre-Order\nMushrooms",
     subtitle:
-      "Secure seasonal and specialty varieties before they sell out",
-    primaryCtaLabel: "Pre-Order Now",
+      "Some mushrooms are available only in certain seasons. Book early so you don't miss out.",
+    primaryCtaLabel: "Book Now",
     primaryCtaHref: "/pre-order",
-    secondaryCtaLabel: "Browse Shop",
+    secondaryCtaLabel: "See All",
     secondaryCtaHref: "/shop",
     image: "/gallery/farm/growing-shed-interior.png",
   },
 ];
 
 const trustBadges = [
-  { icon: ShieldCheck, label: "FSSAI Certified" },
-  { icon: Leaf, label: "100% Organic" },
-  { icon: Clock, label: "Same-Day Harvest" },
+  { icon: ShieldCheck, label: "FSSAI Registered" },
+  { icon: Leaf, label: "Natural Growing" },
+  { icon: Clock, label: "Fresh Harvests" },
 ];
 
 function VideoBackground({ src, isActive }: { src: string; isActive: boolean }) {
@@ -222,7 +222,7 @@ export function HomeHero({ slides }: { slides?: HeroSlideData[] }) {
                       {slide.primaryCtaLabel && slide.primaryCtaHref && (
                         <Link
                           href={slide.primaryCtaHref}
-                          className="inline-flex items-center justify-center gap-2.5 rounded-lg bg-[#1A4938] text-white font-semibold px-7 py-3.5 text-xs sm:text-sm hover:bg-[#143D2E] transition-colors shadow-lg shadow-black/20"
+                          className="inline-flex items-center justify-center gap-2.5 rounded-full bg-primary text-white font-semibold px-7 py-3.5 text-xs sm:text-sm hover:bg-primary/90 transition-colors shadow-lg shadow-black/20"
                         >
                           {slide.primaryCtaLabel}
                           <ArrowRight size={16} />
@@ -231,7 +231,7 @@ export function HomeHero({ slides }: { slides?: HeroSlideData[] }) {
                       {slide.secondaryCtaLabel && slide.secondaryCtaHref && (
                         <Link
                           href={slide.secondaryCtaHref}
-                          className="inline-flex items-center justify-center gap-2 rounded-lg border border-white/40 text-white font-semibold px-7 py-3.5 text-xs sm:text-sm hover:bg-white/10 transition-colors backdrop-blur-sm"
+                          className="inline-flex items-center justify-center gap-2 rounded-full border border-white/40 text-white font-semibold px-7 py-3.5 text-xs sm:text-sm hover:bg-white/10 transition-colors backdrop-blur-sm"
                         >
                           {slide.secondaryCtaLabel}
                           <ArrowRight size={16} />

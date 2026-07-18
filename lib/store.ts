@@ -10,6 +10,7 @@ export interface CartLine {
   weight: string;
   image: string;
   quantity: number;
+  shelfLifeDays?: number;
 }
 
 interface CartState {
@@ -49,6 +50,7 @@ export const useCartStore = create<CartState>()(
                 weight: product.weight,
                 image: product.image,
                 quantity,
+                shelfLifeDays: product.shelfLifeDays,
               },
             ],
           };

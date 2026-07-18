@@ -1,7 +1,8 @@
 "use client";
 
-import { Printer, MessageCircle } from "lucide-react";
+import { Printer } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
 
 type OrderActionsProps = {
   order: {
@@ -118,8 +119,8 @@ ${address.deliverySlot ? `\n🕐 Slot: ${address.deliverySlot}` : ""}`;
       <Button variant="outline" size="sm" className="gap-1.5" onClick={handlePrint}>
         <Printer size={14} /> Print
       </Button>
-      <Button variant="outline" size="sm" className="gap-1.5" onClick={handleWhatsApp}>
-        <MessageCircle size={14} /> WhatsApp
+      <Button variant="outline" size="sm" className="gap-1.5 text-whatsapp hover:text-whatsapp" onClick={handleWhatsApp}>
+        <WhatsAppIcon className="size-3.5" /> WhatsApp
       </Button>
     </div>
   );

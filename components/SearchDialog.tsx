@@ -8,7 +8,7 @@ import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { searchProducts } from "@/app/admin/products/actions";
 
-const popularSearches = ["Oyster", "Milky Mushroom", "Shiitake", "Combo Pack", "Organic"];
+const popularSearches = ["Oyster", "Milky Mushroom", "Shiitake", "Combo Pack", "Fresh"];
 
 const quickLinks = [
   { label: "Pre-Order Mushrooms", href: "/pre-order" },

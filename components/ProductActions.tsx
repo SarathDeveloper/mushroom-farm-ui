@@ -11,21 +11,13 @@ import { cn } from "@/lib/utils";
 
 export function ProductActions({ product }: { product: Product }) {
   const [qty, setQty] = useState(1);
-  const [purchaseMode, setPurchaseMode] = useState<"onetime" | "subscription">("onetime");
-  const [subscriptionFreq, setSubscriptionFreq] = useState<string | undefined>();
   const addItem = useCartStore((s) => s.addItem);
   const wished = useWishlistStore((s) => s.has(product.id));
   const toggleWish = useWishlistStore((s) => s.toggle);
 
-  const handleSubscriptionSelect = (type: "onetime" | "subscription", frequency?: string) => {
-    setPurchaseMode(type);
-    setSubscriptionFreq(frequency);
-  };
-
   return (
     <div className="space-y-4">
-      {/* Subscription toggle */}
-      <SubscriptionToggle price={product.price} onSelect={handleSubscriptionSelect} />
+      <SubscriptionToggle productName={product.name} />
 
       <div className="flex flex-col sm:flex-row gap-3">
         <div className="flex items-center rounded-lg border border-border bg-secondary/60 h-11 w-fit">
@@ -51,17 +43,14 @@ export function ProductActions({ product }: { product: Product }) {
         <Button
           onClick={() => {
             addItem(product, qty);
-            const msg = purchaseMode === "subscription"
-              ? `${qty} × ${product.name} added to subscription (${subscriptionFreq})`
-              : `${qty} × ${product.name} added to cart`;
-            toast.success(msg);
+            toast.success(`${qty} × ${product.name} added to cart`);
             setQty(1);
           }}
           size="lg"
           className="flex-1 rounded-lg h-11 bg-[#1A4938] hover:bg-[#14392c]"
         >
           <ShoppingCart size={18} className="mr-2" />
-          {purchaseMode === "subscription" ? "Subscribe" : "Add to Cart"}
+          Add to Cart
         </Button>
         <Button
           onClick={() => {

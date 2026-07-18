@@ -265,21 +265,21 @@ export default async function AdminDashboardPage() {
       )}
 
       {/* Main Stats */}
-      <div className="grid grid-cols-2 xl:grid-cols-4 gap-3 sm:gap-6 mb-6 sm:mb-8">
-        <div className="bg-card rounded-2xl border border-border p-4 sm:p-6 shadow-[0_4px_12px_rgba(0,0,0,0.04)]">
-          <div className="flex items-center justify-between mb-3 sm:mb-4">
-            <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-green-100 text-green-600 flex items-center justify-center">
+      <div className="grid grid-cols-2 xl:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8">
+        <div className="bg-card rounded-xl border border-border p-3 sm:p-4 shadow-[0_4px_12px_rgba(0,0,0,0.04)] min-w-0">
+          <div className="flex items-center justify-between mb-2 sm:mb-3">
+            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-green-100 text-green-600 flex items-center justify-center">
               <ShoppingBag size={18} strokeWidth={1.75} />
             </div>
             <Badge variant="success" className="text-[10px] sm:text-xs">{data.todayOrders} today</Badge>
           </div>
-          <p className="text-lg md:text-xl font-bold font-heading text-foreground">{data.totalOrders}</p>
+          <p className="text-base md:text-lg font-bold font-heading text-foreground truncate">{data.totalOrders}</p>
           <p className="text-xs sm:text-sm text-[var(--color-body)] mt-0.5 sm:mt-1">Total Orders</p>
         </div>
 
-        <div className="bg-card rounded-2xl border border-border p-4 sm:p-6 shadow-[0_4px_12px_rgba(0,0,0,0.04)]">
-          <div className="flex items-center justify-between mb-3 sm:mb-4">
-            <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
+        <div className="bg-card rounded-xl border border-border p-3 sm:p-4 shadow-[0_4px_12px_rgba(0,0,0,0.04)] min-w-0">
+          <div className="flex items-center justify-between mb-2 sm:mb-3">
+            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
               <IndianRupee size={18} strokeWidth={1.75} />
             </div>
             <div className={`flex items-center gap-1 text-[10px] sm:text-xs font-semibold ${
@@ -293,7 +293,7 @@ export default async function AdminDashboardPage() {
               {Math.abs(data.revenueChange).toFixed(0)}%
             </div>
           </div>
-          <p className="text-lg md:text-xl font-bold font-heading text-foreground">
+          <p className="text-base md:text-lg font-bold font-heading text-foreground truncate">
             ₹{data.thisWeekRevenue.toLocaleString("en-IN")}
           </p>
           <p className="text-xs sm:text-sm text-[var(--color-body)] mt-0.5 sm:mt-1">
@@ -302,23 +302,23 @@ export default async function AdminDashboardPage() {
           </p>
         </div>
 
-        <div className="bg-card rounded-2xl border border-border p-4 sm:p-6 shadow-[0_4px_12px_rgba(0,0,0,0.04)]">
-          <div className="flex items-center justify-between mb-3 sm:mb-4">
-            <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center">
+        <div className="bg-card rounded-xl border border-border p-3 sm:p-4 shadow-[0_4px_12px_rgba(0,0,0,0.04)] min-w-0">
+          <div className="flex items-center justify-between mb-2 sm:mb-3">
+            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center">
               <Package size={18} strokeWidth={1.75} />
             </div>
           </div>
-          <p className="text-lg md:text-xl font-bold font-heading text-foreground">{data.totalProducts}</p>
+          <p className="text-base md:text-lg font-bold font-heading text-foreground truncate">{data.totalProducts}</p>
           <p className="text-xs sm:text-sm text-[var(--color-body)] mt-0.5 sm:mt-1">Products</p>
         </div>
 
-        <div className="bg-card rounded-2xl border border-border p-4 sm:p-6 shadow-[0_4px_12px_rgba(0,0,0,0.04)]">
-          <div className="flex items-center justify-between mb-3 sm:mb-4">
-            <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center">
+        <div className="bg-card rounded-xl border border-border p-3 sm:p-4 shadow-[0_4px_12px_rgba(0,0,0,0.04)] min-w-0">
+          <div className="flex items-center justify-between mb-2 sm:mb-3">
+            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center">
               <Users size={18} strokeWidth={1.75} />
             </div>
           </div>
-          <p className="text-lg md:text-xl font-bold font-heading text-foreground">{data.totalUsers}</p>
+          <p className="text-base md:text-lg font-bold font-heading text-foreground truncate">{data.totalUsers}</p>
           <p className="text-xs sm:text-sm text-[var(--color-body)] mt-0.5 sm:mt-1">Customers</p>
         </div>
       </div>

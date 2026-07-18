@@ -4,6 +4,7 @@ import { useState } from "react";
 import { MapPin, Check, X, Loader2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
 
 const SERVICEABLE_PINCODES: Record<string, { area: string; days: number }> = {
   "636001": { area: "Salem", days: 1 },
@@ -50,6 +51,15 @@ const SERVICEABLE_PINCODES: Record<string, { area: string; days: number }> = {
 
 interface PincodeCheckerProps {
   compact?: boolean;
+}
+
+function formatDeliveryDate(days: number) {
+  const date = new Date();
+  date.setDate(date.getDate() + days);
+  return date.toLocaleDateString("en-IN", {
+    day: "numeric",
+    month: "short",
+  });
 }
 
 export function PincodeChecker({ compact = false }: PincodeCheckerProps) {
@@ -106,13 +116,16 @@ export function PincodeChecker({ compact = false }: PincodeCheckerProps) {
               <Check size={16} className="shrink-0 mt-0.5" />
               <span>
                 Delivery available to <strong>{result.area}</strong> — arrives in{" "}
-                <strong>{result.days === 1 ? "1 day" : `${result.days} days`}</strong>
+                <strong>
+                  {formatDeliveryDate(result.days ?? 1)}
+                </strong>{" "}
+                ({result.days === 1 ? "1 day" : `${result.days} days`})
               </span>
             </>
           ) : (
             <>
               <X size={16} className="shrink-0 mt-0.5" />
-              <span>Sorry, we don&apos;t deliver to this pincode yet. <a href="/pre-order" className="underline text-primary">Try pre-ordering</a> or <a href="https://wa.me/919876543210" className="underline text-primary">contact us on WhatsApp</a>.</span>
+              <span>Sorry, we don&apos;t deliver to this pincode yet. <a href="/pre-order" className="underline text-primary">Try pre-ordering</a> or <a href="https://wa.me/916380687811" className="inline-flex items-center gap-1 underline text-whatsapp"><WhatsAppIcon className="size-3.5 inline" />contact us on WhatsApp</a>.</span>
             </>
           )}
         </div>

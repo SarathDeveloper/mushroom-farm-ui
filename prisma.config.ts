@@ -9,7 +9,9 @@ export default defineConfig({
     path: "prisma/migrations",
     seed: "npx tsx prisma/seed.ts",
   },
+  // Prisma CLI uses this URL for migrations/introspection (direct connection).
+  // Runtime still uses DATABASE_URL via the driver adapter in lib/prisma.ts.
   datasource: {
-    url: process.env["DATABASE_URL"],
+    url: process.env["DIRECT_URL"] ?? process.env["DATABASE_URL"],
   },
 });

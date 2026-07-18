@@ -153,6 +153,7 @@ model Product {
   weight         String   @default("200g")
   stock          Int      @default(0)
   lowStockThreshold Int   @default(10)
+  shelfLifeDays  Int      @default(3)
   harvestDate    DateTime?
   bestBefore     DateTime?
   isActive       Boolean  @default(true)
@@ -372,4 +373,25 @@ model HeroSlide {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Inquiry {
+  id               String   @id @default(uuid())
+  name             String
+  email            String?
+  phone            String
+  location         String?  // Village/Town/City
+  company          String?
+  inquiryType      String   // General, Training, Wholesale, etc.
+  preferredContact String   // WhatsApp, Phone, Email
+  message          String?  @db.Text
+  isHandled        Boolean  @default(false)
+  adminNotes       String?  @db.Text
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([inquiryType])
+  @@index([isHandled])
+  @@index([createdAt])
 }

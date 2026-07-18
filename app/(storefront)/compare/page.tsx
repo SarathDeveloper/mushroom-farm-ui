@@ -102,7 +102,7 @@ export default function ComparePage() {
           <FadeIn className="mb-16">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {mushrooms.map((m) => (
-                <div key={m.name} className="bg-card rounded-2xl border border-border overflow-hidden hover:shadow-[0_8px_24px_rgba(0,0,0,0.06)] transition-shadow">
+                <div key={m.name} className="bg-card rounded-2xl border border-border overflow-hidden hover:shadow-[0_8px_24px_rgba(0,0,0,0.06)] hover:-translate-y-1 transition-all duration-300">
                   <div className="relative h-40">
                     <SafeImage src={m.image} alt={m.name} fill sizes="(max-width: 640px) 100vw, 25vw" className="object-cover" />
                     <Badge className="absolute top-3 left-3 bg-card/90 backdrop-blur-sm text-foreground font-bold">{m.name}</Badge>
@@ -158,7 +158,12 @@ export default function ComparePage() {
 
           {/* Recommendation by Goal */}
           <FadeIn>
-            <h2 className="text-xl md:text-2xl font-bold font-heading text-foreground text-center mb-8">
+            <div className="flex items-center justify-center gap-3 mb-3">
+              <span className="hidden sm:block h-px w-8 bg-border" />
+              <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Recommendation</span>
+              <span className="hidden sm:block h-px w-8 bg-border" />
+            </div>
+            <h2 className="text-xl sm:text-2xl font-extrabold font-heading text-foreground text-center tracking-tight mb-8">
               Which Mushroom For Your Goal?
             </h2>
             <div className="max-w-3xl mx-auto space-y-4">

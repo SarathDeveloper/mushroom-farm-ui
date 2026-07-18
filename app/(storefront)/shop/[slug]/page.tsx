@@ -1,12 +1,14 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ChevronRight, Star, Truck, ShieldCheck, RotateCcw, Clock, Share2 } from "lucide-react";
+import { ChevronRight, Star, Truck, ShieldCheck, RotateCcw, Clock, Share2, Timer } from "lucide-react";
 import type { Metadata } from "next";
 import { FadeIn } from "@/components/FadeIn";
 import { ProductGallery } from "@/components/ProductGallery";
 import { ProductActions } from "@/components/ProductActions";
 import { ProductCard } from "@/components/ProductCard";
 import { PincodeChecker } from "@/components/PincodeChecker";
+import { ProductShare } from "@/components/ProductShare";
+import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
 import { prisma } from "@/lib/prisma";
 import type { Product } from "@/lib/data";
 
@@ -47,10 +49,35 @@ const storageInstructions: Record<string, string> = {
   "Value-Added": "Store in a cool, dry place away from sunlight. Check label for specific shelf life.",
 };
 
+const recipesByCategory: Record<string, { title: string; time: string; description: string }[]> = {
+  Oyster: [
+    { title: "Pepper Garlic Oyster Mushrooms", time: "20 min", description: "Toss with garlic, black pepper, curry leaves, and a little oil for a quick side dish." },
+    { title: "Oyster Mushroom Stir-Fry", time: "15 min", description: "Cook with onions, capsicum, and soy or spices until lightly crisp at the edges." },
+  ],
+  Milky: [
+    { title: "Milky Mushroom Biryani", time: "40 min", description: "Slice the firm mushrooms into a fragrant rice biryani with whole spices and herbs." },
+    { title: "Mushroom Pepper Curry", time: "30 min", description: "Simmer with onion, tomato, and freshly ground pepper for a hearty curry." },
+  ],
+  Button: [
+    { title: "Everyday Mushroom Masala", time: "25 min", description: "Sauté with onion, tomato, turmeric, and garam masala for an easy weeknight dish." },
+    { title: "Creamy Mushroom Toast", time: "15 min", description: "Cook sliced mushrooms with garlic and herbs, then serve over toasted bread." },
+  ],
+  Shiitake: [
+    { title: "Shiitake Noodle Bowl", time: "25 min", description: "Add sautéed shiitake to noodles with greens, ginger, and a light soy dressing." },
+    { title: "Crispy Shiitake Roast", time: "25 min", description: "Roast with oil and seasoning until the edges are crisp and deeply savoury." },
+  ],
+  "Value-Added": [
+    { title: "Quick Mushroom Soup", time: "15 min", description: "Prepare a warming soup using the mix according to the pack instructions." },
+    { title: "Mushroom Masala Marinade", time: "10 min", description: "Use mushroom masala powder with yogurt or oil as a flavourful marinade." },
+  ],
+};
+
 type DbProduct = Omit<Product, "category" | "image" | "gallery"> & {
   images: string[];
   category: { name: string };
   categoryId: string;
+  harvestDate: Date | null;
+  bestBefore: Date | null;
 };
 
 function mapProduct(p: DbProduct): Product {
@@ -69,7 +96,15 @@ export default async function ProductDetailPage(props: {
   
   const p = await prisma.product.findUnique({ 
     where: { slug },
-    include: { category: true }
+    include: {
+      category: true,
+      reviews: {
+        where: { isApproved: true },
+        orderBy: { createdAt: "desc" },
+        take: 6,
+        include: { user: { select: { name: true } } },
+      },
+    },
   });
   
   if (!p) notFound();
@@ -88,12 +123,14 @@ export default async function ProductDetailPage(props: {
   const related: Product[] = rawRelated.map((p: DbProduct) => mapProduct(p));
   const nutrition = nutritionData[product.category] || nutritionData["Value-Added"];
   const storage = storageInstructions[product.category] || storageInstructions["Value-Added"];
+  const recipes = recipesByCategory[product.category] || recipesByCategory["Value-Added"];
+  const reviews = p.reviews;
 
   return (
     <div className="flex flex-col min-h-screen">
       {/* Breadcrumb */}
       <div className="bg-secondary py-4">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl flex items-center gap-2 text-sm text-[hsl(var(--foreground))]">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl flex items-center gap-2 text-sm text-muted-foreground">
           <Link href="/" className="hover:text-primary">Home</Link>
           <ChevronRight size={14} />
           <Link href="/shop" className="hover:text-primary">Shop</Link>
@@ -159,8 +196,17 @@ export default async function ProductDetailPage(props: {
                 )}
               </div>
 
+              {product.shelfLifeDays != null && product.shelfLifeDays > 0 && (
+                <div className="flex items-center gap-2 mb-4 px-3 py-2 rounded-xl bg-amber-50 border border-amber-200 w-fit">
+                  <Timer size={16} className="text-amber-600 shrink-0" />
+                  <span className="text-xs font-semibold text-amber-700">
+                    Best consumed within {product.shelfLifeDays} day{product.shelfLifeDays > 1 ? "s" : ""} of delivery
+                  </span>
+                </div>
+              )}
+
               <div className="flex items-baseline gap-2 mb-6 flex-wrap">
-                <span className="text-xl md:text-2xl font-bold text-[#1A4938]">
+                <span className="text-xl md:text-2xl font-bold text-primary">
                   ₹{product.price.toLocaleString("en-IN")}
                 </span>
                 {product.compareAtPrice && (
@@ -176,13 +222,13 @@ export default async function ProductDetailPage(props: {
                 )}
               </div>
 
-              <p className="text-xs sm:text-sm text-[hsl(var(--foreground))] leading-relaxed mb-6">{product.description}</p>
+              <p className="text-xs sm:text-sm text-foreground leading-relaxed mb-6">{product.description}</p>
 
               <div className="flex flex-wrap gap-2 mb-6">
                 {product.highlights.map((h: string) => (
                   <span
                     key={h}
-                    className="inline-flex items-center rounded-full bg-[#E8F2EC] px-3 py-1 text-xs font-medium text-[#2B7A5D] border border-[#2B7A5D]/10"
+                    className="inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary border border-primary/10"
                   >
                     {h}
                   </span>
@@ -205,12 +251,13 @@ export default async function ProductDetailPage(props: {
                   href={`https://wa.me/?text=Check out ${product.name} from Sri Amman Mushroom Farms!`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-primary font-medium"
+                  className="inline-flex items-center gap-1.5 text-whatsapp hover:text-whatsapp-hover font-medium"
                 >
+                  <WhatsAppIcon className="size-3.5" />
                   WhatsApp
                 </a>
                 <span>·</span>
-                <button className="hover:text-primary font-medium">Copy Link</button>
+                <ProductShare productName={product.name} />
               </div>
 
               {/* Trust badges */}
@@ -221,7 +268,7 @@ export default async function ProductDetailPage(props: {
                 </div>
                 <div className="flex flex-col items-center text-center gap-2">
                   <ShieldCheck size={22} className="text-primary" />
-                  <span className="text-xs text-muted-foreground">100% organic certified</span>
+                  <span className="text-xs text-muted-foreground">FSSAI registered business</span>
                 </div>
                 <div className="flex flex-col items-center text-center gap-2">
                   <RotateCcw size={22} className="text-primary" />
@@ -233,10 +280,40 @@ export default async function ProductDetailPage(props: {
         </div>
       </section>
 
-      {/* Nutrition & Storage Tabs */}
-      <section className="py-16 sm:py-20 bg-secondary">
+      {/* Product information */}
+      <section className="py-20 sm:py-28 bg-secondary">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <FadeIn>
+              <div className="bg-card rounded-2xl border border-border p-6 h-full">
+                <h3 className="text-base md:text-lg font-bold text-foreground font-heading mb-4">
+                  Freshness Information
+                </h3>
+                <div className="space-y-3 text-xs">
+                  <div className="flex items-center justify-between gap-4 border-b border-border pb-3">
+                    <span className="text-muted-foreground">Harvested</span>
+                    <span className="font-semibold text-right">
+                      {p.harvestDate
+                        ? new Date(p.harvestDate).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })
+                        : "Fresh farm harvest"}
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between gap-4 border-b border-border pb-3">
+                    <span className="text-muted-foreground">Best before</span>
+                    <span className="font-semibold text-right">
+                      {p.bestBefore
+                        ? new Date(p.bestBefore).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })
+                        : "See pack label"}
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between gap-4">
+                    <span className="text-muted-foreground">Pack size</span>
+                    <span className="font-semibold">{product.weight}</span>
+                  </div>
+                </div>
+              </div>
+            </FadeIn>
+
             <FadeIn>
               <div className="bg-card rounded-2xl border border-border p-6">
                 <h3 className="text-base md:text-lg font-bold text-foreground font-heading mb-4 flex items-center gap-2">
@@ -251,7 +328,7 @@ export default async function ProductDetailPage(props: {
                     { label: "Iron", value: nutrition.iron },
                   ].map((item) => (
                     <div key={item.label} className="flex items-center justify-between py-2 border-b border-border last:border-0">
-                      <span className="text-xs text-[hsl(var(--foreground))]">{item.label}</span>
+                      <span className="text-xs text-foreground">{item.label}</span>
                       <span className="text-xs font-semibold text-foreground">{item.value}</span>
                     </div>
                   ))}
@@ -267,10 +344,10 @@ export default async function ProductDetailPage(props: {
                 <h3 className="text-base md:text-lg font-bold text-foreground font-heading mb-4 flex items-center gap-2">
                   <ShieldCheck size={18} className="text-primary" /> Storage Instructions
                 </h3>
-                <p className="text-xs text-[hsl(var(--foreground))] leading-relaxed mb-4">{storage}</p>
+                <p className="text-xs text-foreground leading-relaxed mb-4">{storage}</p>
                 <div className="bg-primary/5 rounded-xl p-4 border border-primary/10">
                   <h4 className="text-xs font-bold text-primary mb-2">Pro Tips:</h4>
-                  <ul className="space-y-1.5 text-xs text-[hsl(var(--foreground))]">
+                  <ul className="space-y-1.5 text-xs text-foreground">
                     <li>• Never wash mushrooms before storing — moisture causes spoilage</li>
                     <li>• Use a paper bag, not plastic, to allow airflow</li>
                     <li>• Bring to room temperature before cooking for best texture</li>
@@ -282,14 +359,102 @@ export default async function ProductDetailPage(props: {
         </div>
       </section>
 
+      {/* Customer reviews */}
+      <section className="py-20 sm:py-28 bg-background">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+          <FadeIn>
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-8">
+              <div>
+                <div className="flex items-center gap-3 mb-2">
+                  <span className="hidden sm:block h-px w-8 bg-border" />
+                  <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Customer feedback</span>
+                  <span className="hidden sm:block h-px w-8 bg-border" />
+                </div>
+                <h2 className="text-xl sm:text-2xl font-extrabold text-foreground font-heading tracking-tight">Reviews for {product.name}</h2>
+              </div>
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <Star size={16} className="fill-[#c4a96a] text-[#c4a96a]" />
+                <span className="font-semibold text-foreground">{product.rating.toFixed(1)}</span>
+                <span>from {product.reviewCount} reviews</span>
+              </div>
+            </div>
+          </FadeIn>
+          {reviews.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {reviews.map((review) => (
+                <FadeIn key={review.id}>
+                  <article className="h-full rounded-2xl border border-border bg-card p-5">
+                    <div className="flex items-center gap-1 mb-3" aria-label={`${review.rating} out of 5 stars`}>
+                      {[1, 2, 3, 4, 5].map((star) => (
+                        <Star
+                          key={star}
+                          size={14}
+                          className={star <= review.rating ? "fill-[#c4a96a] text-[#c4a96a]" : "fill-border text-border"}
+                        />
+                      ))}
+                    </div>
+                    <p className="text-sm leading-relaxed text-[var(--color-body)]">
+                      {review.comment || "A customer left a rating for this product."}
+                    </p>
+                    <p className="mt-4 text-xs font-semibold text-muted-foreground">
+                      {review.user.name || "Verified customer"}
+                    </p>
+                  </article>
+                </FadeIn>
+              ))}
+            </div>
+          ) : (
+            <div className="rounded-2xl border border-dashed border-border bg-secondary/50 p-8 text-center text-sm text-muted-foreground">
+              Customer reviews for this product will appear here after they are approved.
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* Recipe ideas */}
+      <section className="py-20 sm:py-28 bg-secondary">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+          <FadeIn>
+            <div className="flex items-center gap-3 mb-2">
+              <span className="hidden sm:block h-px w-8 bg-border" />
+              <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Cook something good</span>
+              <span className="hidden sm:block h-px w-8 bg-border" />
+            </div>
+            <h2 className="text-xl sm:text-2xl font-extrabold text-foreground font-heading tracking-tight mb-8">
+              Recipe ideas for {product.name}
+            </h2>
+          </FadeIn>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {recipes.map((recipe) => (
+              <FadeIn key={recipe.title}>
+                <article className="rounded-2xl border border-border bg-card p-5">
+                  <div className="flex items-start justify-between gap-4">
+                    <h3 className="font-bold text-foreground font-heading">{recipe.title}</h3>
+                    <span className="shrink-0 rounded-full bg-primary/10 px-2.5 py-1 text-xs font-semibold text-primary">
+                      {recipe.time}
+                    </span>
+                  </div>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{recipe.description}</p>
+                </article>
+              </FadeIn>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Related Products */}
       {related.length > 0 && (
         <section className="py-20 sm:py-28 bg-background">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
             <FadeIn>
-              <h2 className="text-xl md:text-2xl font-bold text-foreground mb-10 font-heading">You Might Also Like</h2>
+              <div className="flex items-center justify-center gap-3 mb-3">
+                <span className="hidden sm:block h-px w-8 bg-border" />
+                <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">More Options</span>
+                <span className="hidden sm:block h-px w-8 bg-border" />
+              </div>
+              <h2 className="text-xl sm:text-2xl font-extrabold text-foreground mb-10 font-heading tracking-tight text-center">You Might Also Like</h2>
             </FadeIn>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-5">
               {related.map((p, i) => (
                 <FadeIn key={p.id} delay={i * 0.08}>
                   {/* @ts-ignore */}

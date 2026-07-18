@@ -2,22 +2,31 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useSession } from "next-auth/react";
 import { Home, ShoppingBag, ShoppingCart, User } from "lucide-react";
 import { useCartStore } from "@/lib/store";
 import { useHasMounted } from "@/lib/useHasMounted";
 import { cn } from "@/lib/utils";
 
-const tabs = [
+const baseTabs = [
   { href: "/", icon: Home, label: "Home" },
   { href: "/shop", icon: ShoppingBag, label: "Shop" },
   { href: "/cart", icon: ShoppingCart, label: "Cart" },
-  { href: "/login", icon: User, label: "Account" },
 ];
 
 export function MobileBottomNav() {
   const pathname = usePathname();
+  const { data: session } = useSession();
   const mounted = useHasMounted();
   const cartCount = useCartStore((s) => s.totalItems());
+  const tabs = [
+    ...baseTabs,
+    {
+      href: session?.user ? "/orders" : "/login",
+      icon: User,
+      label: session?.user ? "Orders" : "Account",
+    },
+  ];
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-card/95 backdrop-blur-lg border-t border-border safe-area-bottom">

@@ -14,6 +14,7 @@ export interface Product {
   stock: number;
   description: string;
   highlights: string[];
+  shelfLifeDays?: number;
 }
 
 export const products: Product[] = [
@@ -37,7 +38,7 @@ export const products: Product[] = [
     stock: 42,
     description:
       "Delicate, fan-shaped oyster mushrooms hand-picked at the peak of freshness. Prized for their subtle, savory flavor and tender texture, perfect for stir-fries, soups, and grilling.",
-    highlights: ["Rich in protein & fiber", "Zero pesticides", "Harvested same-day", "Great meat substitute"],
+    highlights: ["Rich in protein & fiber", "Carefully grown", "Harvested same-day", "Great meat substitute"],
   },
   {
     id: "2",
@@ -62,7 +63,7 @@ export const products: Product[] = [
   {
     id: "3",
     slug: "organic-button-mushroom",
-    name: "Organic Button Mushroom",
+    name: "Button Mushroom",
     category: "Button",
     price: 120,
     weight: "200g",
@@ -374,7 +375,7 @@ export const testimonials: Testimonial[] = [
   {
     name: "Anita Krishnan",
     role: "Fitness Enthusiast",
-    review: "Organic, clean, and incredibly tasty. I order my weekly batch every Monday!",
+    review: "Clean, fresh, and incredibly tasty. I order my weekly batch every Monday!",
     rating: 4,
     avatar: "https://i.pravatar.cc/150?img=32",
   },
@@ -464,8 +465,8 @@ export function getTrainingBySlug(slug: string) {
 }
 
 export const certifications = [
-  { name: "FSSAI Certified", icon: "ShieldCheck" },
-  { name: "India Organic", icon: "Leaf" },
-  { name: "ISO 22000", icon: "BadgeCheck" },
-  { name: "Pesticide-Free Tested", icon: "FlaskConical" },
+  { name: "FSSAI Registered", icon: "ShieldCheck" },
+  { name: "Farm Quality Checked", icon: "BadgeCheck" },
+  { name: "Naturally Grown", icon: "Leaf" },
+  { name: "Carefully Packed", icon: "FlaskConical" },
 ];

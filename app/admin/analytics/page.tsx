@@ -91,26 +91,26 @@ export default async function AdminAnalyticsPage() {
       </header>
 
       {/* Summary Cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        <div className="bg-card rounded-xl border border-border p-4 shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
+        <div className="bg-card rounded-xl border border-border p-3 shadow-[0_2px_8px_rgba(0,0,0,0.04)] min-w-0">
           <p className="text-xs text-muted-foreground mb-1">Total Revenue</p>
-          <p className="text-lg md:text-xl font-bold text-foreground">
+          <p className="text-base md:text-lg font-bold text-foreground truncate">
             ₹{stats.totalRevenue.toLocaleString("en-IN")}
           </p>
         </div>
-        <div className="bg-card rounded-xl border border-border p-4 shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
+        <div className="bg-card rounded-xl border border-border p-3 shadow-[0_2px_8px_rgba(0,0,0,0.04)] min-w-0">
           <p className="text-xs text-muted-foreground mb-1">Last 30 Days</p>
-          <p className="text-lg md:text-xl font-bold text-foreground">
+          <p className="text-base md:text-lg font-bold text-foreground truncate">
             ₹{Math.round(stats.last30Revenue).toLocaleString("en-IN")}
           </p>
         </div>
-        <div className="bg-card rounded-xl border border-border p-4 shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
+        <div className="bg-card rounded-xl border border-border p-3 shadow-[0_2px_8px_rgba(0,0,0,0.04)] min-w-0">
           <p className="text-xs text-muted-foreground mb-1">Total Orders</p>
-          <p className="text-lg md:text-xl font-bold text-foreground">{stats.totalOrders}</p>
+          <p className="text-base md:text-lg font-bold text-foreground truncate">{stats.totalOrders}</p>
         </div>
-        <div className="bg-card rounded-xl border border-border p-4 shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
+        <div className="bg-card rounded-xl border border-border p-3 shadow-[0_2px_8px_rgba(0,0,0,0.04)] min-w-0">
           <p className="text-xs text-muted-foreground mb-1">Avg Order Value</p>
-          <p className="text-lg md:text-xl font-bold text-foreground">
+          <p className="text-base md:text-lg font-bold text-foreground truncate">
             ₹{stats.avgOrderValue.toLocaleString("en-IN")}
           </p>
         </div>

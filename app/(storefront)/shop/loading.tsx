@@ -11,10 +11,10 @@ export default function ShopLoading() {
               <Skeleton key={i} className="h-10 w-24 rounded-full" />
             ))}
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-5">
             {Array.from({ length: 6 }).map((_, i) => (
               <div key={i} className="rounded-2xl overflow-hidden border border-border shadow-[0_8px_24px_rgba(0,0,0,0.06)]">
-                <Skeleton className="aspect-[4/3] w-full rounded-none" />
+                <Skeleton className="aspect-[3/2] w-full rounded-none" />
                 <div className="p-5 space-y-3">
                   <Skeleton className="h-5 w-3/4" />
                   <Skeleton className="h-4 w-full" />

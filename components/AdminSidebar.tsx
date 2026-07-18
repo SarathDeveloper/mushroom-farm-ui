@@ -29,6 +29,7 @@ const links = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
   { href: "/admin/analytics", label: "Analytics", icon: BarChart3 },
   { href: "/admin/orders", label: "Orders", icon: ShoppingBag },
+  { href: "/admin/inquiries", label: "Inquiries", icon: MessageSquare },
   { href: "/admin/products", label: "Products", icon: Package },
   { href: "/admin/categories", label: "Categories", icon: FolderTree },
   { href: "/admin/customers", label: "Customers", icon: Users },
@@ -104,16 +105,29 @@ export function AdminSidebar() {
     <>
       {/* Mobile top bar */}
       <div className="sticky top-0 z-40 flex items-center justify-between bg-[var(--color-primary-dark)] px-4 py-3 lg:hidden">
-        <Link href="/" className="flex items-center gap-2">
-          <Image
-            src="/gallery/brand-logo.png"
-            alt="Sri Amman Mushroom Farms"
-            width={32}
-            height={32}
-            className="h-8 w-8 rounded-full object-cover ring-1 ring-white/20"
-          />
-          <span className="text-base font-bold tracking-tight font-heading text-white">
-            Sri Amman Mushroom Farms <span className="text-secondary">Admin</span>
+        <Link href="/" className="flex items-center gap-3 group">
+          <div className="relative h-8 w-8 shrink-0 overflow-hidden rounded-full ring-2 ring-white/10 transition-transform duration-300 group-hover:scale-105">
+            <Image
+              src="/gallery/brand-logo.png"
+              alt="Sri Amman Mushroom Farms"
+              fill
+              sizes="32px"
+              className="object-cover"
+            />
+          </div>
+          <span className="leading-none flex flex-col justify-center">
+            <span className="block font-display text-[13px] font-extrabold tracking-[0.01em] text-white">
+              Sri Amman
+            </span>
+            <span className="block font-sans text-[8px] font-semibold tracking-[0.16em] uppercase text-white/60 mt-0.5">
+              Mushroom Farms
+            </span>
+            <svg className="w-5 h-1 text-white/30 mt-1 transition-all duration-300 group-hover:w-8 group-hover:text-[#2B7A5D]" viewBox="0 0 32 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M1 4.5C8 2 24 1.5 31 3.5" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
+            </svg>
+          </span>
+          <span className="ml-1.5 px-1.5 py-0.5 rounded text-[8px] font-extrabold tracking-wider uppercase bg-[#2B7A5D] text-white/95 ring-1 ring-white/10">
+            Admin
           </span>
         </Link>
         <button
@@ -141,16 +155,29 @@ export function AdminSidebar() {
         )}
       >
         <div className="p-5 border-b border-white/10 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2.5">
-            <Image
-              src="/gallery/brand-logo.png"
-              alt="Sri Amman Mushroom Farms"
-              width={36}
-              height={36}
-              className="h-9 w-9 rounded-full object-cover ring-1 ring-white/20"
-            />
-            <span className="text-base font-bold tracking-tight font-heading">
-              Sri Amman Mushroom Farms <span className="text-secondary">Admin</span>
+          <Link href="/" className="flex items-center gap-3 group">
+            <div className="relative h-9 w-9 shrink-0 overflow-hidden rounded-full ring-2 ring-white/10 transition-transform duration-300 group-hover:scale-105">
+              <Image
+                src="/gallery/brand-logo.png"
+                alt="Sri Amman Mushroom Farms"
+                fill
+                sizes="36px"
+                className="object-cover"
+              />
+            </div>
+            <span className="leading-none flex flex-col justify-center">
+              <span className="block font-display text-sm font-extrabold tracking-[0.01em] text-white">
+                Sri Amman
+              </span>
+              <span className="block font-sans text-[8px] font-semibold tracking-[0.18em] uppercase text-white/60 mt-0.5">
+                Mushroom Farms
+              </span>
+              <svg className="w-6 h-1.5 text-white/30 mt-1 transition-all duration-300 group-hover:w-9 group-hover:text-[#2B7A5D]" viewBox="0 0 32 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 4.5C8 2 24 1.5 31 3.5" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
+              </svg>
+            </span>
+            <span className="ml-1.5 px-1.5 py-0.5 rounded text-[8px] font-extrabold tracking-wider uppercase bg-[#2B7A5D] text-white/95 ring-1 ring-white/10">
+              Admin
             </span>
           </Link>
           <button
@@ -167,16 +194,29 @@ export function AdminSidebar() {
       {/* Desktop sidebar */}
       <aside className="hidden lg:flex lg:sticky lg:top-0 lg:h-screen w-64 shrink-0 bg-[var(--color-primary-dark)] text-white flex-col">
         <div className="p-6 border-b border-white/10">
-          <Link href="/" className="flex items-center gap-2.5">
-            <Image
-              src="/gallery/brand-logo.png"
-              alt="Sri Amman Mushroom Farms"
-              width={40}
-              height={40}
-              className="h-10 w-10 rounded-full object-cover ring-1 ring-white/20"
-            />
-            <span className="text-lg font-bold tracking-tight font-heading">
-              Sri Amman Mushroom Farms <span className="text-secondary">Admin</span>
+          <Link href="/" className="flex items-center gap-3 group">
+            <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full ring-2 ring-white/10 transition-transform duration-300 group-hover:scale-105">
+              <Image
+                src="/gallery/brand-logo.png"
+                alt="Sri Amman Mushroom Farms"
+                fill
+                sizes="40px"
+                className="object-cover"
+              />
+            </div>
+            <span className="leading-none flex flex-col justify-center">
+              <span className="block font-display text-base font-extrabold tracking-[0.01em] text-white">
+                Sri Amman
+              </span>
+              <span className="block font-sans text-[9px] font-semibold tracking-[0.18em] uppercase text-white/60 mt-0.5">
+                Mushroom Farms
+              </span>
+              <svg className="w-7 h-1.5 text-white/30 mt-1 transition-all duration-300 group-hover:w-11 group-hover:text-[#2B7A5D]" viewBox="0 0 32 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 4.5C8 2 24 1.5 31 3.5" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
+              </svg>
+            </span>
+            <span className="ml-1.5 px-1.5 py-0.5 rounded text-[8px] font-extrabold tracking-wider uppercase bg-[#2B7A5D] text-white/95 ring-1 ring-white/10">
+              Admin
             </span>
           </Link>
         </div>
