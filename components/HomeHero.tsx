@@ -139,7 +139,7 @@ export function HomeHero({ slides }: { slides?: HeroSlideData[] }) {
             return (
               <div
                 key={i}
-                className="relative min-h-[30rem] h-[min(70svh,38rem)] sm:h-[min(55svh,36rem)] flex-[0_0_100%] flex flex-col"
+                className="relative h-screen flex-[0_0_100%] flex flex-col"
               >
                 {/* Background: video or image with Ken Burns */}
                 <div className="absolute inset-0 overflow-hidden">
