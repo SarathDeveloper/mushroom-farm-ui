@@ -1,25 +1,39 @@
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { ArrowRight, ShieldCheck, Clock, Truck, Send } from "lucide-react";
 import { FadeIn } from "@/components/FadeIn";
 import { HomeHero, type HeroSlideData } from "@/components/HomeHero";
-import { FarmToTable } from "@/components/FarmToTable";
-import { AboutPreview } from "@/components/AboutPreview";
-import { PressAndRecognition } from "@/components/PressAndRecognition";
-import { SuccessStories } from "@/components/SuccessStories";
-import { HomeContactSection } from "@/components/HomeContactSection";
 import { ProductCard } from "@/components/ProductCard";
-import { Certifications } from "@/components/Certifications";
-import { NewsletterForm } from "@/components/NewsletterForm";
 import { SectionDivider } from "@/components/SectionDivider";
 import { ShopByCategory } from "@/components/ShopByCategory";
+import { DeliverySchedule } from "@/components/DeliverySchedule";
+import { AboutPreview } from "@/components/AboutPreview";
+import { PressAndRecognition } from "@/components/PressAndRecognition";
 import { TrainingJourneySection } from "@/components/TrainingJourneySection";
 import { TrainingOrderFlowSection } from "@/components/TrainingOrderFlowSection";
-import { PreOrderSection } from "@/components/PreOrderSection";
-import { DeliverySchedule } from "@/components/DeliverySchedule";
+import { Certifications } from "@/components/Certifications";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { prisma } from "@/lib/prisma";
 import { type Product } from "@/lib/data";
+
+export const revalidate = 60;
+
+const FarmToTable = dynamic(() =>
+  import("@/components/FarmToTable").then((m) => ({ default: m.FarmToTable })),
+);
+const SuccessStories = dynamic(() =>
+  import("@/components/SuccessStories").then((m) => ({ default: m.SuccessStories })),
+);
+const HomeContactSection = dynamic(() =>
+  import("@/components/HomeContactSection").then((m) => ({ default: m.HomeContactSection })),
+);
+const PreOrderSection = dynamic(() =>
+  import("@/components/PreOrderSection").then((m) => ({ default: m.PreOrderSection })),
+);
+const NewsletterForm = dynamic(() =>
+  import("@/components/NewsletterForm").then((m) => ({ default: m.NewsletterForm })),
+);
 
 export default async function Home() {
   const [dbProducts, dbValueAdded, dbSlides] = await Promise.all([

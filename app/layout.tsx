@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { Playfair_Display } from "next/font/google";
 import "./globals.css";
-import Providers from "@/components/Providers";
 import { formatCurrency } from "@/lib/utils";
 
 const effra = localFont({
@@ -27,6 +26,7 @@ const playfair = Playfair_Display({
   subsets: ["latin"],
   weight: ["400", "700", "800"],
   variable: "--font-display",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -89,9 +89,7 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col font-sans">
-        <Providers>
-          {children}
-        </Providers>
+        {children}
       </body>
     </html>
   );

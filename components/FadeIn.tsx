@@ -1,46 +1,63 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useEffect, useRef, useState } from "react";
 
-export function FadeIn({ children, delay = 0, direction = "up", className = "", fullWidth = false }: { children: ReactNode, delay?: number, direction?: "up" | "down" | "left" | "right" | "none", className?: string, fullWidth?: boolean }) {
-  const [ready, setReady] = useState(false);
+const initialTransform: Record<string, string> = {
+  up: "translate3d(0, 40px, 0)",
+  down: "translate3d(0, -40px, 0)",
+  left: "translate3d(40px, 0, 0)",
+  right: "translate3d(-40px, 0, 0)",
+  none: "none",
+};
+
+export function FadeIn({
+  children,
+  delay = 0,
+  direction = "up",
+  className = "",
+  fullWidth = false,
+}: {
+  children: ReactNode;
+  delay?: number;
+  direction?: "up" | "down" | "left" | "right" | "none";
+  className?: string;
+  fullWidth?: boolean;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    setReady(true);
-  }, []);
+    const el = ref.current;
+    if (!el) return;
 
-  const variants = {
-    hidden: { 
-      opacity: 0, 
-      y: direction === "up" ? 40 : direction === "down" ? -40 : 0,
-      x: direction === "left" ? 40 : direction === "right" ? -40 : 0
-    },
-    visible: { 
-      opacity: 1, 
-      y: 0, 
-      x: 0,
-      transition: { duration: 0.7, delay, ease: [0.21, 0.47, 0.32, 0.98] as const } 
-    }
-  };
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          observer.unobserve(el);
+        }
+      },
+      { rootMargin: "-100px" },
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   const combinedClassName = `${fullWidth ? "w-full" : ""} ${className}`.trim();
 
-  // Render a plain div on the server / first paint so framer-motion
-  // styles (opacity: 0, transforms) don't cause hydration mismatches.
-  if (!ready) {
-    return <div className={combinedClassName}>{children}</div>;
-  }
-
   return (
-    <motion.div
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: "-100px" }}
-      variants={direction === "none" ? { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { duration: 0.7, delay } } } : variants}
+    <div
+      ref={ref}
       className={combinedClassName}
+      style={{
+        opacity: visible ? 1 : 0,
+        transform: visible ? "none" : initialTransform[direction],
+        transition: `opacity 0.7s cubic-bezier(0.21,0.47,0.32,0.98) ${delay}s, transform 0.7s cubic-bezier(0.21,0.47,0.32,0.98) ${delay}s`,
+        willChange: visible ? "auto" : "opacity, transform",
+      }}
     >
       {children}
-    </motion.div>
+    </div>
   );
 }

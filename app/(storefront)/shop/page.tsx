@@ -9,6 +9,8 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import type { Product } from "@/lib/data";
 
+export const revalidate = 60;
+
 const PRODUCTS_PER_PAGE = 12;
 
 type DbProduct = Omit<Product, "category" | "image" | "gallery"> & {

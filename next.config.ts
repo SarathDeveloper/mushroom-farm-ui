@@ -32,6 +32,14 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   compress: true,
   reactStrictMode: true,
+  experimental: {
+    optimizePackageImports: [
+      "lucide-react",
+      "recharts",
+      "framer-motion",
+      "embla-carousel-react",
+    ],
+  },
   images: {
     remotePatterns: [
       {
