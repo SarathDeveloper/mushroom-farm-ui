@@ -174,11 +174,11 @@ export function ProductForm({
       <header className="mb-8">
         <Link
           href="/admin/products"
-          className="inline-flex items-center gap-1.5 text-sm text-[var(--color-body)] hover:text-primary mb-4"
+          className="inline-flex items-center gap-1.5 text-base text-[var(--color-body)] hover:text-primary mb-4"
         >
           <ArrowLeft size={16} /> Back to products
         </Link>
-        <h1 className="text-2xl md:text-3xl font-bold font-heading text-foreground">
+        <h1 className="text-3xl md:text-4xl font-bold font-heading text-foreground">
           {mode === "edit" ? "Edit Product" : "Add New Product"}
         </h1>
       </header>
@@ -187,7 +187,7 @@ export function ProductForm({
         <div className="space-y-8">
         {/* Basic Info */}
         <section className="bg-card rounded-2xl border border-border shadow-[0_4px_12px_rgba(0,0,0,0.04)] p-6 space-y-5">
-          <h2 className="font-heading font-semibold text-foreground text-lg">
+          <h2 className="font-heading font-semibold text-foreground text-xl">
             Basic Information
           </h2>
 
@@ -200,7 +200,7 @@ export function ProductForm({
                 {...register("name")}
               />
               {errors.name && (
-                <p className="text-xs text-destructive">{errors.name.message}</p>
+                <p className="text-sm text-destructive">{errors.name.message}</p>
               )}
             </div>
 
@@ -212,7 +212,7 @@ export function ProductForm({
                 {...register("slug")}
               />
               {errors.slug && (
-                <p className="text-xs text-destructive">{errors.slug.message}</p>
+                <p className="text-sm text-destructive">{errors.slug.message}</p>
               )}
             </div>
           </div>
@@ -226,7 +226,7 @@ export function ProductForm({
               {...register("description")}
             />
             {errors.description && (
-              <p className="text-xs text-destructive">
+              <p className="text-sm text-destructive">
                 {errors.description.message}
               </p>
             )}
@@ -235,7 +235,7 @@ export function ProductForm({
 
         {/* Pricing & Inventory */}
         <section className="bg-card rounded-2xl border border-border shadow-[0_4px_12px_rgba(0,0,0,0.04)] p-6 space-y-5">
-          <h2 className="font-heading font-semibold text-foreground text-lg">
+          <h2 className="font-heading font-semibold text-foreground text-xl">
             Pricing & Inventory
           </h2>
 
@@ -250,7 +250,7 @@ export function ProductForm({
                 {...register("price")}
               />
               {errors.price && (
-                <p className="text-xs text-destructive">
+                <p className="text-sm text-destructive">
                   {errors.price.message}
                 </p>
               )}
@@ -276,7 +276,7 @@ export function ProductForm({
                 {...register("weight")}
               />
               {errors.weight && (
-                <p className="text-xs text-destructive">
+                <p className="text-sm text-destructive">
                   {errors.weight.message}
                 </p>
               )}
@@ -291,7 +291,7 @@ export function ProductForm({
                 {...register("stock")}
               />
               {errors.stock && (
-                <p className="text-xs text-destructive">
+                <p className="text-sm text-destructive">
                   {errors.stock.message}
                 </p>
               )}
@@ -308,7 +308,7 @@ export function ProductForm({
                 placeholder="10"
                 {...register("lowStockThreshold")}
               />
-              <p className="text-xs text-muted-foreground">Alert when stock falls below this</p>
+              <p className="text-sm text-muted-foreground">Alert when stock falls below this</p>
             </div>
 
             <div className="space-y-2">
@@ -350,7 +350,7 @@ export function ProductForm({
 
         {/* Organization */}
         <section className="bg-card rounded-2xl border border-border shadow-[0_4px_12px_rgba(0,0,0,0.04)] p-6 space-y-5">
-          <h2 className="font-heading font-semibold text-foreground text-lg">
+          <h2 className="font-heading font-semibold text-foreground text-xl">
             Organization
           </h2>
 
@@ -360,7 +360,7 @@ export function ProductForm({
               <div className="flex gap-2">
                 <select
                   id="categoryId"
-                  className="flex-1 h-11 rounded-xl border border-border bg-card px-3.5 text-sm outline-none focus-visible:border-primary focus-visible:ring-3 focus-visible:ring-primary/20"
+                  className="flex-1 h-11 rounded-xl border border-border bg-card px-3.5 text-base outline-none focus-visible:border-primary focus-visible:ring-3 focus-visible:ring-primary/20"
                   {...register("categoryId")}
                 >
                   <option value="">Select a category</option>
@@ -381,7 +381,7 @@ export function ProductForm({
                 </Button>
               </div>
               {errors.categoryId && (
-                <p className="text-xs text-destructive">
+                <p className="text-sm text-destructive">
                   {errors.categoryId.message}
                 </p>
               )}
@@ -418,10 +418,10 @@ export function ProductForm({
         {/* Highlights */}
         <section className="bg-card rounded-2xl border border-border shadow-[0_4px_12px_rgba(0,0,0,0.04)] p-6 space-y-5">
           <div>
-            <h2 className="font-heading font-semibold text-foreground text-lg">
+            <h2 className="font-heading font-semibold text-foreground text-xl">
               Highlights
             </h2>
-            <p className="text-sm text-muted-foreground mt-1">
+            <p className="text-base text-muted-foreground mt-1">
               Shown as green tags on the storefront product card.
             </p>
           </div>
@@ -431,7 +431,7 @@ export function ProductForm({
               {highlights.map((h, i) => (
                 <span
                   key={i}
-                  className="inline-flex items-center gap-1.5 rounded-full bg-[#E8F2EC] px-3 py-1.5 text-sm font-medium text-[#2B7A5D] border border-[#2B7A5D]/10"
+                  className="inline-flex items-center gap-1.5 rounded-full bg-[#E8F2EC] px-3 py-1.5 text-base font-medium text-[#2B7A5D] border border-[#2B7A5D]/10"
                 >
                   {h}
                   <button
@@ -463,7 +463,7 @@ export function ProductForm({
             </Button>
           </div>
           {errors.highlights && (
-            <p className="text-xs text-destructive">
+            <p className="text-sm text-destructive">
               {errors.highlights.message}
             </p>
           )}
@@ -471,10 +471,10 @@ export function ProductForm({
 
         {/* Images */}
         <section className="bg-card rounded-2xl border border-border shadow-[0_4px_12px_rgba(0,0,0,0.04)] p-6 space-y-5">
-          <h2 className="font-heading font-semibold text-foreground text-lg">
+          <h2 className="font-heading font-semibold text-foreground text-xl">
             Product Images *
           </h2>
-          <p className="text-sm text-[var(--color-body)]">
+          <p className="text-base text-[var(--color-body)]">
             Images are uploaded to Cloudinary and the public ID is saved in the
             database. The storefront and admin panels both load them from
             Cloudinary. The first image is the main display image.
@@ -492,7 +492,7 @@ export function ProductForm({
             )}
           />
           {errors.images && (
-            <p className="text-xs text-destructive">
+            <p className="text-sm text-destructive">
               {errors.images.message}
             </p>
           )}
@@ -520,7 +520,7 @@ export function ProductForm({
 
         {/* Live storefront card preview */}
         <aside className="xl:sticky xl:top-6 space-y-3">
-          <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+          <p className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">
             Storefront preview
           </p>
           <div className="flex flex-col bg-card rounded-2xl overflow-hidden border border-border/80 shadow-[0_8px_24px_rgba(0,0,0,0.06)]">
@@ -534,7 +534,7 @@ export function ProductForm({
               />
               <span
                 className={cn(
-                  "absolute top-3 right-3 px-2.5 py-1 rounded-full text-[11px] font-semibold text-white shadow-sm",
+                  "absolute top-3 right-3 px-2.5 py-1 rounded-full text-sm font-semibold text-white shadow-sm",
                   previewStockTone === "in" && "bg-[#2B7A5D]",
                   previewStockTone === "low" && "bg-[#E5B06D]",
                   previewStockTone === "out" && "bg-[#E56D6D]"
@@ -545,17 +545,17 @@ export function ProductForm({
             </div>
             <div className="p-5 flex flex-col gap-3">
               <div className="flex items-start justify-between gap-3">
-                <h3 className="font-bold text-[15px] leading-snug text-foreground line-clamp-2 font-heading">
+                <h3 className="font-bold text-lg leading-snug text-foreground line-clamp-2 font-heading">
                   {name || "Product name"}
                 </h3>
                 <div className="flex items-center gap-1 shrink-0 pt-0.5">
                   <Star size={13} className="fill-[#c4a96a] text-[#c4a96a]" />
-                  <span className="text-xs font-medium text-muted-foreground">
+                  <span className="text-sm font-medium text-muted-foreground">
                     4.8
                   </span>
                 </div>
               </div>
-              <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3">
+              <p className="text-base text-muted-foreground leading-relaxed line-clamp-3">
                 {description || "Product description will appear here."}
               </p>
               {highlights.length > 0 && (
@@ -563,7 +563,7 @@ export function ProductForm({
                   {highlights.slice(0, 4).map((tag) => (
                     <span
                       key={tag}
-                      className="inline-flex items-center rounded-full bg-[#E8F2EC] px-2.5 py-0.5 text-[11px] font-medium text-[#2B7A5D] border border-[#2B7A5D]/10"
+                      className="inline-flex items-center rounded-full bg-[#E8F2EC] px-2.5 py-0.5 text-sm font-medium text-[#2B7A5D] border border-[#2B7A5D]/10"
                     >
                       {tag}
                     </span>
@@ -571,23 +571,23 @@ export function ProductForm({
                 </div>
               )}
               <div className="flex items-baseline gap-1.5">
-                <span className="text-xl font-extrabold text-[#1A4938] tabular-nums">
+                <span className="text-2xl font-extrabold text-[#1A4938] tabular-nums">
                   ₹{(Number(price) || 0).toLocaleString("en-IN")}
                 </span>
                 {compareAtPrice ? (
-                  <span className="text-xs text-muted-foreground line-through">
+                  <span className="text-sm text-muted-foreground line-through">
                     ₹{Number(compareAtPrice).toLocaleString("en-IN")}
                   </span>
                 ) : null}
-                <span className="text-sm text-muted-foreground">
+                <span className="text-base text-muted-foreground">
                   per {weight || "unit"}
                 </span>
               </div>
               <div className="flex items-center gap-2.5 pt-1">
-                <div className="flex items-center rounded-lg border border-border bg-secondary/60 h-10 shrink-0 px-2.5 text-xs text-muted-foreground">
+                <div className="flex items-center rounded-lg border border-border bg-secondary/60 h-10 shrink-0 px-2.5 text-sm text-muted-foreground">
                   − 1 + · {weight || "kg"}
                 </div>
-                <div className="flex-1 h-10 rounded-lg bg-[#1A4938] text-white text-sm font-semibold flex items-center justify-center gap-1.5">
+                <div className="flex-1 h-10 rounded-lg bg-[#1A4938] text-white text-base font-semibold flex items-center justify-center gap-1.5">
                   <ShoppingCart size={14} />
                   Add to Cart
                 </div>

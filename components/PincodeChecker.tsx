@@ -84,7 +84,7 @@ export function PincodeChecker({ compact = false }: PincodeCheckerProps) {
   return (
     <div className={compact ? "" : "rounded-2xl border border-border bg-card p-5"}>
       {!compact && (
-        <h3 className="font-bold text-foreground text-sm mb-3 flex items-center gap-2">
+        <h3 className="font-bold text-foreground text-base mb-3 flex items-center gap-2">
           <MapPin size={16} className="text-primary" /> Check Delivery Availability
         </h3>
       )}
@@ -110,7 +110,7 @@ export function PincodeChecker({ compact = false }: PincodeCheckerProps) {
         </Button>
       </div>
       {result && (
-        <div className={`mt-3 flex items-start gap-2 text-sm ${result.available ? "text-[var(--color-success)]" : "text-[var(--color-error)]"}`}>
+        <div className={`mt-3 flex items-start gap-2 text-base ${result.available ? "text-[var(--color-success)]" : "text-[var(--color-error)]"}`}>
           {result.available ? (
             <>
               <Check size={16} className="shrink-0 mt-0.5" />

@@ -76,21 +76,21 @@ export function HomeContactSection() {
   };
 
   return (
-    <section className="py-20 sm:py-28 bg-secondary grain-overlay">
+    <section className="py-10 sm:py-14 bg-secondary grain-overlay">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
         {/* Section header */}
         <FadeIn className="text-center mb-10 sm:mb-14">
           <div className="flex items-center justify-center gap-3 mb-4">
             <span className="h-px w-6 sm:w-8 bg-border" />
-            <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">
+            <span className="text-sm font-bold uppercase tracking-[0.2em] text-primary">
               Talk to Us
             </span>
             <span className="h-px w-6 sm:w-8 bg-border" />
           </div>
-          <h2 className="text-xl sm:text-2xl font-extrabold text-foreground tracking-tight font-heading">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-foreground tracking-tight font-heading">
             Contact Us
           </h2>
-          <p className="text-[var(--color-body)] max-w-lg mx-auto mt-3 text-sm sm:text-base leading-relaxed">
+          <p className="text-[var(--color-body)] max-w-lg mx-auto mt-3 text-base sm:text-lg leading-relaxed">
             Have questions about mushrooms, training, or visiting our farm? Write to us and we will reply.
           </p>
         </FadeIn>
@@ -101,10 +101,10 @@ export function HomeContactSection() {
           <FadeIn direction="right" className="space-y-6">
             {/* Reach us directly */}
             <div className="rounded-2xl border border-border bg-card p-6 sm:p-8">
-              <h3 className="text-lg font-bold font-heading text-foreground mb-1">
+              <h3 className="text-xl font-bold font-heading text-foreground mb-1">
                   Call or Message Us
                 </h3>
-                <p className="text-sm text-muted-foreground mb-5">
+                <p className="text-base text-muted-foreground mb-5">
                   Want to talk now? Pick how you want to reach us.
                 </p>
 
@@ -113,7 +113,7 @@ export function HomeContactSection() {
                   href={`https://wa.me/${WHATSAPP_NUMBER}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full bg-whatsapp px-5 py-2.5 text-sm font-semibold text-white hover:bg-whatsapp-hover transition-colors"
+                  className="inline-flex items-center gap-2 rounded-full bg-whatsapp px-5 py-2.5 text-base font-semibold text-white hover:bg-whatsapp-hover transition-colors"
                 >
                   <WhatsAppIcon className="size-4" />
                   WhatsApp
@@ -121,7 +121,7 @@ export function HomeContactSection() {
 
                 <a
                   href={`tel:${PHONE.replace(/\s/g, "")}`}
-                  className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-5 py-2.5 text-sm font-medium text-foreground hover:bg-secondary transition-colors"
+                  className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-5 py-2.5 text-base font-medium text-foreground hover:bg-secondary transition-colors"
                 >
                   <Phone size={15} />
                   {PHONE}
@@ -129,13 +129,13 @@ export function HomeContactSection() {
 
                 <a
                   href={`mailto:${EMAIL}`}
-                  className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-5 py-2.5 text-sm font-medium text-foreground hover:bg-secondary transition-colors"
+                  className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-5 py-2.5 text-base font-medium text-foreground hover:bg-secondary transition-colors"
                 >
                   <Mail size={15} />
                   {EMAIL}
                 </a>
               </div>
-              <div className="flex flex-wrap gap-x-4 gap-y-1 mt-3 text-sm text-muted-foreground">
+              <div className="flex flex-wrap gap-x-4 gap-y-1 mt-3 text-base text-muted-foreground">
                 {ADDITIONAL_PHONES.map((phone) => (
                   <a key={phone} href={`tel:${phone.replace(/\s/g, "")}`} className="hover:text-foreground transition-colors">
                     {phone}
@@ -143,7 +143,7 @@ export function HomeContactSection() {
                 ))}
               </div>
 
-                <p className="text-xs text-muted-foreground mt-4">
+                <p className="text-sm text-muted-foreground mt-4">
                   We usually reply within 24 hours
                 </p>
             </div>
@@ -151,14 +151,14 @@ export function HomeContactSection() {
             {/* Visit us + map */}
             <div className="rounded-2xl border border-border bg-card p-6 sm:p-8">
               <div className="flex items-start justify-between mb-4">
-                  <h3 className="text-lg font-bold font-heading text-foreground">
+                  <h3 className="text-xl font-bold font-heading text-foreground">
                     Come Visit Us
                   </h3>
                   <a
                     href={MAPS_LINK}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline"
+                    className="inline-flex items-center gap-1.5 text-base font-medium text-primary hover:underline"
                   >
                     See on Google Maps
                     <ExternalLink size={14} />
@@ -168,10 +168,10 @@ export function HomeContactSection() {
               <div className="flex items-start gap-2.5 mb-5">
                 <MapPin size={18} className="text-primary shrink-0 mt-0.5" />
                 <div>
-                  <p className="font-semibold text-sm text-foreground">
+                  <p className="font-semibold text-base text-foreground">
                     Sari Amman Oyster Mushroom Farm
                   </p>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-base text-muted-foreground">
                     {ADDRESS_LINE.replace("Sari Amman Oyster Mushroom Farm, ", "")}
                   </p>
                 </div>
@@ -190,7 +190,7 @@ export function HomeContactSection() {
 
               <Link
                 href="/contact"
-                className="group inline-flex items-center gap-2 text-sm font-semibold text-primary hover:underline mt-4"
+                className="group inline-flex items-center gap-2 text-base font-semibold text-primary hover:underline mt-4"
               >
                 See All Contact Info
                 <ArrowRight size={16} className="group-hover:translate-x-0.5 transition-transform" />
@@ -205,10 +205,10 @@ export function HomeContactSection() {
                 <div className="w-14 h-14 rounded-full bg-[var(--color-success)]/15 text-[var(--color-success)] flex items-center justify-center mb-5">
                   <MailCheck size={28} />
                 </div>
-                <h3 className="text-xl font-bold font-heading text-foreground mb-2">
+                <h3 className="text-2xl font-bold font-heading text-foreground mb-2">
                     Message Sent!
                   </h3>
-                  <p className="text-[var(--color-body)] max-w-sm mb-5 text-sm">
+                  <p className="text-[var(--color-body)] max-w-sm mb-5 text-base">
                     Thank you! We will reply to you within one day.
                   </p>
                 <Button
@@ -228,10 +228,10 @@ export function HomeContactSection() {
                   className="bg-card rounded-2xl border border-border p-6 sm:p-8 space-y-4"
                 >
                   <div>
-                    <h3 className="text-lg font-bold font-heading text-foreground">
+                    <h3 className="text-xl font-bold font-heading text-foreground">
                       Send Us a Message
                     </h3>
-                    <p className="text-sm text-muted-foreground mt-0.5">
+                    <p className="text-base text-muted-foreground mt-0.5">
                       Tell us what you need and we will reply within 24 hours.
                     </p>
                   </div>
@@ -282,7 +282,7 @@ export function HomeContactSection() {
                     required
                     value={form.inquiryType}
                     onChange={(e) => set("inquiryType", e.target.value)}
-                    className="h-11 w-full rounded-xl border border-border bg-card px-3.5 py-2 text-sm outline-none focus-visible:border-primary focus-visible:ring-3 focus-visible:ring-primary/20 text-foreground appearance-none"
+                    className="h-11 w-full rounded-xl border border-border bg-card px-3.5 py-2 text-base outline-none focus-visible:border-primary focus-visible:ring-3 focus-visible:ring-primary/20 text-foreground appearance-none"
                     style={{
                       backgroundImage:
                         "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%235c6370' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E\")",
@@ -313,7 +313,7 @@ export function HomeContactSection() {
                           key={method}
                           type="button"
                           onClick={() => set("preferredContact", method)}
-                          className={`rounded-full px-4 py-1.5 text-sm font-medium border transition-colors ${
+                          className={`rounded-full px-4 py-1.5 text-base font-medium border transition-colors ${
                             active
                               ? "bg-primary text-white border-primary"
                               : "bg-card text-foreground border-border hover:bg-secondary"
@@ -335,7 +335,7 @@ export function HomeContactSection() {
                       onChange={(e) => set("message", e.target.value)}
                       placeholder="Tell us more about what you need..."
                     rows={3}
-                    className="w-full rounded-xl border border-border bg-card px-3.5 py-2.5 text-sm outline-none focus-visible:border-primary focus-visible:ring-3 focus-visible:ring-primary/20 resize-none"
+                    className="w-full rounded-xl border border-border bg-card px-3.5 py-2.5 text-base outline-none focus-visible:border-primary focus-visible:ring-3 focus-visible:ring-primary/20 resize-none"
                   />
                 </div>
 

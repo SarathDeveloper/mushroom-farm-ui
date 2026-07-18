@@ -36,7 +36,7 @@ export function ProductActions({ product }: { product: Product }) {
           >
             <Plus size={16} />
           </button>
-          <span className="pr-3 text-xs text-muted-foreground border-l border-border ml-0.5 pl-2.5">
+          <span className="pr-3 text-sm text-muted-foreground border-l border-border ml-0.5 pl-2.5">
             {product.weight}
           </span>
         </div>

@@ -130,7 +130,7 @@ export default async function ProductDetailPage(props: {
     <div className="flex flex-col min-h-screen">
       {/* Breadcrumb */}
       <div className="bg-secondary py-4">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl flex items-center gap-2 text-sm text-muted-foreground min-w-0">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl flex items-center gap-2 text-base text-muted-foreground min-w-0">
           <Link href="/" className="hover:text-primary shrink-0">Home</Link>
           <ChevronRight size={14} className="shrink-0" />
           <Link href="/shop" className="hover:text-primary shrink-0">Shop</Link>
@@ -140,7 +140,7 @@ export default async function ProductDetailPage(props: {
       </div>
 
       {/* Product Detail */}
-      <section className="py-20 sm:py-28">
+      <section className="py-10 sm:py-14">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             <FadeIn direction="right">
@@ -149,14 +149,14 @@ export default async function ProductDetailPage(props: {
 
             <FadeIn direction="left" className="flex flex-col">
               {product.tag && (
-                <span className="inline-block w-fit px-3 py-1 rounded-full bg-accent text-white text-xs font-bold uppercase tracking-wide mb-4">
+                <span className="inline-block w-fit px-3 py-1 rounded-full bg-accent text-white text-sm font-bold uppercase tracking-wide mb-4">
                   {product.tag}
                 </span>
               )}
-              <span className="text-sm font-semibold text-primary uppercase tracking-wider mb-2">
+              <span className="text-base font-semibold text-primary uppercase tracking-wider mb-2">
                 {product.category} Mushroom
               </span>
-              <h1 className="text-xl sm:text-2xl font-bold font-heading text-foreground mb-3">
+              <h1 className="text-2xl sm:text-3xl font-bold font-heading text-foreground mb-3">
                 {product.name}
               </h1>
               <div className="flex items-center gap-2 mb-4">
@@ -169,7 +169,7 @@ export default async function ProductDetailPage(props: {
                     />
                   ))}
                 </div>
-                <span className="text-sm text-muted-foreground">{product.rating} ({product.reviewCount} reviews)</span>
+                <span className="text-base text-muted-foreground">{product.rating} ({product.reviewCount} reviews)</span>
               </div>
 
               {/* Stock badge */}
@@ -177,10 +177,10 @@ export default async function ProductDetailPage(props: {
                 <span
                   className={
                     product.stock <= 0
-                      ? "inline-flex px-2.5 py-1 rounded-full bg-[hsl(var(--destructive))] text-white text-xs font-semibold"
+                      ? "inline-flex px-2.5 py-1 rounded-full bg-[hsl(var(--destructive))] text-white text-sm font-semibold"
                       : product.stock <= 20
-                        ? "inline-flex px-2.5 py-1 rounded-full bg-[hsl(var(--warning))] text-white text-xs font-semibold"
-                        : "inline-flex px-2.5 py-1 rounded-full bg-[hsl(var(--primary-600))] text-white text-xs font-semibold"
+                        ? "inline-flex px-2.5 py-1 rounded-full bg-[hsl(var(--warning))] text-white text-sm font-semibold"
+                        : "inline-flex px-2.5 py-1 rounded-full bg-[hsl(var(--primary-600))] text-white text-sm font-semibold"
                   }
                 >
                   {product.stock <= 0
@@ -190,7 +190,7 @@ export default async function ProductDetailPage(props: {
                       : "In Stock"}
                 </span>
                 {product.stock > 0 && product.stock <= 20 && (
-                  <span className="text-xs font-semibold text-[hsl(var(--warning))]">
+                  <span className="text-sm font-semibold text-[hsl(var(--warning))]">
                     Only {product.stock} left!
                   </span>
                 )}
@@ -199,36 +199,36 @@ export default async function ProductDetailPage(props: {
               {product.shelfLifeDays != null && product.shelfLifeDays > 0 && (
                 <div className="flex items-center gap-2 mb-4 px-3 py-2 rounded-xl bg-amber-50 border border-amber-200 w-fit">
                   <Timer size={16} className="text-amber-600 shrink-0" />
-                  <span className="text-xs font-semibold text-amber-700">
+                  <span className="text-sm font-semibold text-amber-700">
                     Best consumed within {product.shelfLifeDays} day{product.shelfLifeDays > 1 ? "s" : ""} of delivery
                   </span>
                 </div>
               )}
 
               <div className="flex items-baseline gap-2 mb-6 flex-wrap">
-                <span className="text-xl sm:text-2xl font-bold text-primary">
+                <span className="text-2xl sm:text-3xl font-bold text-primary">
                   ₹{product.price.toLocaleString("en-IN")}
                 </span>
                 {product.compareAtPrice && (
-                  <span className="text-sm sm:text-base text-muted-foreground line-through">
+                  <span className="text-base sm:text-lg text-muted-foreground line-through">
                     ₹{product.compareAtPrice.toLocaleString("en-IN")}
                   </span>
                 )}
                 <span className="text-muted-foreground">per {product.weight}</span>
                 {product.compareAtPrice && (
-                  <span className="text-xs font-bold text-white bg-[var(--color-error)] px-2 py-0.5 rounded-full">
+                  <span className="text-sm font-bold text-white bg-[var(--color-error)] px-2 py-0.5 rounded-full">
                     {Math.round((1 - product.price / product.compareAtPrice) * 100)}% OFF
                   </span>
                 )}
               </div>
 
-              <p className="text-xs sm:text-sm text-foreground leading-relaxed mb-6">{product.description}</p>
+              <p className="text-sm sm:text-base text-foreground leading-relaxed mb-6">{product.description}</p>
 
               <div className="flex flex-wrap gap-2 mb-6">
                 {product.highlights.map((h: string) => (
                   <span
                     key={h}
-                    className="inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary border border-primary/10"
+                    className="inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-sm font-medium text-primary border border-primary/10"
                   >
                     {h}
                   </span>
@@ -244,7 +244,7 @@ export default async function ProductDetailPage(props: {
               </div>
 
               {/* Share */}
-              <div className="mt-4 flex items-center gap-3 text-sm text-muted-foreground">
+              <div className="mt-4 flex items-center gap-3 text-base text-muted-foreground">
                 <Share2 size={14} />
                 <span>Share:</span>
                 <a
@@ -264,15 +264,15 @@ export default async function ProductDetailPage(props: {
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-8 pt-8 border-t border-border">
                 <div className="flex flex-col items-center text-center gap-2">
                   <Truck size={22} className="text-primary" />
-                  <span className="text-xs text-muted-foreground">Free delivery over ₹500</span>
+                  <span className="text-sm text-muted-foreground">Free delivery over ₹500</span>
                 </div>
                 <div className="flex flex-col items-center text-center gap-2">
                   <ShieldCheck size={22} className="text-primary" />
-                  <span className="text-xs text-muted-foreground">FSSAI registered business</span>
+                  <span className="text-sm text-muted-foreground">FSSAI registered business</span>
                 </div>
                 <div className="flex flex-col items-center text-center gap-2">
                   <RotateCcw size={22} className="text-primary" />
-                  <span className="text-xs text-muted-foreground">Easy replacement</span>
+                  <span className="text-sm text-muted-foreground">Easy replacement</span>
                 </div>
               </div>
             </FadeIn>
@@ -281,15 +281,15 @@ export default async function ProductDetailPage(props: {
       </section>
 
       {/* Product information */}
-      <section className="py-20 sm:py-28 bg-secondary">
+      <section className="py-10 sm:py-14 bg-secondary">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <FadeIn>
               <div className="bg-card rounded-2xl border border-border p-6 h-full">
-                <h3 className="text-base sm:text-lg font-bold text-foreground font-heading mb-4">
+                <h3 className="text-lg sm:text-xl font-bold text-foreground font-heading mb-4">
                   Freshness Information
                 </h3>
-                <div className="space-y-3 text-xs">
+                <div className="space-y-3 text-sm">
                   <div className="flex items-center justify-between gap-4 border-b border-border pb-3">
                     <span className="text-muted-foreground">Harvested</span>
                     <span className="font-semibold text-right">
@@ -316,7 +316,7 @@ export default async function ProductDetailPage(props: {
 
             <FadeIn>
               <div className="bg-card rounded-2xl border border-border p-6">
-                <h3 className="text-base sm:text-lg font-bold text-foreground font-heading mb-4 flex items-center gap-2">
+                <h3 className="text-lg sm:text-xl font-bold text-foreground font-heading mb-4 flex items-center gap-2">
                   <Clock size={18} className="text-primary" /> Nutrition Facts (per 100g)
                 </h3>
                 <div className="space-y-3">
@@ -328,12 +328,12 @@ export default async function ProductDetailPage(props: {
                     { label: "Iron", value: nutrition.iron },
                   ].map((item) => (
                     <div key={item.label} className="flex items-center justify-between py-2 border-b border-border last:border-0">
-                      <span className="text-xs text-foreground">{item.label}</span>
-                      <span className="text-xs font-semibold text-foreground">{item.value}</span>
+                      <span className="text-sm text-foreground">{item.label}</span>
+                      <span className="text-sm font-semibold text-foreground">{item.value}</span>
                     </div>
                   ))}
                 </div>
-                <Link href="/compare" className="text-xs text-primary font-semibold mt-4 inline-block hover:underline">
+                <Link href="/compare" className="text-sm text-primary font-semibold mt-4 inline-block hover:underline">
                   Compare all varieties →
                 </Link>
               </div>
@@ -341,13 +341,13 @@ export default async function ProductDetailPage(props: {
 
             <FadeIn delay={0.1}>
               <div className="bg-card rounded-2xl border border-border p-6">
-                <h3 className="text-base sm:text-lg font-bold text-foreground font-heading mb-4 flex items-center gap-2">
+                <h3 className="text-lg sm:text-xl font-bold text-foreground font-heading mb-4 flex items-center gap-2">
                   <ShieldCheck size={18} className="text-primary" /> Storage Instructions
                 </h3>
-                <p className="text-xs text-foreground leading-relaxed mb-4">{storage}</p>
+                <p className="text-sm text-foreground leading-relaxed mb-4">{storage}</p>
                 <div className="bg-primary/5 rounded-xl p-4 border border-primary/10">
-                  <h4 className="text-xs font-bold text-primary mb-2">Pro Tips:</h4>
-                  <ul className="space-y-1.5 text-xs text-foreground">
+                  <h4 className="text-sm font-bold text-primary mb-2">Pro Tips:</h4>
+                  <ul className="space-y-1.5 text-sm text-foreground">
                     <li>• Never wash mushrooms before storing — moisture causes spoilage</li>
                     <li>• Use a paper bag, not plastic, to allow airflow</li>
                     <li>• Bring to room temperature before cooking for best texture</li>
@@ -360,19 +360,19 @@ export default async function ProductDetailPage(props: {
       </section>
 
       {/* Customer reviews */}
-      <section className="py-20 sm:py-28 bg-background">
+      <section className="py-10 sm:py-14 bg-background">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
           <FadeIn>
             <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-8">
               <div>
                 <div className="flex items-center gap-3 mb-2">
                   <span className="h-px w-6 sm:w-8 bg-border" />
-                  <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Customer feedback</span>
+                  <span className="text-sm font-bold uppercase tracking-[0.2em] text-primary">Customer feedback</span>
                   <span className="h-px w-6 sm:w-8 bg-border" />
                 </div>
-                <h2 className="text-xl sm:text-2xl font-extrabold text-foreground font-heading tracking-tight">Reviews for {product.name}</h2>
+                <h2 className="text-2xl sm:text-3xl font-extrabold text-foreground font-heading tracking-tight">Reviews for {product.name}</h2>
               </div>
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <div className="flex items-center gap-2 text-base text-muted-foreground">
                 <Star size={16} className="fill-[#c4a96a] text-[#c4a96a]" />
                 <span className="font-semibold text-foreground">{product.rating.toFixed(1)}</span>
                 <span>from {product.reviewCount} reviews</span>
@@ -393,10 +393,10 @@ export default async function ProductDetailPage(props: {
                         />
                       ))}
                     </div>
-                    <p className="text-sm leading-relaxed text-[var(--color-body)]">
+                    <p className="text-base leading-relaxed text-[var(--color-body)]">
                       {review.comment || "A customer left a rating for this product."}
                     </p>
-                    <p className="mt-4 text-xs font-semibold text-muted-foreground">
+                    <p className="mt-4 text-sm font-semibold text-muted-foreground">
                       {review.user.name || "Verified customer"}
                     </p>
                   </article>
@@ -404,7 +404,7 @@ export default async function ProductDetailPage(props: {
               ))}
             </div>
           ) : (
-            <div className="rounded-2xl border border-dashed border-border bg-secondary/50 p-8 text-center text-sm text-muted-foreground">
+            <div className="rounded-2xl border border-dashed border-border bg-secondary/50 p-8 text-center text-base text-muted-foreground">
               Customer reviews for this product will appear here after they are approved.
             </div>
           )}
@@ -412,15 +412,15 @@ export default async function ProductDetailPage(props: {
       </section>
 
       {/* Recipe ideas */}
-      <section className="py-20 sm:py-28 bg-secondary">
+      <section className="py-10 sm:py-14 bg-secondary">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
           <FadeIn>
             <div className="flex items-center gap-3 mb-2">
               <span className="h-px w-6 sm:w-8 bg-border" />
-              <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Cook something good</span>
+              <span className="text-sm font-bold uppercase tracking-[0.2em] text-primary">Cook something good</span>
               <span className="h-px w-6 sm:w-8 bg-border" />
             </div>
-            <h2 className="text-xl sm:text-2xl font-extrabold text-foreground font-heading tracking-tight mb-8">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-foreground font-heading tracking-tight mb-8">
               Recipe ideas for {product.name}
             </h2>
           </FadeIn>
@@ -430,11 +430,11 @@ export default async function ProductDetailPage(props: {
                 <article className="rounded-2xl border border-border bg-card p-5">
                   <div className="flex items-start justify-between gap-4">
                     <h3 className="font-bold text-foreground font-heading">{recipe.title}</h3>
-                    <span className="shrink-0 rounded-full bg-primary/10 px-2.5 py-1 text-xs font-semibold text-primary">
+                    <span className="shrink-0 rounded-full bg-primary/10 px-2.5 py-1 text-sm font-semibold text-primary">
                       {recipe.time}
                     </span>
                   </div>
-                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{recipe.description}</p>
+                  <p className="mt-2 text-base leading-relaxed text-muted-foreground">{recipe.description}</p>
                 </article>
               </FadeIn>
             ))}
@@ -444,15 +444,15 @@ export default async function ProductDetailPage(props: {
 
       {/* Related Products */}
       {related.length > 0 && (
-        <section className="py-20 sm:py-28 bg-background">
+        <section className="py-10 sm:py-14 bg-background">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
             <FadeIn>
               <div className="flex items-center justify-center gap-3 mb-3">
                 <span className="h-px w-6 sm:w-8 bg-border" />
-                <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">More Options</span>
+                <span className="text-sm font-bold uppercase tracking-[0.2em] text-primary">More Options</span>
                 <span className="h-px w-6 sm:w-8 bg-border" />
               </div>
-              <h2 className="text-xl sm:text-2xl font-extrabold text-foreground mb-10 font-heading tracking-tight text-center">You Might Also Like</h2>
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-foreground mb-10 font-heading tracking-tight text-center">You Might Also Like</h2>
             </FadeIn>
             <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 lg:gap-5">
               {related.map((p, i) => (

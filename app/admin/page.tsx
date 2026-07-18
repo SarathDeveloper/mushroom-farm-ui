@@ -147,10 +147,10 @@ export default async function AdminDashboardPage() {
   return (
     <div className="p-4 sm:p-6 lg:p-10">
       <header className="mb-6 sm:mb-8">
-        <h1 className="text-xl md:text-2xl font-bold font-heading text-foreground">
+        <h1 className="text-2xl md:text-3xl font-bold font-heading text-foreground">
           Dashboard
         </h1>
-        <p className="text-[var(--color-body)] mt-1 text-sm sm:text-base">
+        <p className="text-[var(--color-body)] mt-1 text-base sm:text-lg">
           Welcome back! Here&apos;s what&apos;s happening today.
         </p>
       </header>
@@ -170,7 +170,7 @@ export default async function AdminDashboardPage() {
                 <p className="font-semibold text-yellow-800">
                   {data.pendingOrders} Pending Orders
                 </p>
-                <p className="text-xs text-yellow-600">Needs attention</p>
+                <p className="text-sm text-yellow-600">Needs attention</p>
               </div>
             </Link>
           )}
@@ -187,7 +187,7 @@ export default async function AdminDashboardPage() {
                 <p className="font-semibold text-blue-800">
                   {data.processingOrders} To Pack
                 </p>
-                <p className="text-xs text-blue-600">Ready to ship</p>
+                <p className="text-sm text-blue-600">Ready to ship</p>
               </div>
             </Link>
           )}
@@ -204,7 +204,7 @@ export default async function AdminDashboardPage() {
                 <p className="font-semibold text-purple-800">
                   {data.shippedOrders} In Transit
                 </p>
-                <p className="text-xs text-purple-600">Out for delivery</p>
+                <p className="text-sm text-purple-600">Out for delivery</p>
               </div>
             </Link>
           )}
@@ -223,7 +223,7 @@ export default async function AdminDashboardPage() {
                     ? `${data.outOfStockCount} Out of Stock`
                     : `${data.lowStockCount} Low Stock`}
                 </p>
-                <p className="text-xs text-red-600">Restock needed</p>
+                <p className="text-sm text-red-600">Restock needed</p>
               </div>
             </Link>
           )}
@@ -240,7 +240,7 @@ export default async function AdminDashboardPage() {
                 <p className="font-semibold text-teal-800">
                   {data.pendingPreOrders} Pre-Orders
                 </p>
-                <p className="text-xs text-teal-600">Awaiting confirmation</p>
+                <p className="text-sm text-teal-600">Awaiting confirmation</p>
               </div>
             </Link>
           )}
@@ -257,7 +257,7 @@ export default async function AdminDashboardPage() {
                 <p className="font-semibold text-green-800">
                   {data.pendingRegistrations} Training Registrations
                 </p>
-                <p className="text-xs text-green-600">Pending payment</p>
+                <p className="text-sm text-green-600">Pending payment</p>
               </div>
             </Link>
           )}
@@ -271,10 +271,10 @@ export default async function AdminDashboardPage() {
             <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-green-100 text-green-600 flex items-center justify-center">
               <ShoppingBag size={18} strokeWidth={1.75} />
             </div>
-            <Badge variant="success" className="text-[10px] sm:text-xs">{data.todayOrders} today</Badge>
+            <Badge variant="success" className="text-xs sm:text-sm">{data.todayOrders} today</Badge>
           </div>
-          <p className="text-base md:text-lg font-bold font-heading text-foreground truncate">{data.totalOrders}</p>
-          <p className="text-xs sm:text-sm text-[var(--color-body)] mt-0.5 sm:mt-1">Total Orders</p>
+          <p className="text-lg md:text-xl font-bold font-heading text-foreground truncate">{data.totalOrders}</p>
+          <p className="text-sm sm:text-base text-[var(--color-body)] mt-0.5 sm:mt-1">Total Orders</p>
         </div>
 
         <div className="bg-card rounded-xl border border-border p-3 sm:p-4 shadow-[0_4px_12px_rgba(0,0,0,0.04)] min-w-0">
@@ -282,7 +282,7 @@ export default async function AdminDashboardPage() {
             <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
               <IndianRupee size={18} strokeWidth={1.75} />
             </div>
-            <div className={`flex items-center gap-1 text-[10px] sm:text-xs font-semibold ${
+            <div className={`flex items-center gap-1 text-xs sm:text-sm font-semibold ${
               data.revenueChange >= 0 ? "text-green-600" : "text-red-600"
             }`}>
               {data.revenueChange >= 0 ? (
@@ -293,10 +293,10 @@ export default async function AdminDashboardPage() {
               {Math.abs(data.revenueChange).toFixed(0)}%
             </div>
           </div>
-          <p className="text-base md:text-lg font-bold font-heading text-foreground truncate">
+          <p className="text-lg md:text-xl font-bold font-heading text-foreground truncate">
             ₹{data.thisWeekRevenue.toLocaleString("en-IN")}
           </p>
-          <p className="text-xs sm:text-sm text-[var(--color-body)] mt-0.5 sm:mt-1">
+          <p className="text-sm sm:text-base text-[var(--color-body)] mt-0.5 sm:mt-1">
             <span className="hidden sm:inline">This Week (vs ₹{data.lastWeekRevenue.toLocaleString("en-IN")} last week)</span>
             <span className="sm:hidden">This Week</span>
           </p>
@@ -308,8 +308,8 @@ export default async function AdminDashboardPage() {
               <Package size={18} strokeWidth={1.75} />
             </div>
           </div>
-          <p className="text-base md:text-lg font-bold font-heading text-foreground truncate">{data.totalProducts}</p>
-          <p className="text-xs sm:text-sm text-[var(--color-body)] mt-0.5 sm:mt-1">Products</p>
+          <p className="text-lg md:text-xl font-bold font-heading text-foreground truncate">{data.totalProducts}</p>
+          <p className="text-sm sm:text-base text-[var(--color-body)] mt-0.5 sm:mt-1">Products</p>
         </div>
 
         <div className="bg-card rounded-xl border border-border p-3 sm:p-4 shadow-[0_4px_12px_rgba(0,0,0,0.04)] min-w-0">
@@ -318,8 +318,8 @@ export default async function AdminDashboardPage() {
               <Users size={18} strokeWidth={1.75} />
             </div>
           </div>
-          <p className="text-base md:text-lg font-bold font-heading text-foreground truncate">{data.totalUsers}</p>
-          <p className="text-xs sm:text-sm text-[var(--color-body)] mt-0.5 sm:mt-1">Customers</p>
+          <p className="text-lg md:text-xl font-bold font-heading text-foreground truncate">{data.totalUsers}</p>
+          <p className="text-sm sm:text-base text-[var(--color-body)] mt-0.5 sm:mt-1">Customers</p>
         </div>
       </div>
 
@@ -327,17 +327,17 @@ export default async function AdminDashboardPage() {
         {/* Recent Orders */}
         <div className="lg:col-span-2 bg-card rounded-2xl border border-border shadow-[0_4px_12px_rgba(0,0,0,0.04)] overflow-hidden">
           <div className="flex items-center justify-between px-4 sm:px-6 py-4 sm:py-6 border-b border-border">
-            <h2 className="font-bold font-heading text-foreground text-sm sm:text-base">Recent Orders</h2>
+            <h2 className="font-bold font-heading text-foreground text-base sm:text-lg">Recent Orders</h2>
             <Link
               href="/admin/orders"
-              className="inline-flex items-center gap-1 text-xs sm:text-sm font-semibold text-primary hover:underline"
+              className="inline-flex items-center gap-1 text-sm sm:text-base font-semibold text-primary hover:underline"
             >
               View all <ArrowUpRight size={14} />
             </Link>
           </div>
 
           {data.recentOrders.length === 0 ? (
-            <p className="p-4 sm:p-6 text-sm text-muted-foreground">
+            <p className="p-4 sm:p-6 text-base text-muted-foreground">
               No orders yet. Orders will appear here once customers start buying.
             </p>
           ) : (
@@ -349,14 +349,14 @@ export default async function AdminDashboardPage() {
                   className="flex items-center justify-between gap-3 px-4 sm:px-6 py-3 sm:py-4 hover:bg-secondary/30 transition-colors"
                 >
                   <div className="min-w-0">
-                    <p className="font-semibold text-foreground text-sm">#{order.id.slice(0, 8).toUpperCase()}</p>
-                    <p className="text-xs sm:text-sm text-muted-foreground truncate">
+                    <p className="font-semibold text-foreground text-base">#{order.id.slice(0, 8).toUpperCase()}</p>
+                    <p className="text-sm sm:text-base text-muted-foreground truncate">
                       {order.user?.name ?? order.user?.email ?? "Guest"} · {order.orderItems.length} items
                     </p>
                   </div>
                   <div className="flex items-center gap-2 sm:gap-4 shrink-0">
-                    <span className="font-semibold text-foreground text-sm">₹{order.totalAmount}</span>
-                    <Badge variant={statusVariant[order.status] ?? "secondary"} className="text-[10px] sm:text-xs">{order.status}</Badge>
+                    <span className="font-semibold text-foreground text-base">₹{order.totalAmount}</span>
+                    <Badge variant={statusVariant[order.status] ?? "secondary"} className="text-xs sm:text-sm">{order.status}</Badge>
                   </div>
                 </Link>
               ))}
@@ -367,17 +367,17 @@ export default async function AdminDashboardPage() {
         {/* Low Stock Products */}
         <div className="bg-card rounded-2xl border border-border shadow-[0_4px_12px_rgba(0,0,0,0.04)] overflow-hidden">
           <div className="flex items-center justify-between px-4 sm:px-6 py-4 sm:py-6 border-b border-border">
-            <h2 className="font-bold font-heading text-foreground text-sm sm:text-base">Low Stock</h2>
+            <h2 className="font-bold font-heading text-foreground text-base sm:text-lg">Low Stock</h2>
             <Link
               href="/admin/products"
-              className="inline-flex items-center gap-1 text-xs sm:text-sm font-semibold text-primary hover:underline"
+              className="inline-flex items-center gap-1 text-sm sm:text-base font-semibold text-primary hover:underline"
             >
               Manage <ArrowUpRight size={14} />
             </Link>
           </div>
 
           {data.lowStockProducts.length === 0 ? (
-            <p className="p-4 sm:p-6 text-sm text-muted-foreground">
+            <p className="p-4 sm:p-6 text-base text-muted-foreground">
               All products are well stocked.
             </p>
           ) : (
@@ -398,8 +398,8 @@ export default async function AdminDashboardPage() {
                     />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <p className="font-medium text-foreground text-sm truncate">{product.name}</p>
-                    <p className={`text-xs font-medium ${product.stock === 0 ? "text-[#E56D6D]" : "text-[#E5B06D]"}`}>
+                    <p className="font-medium text-foreground text-base truncate">{product.name}</p>
+                    <p className={`text-sm font-medium ${product.stock === 0 ? "text-[#E56D6D]" : "text-[#E5B06D]"}`}>
                       {product.stock === 0 ? "Out of Stock" : `${product.stock} left · Low Stock`}
                     </p>
                   </div>

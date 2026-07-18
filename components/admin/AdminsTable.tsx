@@ -191,7 +191,7 @@ export function AdminsTable({
                 <span className="font-semibold text-foreground">
                   {admin.name || "Unnamed"}
                   {isSelf && (
-                    <span className="text-xs text-muted-foreground ml-1.5">
+                    <span className="text-sm text-muted-foreground ml-1.5">
                       (You)
                     </span>
                   )}
@@ -202,7 +202,7 @@ export function AdminsTable({
                   <Badge variant="destructive">Deactivated</Badge>
                 )}
               </div>
-              <div className="space-y-1 text-sm text-muted-foreground mb-3">
+              <div className="space-y-1 text-base text-muted-foreground mb-3">
                 <p className="flex items-center gap-1.5">
                   <Phone size={14} /> {admin.phone || "—"}
                 </p>
@@ -211,7 +211,7 @@ export function AdminsTable({
                     <Mail size={14} /> {admin.email}
                   </p>
                 )}
-                <p className="text-xs">Joined: {formatDate(admin.createdAt)}</p>
+                <p className="text-sm">Joined: {formatDate(admin.createdAt)}</p>
               </div>
               <div className="flex items-center justify-between pt-3 border-t border-border">
                 {!isSelf && (
@@ -221,7 +221,7 @@ export function AdminsTable({
                       onCheckedChange={() => handleToggleActive(admin)}
                       disabled={isPending}
                     />
-                    <span className="text-xs text-muted-foreground">
+                    <span className="text-sm text-muted-foreground">
                       {admin.isActive ? "Active" : "Inactive"}
                     </span>
                   </div>
@@ -256,7 +256,7 @@ export function AdminsTable({
       {/* Desktop table view */}
       <div className="hidden md:block bg-card rounded-2xl border border-border shadow-[0_4px_12px_rgba(0,0,0,0.04)] overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-sm">
+          <table className="w-full text-left text-base">
             <thead>
               <tr className="border-b border-border bg-secondary/50 text-[var(--color-body)]">
                 <th className="font-semibold px-6 py-4">Name</th>
@@ -278,7 +278,7 @@ export function AdminsTable({
                     <td className="px-6 py-4 font-medium text-foreground">
                       {admin.name || "Unnamed"}
                       {isSelf && (
-                        <span className="text-xs text-muted-foreground ml-1.5">
+                        <span className="text-sm text-muted-foreground ml-1.5">
                           (You)
                         </span>
                       )}
@@ -459,7 +459,7 @@ export function AdminsTable({
                     }
                     disabled={editTarget.id === currentUserId}
                   />
-                  <span className="text-sm">
+                  <span className="text-base">
                     {formData.isActive ? "Active" : "Deactivated"}
                   </span>
                 </div>
@@ -498,7 +498,7 @@ export function AdminsTable({
       >
         <DialogContent className="sm:max-w-md">
           <DialogTitle>Delete Admin</DialogTitle>
-          <p className="text-sm text-[var(--color-body)] mt-2">
+          <p className="text-base text-[var(--color-body)] mt-2">
             Are you sure you want to delete admin{" "}
             <strong className="text-foreground">
               {deleteTarget?.name || deleteTarget?.phone}

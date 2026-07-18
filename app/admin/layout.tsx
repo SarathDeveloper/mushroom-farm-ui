@@ -2,7 +2,6 @@ import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { AdminSidebar } from "@/components/AdminSidebar";
-import Providers from "@/components/Providers";
 
 export const metadata = {
   title: "Admin Dashboard",
@@ -23,11 +22,9 @@ export default async function AdminLayout({
   }
 
   return (
-    <Providers>
-      <div className="flex flex-col lg:flex-row min-h-screen bg-background">
-        <AdminSidebar />
-        <main className="flex-1 min-w-0 overflow-x-hidden">{children}</main>
-      </div>
-    </Providers>
+    <div className="flex flex-col lg:flex-row min-h-screen bg-background">
+      <AdminSidebar />
+      <main className="flex-1 min-w-0 overflow-x-hidden">{children}</main>
+    </div>
   );
 }

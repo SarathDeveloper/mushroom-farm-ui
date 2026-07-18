@@ -74,7 +74,7 @@ export function CloudinaryUpload({
   return (
     <div className={cn("space-y-3", className)}>
       {hasNonCloudinary && (
-        <div className="rounded-xl border border-[var(--color-warning)]/40 bg-[var(--color-warning)]/10 px-4 py-3 text-sm text-foreground">
+        <div className="rounded-xl border border-[var(--color-warning)]/40 bg-[var(--color-warning)]/10 px-4 py-3 text-base text-foreground">
           <p className="font-medium">
             Some images are not stored in Cloudinary (e.g. Unsplash seed URLs).
           </p>
@@ -123,7 +123,7 @@ export function CloudinaryUpload({
                 </button>
               )}
               {!isCloudinarySrc(src) && (
-                <span className="absolute bottom-0 inset-x-0 bg-[var(--color-warning)]/90 text-[10px] font-bold text-center text-white py-0.5">
+                <span className="absolute bottom-0 inset-x-0 bg-[var(--color-warning)]/90 text-xs font-bold text-center text-white py-0.5">
                   External
                 </span>
               )}

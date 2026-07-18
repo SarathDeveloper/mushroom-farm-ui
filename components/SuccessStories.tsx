@@ -33,18 +33,18 @@ const stories = [
 
 export function SuccessStories() {
   return (
-    <section className="py-24 sm:py-32 bg-background grain-overlay">
+    <section className="py-12 sm:py-16 bg-background grain-overlay">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         <FadeIn className="text-center mb-14">
           <div className="flex items-center justify-center gap-3 mb-4">
             <span className="h-px w-6 sm:w-8 bg-border" />
-            <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Happy Customers</span>
+            <span className="text-sm font-bold uppercase tracking-[0.2em] text-primary">Happy Customers</span>
             <span className="h-px w-6 sm:w-8 bg-border" />
           </div>
-          <h2 className="text-xl sm:text-2xl font-extrabold text-foreground tracking-tight font-heading">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-foreground tracking-tight font-heading">
             What People Say
           </h2>
-          <p className="text-[var(--color-body)] max-w-2xl mx-auto mt-3 text-sm sm:text-base">
+          <p className="text-[var(--color-body)] max-w-2xl mx-auto mt-3 text-base sm:text-lg">
             Restaurants, families, and new farmers — see what they say about us.
           </p>
         </FadeIn>
@@ -58,13 +58,13 @@ export function SuccessStories() {
               className="bg-card rounded-2xl border border-border p-6 sm:p-8 flex flex-col hover:shadow-[0_12px_30px_rgba(0,0,0,0.04)] transition-all duration-300 hover:-translate-y-1"
             >
               <div className="flex items-center justify-between mb-5">
-                <span className="text-xs font-bold uppercase tracking-wider text-primary bg-primary/10 px-3.5 py-1 rounded-full">
+                <span className="text-sm font-bold uppercase tracking-wider text-primary bg-primary/10 px-3.5 py-1 rounded-full">
                   {story.type}
                 </span>
                 <Quote size={28} className="text-[#F4F0E6]" />
               </div>
 
-              <p className="text-[var(--color-body)] text-sm leading-relaxed italic flex-1 mb-6">
+              <p className="text-[var(--color-body)] text-base leading-relaxed italic flex-1 mb-6">
                 &ldquo;{story.story}&rdquo;
               </p>
 
@@ -73,14 +73,14 @@ export function SuccessStories() {
                   <TrendingUp size={18} />
                 </div>
                 <div>
-                  <p className="font-extrabold text-foreground text-sm">{story.metric}</p>
-                  <p className="text-xs text-muted-foreground">{story.metricLabel}</p>
+                  <p className="font-extrabold text-foreground text-base">{story.metric}</p>
+                  <p className="text-sm text-muted-foreground">{story.metricLabel}</p>
                 </div>
               </div>
 
               <div className="pt-5 border-t border-border">
-                <h4 className="font-bold text-foreground text-sm">{story.name}</h4>
-                <p className="text-xs text-muted-foreground">{story.role}</p>
+                <h4 className="font-bold text-foreground text-base">{story.name}</h4>
+                <p className="text-sm text-muted-foreground">{story.role}</p>
               </div>
             </FadeIn>
           ))}

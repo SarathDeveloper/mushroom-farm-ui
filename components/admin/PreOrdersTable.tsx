@@ -76,7 +76,7 @@ export function PreOrdersTable({ orders }: { orders: PreOrder[] }) {
         <select
           value={filter}
           onChange={(e) => setFilter(e.target.value as "all" | "pending" | "handled")}
-          className="h-9 rounded-lg border border-border bg-card px-3 text-sm outline-none focus:border-primary"
+          className="h-9 rounded-lg border border-border bg-card px-3 text-base outline-none focus:border-primary"
         >
           <option value="all">All Requests</option>
           <option value="pending">Pending</option>
@@ -93,18 +93,18 @@ export function PreOrdersTable({ orders }: { orders: PreOrder[] }) {
             onClick={() => setViewTarget(order)}
           >
             <div className="flex items-center justify-between mb-2">
-              <span className="font-bold text-foreground text-sm">{order.name}</span>
-              <Badge variant={order.isHandled ? "success" : "warning"} className="text-[10px]">
+              <span className="font-bold text-foreground text-base">{order.name}</span>
+              <Badge variant={order.isHandled ? "success" : "warning"} className="text-xs">
                 {order.isHandled ? "Handled" : "Pending"}
               </Badge>
             </div>
-            <div className="text-sm text-foreground">{order.product} · {order.quantity}</div>
-            <div className="flex items-center gap-3 text-xs text-muted-foreground mt-1">
+            <div className="text-base text-foreground">{order.product} · {order.quantity}</div>
+            <div className="flex items-center gap-3 text-sm text-muted-foreground mt-1">
               <span>Preferred: {formatDate(order.preferredDate)}</span>
               <span>· {order.location}</span>
             </div>
             <div className="flex items-center justify-between mt-3 pt-3 border-t border-border">
-              <span className="text-xs text-muted-foreground">{formatDate(order.createdAt)}</span>
+              <span className="text-sm text-muted-foreground">{formatDate(order.createdAt)}</span>
               <div className="flex items-center gap-1.5" onClick={(e) => e.stopPropagation()}>
                 <a href={`tel:${order.phone}`} className="h-8 w-8 rounded-lg bg-secondary flex items-center justify-center text-foreground">
                   <Phone size={13} />
@@ -121,7 +121,7 @@ export function PreOrdersTable({ orders }: { orders: PreOrder[] }) {
       {/* Desktop table view */}
       <div className="hidden md:block bg-card rounded-2xl border border-border shadow-[0_4px_12px_rgba(0,0,0,0.04)] overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-sm">
+          <table className="w-full text-left text-base">
             <thead>
               <tr className="border-b border-border bg-secondary/50 text-[var(--color-body)]">
                 <th className="font-semibold px-6 py-4">Customer</th>
@@ -147,7 +147,7 @@ export function PreOrdersTable({ orders }: { orders: PreOrder[] }) {
                       <a
                         href={`tel:${order.phone}`}
                         onClick={(e) => e.stopPropagation()}
-                        className="text-xs text-muted-foreground hover:text-primary"
+                        className="text-sm text-muted-foreground hover:text-primary"
                       >
                         <Phone size={12} className="inline mr-1" />
                         {order.phone}
@@ -214,41 +214,41 @@ export function PreOrdersTable({ orders }: { orders: PreOrder[] }) {
             <div className="space-y-4 mt-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <p className="text-xs text-muted-foreground">Phone</p>
+                  <p className="text-sm text-muted-foreground">Phone</p>
                   <a href={`tel:${viewTarget.phone}`} className="font-medium text-primary">
                     {viewTarget.phone}
                   </a>
                 </div>
                 <div>
-                  <p className="text-xs text-muted-foreground">Email</p>
+                  <p className="text-sm text-muted-foreground">Email</p>
                   <a href={`mailto:${viewTarget.email}`} className="font-medium text-primary">
                     {viewTarget.email}
                   </a>
                 </div>
                 <div>
-                  <p className="text-xs text-muted-foreground">Product</p>
+                  <p className="text-sm text-muted-foreground">Product</p>
                   <p className="font-medium">{viewTarget.product}</p>
                 </div>
                 <div>
-                  <p className="text-xs text-muted-foreground">Quantity</p>
+                  <p className="text-sm text-muted-foreground">Quantity</p>
                   <p className="font-medium">{viewTarget.quantity}</p>
                 </div>
                 <div>
-                  <p className="text-xs text-muted-foreground">Preferred Date</p>
+                  <p className="text-sm text-muted-foreground">Preferred Date</p>
                   <p className="font-medium">{formatDate(viewTarget.preferredDate)}</p>
                 </div>
                 <div>
-                  <p className="text-xs text-muted-foreground">Location</p>
+                  <p className="text-sm text-muted-foreground">Location</p>
                   <p className="font-medium">{viewTarget.location}</p>
                 </div>
                 <div className="col-span-2">
-                  <p className="text-xs text-muted-foreground">Submitted</p>
+                  <p className="text-sm text-muted-foreground">Submitted</p>
                   <p className="font-medium">{formatDate(viewTarget.createdAt)}</p>
                 </div>
               </div>
               {viewTarget.notes && (
                 <div>
-                  <p className="text-xs text-muted-foreground">Notes</p>
+                  <p className="text-sm text-muted-foreground">Notes</p>
                   <p className="text-foreground mt-1">{viewTarget.notes}</p>
                 </div>
               )}
@@ -281,7 +281,7 @@ export function PreOrdersTable({ orders }: { orders: PreOrder[] }) {
       <Dialog open={!!deleteTarget} onOpenChange={(open) => !open && setDeleteTarget(null)}>
         <DialogContent className="sm:max-w-md">
           <DialogTitle>Delete Pre-Order</DialogTitle>
-          <p className="text-sm text-[var(--color-body)] mt-2">
+          <p className="text-base text-[var(--color-body)] mt-2">
             Are you sure you want to delete the pre-order from{" "}
             <strong className="text-foreground">{deleteTarget?.name}</strong>?
           </p>

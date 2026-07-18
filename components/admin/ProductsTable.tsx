@@ -75,7 +75,7 @@ function QuickStockUpdate({ product }: { product: Product }) {
 
   return (
     <div className="flex items-center gap-1.5">
-      <span className="text-xs text-muted-foreground shrink-0">Stock</span>
+      <span className="text-sm text-muted-foreground shrink-0">Stock</span>
       <Input
         type="number"
         min="0"
@@ -84,7 +84,7 @@ function QuickStockUpdate({ product }: { product: Product }) {
         onBlur={handleUpdate}
         onKeyDown={(e) => e.key === "Enter" && handleUpdate()}
         disabled={isPending}
-        className="w-16 h-8 text-center px-2 text-sm"
+        className="w-16 h-8 text-center px-2 text-base"
       />
       {isPending && (
         <Loader2 size={14} className="animate-spin text-muted-foreground" />
@@ -112,7 +112,7 @@ function ActiveToggle({ product }: { product: Product }) {
       onClick={handleToggle}
       disabled={isPending}
       className={cn(
-        "inline-flex items-center gap-1.5 h-8 px-2.5 rounded-lg text-xs font-medium transition-colors",
+        "inline-flex items-center gap-1.5 h-8 px-2.5 rounded-lg text-sm font-medium transition-colors",
         product.isActive
           ? "bg-[#E8F2EC] text-[#2B7A5D] hover:bg-[#dcebe3]"
           : "bg-secondary text-muted-foreground hover:bg-secondary/80"
@@ -165,14 +165,14 @@ export function ProductsTable({ products }: { products: Product[] }) {
       {(lowStockCount > 0 || outOfStockCount > 0) && (
         <div className="flex flex-wrap gap-3 mb-6">
           {outOfStockCount > 0 && (
-            <div className="flex items-center gap-2 px-4 py-2 rounded-xl bg-red-50 border border-red-200 text-red-700 text-sm font-medium">
+            <div className="flex items-center gap-2 px-4 py-2 rounded-xl bg-red-50 border border-red-200 text-red-700 text-base font-medium">
               <AlertTriangle size={16} />
               {outOfStockCount} product{outOfStockCount !== 1 && "s"} out of
               stock
             </div>
           )}
           {lowStockCount > 0 && (
-            <div className="flex items-center gap-2 px-4 py-2 rounded-xl bg-yellow-50 border border-yellow-200 text-yellow-700 text-sm font-medium">
+            <div className="flex items-center gap-2 px-4 py-2 rounded-xl bg-yellow-50 border border-yellow-200 text-yellow-700 text-base font-medium">
               <AlertTriangle size={16} />
               {lowStockCount} product{lowStockCount !== 1 && "s"} low on stock
             </div>
@@ -217,7 +217,7 @@ export function ProductsTable({ products }: { products: Product[] }) {
                   />
                   <span
                     className={cn(
-                      "absolute top-3 right-3 px-2.5 py-1 rounded-full text-[11px] font-semibold text-white shadow-sm",
+                      "absolute top-3 right-3 px-2.5 py-1 rounded-full text-sm font-semibold text-white shadow-sm",
                       stock.tone === "in" && "bg-[#2B7A5D]",
                       stock.tone === "low" && "bg-[#E5B06D]",
                       stock.tone === "out" && "bg-[#E56D6D]"
@@ -226,7 +226,7 @@ export function ProductsTable({ products }: { products: Product[] }) {
                     {stock.text}
                   </span>
                   {product.isFeatured && (
-                    <span className="absolute top-3 left-3 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-white/95 text-[#1A4938] shadow-sm">
+                    <span className="absolute top-3 left-3 px-2.5 py-1 rounded-full text-sm font-semibold bg-white/95 text-[#1A4938] shadow-sm">
                       Featured
                     </span>
                   )}
@@ -235,10 +235,10 @@ export function ProductsTable({ products }: { products: Product[] }) {
                 <div className="p-5 flex-1 flex flex-col gap-3">
                   <div className="flex items-start justify-between gap-3">
                     <div className="min-w-0">
-                      <h3 className="font-bold text-[15px] leading-snug text-foreground line-clamp-2 font-heading">
+                      <h3 className="font-bold text-lg leading-snug text-foreground line-clamp-2 font-heading">
                         {product.name}
                       </h3>
-                      <p className="text-xs text-muted-foreground mt-0.5">
+                      <p className="text-sm text-muted-foreground mt-0.5">
                         {product.category.name}
                       </p>
                     </div>
@@ -247,13 +247,13 @@ export function ProductsTable({ products }: { products: Product[] }) {
                         size={13}
                         className="fill-[#c4a96a] text-[#c4a96a]"
                       />
-                      <span className="text-xs font-medium text-muted-foreground tabular-nums">
+                      <span className="text-sm font-medium text-muted-foreground tabular-nums">
                         {product.rating.toFixed(1)}
                       </span>
                     </div>
                   </div>
 
-                  <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2">
+                  <p className="text-base text-muted-foreground leading-relaxed line-clamp-2">
                     {product.description}
                   </p>
 
@@ -262,7 +262,7 @@ export function ProductsTable({ products }: { products: Product[] }) {
                       {tags.map((tag) => (
                         <span
                           key={tag}
-                          className="inline-flex items-center rounded-full bg-[#E8F2EC] px-2.5 py-0.5 text-[11px] font-medium text-[#2B7A5D] border border-[#2B7A5D]/10"
+                          className="inline-flex items-center rounded-full bg-[#E8F2EC] px-2.5 py-0.5 text-sm font-medium text-[#2B7A5D] border border-[#2B7A5D]/10"
                         >
                           {tag}
                         </span>
@@ -271,10 +271,10 @@ export function ProductsTable({ products }: { products: Product[] }) {
                   )}
 
                   <div className="flex items-baseline gap-1.5">
-                    <span className="text-xl font-extrabold text-[#1A4938] tabular-nums">
+                    <span className="text-2xl font-extrabold text-[#1A4938] tabular-nums">
                       ₹{product.price.toLocaleString("en-IN")}
                     </span>
-                    <span className="text-sm text-muted-foreground">
+                    <span className="text-base text-muted-foreground">
                       per {product.weight}
                     </span>
                   </div>
@@ -309,10 +309,10 @@ export function ProductsTable({ products }: { products: Product[] }) {
       ) : (
         <div className="bg-card rounded-2xl border border-border shadow-[0_4px_12px_rgba(0,0,0,0.04)] p-16 text-center">
           <Package size={48} className="mx-auto text-muted-foreground mb-4" />
-          <h3 className="text-lg font-semibold text-foreground mb-1">
+          <h3 className="text-xl font-semibold text-foreground mb-1">
             {search ? "No products match your search" : "No products yet"}
           </h3>
-          <p className="text-sm text-[var(--color-body)] mb-6">
+          <p className="text-base text-[var(--color-body)] mb-6">
             {search
               ? "Try a different search term."
               : "Add your first product to get started."}
@@ -331,7 +331,7 @@ export function ProductsTable({ products }: { products: Product[] }) {
       >
         <DialogContent className="sm:max-w-md">
           <DialogTitle>Delete Product</DialogTitle>
-          <p className="text-sm text-[var(--color-body)] mt-2">
+          <p className="text-base text-[var(--color-body)] mt-2">
             Are you sure you want to delete{" "}
             <strong className="text-foreground">{deleteTarget?.name}</strong>?
             This action cannot be undone.

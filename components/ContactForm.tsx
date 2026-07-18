@@ -84,10 +84,10 @@ export function ContactForm({
         <div className="w-16 h-16 rounded-full bg-[var(--color-success)]/15 text-[var(--color-success)] flex items-center justify-center mb-6">
           <MailCheck size={32} />
         </div>
-        <h3 className="text-2xl font-bold font-heading text-foreground mb-2">
+        <h3 className="text-3xl font-bold font-heading text-foreground mb-2">
           {successTitle}
         </h3>
-        <p className="text-[var(--color-body)] max-w-sm mb-6 text-sm leading-relaxed">
+        <p className="text-[var(--color-body)] max-w-sm mb-6 text-base leading-relaxed">
           {successMessage}
         </p>
         <Button
@@ -120,10 +120,10 @@ export function ContactForm({
     >
       {!compact && (
         <div>
-          <h2 className="text-lg font-bold font-heading text-foreground">
+          <h2 className="text-xl font-bold font-heading text-foreground">
             Send Us a Message
           </h2>
-          <p className="text-sm text-muted-foreground mt-0.5">
+          <p className="text-base text-muted-foreground mt-0.5">
             Tell us what you need and we will reply within 24 hours.
           </p>
         </div>
@@ -131,10 +131,10 @@ export function ContactForm({
 
       {compact && (
         <div className="mb-2">
-          <h3 className="font-bold text-lg text-foreground font-heading mb-1">
+          <h3 className="font-bold text-xl text-foreground font-heading mb-1">
             Register Your Interest
           </h3>
-          <p className="text-sm text-[var(--color-body)]">
+          <p className="text-base text-[var(--color-body)]">
             Fill your details. Mathesh will contact you within 24 hours.
           </p>
         </div>
@@ -211,7 +211,7 @@ export function ContactForm({
             required
             value={form.inquiryType}
             onChange={(e) => set("inquiryType", e.target.value)}
-            className="h-11 w-full rounded-xl border border-border bg-card px-3.5 py-2 text-sm outline-none focus-visible:border-primary focus-visible:ring-3 focus-visible:ring-primary/20 text-foreground appearance-none"
+            className="h-11 w-full rounded-xl border border-border bg-card px-3.5 py-2 text-base outline-none focus-visible:border-primary focus-visible:ring-3 focus-visible:ring-primary/20 text-foreground appearance-none"
             style={{
               backgroundImage:
                 "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%235c6370' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E\")",
@@ -243,7 +243,7 @@ export function ContactForm({
                   key={method}
                   type="button"
                   onClick={() => set("preferredContact", method)}
-                  className={`rounded-full px-4 py-1.5 text-sm font-medium border transition-colors ${
+                  className={`rounded-full px-4 py-1.5 text-base font-medium border transition-colors ${
                     active
                       ? "bg-primary text-white border-primary"
                       : "bg-card text-foreground border-border hover:bg-secondary"
@@ -266,7 +266,7 @@ export function ContactForm({
             onChange={(e) => set("message", e.target.value)}
             placeholder="Tell us more about what you need..."
             rows={4}
-            className="w-full rounded-xl border border-border bg-card px-3.5 py-2.5 text-sm outline-none focus-visible:border-primary focus-visible:ring-3 focus-visible:ring-primary/20 resize-none"
+            className="w-full rounded-xl border border-border bg-card px-3.5 py-2.5 text-base outline-none focus-visible:border-primary focus-visible:ring-3 focus-visible:ring-primary/20 resize-none"
           />
         </div>
       )}

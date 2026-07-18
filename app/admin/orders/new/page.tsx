@@ -26,14 +26,14 @@ export default async function NewOrderPage() {
       <header className="mb-6 sm:mb-8">
         <Link
           href="/admin/orders"
-          className="inline-flex items-center gap-1.5 text-sm text-[var(--color-body)] hover:text-primary mb-3 sm:mb-4"
+          className="inline-flex items-center gap-1.5 text-base text-[var(--color-body)] hover:text-primary mb-3 sm:mb-4"
         >
           <ArrowLeft size={16} /> Back to orders
         </Link>
-        <h1 className="text-xl md:text-2xl font-bold font-heading text-foreground">
+        <h1 className="text-2xl md:text-3xl font-bold font-heading text-foreground">
           Create Manual Order
         </h1>
-        <p className="text-[var(--color-body)] mt-1 text-xs sm:text-sm">
+        <p className="text-[var(--color-body)] mt-1 text-sm sm:text-base">
           Create an order for phone/walk-in customers
         </p>
       </header>

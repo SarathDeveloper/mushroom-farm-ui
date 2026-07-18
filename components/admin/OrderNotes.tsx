@@ -53,8 +53,8 @@ export function OrderNotes({ orderId, notes }: { orderId: string; notes: Note[] 
               className="group flex items-start gap-3 p-3 rounded-lg bg-secondary/50"
             >
               <div className="flex-1 min-w-0">
-                <p className="text-sm text-foreground whitespace-pre-wrap">{note.content}</p>
-                <p className="text-xs text-muted-foreground mt-1">
+                <p className="text-base text-foreground whitespace-pre-wrap">{note.content}</p>
+                <p className="text-sm text-muted-foreground mt-1">
                   {new Date(note.createdAt).toLocaleDateString("en-IN", {
                     day: "numeric",
                     month: "short",
@@ -81,7 +81,7 @@ export function OrderNotes({ orderId, notes }: { orderId: string; notes: Note[] 
           placeholder="Add a note..."
           value={content}
           onChange={(e) => setContent(e.target.value)}
-          className="flex-1 h-9 rounded-lg border border-border bg-background px-3 text-sm outline-none focus:border-primary"
+          className="flex-1 h-9 rounded-lg border border-border bg-background px-3 text-base outline-none focus:border-primary"
         />
         <Button type="submit" size="sm" disabled={isPending || !content.trim()} className="h-9 gap-1.5">
           <Send size={14} /> Add

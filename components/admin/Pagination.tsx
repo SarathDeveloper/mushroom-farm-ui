@@ -58,7 +58,7 @@ export function Pagination({ currentPage, totalPages }: PaginationProps) {
       </Button>
 
       {/* Mobile: show current/total */}
-      <span className="sm:hidden text-sm text-muted-foreground px-3">
+      <span className="sm:hidden text-base text-muted-foreground px-3">
         {currentPage} / {totalPages}
       </span>
 
@@ -66,7 +66,7 @@ export function Pagination({ currentPage, totalPages }: PaginationProps) {
       <div className="hidden sm:flex items-center gap-1.5">
         {pages.map((page, i) =>
           page === "..." ? (
-            <span key={`dots-${i}`} className="px-2 text-muted-foreground text-sm">
+            <span key={`dots-${i}`} className="px-2 text-muted-foreground text-base">
               ...
             </span>
           ) : (
@@ -74,7 +74,7 @@ export function Pagination({ currentPage, totalPages }: PaginationProps) {
               key={page}
               variant={page === currentPage ? "default" : "outline"}
               size="sm"
-              className="h-9 w-9 p-0 text-sm"
+              className="h-9 w-9 p-0 text-base"
               onClick={() => goToPage(page)}
             >
               {page}

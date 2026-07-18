@@ -40,20 +40,20 @@ const HARDCODED_CATEGORIES = [
 
 export function ShopByCategory() {
   return (
-    <section className="pt-16 pb-8 sm:py-20 lg:py-28 bg-secondary grain-overlay">
+    <section className="pt-16 pb-8 sm:py-10 lg:py-14 bg-secondary grain-overlay">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         <FadeIn className="text-center mb-8 sm:mb-14">
           <div className="flex items-center justify-center gap-3 mb-3">
             <span className="h-px w-6 sm:w-8 bg-border" />
-            <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">
+            <span className="text-sm font-bold uppercase tracking-[0.2em] text-primary">
               Shop
             </span>
             <span className="h-px w-6 sm:w-8 bg-border" />
           </div>
-          <h2 className="text-xl sm:text-2xl font-extrabold text-foreground tracking-tight font-heading">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-foreground tracking-tight font-heading">
             Shop by Category
           </h2>
-          <p className="text-[var(--color-body)] text-sm mt-1.5 max-w-md mx-auto">
+          <p className="text-[var(--color-body)] text-base mt-1.5 max-w-md mx-auto">
             Find the mushrooms you&apos;re looking for
           </p>
         </FadeIn>
@@ -79,7 +79,7 @@ export function ShopByCategory() {
                     className="object-cover transition-transform duration-500 group-hover:scale-110"
                   />
                 </div>
-                <span className="text-sm sm:text-base font-bold text-foreground text-center font-heading group-hover:text-primary transition-colors">
+                <span className="text-base sm:text-lg font-bold text-foreground text-center font-heading group-hover:text-primary transition-colors">
                   {category.name}
                 </span>
               </Link>

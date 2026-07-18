@@ -39,10 +39,10 @@ export default function NavbarMobileSheet() {
               <Image src="/gallery/brand-logo.png" alt="Logo" fill sizes="40px" className="object-cover" />
             </div>
             <span className="leading-none flex flex-col justify-center">
-              <span className="block font-display text-lg font-extrabold tracking-[0.01em] text-primary">
+              <span className="block font-display text-xl font-extrabold tracking-[0.01em] text-primary">
                 Sri Amman
               </span>
-              <span className="block font-sans text-[9px] font-semibold tracking-[0.22em] uppercase text-primary/70 mt-0.5">
+              <span className="block font-sans text-[10px] font-semibold tracking-[0.22em] uppercase text-primary/70 mt-0.5">
                 Mushroom Farms
               </span>
             </span>
@@ -58,7 +58,7 @@ export default function NavbarMobileSheet() {
                   key={link.href}
                   href={link.href}
                   className={cn(
-                    "flex items-center gap-3 px-4 py-3 rounded-xl text-[15px] font-medium transition-colors",
+                    "flex items-center gap-3 px-4 py-3 rounded-xl text-lg font-medium transition-colors",
                     isActive
                       ? "bg-primary/10 text-primary"
                       : "text-foreground hover:bg-secondary hover:text-primary"
@@ -75,31 +75,31 @@ export default function NavbarMobileSheet() {
 
           <div className="mx-6 my-4 border-t border-border" />
           <div className="px-4 space-y-1">
-            <p className="px-4 mb-2 text-[10px] font-bold uppercase tracking-[0.15em] text-muted-foreground">
+            <p className="px-4 mb-2 text-xs font-bold uppercase tracking-[0.15em] text-muted-foreground">
               Quick Access
             </p>
-            <Link href="/track-order" className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium text-foreground hover:bg-secondary hover:text-primary transition-colors">
+            <Link href="/track-order" className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-base font-medium text-foreground hover:bg-secondary hover:text-primary transition-colors">
               <Package size={16} className="text-muted-foreground" />
               Track Order
             </Link>
-            <Link href="/compare" className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium text-foreground hover:bg-secondary hover:text-primary transition-colors">
+            <Link href="/compare" className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-base font-medium text-foreground hover:bg-secondary hover:text-primary transition-colors">
               <ShoppingBag size={16} className="text-muted-foreground" />
               Compare Varieties
             </Link>
-            <Link href="/wishlist" className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium text-foreground hover:bg-secondary hover:text-primary transition-colors">
+            <Link href="/wishlist" className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-base font-medium text-foreground hover:bg-secondary hover:text-primary transition-colors">
               <Heart size={16} className="text-muted-foreground" />
               Wishlist
               {mounted && wishlistCount > 0 && (
-                <span className="ml-auto text-[10px] font-bold bg-primary/10 text-primary px-2 py-0.5 rounded-full">
+                <span className="ml-auto text-xs font-bold bg-primary/10 text-primary px-2 py-0.5 rounded-full">
                   {wishlistCount}
                 </span>
               )}
             </Link>
-            <Link href="/cart" className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium text-foreground hover:bg-secondary hover:text-primary transition-colors">
+            <Link href="/cart" className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-base font-medium text-foreground hover:bg-secondary hover:text-primary transition-colors">
               <ShoppingCart size={16} className="text-muted-foreground" />
               Cart
               {mounted && cartCount > 0 && (
-                <span className="ml-auto text-[10px] font-bold bg-primary/10 text-primary px-2 py-0.5 rounded-full">
+                <span className="ml-auto text-xs font-bold bg-primary/10 text-primary px-2 py-0.5 rounded-full">
                   {cartCount}
                 </span>
               )}
@@ -108,21 +108,21 @@ export default function NavbarMobileSheet() {
 
           <div className="mx-6 my-4 border-t border-border" />
           <div className="px-4 space-y-1">
-            <p className="px-4 mb-2 text-[10px] font-bold uppercase tracking-[0.15em] text-muted-foreground">
+            <p className="px-4 mb-2 text-xs font-bold uppercase tracking-[0.15em] text-muted-foreground">
               Account
             </p>
             {session?.user ? (
               <>
-                <Link href="/account" className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium text-foreground hover:bg-secondary hover:text-primary transition-colors">
+                <Link href="/account" className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-base font-medium text-foreground hover:bg-secondary hover:text-primary transition-colors">
                   <User size={16} className="text-muted-foreground" />
                   My Profile
                 </Link>
-                <Link href="/orders" className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium text-foreground hover:bg-secondary hover:text-primary transition-colors">
+                <Link href="/orders" className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-base font-medium text-foreground hover:bg-secondary hover:text-primary transition-colors">
                   <Package size={16} className="text-muted-foreground" />
                   My Orders
                 </Link>
                 {session.user.role === "ADMIN" && (
-                  <Link href="/admin" className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium text-primary hover:bg-primary/10 transition-colors">
+                  <Link href="/admin" className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-base font-medium text-primary hover:bg-primary/10 transition-colors">
                     <Leaf size={16} />
                     Admin Dashboard
                   </Link>

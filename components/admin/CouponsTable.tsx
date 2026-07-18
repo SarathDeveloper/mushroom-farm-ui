@@ -187,7 +187,7 @@ export function CouponsTable({ coupons }: { coupons: Coupon[] }) {
             >
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
-                  <span className="font-mono font-bold text-foreground bg-secondary px-2 py-1 rounded text-sm">
+                  <span className="font-mono font-bold text-foreground bg-secondary px-2 py-1 rounded text-base">
                     {coupon.code}
                   </span>
                   <CopyButton text={coupon.code} />
@@ -200,13 +200,13 @@ export function CouponsTable({ coupons }: { coupons: Coupon[] }) {
                   <Badge variant="secondary">Inactive</Badge>
                 )}
               </div>
-              <div className="space-y-1.5 text-sm mb-3">
+              <div className="space-y-1.5 text-base mb-3">
                 <p className="font-semibold text-primary">
                   {coupon.isPercentage ? (
                     <>
                       {coupon.discountValue}% off
                       {coupon.maxDiscount && (
-                        <span className="text-xs text-muted-foreground ml-1">
+                        <span className="text-sm text-muted-foreground ml-1">
                           (max ₹{coupon.maxDiscount})
                         </span>
                       )}
@@ -215,12 +215,12 @@ export function CouponsTable({ coupons }: { coupons: Coupon[] }) {
                     <>₹{coupon.discountValue} off</>
                   )}
                 </p>
-                <p className="text-xs text-muted-foreground">
+                <p className="text-sm text-muted-foreground">
                   {coupon.minOrderValue ? `Min order: ₹${coupon.minOrderValue}` : "No minimum order"}
                 </p>
               </div>
               <div className="flex items-center justify-between pt-3 border-t border-border">
-                <span className="text-xs text-muted-foreground">
+                <span className="text-sm text-muted-foreground">
                   Expires: {formatDate(coupon.expiryDate)}
                 </span>
                 <div className="flex items-center gap-2">
@@ -250,7 +250,7 @@ export function CouponsTable({ coupons }: { coupons: Coupon[] }) {
       {/* Desktop table view */}
       <div className="hidden md:block bg-card rounded-2xl border border-border shadow-[0_4px_12px_rgba(0,0,0,0.04)] overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-sm">
+          <table className="w-full text-left text-base">
             <thead>
               <tr className="border-b border-border bg-secondary/50 text-[var(--color-body)]">
                 <th className="font-semibold px-6 py-4">Code</th>
@@ -283,7 +283,7 @@ export function CouponsTable({ coupons }: { coupons: Coupon[] }) {
                           <>
                             {coupon.discountValue}%
                             {coupon.maxDiscount && (
-                              <span className="text-xs text-muted-foreground ml-1">
+                              <span className="text-sm text-muted-foreground ml-1">
                                 (max ₹{coupon.maxDiscount})
                               </span>
                             )}
@@ -386,7 +386,7 @@ export function CouponsTable({ coupons }: { coupons: Coupon[] }) {
                     checked={formData.isPercentage}
                     onCheckedChange={(checked) => setFormData((prev) => ({ ...prev, isPercentage: checked }))}
                   />
-                  <span className="text-sm">{formData.isPercentage ? "Percentage" : "Fixed Amount"}</span>
+                  <span className="text-base">{formData.isPercentage ? "Percentage" : "Fixed Amount"}</span>
                 </div>
               </div>
             </div>
@@ -435,7 +435,7 @@ export function CouponsTable({ coupons }: { coupons: Coupon[] }) {
                     checked={formData.isActive}
                     onCheckedChange={(checked) => setFormData((prev) => ({ ...prev, isActive: checked }))}
                   />
-                  <span className="text-sm">{formData.isActive ? "Yes" : "No"}</span>
+                  <span className="text-base">{formData.isActive ? "Yes" : "No"}</span>
                 </div>
               </div>
             </div>
@@ -457,7 +457,7 @@ export function CouponsTable({ coupons }: { coupons: Coupon[] }) {
       <Dialog open={!!deleteTarget} onOpenChange={(open) => !open && setDeleteTarget(null)}>
         <DialogContent className="sm:max-w-md">
           <DialogTitle>Delete Coupon</DialogTitle>
-          <p className="text-sm text-[var(--color-body)] mt-2">
+          <p className="text-base text-[var(--color-body)] mt-2">
             Are you sure you want to delete coupon <strong className="text-foreground font-mono">{deleteTarget?.code}</strong>?
           </p>
           <div className="flex justify-end gap-3 mt-6">

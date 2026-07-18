@@ -138,8 +138,8 @@ export default async function AdminOrdersPage(props: {
     <div className="p-4 sm:p-6 lg:p-10">
       <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6 sm:mb-8">
         <div>
-          <h1 className="text-xl md:text-2xl font-bold font-heading text-foreground">Orders</h1>
-          <p className="text-[var(--color-body)] mt-1 text-xs sm:text-sm">
+          <h1 className="text-2xl md:text-3xl font-bold font-heading text-foreground">Orders</h1>
+          <p className="text-[var(--color-body)] mt-1 text-sm sm:text-base">
             {stats.total} total · {stats.pending} pending · {stats.processing} processing · {stats.shipped} shipped
           </p>
         </div>
@@ -157,7 +157,7 @@ export default async function AdminOrdersPage(props: {
           <div className="w-16 h-16 rounded-full bg-secondary flex items-center justify-center mb-5">
             <PackageSearch size={30} className="text-primary" />
           </div>
-          <h2 className="text-xl font-bold font-heading text-foreground mb-1">No orders found</h2>
+          <h2 className="text-2xl font-bold font-heading text-foreground mb-1">No orders found</h2>
           <p className="text-[var(--color-body)] max-w-sm">
             {statusFilter || dateFilter || cityFilter || searchQuery
               ? "Try adjusting your filters."

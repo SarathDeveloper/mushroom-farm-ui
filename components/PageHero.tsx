@@ -20,15 +20,15 @@ export function PageHero({
       <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl text-center">
         <FadeIn direction="up">
           {eyebrow && (
-            <span className="inline-flex items-center px-3 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-bold uppercase tracking-wider mb-5">
+            <span className="inline-flex items-center px-3 py-1.5 rounded-full bg-primary/10 text-primary text-base font-bold uppercase tracking-wider mb-5">
               {eyebrow}
             </span>
           )}
-          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-foreground leading-[1.15] font-heading mb-4 sm:mb-5">
+          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-foreground leading-[1.15] font-heading mb-4 sm:mb-5">
             {title}
           </h1>
           {description && (
-            <p className="text-[var(--color-body)] text-sm md:text-base max-w-2xl mx-auto leading-relaxed">
+            <p className="text-[var(--color-body)] text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
               {description}
             </p>
           )}

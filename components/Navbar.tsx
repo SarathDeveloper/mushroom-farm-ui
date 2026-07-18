@@ -51,7 +51,7 @@ export default function Navbar() {
         <div className="flex h-16 sm:h-20 items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 min-w-0 group">
-            <div className="relative h-12 w-12 sm:h-14 sm:w-14 shrink-0 overflow-hidden rounded-full ring-2 ring-primary/10 transition-transform duration-300 group-hover:scale-105">
+            <div className="relative h-12 w-12 sm:h-14 sm:w-14 shrink-0 overflow-hidden rounded-full transition-transform duration-300 group-hover:scale-105">
               <Image
                 src="/gallery/brand-logo.png"
                 alt="Sri Amman Mushroom Farms"
@@ -65,7 +65,7 @@ export default function Navbar() {
               <span className="block font-display text-[17px] sm:text-[21px] font-extrabold tracking-[0.01em] text-primary transition-colors duration-300 group-hover:text-primary/90">
                 Sri Amman
               </span>
-              <span className="block font-sans text-[9px] sm:text-[10px] font-semibold tracking-[0.22em] uppercase text-primary/90 mt-1">
+              <span className="block font-sans text-[10px] sm:text-xs font-semibold tracking-[0.22em] uppercase text-primary/90 mt-1">
                 Mushroom Farms
               </span>
               <svg className="w-7 h-1.5 text-primary/40 mt-1 transition-all duration-300 group-hover:w-11 group-hover:text-primary" viewBox="0 0 32 6" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -83,7 +83,7 @@ export default function Navbar() {
                   key={link.href}
                   href={link.href}
                   className={cn(
-                    "text-sm font-medium transition-colors hover:text-primary",
+                    "text-base font-medium transition-colors hover:text-primary",
                     isActive ? "text-primary" : "text-muted-foreground"
                   )}
                 >
@@ -100,7 +100,7 @@ export default function Navbar() {
             <Link href="/wishlist" aria-label="View wishlist" className="relative flex items-center justify-center w-10 h-10 text-muted-foreground hover:text-primary transition-colors">
               <Heart size={20} />
               {mounted && wishlistCount > 0 && (
-                <span className="absolute right-1 top-1 flex h-4 w-4 items-center justify-center rounded-full bg-[#F76B46] text-[10px] font-bold text-white">
+                <span className="absolute right-1 top-1 flex h-4 w-4 items-center justify-center rounded-full bg-[#F76B46] text-xs font-bold text-white">
                   {wishlistCount}
                 </span>
               )}
@@ -109,7 +109,7 @@ export default function Navbar() {
             <Link href="/cart" aria-label="View cart" className="relative flex items-center justify-center w-10 h-10 text-muted-foreground hover:text-primary transition-colors">
               <ShoppingCart size={20} />
               {mounted && cartCount > 0 && (
-                <span className="absolute right-1 top-1 flex h-4 w-4 items-center justify-center rounded-full bg-[#F76B46] text-[10px] font-bold text-white">
+                <span className="absolute right-1 top-1 flex h-4 w-4 items-center justify-center rounded-full bg-[#F76B46] text-xs font-bold text-white">
                   {cartCount}
                 </span>
               )}

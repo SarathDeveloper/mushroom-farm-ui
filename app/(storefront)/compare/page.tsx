@@ -96,7 +96,7 @@ export default function ComparePage() {
         image="https://images.unsplash.com/photo-1445282768818-728615cc910a?q=80&w=2000&auto=format&fit=crop"
       />
 
-      <section className="py-20 sm:py-28 bg-background">
+      <section className="py-10 sm:py-14 bg-background">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
           {/* Comparison Cards */}
           <FadeIn className="mb-16">
@@ -108,44 +108,44 @@ export default function ComparePage() {
                     <Badge className="absolute top-3 left-3 bg-card/90 backdrop-blur-sm text-foreground font-bold">{m.name}</Badge>
                   </div>
                   <div className="p-5 space-y-3">
-                    <div className="flex items-center justify-between text-sm">
-                      <span className="text-muted-foreground text-xs">Calories</span>
-                      <span className="font-bold text-foreground text-xs">{m.calories} kcal</span>
+                    <div className="flex items-center justify-between text-base">
+                      <span className="text-muted-foreground text-sm">Calories</span>
+                      <span className="font-bold text-foreground text-sm">{m.calories} kcal</span>
                     </div>
-                    <div className="flex items-center justify-between text-sm">
+                    <div className="flex items-center justify-between text-base">
                       <span className="text-muted-foreground">Protein</span>
                       <span className="font-bold text-foreground">{m.protein}</span>
                     </div>
-                    <div className="flex items-center justify-between text-sm">
+                    <div className="flex items-center justify-between text-base">
                       <span className="text-muted-foreground">Fiber</span>
                       <span className="font-bold text-foreground">{m.fiber}</span>
                     </div>
-                    <div className="flex items-center justify-between text-sm">
+                    <div className="flex items-center justify-between text-base">
                       <span className="text-muted-foreground">Vitamin D</span>
                       <span className="font-bold text-foreground">{m.vitaminD}</span>
                     </div>
-                    <div className="flex items-center justify-between text-sm">
+                    <div className="flex items-center justify-between text-base">
                       <span className="text-muted-foreground">Iron</span>
                       <span className="font-bold text-foreground">{m.iron}</span>
                     </div>
-                    <div className="flex items-center justify-between text-sm">
+                    <div className="flex items-center justify-between text-base">
                       <span className="text-muted-foreground">Potassium</span>
                       <span className="font-bold text-foreground">{m.potassium}</span>
                     </div>
                     <div className="border-t border-border pt-3 mt-3">
-                      <p className="text-xs text-muted-foreground mb-1">Best for</p>
-                      <p className="text-sm font-semibold text-primary">{m.bestFor}</p>
+                      <p className="text-sm text-muted-foreground mb-1">Best for</p>
+                      <p className="text-base font-semibold text-primary">{m.bestFor}</p>
                     </div>
                     <div>
-                      <p className="text-xs text-muted-foreground mb-1">Taste & Texture</p>
-                      <p className="text-sm text-foreground">{m.taste} · {m.texture}</p>
+                      <p className="text-sm text-muted-foreground mb-1">Taste & Texture</p>
+                      <p className="text-base text-foreground">{m.taste} · {m.texture}</p>
                     </div>
                     <div>
-                      <p className="text-xs text-muted-foreground mb-1">Best in</p>
-                      <p className="text-sm text-foreground">{m.cooking}</p>
+                      <p className="text-sm text-muted-foreground mb-1">Best in</p>
+                      <p className="text-base text-foreground">{m.cooking}</p>
                     </div>
                     <div className="bg-primary/5 rounded-lg px-3 py-2 text-center">
-                      <p className="text-xs font-bold text-primary">{m.highlight}</p>
+                      <p className="text-sm font-bold text-primary">{m.highlight}</p>
                     </div>
                     <Button asChild size="sm" variant="outline" className="w-full rounded-full mt-2">
                       <Link href={`/shop/${m.slug}`}>Shop {m.name} <ArrowRight size={14} className="ml-1" /></Link>
@@ -160,10 +160,10 @@ export default function ComparePage() {
           <FadeIn>
             <div className="flex items-center justify-center gap-3 mb-3">
               <span className="h-px w-6 sm:w-8 bg-border" />
-              <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Recommendation</span>
+              <span className="text-sm font-bold uppercase tracking-[0.2em] text-primary">Recommendation</span>
               <span className="h-px w-6 sm:w-8 bg-border" />
             </div>
-            <h2 className="text-xl sm:text-2xl font-extrabold font-heading text-foreground text-center tracking-tight mb-8">
+            <h2 className="text-2xl sm:text-3xl font-extrabold font-heading text-foreground text-center tracking-tight mb-8">
               Which Mushroom For Your Goal?
             </h2>
             <div className="max-w-3xl mx-auto space-y-4">
@@ -173,17 +173,17 @@ export default function ComparePage() {
                     <uc.icon size={22} strokeWidth={1.75} />
                   </div>
                   <div className="flex-1">
-                    <h3 className="font-bold text-foreground text-sm">{uc.goal}</h3>
-                    <p className="text-sm text-[var(--color-body)]">{uc.reason}</p>
+                    <h3 className="font-bold text-foreground text-base">{uc.goal}</h3>
+                    <p className="text-base text-[var(--color-body)]">{uc.reason}</p>
                   </div>
-                  <Badge className="bg-primary/10 text-primary font-bold shrink-0 text-xs">{uc.recommended}</Badge>
+                  <Badge className="bg-primary/10 text-primary font-bold shrink-0 text-sm">{uc.recommended}</Badge>
                 </div>
               ))}
             </div>
           </FadeIn>
 
           <FadeIn className="text-center mt-16">
-            <p className="text-xs text-muted-foreground mb-4">All values per 100g of raw mushroom. Individual results may vary.</p>
+            <p className="text-sm text-muted-foreground mb-4">All values per 100g of raw mushroom. Individual results may vary.</p>
             <Button asChild className="rounded-full px-8">
               <Link href="/shop">Shop All Mushrooms</Link>
             </Button>

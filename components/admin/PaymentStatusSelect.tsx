@@ -44,7 +44,7 @@ export function PaymentStatusSelect({
         value={currentStatus}
         onChange={handleChange}
         disabled={isPending}
-        className={`appearance-none px-3 py-1.5 pr-8 rounded-full text-xs font-bold border cursor-pointer outline-none ${statusColors[currentStatus]}`}
+        className={`appearance-none px-3 py-1.5 pr-8 rounded-full text-sm font-bold border cursor-pointer outline-none ${statusColors[currentStatus]}`}
       >
         {statuses.map((s) => (
           <option key={s} value={s}>

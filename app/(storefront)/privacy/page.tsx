@@ -50,12 +50,12 @@ export default function PrivacyPolicyPage() {
         description="Last updated: June 1, 2026"
         image="/gallery/farm/oyster-mushroom-growing.png"
       />
-      <section className="py-20 sm:py-28 bg-background">
+      <section className="py-10 sm:py-14 bg-background">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-3xl space-y-10">
           {sections.map((section, i) => (
             <FadeIn key={section.title} delay={Math.min(i * 0.05, 0.3)}>
-              <h2 className="text-lg sm:text-xl font-bold font-heading text-foreground mb-3">{section.title}</h2>
-              <p className="text-[var(--color-body)] text-sm sm:text-base leading-relaxed">{section.body}</p>
+              <h2 className="text-xl sm:text-2xl font-bold font-heading text-foreground mb-3">{section.title}</h2>
+              <p className="text-[var(--color-body)] text-base sm:text-lg leading-relaxed">{section.body}</p>
             </FadeIn>
           ))}
         </div>

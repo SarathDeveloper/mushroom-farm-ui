@@ -233,7 +233,7 @@ export function TrainingTable({ programs }: { programs: Training[] }) {
           <div className="w-16 h-16 rounded-full bg-secondary flex items-center justify-center mb-5">
             <GraduationCap size={30} className="text-primary" />
           </div>
-          <h2 className="text-xl font-bold font-heading text-foreground mb-1">No training programs</h2>
+          <h2 className="text-2xl font-bold font-heading text-foreground mb-1">No training programs</h2>
           <p className="text-[var(--color-body)] max-w-sm">
             Create training programs for mushroom farming education.
           </p>
@@ -263,8 +263,8 @@ export function TrainingTable({ programs }: { programs: Training[] }) {
                     <div className="flex items-center gap-2 mb-2">
                       <Badge variant={statusVariant[prog.status]}>{prog.status}</Badge>
                     </div>
-                    <h3 className="text-lg font-semibold text-foreground">{prog.title}</h3>
-                    <p className="text-sm text-muted-foreground mt-1 line-clamp-2">{prog.description}</p>
+                    <h3 className="text-xl font-semibold text-foreground">{prog.title}</h3>
+                    <p className="text-base text-muted-foreground mt-1 line-clamp-2">{prog.description}</p>
                   </div>
                   <div className="flex items-center gap-2 shrink-0">
                     <Button variant="outline" size="sm" className="h-8 w-8 p-0" onClick={() => openEdit(prog)}>
@@ -281,7 +281,7 @@ export function TrainingTable({ programs }: { programs: Training[] }) {
                   </div>
                 </div>
 
-                <div className="flex flex-wrap gap-x-6 gap-y-2 mt-4 text-sm">
+                <div className="flex flex-wrap gap-x-6 gap-y-2 mt-4 text-base">
                   <div className="flex items-center gap-1.5 text-muted-foreground">
                     <Calendar size={14} />
                     {formatDate(prog.startDate)}
@@ -424,7 +424,7 @@ export function TrainingTable({ programs }: { programs: Training[] }) {
                     id="status"
                     value={formData.status}
                     onChange={(e) => setFormData((prev) => ({ ...prev, status: e.target.value as TrainingStatus }))}
-                    className="h-11 w-full rounded-xl border border-border bg-card px-3.5 text-sm outline-none"
+                    className="h-11 w-full rounded-xl border border-border bg-card px-3.5 text-base outline-none"
                   >
                     <option value="UPCOMING">Upcoming</option>
                     <option value="ONGOING">Ongoing</option>
@@ -468,12 +468,12 @@ export function TrainingTable({ programs }: { programs: Training[] }) {
                 {viewRegistrations.registrations.map((reg) => (
                   <div key={reg.id} className="rounded-lg border border-border p-3">
                     <div className="flex items-center justify-between gap-2 mb-2">
-                      <p className="font-medium text-sm truncate">{reg.user.name || "—"}</p>
+                      <p className="font-medium text-base truncate">{reg.user.name || "—"}</p>
                       <select
                         value={reg.status}
                         onChange={(e) => handleRegistrationStatus(reg.id, e.target.value as PaymentStatus)}
                         disabled={isPending}
-                        className={`text-xs px-2 py-1 rounded-full border font-bold shrink-0 ${
+                        className={`text-sm px-2 py-1 rounded-full border font-bold shrink-0 ${
                           reg.status === "COMPLETED" ? "bg-green-100 text-green-800 border-green-200" :
                           reg.status === "PENDING" ? "bg-yellow-100 text-yellow-800 border-yellow-200" :
                           reg.status === "FAILED" ? "bg-red-100 text-red-800 border-red-200" :
@@ -486,7 +486,7 @@ export function TrainingTable({ programs }: { programs: Training[] }) {
                         <option value="REFUNDED">REFUNDED</option>
                       </select>
                     </div>
-                    <div className="text-xs text-muted-foreground space-y-0.5">
+                    <div className="text-sm text-muted-foreground space-y-0.5">
                       {reg.user.email && <p>{reg.user.email}</p>}
                       {reg.user.phone && <p>{reg.user.phone}</p>}
                       <p>{formatDate(reg.createdAt)}</p>
@@ -497,7 +497,7 @@ export function TrainingTable({ programs }: { programs: Training[] }) {
 
               {/* Desktop table view */}
               <div className="hidden sm:block overflow-x-auto">
-                <table className="w-full text-sm">
+                <table className="w-full text-base">
                   <thead>
                     <tr className="border-b text-left text-muted-foreground">
                       <th className="pb-2 font-semibold">Name</th>
@@ -511,7 +511,7 @@ export function TrainingTable({ programs }: { programs: Training[] }) {
                       <tr key={reg.id}>
                         <td className="py-3 font-medium">{reg.user.name || "—"}</td>
                         <td className="py-3">
-                          <div className="text-xs">
+                          <div className="text-sm">
                             {reg.user.email && <p>{reg.user.email}</p>}
                             {reg.user.phone && <p className="text-muted-foreground">{reg.user.phone}</p>}
                           </div>
@@ -522,7 +522,7 @@ export function TrainingTable({ programs }: { programs: Training[] }) {
                             value={reg.status}
                             onChange={(e) => handleRegistrationStatus(reg.id, e.target.value as PaymentStatus)}
                             disabled={isPending}
-                            className={`text-xs px-2 py-1 rounded-full border font-bold ${
+                            className={`text-sm px-2 py-1 rounded-full border font-bold ${
                               reg.status === "COMPLETED" ? "bg-green-100 text-green-800 border-green-200" :
                               reg.status === "PENDING" ? "bg-yellow-100 text-yellow-800 border-yellow-200" :
                               reg.status === "FAILED" ? "bg-red-100 text-red-800 border-red-200" :
@@ -549,7 +549,7 @@ export function TrainingTable({ programs }: { programs: Training[] }) {
       <Dialog open={!!deleteTarget} onOpenChange={(open) => !open && setDeleteTarget(null)}>
         <DialogContent className="sm:max-w-md">
           <DialogTitle>Delete Program</DialogTitle>
-          <p className="text-sm text-[var(--color-body)] mt-2">
+          <p className="text-base text-[var(--color-body)] mt-2">
             Are you sure you want to delete <strong className="text-foreground">{deleteTarget?.title}</strong>?
             This will also delete all registrations.
           </p>

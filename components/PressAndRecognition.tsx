@@ -48,16 +48,16 @@ const recognitionPhotos = [
 
 export function PressAndRecognition({ compact = false }: { compact?: boolean }) {
   return (
-    <section className={compact ? "py-24 sm:py-32 bg-background grain-overlay" : undefined}>
+    <section className={compact ? "py-12 sm:py-16 bg-background grain-overlay" : undefined}>
       <div className={compact ? "container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl" : undefined}>
         <FadeIn className="text-center mb-12">
           <div className="flex items-center justify-center gap-3 mb-4">
             <span className="h-px w-6 sm:w-8 bg-border" />
-            <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">News</span>
+            <span className="text-sm font-bold uppercase tracking-[0.2em] text-primary">News</span>
             <span className="h-px w-6 sm:w-8 bg-border" />
           </div>
-          <h2 className="text-xl sm:text-2xl font-extrabold text-foreground tracking-tight font-heading mb-3">We Are in the News</h2>
-          <p className="text-[var(--color-body)] max-w-2xl mx-auto text-sm sm:text-base">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-foreground tracking-tight font-heading mb-3">We Are in the News</h2>
+          <p className="text-[var(--color-body)] max-w-2xl mx-auto text-base sm:text-lg">
             Tamil newspapers wrote about our farm and our mushroom growing work.
           </p>
         </FadeIn>
@@ -77,10 +77,10 @@ export function PressAndRecognition({ compact = false }: { compact?: boolean }) 
                 <div className="p-5">
                   <div className="flex items-center gap-2 mb-2">
                     <Newspaper size={16} className="text-primary" />
-                    <span className="text-sm font-semibold text-primary">{article.paper}</span>
-                    <span className="text-xs text-muted-foreground ml-auto">{article.date}</span>
+                    <span className="text-base font-semibold text-primary">{article.paper}</span>
+                    <span className="text-sm text-muted-foreground ml-auto">{article.date}</span>
                   </div>
-                  <p className="text-sm text-foreground font-medium leading-snug">{article.headline}</p>
+                  <p className="text-base text-foreground font-medium leading-snug">{article.headline}</p>
                 </div>
               </div>
             </FadeIn>
@@ -90,11 +90,11 @@ export function PressAndRecognition({ compact = false }: { compact?: boolean }) 
         <FadeIn className="text-center mb-12">
           <div className="flex items-center justify-center gap-3 mb-4">
             <span className="h-px w-6 sm:w-8 bg-border" />
-            <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Trust</span>
+            <span className="text-sm font-bold uppercase tracking-[0.2em] text-primary">Trust</span>
             <span className="h-px w-6 sm:w-8 bg-border" />
           </div>
-          <h2 className="text-xl sm:text-2xl font-extrabold text-foreground tracking-tight font-heading mb-3">Recognition &amp; Support</h2>
-          <p className="text-[var(--color-body)] max-w-2xl mx-auto text-sm sm:text-base">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-foreground tracking-tight font-heading mb-3">Recognition &amp; Support</h2>
+          <p className="text-[var(--color-body)] max-w-2xl mx-auto text-base sm:text-lg">
             The District office and Tamil Nadu Horticulture Department support our farm.
           </p>
         </FadeIn>
@@ -112,8 +112,8 @@ export function PressAndRecognition({ compact = false }: { compact?: boolean }) 
                   />
                 </div>
                 <div className="p-6">
-                  <h3 className="font-bold text-base text-foreground font-heading mb-1">{photo.title}</h3>
-                  <p className="text-sm text-[var(--color-body)]">{photo.desc}</p>
+                  <h3 className="font-bold text-lg text-foreground font-heading mb-1">{photo.title}</h3>
+                  <p className="text-base text-[var(--color-body)]">{photo.desc}</p>
                 </div>
               </div>
             </FadeIn>

@@ -444,17 +444,17 @@ export default function CheckoutPage() {
           <div className="w-20 h-20 rounded-full bg-[hsl(var(--success))]/15 text-[hsl(var(--success))] flex items-center justify-center mx-auto mb-6">
             <PartyPopper size={36} />
           </div>
-          <h1 className="text-xl sm:text-2xl font-bold font-heading text-foreground mb-3">
+          <h1 className="text-2xl sm:text-3xl font-bold font-heading text-foreground mb-3">
             Order Placed Successfully!
           </h1>
-            <p className="text-sm text-[hsl(var(--foreground))] max-w-md mx-auto mb-2">
+            <p className="text-base text-[hsl(var(--foreground))] max-w-md mx-auto mb-2">
             Thank you for your order. Your order ID is:
           </p>
-          <p className="text-lg font-bold text-primary mb-2">
+          <p className="text-xl font-bold text-primary mb-2">
             #{orderId.slice(0, 8).toUpperCase()}
           </p>
           {paymentMethod === "cod" && (
-            <p className="text-xs text-[hsl(var(--foreground))] mb-8">
+            <p className="text-sm text-[hsl(var(--foreground))] mb-8">
               Please keep ${formatCurrency(total)} ready for cash on delivery.
             </p>
           )}
@@ -481,10 +481,10 @@ export default function CheckoutPage() {
     return (
       <div className="flex flex-col min-h-[60vh] items-center justify-center text-center px-4 py-24">
         <ShoppingBag size={36} className="text-muted-foreground mb-4" />
-        <h1 className="text-xl sm:text-2xl font-bold font-heading text-foreground mb-2">
+        <h1 className="text-2xl sm:text-3xl font-bold font-heading text-foreground mb-2">
           Nothing to checkout
         </h1>
-        <p className="text-sm text-[hsl(var(--foreground))] mb-6">
+        <p className="text-base text-[hsl(var(--foreground))] mb-6">
           Your cart is empty. Add some products first.
         </p>
         <Button asChild className="rounded-full px-8">
@@ -504,15 +504,15 @@ export default function CheckoutPage() {
         image="https://images.unsplash.com/photo-1497515114629-f71d768fd07c?q=80&w=2000&auto=format&fit=crop"
       />
 
-      <section className="py-20 sm:py-28 bg-background">
+      <section className="py-10 sm:py-14 bg-background">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
           <FadeIn className="mb-10">
-            <div className="flex items-center justify-center gap-2 text-sm">
+            <div className="flex items-center justify-center gap-2 text-base">
               {STEPS.map((label, i) => (
                 <div key={label} className="flex items-center gap-2">
                   <span
                     className={cn(
-                      "w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold",
+                      "w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold",
                       i < step
                         ? "bg-primary text-white"
                         : i === step
@@ -551,7 +551,7 @@ export default function CheckoutPage() {
               {step === 0 && (
                 <form onSubmit={goToPayment}>
                   <div className="rounded-2xl border border-border bg-card p-6 sm:p-8 space-y-5">
-                    <h2 className="text-lg sm:text-xl font-bold font-heading text-foreground flex items-center gap-2">
+                    <h2 className="text-xl sm:text-2xl font-bold font-heading text-foreground flex items-center gap-2">
                       <MapPin size={20} className="text-primary" />
                       Delivery Address
                     </h2>
@@ -617,15 +617,15 @@ export default function CheckoutPage() {
                         )}
                       </div>
                       {phoneError && (
-                        <p className="text-xs text-[var(--color-error)]">{phoneError}</p>
+                        <p className="text-sm text-[var(--color-error)]">{phoneError}</p>
                       )}
                       {!phoneError && !phoneVerified && (
-                        <p className="text-xs text-muted-foreground">
+                        <p className="text-sm text-muted-foreground">
                           Must be 10 digits and start with 6, 7, 8, or 9. OTP verification is required.
                         </p>
                       )}
                       {phoneVerified && (
-                        <p className="text-xs text-[hsl(var(--success))] flex items-center gap-1">
+                        <p className="text-sm text-[hsl(var(--success))] flex items-center gap-1">
                           <CheckCircle2 size={16} /> Mobile number verified
                         </p>
                       )}
@@ -666,7 +666,7 @@ export default function CheckoutPage() {
                       {otpMsg && (
                         <p
                           className={cn(
-                            "text-xs",
+                            "text-sm",
                             phoneVerified
                               ? "text-[hsl(var(--success))]"
                               : "text-[hsl(var(--foreground))]",
@@ -686,7 +686,7 @@ export default function CheckoutPage() {
                           type="button"
                           onClick={autofillCurrentAddress}
                           disabled={locating}
-                          className="inline-flex items-center gap-1.5 text-xs font-medium text-primary hover:underline disabled:opacity-60"
+                          className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline disabled:opacity-60"
                         >
                           {locating ? (
                             <Loader2 size={13} className="animate-spin" />
@@ -703,10 +703,10 @@ export default function CheckoutPage() {
                         placeholder="House/flat, street, area"
                         value={address}
                         onChange={(e) => setAddress(e.target.value)}
-                        className="w-full rounded-xl border border-border bg-card px-3.5 py-2 text-base md:text-sm outline-none focus-visible:border-primary focus-visible:ring-3 focus-visible:ring-primary/20 resize-none placeholder:text-muted-foreground"
+                        className="w-full rounded-xl border border-border bg-card px-3.5 py-2 text-lg md:text-base outline-none focus-visible:border-primary focus-visible:ring-3 focus-visible:ring-primary/20 resize-none placeholder:text-muted-foreground"
                       />
                       {locationMsg && (
-                        <p className="text-xs text-muted-foreground">{locationMsg}</p>
+                        <p className="text-sm text-muted-foreground">{locationMsg}</p>
                       )}
                     </div>
 
@@ -753,7 +753,7 @@ export default function CheckoutPage() {
                     </div>
 
                     {errorMsg && (
-                      <p className="text-sm text-[hsl(var(--destructive))] bg-[hsl(var(--destructive))]/10 rounded-xl px-4 py-3">
+                      <p className="text-base text-[hsl(var(--destructive))] bg-[hsl(var(--destructive))]/10 rounded-xl px-4 py-3">
                         {errorMsg}
                       </p>
                     )}
@@ -768,7 +768,7 @@ export default function CheckoutPage() {
               {/* Step 1: Payment */}
               {step === 1 && (
                 <div className="rounded-2xl border border-border bg-card p-6 sm:p-8 space-y-5">
-                  <h2 className="text-lg sm:text-xl font-bold font-heading text-foreground flex items-center gap-2">
+                  <h2 className="text-xl sm:text-2xl font-bold font-heading text-foreground flex items-center gap-2">
                     <CreditCard size={20} className="text-primary" />
                     Payment Method
                   </h2>
@@ -801,7 +801,7 @@ export default function CheckoutPage() {
                           <Banknote size={16} className="text-primary" />
                           Cash On Delivery
                         </p>
-                        <p className="text-sm text-muted-foreground mt-0.5">
+                        <p className="text-base text-muted-foreground mt-0.5">
                           Pay with cash when your order arrives
                         </p>
                       </div>
@@ -834,7 +834,7 @@ export default function CheckoutPage() {
                           <CreditCard size={16} className="text-primary" />
                           Pay Online
                         </p>
-                        <p className="text-sm text-muted-foreground mt-0.5">
+                        <p className="text-base text-muted-foreground mt-0.5">
                           UPI, cards &amp; net banking via Razorpay
                         </p>
                       </div>
@@ -842,7 +842,7 @@ export default function CheckoutPage() {
                   </div>
 
                   {paymentMethod === "online" && (
-                    <div className="rounded-2xl border border-border bg-secondary/50 p-4 flex items-center gap-3 text-sm text-[hsl(var(--foreground))]">
+                    <div className="rounded-2xl border border-border bg-secondary/50 p-4 flex items-center gap-3 text-base text-[hsl(var(--foreground))]">
                       <ShieldCheck size={18} className="text-primary shrink-0" />
                       Secure payment powered by Razorpay. Your card details are
                       never stored on our servers.
@@ -874,29 +874,29 @@ export default function CheckoutPage() {
               {/* Step 2: Review & Place Order */}
               {step === 2 && (
                 <div className="rounded-2xl border border-border bg-card p-6 sm:p-8 space-y-6">
-                  <h2 className="text-lg sm:text-xl font-bold font-heading text-foreground flex items-center gap-2">
+                  <h2 className="text-xl sm:text-2xl font-bold font-heading text-foreground flex items-center gap-2">
                     <CheckCircle2 size={20} className="text-primary" />
                     Review &amp; Place Order
                   </h2>
 
                   <div className="space-y-1">
-                    <h3 className="text-sm font-semibold text-foreground">
+                    <h3 className="text-base font-semibold text-foreground">
                       Delivery Address
                     </h3>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-base text-muted-foreground">
                       {fullName}, {phone}
                     </p>
-                    <p className="text-sm text-muted-foreground">{address}</p>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-base text-muted-foreground">{address}</p>
+                    <p className="text-base text-muted-foreground">
                       {city}, {state} – {pincode}
                     </p>
                   </div>
 
                   <div className="space-y-1">
-                    <h3 className="text-sm font-semibold text-foreground">
+                    <h3 className="text-base font-semibold text-foreground">
                       Payment
                     </h3>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-base text-muted-foreground">
                       {paymentMethod === "cod"
                         ? "Cash On Delivery"
                         : "Pay Online (Razorpay)"}
@@ -904,13 +904,13 @@ export default function CheckoutPage() {
                   </div>
 
                   <div className="space-y-3">
-                    <h3 className="text-sm font-semibold text-foreground">
+                    <h3 className="text-base font-semibold text-foreground">
                       Items ({itemCount})
                     </h3>
                     {items.map((item) => (
                       <div
                         key={item.productId}
-                        className="flex justify-between text-sm text-muted-foreground"
+                        className="flex justify-between text-base text-muted-foreground"
                       >
                         <span>
                           {item.name} × {item.quantity}
@@ -923,7 +923,7 @@ export default function CheckoutPage() {
                   </div>
 
                   {errorMsg && (
-                    <p className="text-sm text-[var(--color-error)] bg-[var(--color-error)]/10 rounded-xl px-4 py-3">
+                    <p className="text-base text-[var(--color-error)] bg-[var(--color-error)]/10 rounded-xl px-4 py-3">
                       {errorMsg}
                     </p>
                   )}
@@ -969,27 +969,27 @@ export default function CheckoutPage() {
                     className="w-full flex items-center justify-between p-4 lg:hidden"
                     onClick={() => setSummaryOpen(!summaryOpen)}
                   >
-                    <h3 className="text-sm font-bold font-heading text-foreground">
+                    <h3 className="text-base font-bold font-heading text-foreground">
                       Order Summary ({itemCount} items)
                     </h3>
                     <div className="flex items-center gap-2">
-                      <span className="font-semibold text-foreground text-base">{formatCurrency(total)}</span>
+                      <span className="font-semibold text-foreground text-lg">{formatCurrency(total)}</span>
                       <ChevronDown size={18} className={cn("text-muted-foreground transition-transform", summaryOpen && "rotate-180")} />
                     </div>
                   </button>
-                  <h3 className="text-base font-bold font-heading text-foreground hidden lg:block">
+                  <h3 className="text-lg font-bold font-heading text-foreground hidden lg:block">
                     Order Summary
                   </h3>
                   <div className={cn("border-t border-border pt-4 space-y-2 px-4 pb-4 lg:px-0 lg:pb-0", !summaryOpen && "hidden lg:block")}>
-                    <div className="flex justify-between text-sm text-[hsl(var(--foreground))]">
+                    <div className="flex justify-between text-base text-[hsl(var(--foreground))]">
                       <span>Items ({itemCount})</span>
                       <span>{formatCurrency(subtotal)}</span>
                     </div>
-                    <div className="flex justify-between text-sm text-[hsl(var(--foreground))]">
+                    <div className="flex justify-between text-base text-[hsl(var(--foreground))]">
                       <span>GST</span>
                       <span>{formatCurrency(gst)}</span>
                     </div>
-                    <div className="flex justify-between text-sm text-[hsl(var(--foreground))]">
+                    <div className="flex justify-between text-base text-[hsl(var(--foreground))]">
                       <span>Delivery</span>
                       <span>
                         {shipping === 0 ? (
@@ -1002,12 +1002,12 @@ export default function CheckoutPage() {
                       </span>
                     </div>
                     {appliedCoupon && (
-                      <div className="flex justify-between text-sm text-[hsl(var(--success))]">
+                      <div className="flex justify-between text-base text-[hsl(var(--success))]">
                         <span>Discount ({appliedCoupon.code})</span>
                         <span>-{formatCurrency(appliedCoupon.discount)}</span>
                       </div>
                     )}
-                    <div className="flex justify-between font-bold text-foreground text-base pt-2 border-t border-border">
+                    <div className="flex justify-between font-bold text-foreground text-lg pt-2 border-t border-border">
                       <span>Total</span>
                       <span>{formatCurrency(total)}</span>
                     </div>
@@ -1015,17 +1015,17 @@ export default function CheckoutPage() {
                 </div>
 
                 <div className={cn("rounded-2xl border border-border bg-card p-5", !summaryOpen && "hidden lg:block")}>
-                  <h4 className="text-sm font-bold text-foreground mb-3 flex items-center gap-2">
+                  <h4 className="text-base font-bold text-foreground mb-3 flex items-center gap-2">
                     <Tag size={14} className="text-primary" /> Apply Coupon
                   </h4>
                   {appliedCoupon ? (
                     <div className="flex items-center justify-between bg-[hsl(var(--success))]/10 rounded-lg px-3 py-2">
-                      <span className="text-sm font-semibold text-[hsl(var(--success))]">
+                      <span className="text-base font-semibold text-[hsl(var(--success))]">
                         {appliedCoupon.code} applied!
                       </span>
                       <button
                         onClick={removeCoupon}
-                        className="text-xs text-[var(--color-error)] font-medium hover:underline"
+                        className="text-sm text-[var(--color-error)] font-medium hover:underline"
                       >
                         Remove
                       </button>
@@ -1040,23 +1040,23 @@ export default function CheckoutPage() {
                             setCouponError("");
                           }}
                           placeholder="Enter code"
-                          className="h-9 text-sm uppercase"
+                          className="h-9 text-base uppercase"
                         />
                         <Button
                           onClick={applyCoupon}
                           size="sm"
                           variant="outline"
-                          className="h-9 px-3 text-xs shrink-0"
+                          className="h-9 px-3 text-sm shrink-0"
                         >
                           Apply
                         </Button>
                       </div>
                       {couponError && (
-                        <p className="text-xs text-[hsl(var(--destructive))] mt-2">
+                        <p className="text-sm text-[hsl(var(--destructive))] mt-2">
                           {couponError}
                         </p>
                       )}
-                      <p className="text-xs text-muted-foreground mt-2">
+                      <p className="text-sm text-muted-foreground mt-2">
                         Try: FRESH10, WELCOME50, MUSHROOM15
                       </p>
                     </>
@@ -1065,7 +1065,7 @@ export default function CheckoutPage() {
 
                 {shipping === 0 && subtotal > 0 && (
                   <div className={cn("rounded-xl bg-[hsl(var(--success))]/10 border border-[hsl(var(--success))]/20 p-3 text-center", !summaryOpen && "hidden lg:block")}>
-                    <p className="text-xs font-semibold text-[hsl(var(--success))]">
+                    <p className="text-sm font-semibold text-[hsl(var(--success))]">
                       <CheckCircle2 size={16} className="inline mr-1" /> You
                       qualify for free delivery!
                     </p>
@@ -1074,30 +1074,30 @@ export default function CheckoutPage() {
 
                 {minShelfLife != null && (
                   <div className={cn("rounded-xl bg-amber-50 border border-amber-200 p-3 space-y-1.5", !summaryOpen && "hidden lg:block")}>
-                    <p className="text-xs font-semibold text-amber-700 flex items-center gap-1.5">
+                    <p className="text-sm font-semibold text-amber-700 flex items-center gap-1.5">
                       <Timer size={14} className="shrink-0" />
                       Your order includes items best consumed within {minShelfLife} day{minShelfLife > 1 ? "s" : ""}
                     </p>
-                    <p className="text-[11px] text-amber-600">
+                    <p className="text-sm text-amber-600">
                       We&apos;ll pick and deliver as fast as possible to ensure peak freshness.
                     </p>
                   </div>
                 )}
 
                 <div className={cn("rounded-xl bg-primary/5 border border-primary/15 p-3 space-y-2", !summaryOpen && "hidden lg:block")}>
-                  <p className="text-xs font-semibold text-primary flex items-center gap-1.5">
+                  <p className="text-sm font-semibold text-primary flex items-center gap-1.5">
                     <Truck size={14} className="shrink-0" />
                     Delivery Schedule
                   </p>
                   <div className="space-y-1">
-                    <p className="text-[11px] text-[var(--color-body)]">
+                    <p className="text-sm text-[var(--color-body)]">
                       <span className="font-semibold text-foreground">Before 7 AM</span> &mdash; We pick fresh today and deliver to your door
                     </p>
-                    <p className="text-[11px] text-[var(--color-body)]">
+                    <p className="text-sm text-[var(--color-body)]">
                       <span className="font-semibold text-foreground">After 7 AM</span> &mdash; We pick tomorrow morning, pack and send
                     </p>
                   </div>
-                  <p className="text-[10px] text-muted-foreground">
+                  <p className="text-xs text-muted-foreground">
                     Mushrooms are picked only after your order &mdash; never sitting in storage.
                   </p>
                 </div>

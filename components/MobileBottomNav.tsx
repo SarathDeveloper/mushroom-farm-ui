@@ -45,12 +45,12 @@ export function MobileBottomNav() {
               <div className="relative">
                 <tab.icon size={22} strokeWidth={isActive ? 2 : 1.5} />
                 {tab.label === "Cart" && mounted && cartCount > 0 && (
-                  <span className="absolute -top-1.5 -right-2 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[9px] font-bold text-white">
+                  <span className="absolute -top-1.5 -right-2 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-white">
                     {cartCount > 9 ? "9+" : cartCount}
                   </span>
                 )}
               </div>
-              <span className="text-xs font-medium">{tab.label}</span>
+              <span className="text-sm font-medium">{tab.label}</span>
               {isActive && (
                 <span className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-0.5 rounded-full bg-primary" />
               )}

@@ -10,6 +10,8 @@ import {
   ShieldCheck,
   Leaf,
   Clock,
+  ShoppingBag,
+  Check
 } from "lucide-react";
 import { SafeImage } from "@/components/SafeImage";
 import { cn } from "@/lib/utils";
@@ -62,11 +64,7 @@ const fallbackSlides: HeroSlideData[] = [
   },
 ];
 
-const trustBadges = [
-  { icon: ShieldCheck, label: "FSSAI Registered" },
-  { icon: Leaf, label: "Natural Growing" },
-  { icon: Clock, label: "Fresh Harvests" },
-];
+
 
 function VideoBackground({ src, isActive }: { src: string; isActive: boolean }) {
   const ref = useRef<HTMLVideoElement>(null);
@@ -160,36 +158,35 @@ export function HomeHero({ slides }: { slides?: HeroSlideData[] }) {
                   )}
                 </div>
 
-                {/* Gradient overlay — lighter for photo-forward look */}
-                <div className="absolute inset-0 bg-gradient-to-r from-[#0A1F17]/80 via-[#0F2E24]/55 to-[#0F2E24]/20 lg:to-transparent" />
+                {/* Gradient overlay */}
+                <div className="absolute inset-0 bg-black/50" />
 
                 {/* Slide content */}
                 <div className="relative z-10 flex-1 flex flex-col justify-center container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl pt-8 sm:pt-10 pb-24 sm:pb-28">
-                  <div className="max-w-xl lg:max-w-2xl">
+                  <div className="max-w-xl lg:max-w-3xl mx-auto flex flex-col items-center text-center">
                     {/* Badge pill */}
                     <div
                       className={cn(
-                        "inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/15 backdrop-blur-md text-white text-xs font-semibold tracking-wide mb-4 sm:mb-6 border border-white/20 transition-all duration-700",
+                        "inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md text-white/90 text-base font-medium mb-6 sm:mb-8 border border-white/10 transition-all duration-700",
                         isActive
                           ? "opacity-100 translate-y-0"
                           : "opacity-0 translate-y-4"
                       )}
                       style={{ transitionDelay: isActive ? "200ms" : "0ms" }}
                     >
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                      <Check size={14} className="text-emerald-400" />
                       {slide.badge}
                     </div>
 
-                    {/* Headline — using display serif font */}
+                    {/* Headline */}
                     <h1
                       className={cn(
-                        "text-2xl sm:text-3xl font-extrabold text-white leading-[1.08] mb-3 sm:mb-5 tracking-tight whitespace-pre-line transition-all duration-700",
+                        "text-5xl sm:text-6xl md:text-7xl font-extrabold font-sans text-white leading-[1.1] mb-4 sm:mb-6 tracking-tight whitespace-pre-line transition-all duration-700",
                         isActive
                           ? "opacity-100 translate-y-0"
                           : "opacity-0 translate-y-6"
                       )}
                       style={{
-                        fontFamily: "var(--font-display)",
                         transitionDelay: isActive ? "350ms" : "0ms",
                       }}
                     >
@@ -199,7 +196,7 @@ export function HomeHero({ slides }: { slides?: HeroSlideData[] }) {
                     {/* Subtitle */}
                     <p
                       className={cn(
-                        "text-white/85 text-sm md:text-base leading-relaxed max-w-lg mb-6 sm:mb-8 transition-all duration-700",
+                        "text-white/80 text-lg md:text-xl leading-relaxed max-w-xl mx-auto mb-8 sm:mb-10 transition-all duration-700",
                         isActive
                           ? "opacity-100 translate-y-0"
                           : "opacity-0 translate-y-6"
@@ -212,7 +209,7 @@ export function HomeHero({ slides }: { slides?: HeroSlideData[] }) {
                     {/* CTA buttons */}
                     <div
                       className={cn(
-                        "flex flex-row flex-wrap items-center gap-3 sm:gap-4 transition-all duration-700",
+                        "flex flex-row flex-wrap justify-center items-center gap-3 sm:gap-4 transition-all duration-700",
                         isActive
                           ? "opacity-100 translate-y-0"
                           : "opacity-0 translate-y-6"
@@ -222,21 +219,50 @@ export function HomeHero({ slides }: { slides?: HeroSlideData[] }) {
                       {slide.primaryCtaLabel && slide.primaryCtaHref && (
                         <Link
                           href={slide.primaryCtaHref}
-                          className="inline-flex items-center justify-center gap-2 rounded-full bg-primary text-white font-semibold px-5 sm:px-7 py-3 sm:py-3.5 text-xs sm:text-sm hover:bg-primary/90 transition-colors shadow-lg shadow-black/20"
+                          className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#265e47] text-white font-medium px-5 sm:px-7 py-3 sm:py-3.5 text-base hover:bg-[#1f4e3b] transition-colors shadow-lg shadow-black/20"
                         >
+                          <ShoppingBag size={16} />
                           {slide.primaryCtaLabel}
-                          <ArrowRight size={16} />
+                          <ArrowRight size={16} className="ml-1 opacity-70" />
                         </Link>
                       )}
                       {slide.secondaryCtaLabel && slide.secondaryCtaHref && (
                         <Link
                           href={slide.secondaryCtaHref}
-                          className="inline-flex items-center justify-center gap-2 rounded-full border border-white/40 text-white font-semibold px-5 sm:px-7 py-3 sm:py-3.5 text-xs sm:text-sm hover:bg-white/10 transition-colors backdrop-blur-sm"
+                          className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/20 bg-white/5 text-white font-medium px-5 sm:px-7 py-3 sm:py-3.5 text-base hover:bg-white/10 transition-colors backdrop-blur-sm"
                         >
                           {slide.secondaryCtaLabel}
-                          <ArrowRight size={16} />
+                          <ArrowRight size={16} className="ml-1 opacity-70" />
                         </Link>
                       )}
+                    </div>
+
+                    {/* Stats Block */}
+                    <div
+                      className={cn(
+                        "mt-10 sm:mt-12 transition-all duration-700 border-t border-white/20 pt-6 sm:pt-8 w-full max-w-2xl",
+                        isActive ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+                      )}
+                      style={{ transitionDelay: isActive ? "800ms" : "0ms" }}
+                    >
+                      <div className="flex flex-wrap justify-center items-center gap-6 sm:gap-10">
+                        <div>
+                          <p className="text-2xl sm:text-3xl font-bold text-white mb-0.5">100%</p>
+                          <p className="text-xs sm:text-sm text-white/70 uppercase tracking-wider">Naturally Grown</p>
+                        </div>
+                        <div>
+                          <p className="text-2xl sm:text-3xl font-bold text-white mb-0.5">Fresh</p>
+                          <p className="text-xs sm:text-sm text-white/70 uppercase tracking-wider">Same Day Delivery</p>
+                        </div>
+                        <div>
+                          <p className="text-2xl sm:text-3xl font-bold text-white mb-0.5">FSSAI</p>
+                          <p className="text-xs sm:text-sm text-white/70 uppercase tracking-wider">Certified Safe</p>
+                        </div>
+                        <div>
+                          <p className="text-2xl sm:text-3xl font-bold text-white mb-0.5">Expert</p>
+                          <p className="text-xs sm:text-sm text-white/70 uppercase tracking-wider">Farm Training</p>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -262,19 +288,8 @@ export function HomeHero({ slides }: { slides?: HeroSlideData[] }) {
         <ChevronRight size={20} />
       </button>
 
-      {/* Bottom chrome: trust badges + dots in one clear band */}
-      <div className="absolute bottom-0 inset-x-0 z-20 flex flex-col items-center gap-3 pb-4 sm:pb-6 pt-8 bg-gradient-to-t from-black/40 to-transparent pointer-events-none">
-        <div className="hidden sm:flex items-center gap-6 pointer-events-auto">
-          {trustBadges.map((badge) => (
-            <div
-              key={badge.label}
-              className="flex items-center gap-1.5 text-white/70 text-xs font-medium"
-            >
-              <badge.icon size={14} strokeWidth={1.5} className="text-emerald-400" />
-              <span>{badge.label}</span>
-            </div>
-          ))}
-        </div>
+      {/* Bottom chrome: dots only */}
+      <div className="absolute bottom-0 inset-x-0 z-20 flex flex-col items-center gap-3 pb-6 pt-8 bg-gradient-to-t from-black/20 to-transparent pointer-events-none">
         <div className="flex items-center gap-2 pointer-events-auto">
           {data.map((_, i) => (
             <button

@@ -66,7 +66,7 @@ export default async function CustomerDetailPage(props: {
       <header className="mb-6 sm:mb-8">
         <Link
           href="/admin/customers"
-          className="inline-flex items-center gap-1.5 text-sm text-[var(--color-body)] hover:text-primary mb-3 sm:mb-4"
+          className="inline-flex items-center gap-1.5 text-base text-[var(--color-body)] hover:text-primary mb-3 sm:mb-4"
         >
           <ArrowLeft size={16} /> Back to customers
         </Link>
@@ -82,15 +82,15 @@ export default async function CustomerDetailPage(props: {
               />
             </div>
           ) : (
-            <div className="h-14 w-14 rounded-full bg-primary flex items-center justify-center text-white font-bold text-lg shrink-0">
+            <div className="h-14 w-14 rounded-full bg-primary flex items-center justify-center text-white font-bold text-xl shrink-0">
               {customer.name?.[0]?.toUpperCase() || customer.email?.[0]?.toUpperCase() || customer.phone?.[0] || "?"}
             </div>
           )}
           <div>
-            <h1 className="text-xl md:text-2xl font-bold font-heading text-foreground">
+            <h1 className="text-2xl md:text-3xl font-bold font-heading text-foreground">
               {customer.name || "Unnamed Customer"}
             </h1>
-            <p className="text-[var(--color-body)] mt-0.5 text-xs sm:text-sm">
+            <p className="text-[var(--color-body)] mt-0.5 text-sm sm:text-base">
               Customer since {formatDate(customer.createdAt)}
             </p>
           </div>
@@ -116,17 +116,17 @@ export default async function CustomerDetailPage(props: {
                   <div key={order.id} className="p-5 flex items-center gap-4">
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-1">
-                        <span className="font-semibold text-foreground text-sm">
+                        <span className="font-semibold text-foreground text-base">
                           #{order.id.slice(0, 8).toUpperCase()}
                         </span>
-                        <Badge variant={statusVariant[order.status] ?? "secondary"} className="text-[10px]">
+                        <Badge variant={statusVariant[order.status] ?? "secondary"} className="text-xs">
                           {order.status}
                         </Badge>
-                        <Badge variant={paymentVariant[order.paymentStatus] ?? "secondary"} className="text-[10px]">
+                        <Badge variant={paymentVariant[order.paymentStatus] ?? "secondary"} className="text-xs">
                           {order.paymentStatus}
                         </Badge>
                       </div>
-                      <p className="text-xs text-muted-foreground">
+                      <p className="text-sm text-muted-foreground">
                         {formatDate(order.createdAt)} · {order.orderItems.length} item{order.orderItems.length !== 1 && "s"} ·{" "}
                         {order.orderItems.map((i) => i.product.name).join(", ")}
                       </p>
@@ -154,15 +154,15 @@ export default async function CustomerDetailPage(props: {
           <section className="bg-card rounded-2xl border border-border shadow-[0_4px_12px_rgba(0,0,0,0.04)] p-5">
             <h2 className="font-heading font-semibold text-foreground mb-4">Summary</h2>
             <div className="space-y-3">
-              <div className="flex justify-between text-sm">
+              <div className="flex justify-between text-base">
                 <span className="text-muted-foreground">Total Spent</span>
                 <span className="font-bold text-foreground">₹{totalSpent.toLocaleString("en-IN")}</span>
               </div>
-              <div className="flex justify-between text-sm">
+              <div className="flex justify-between text-base">
                 <span className="text-muted-foreground">Orders</span>
                 <span className="font-bold text-foreground">{orderCount}</span>
               </div>
-              <div className="flex justify-between text-sm">
+              <div className="flex justify-between text-base">
                 <span className="text-muted-foreground">Avg Order Value</span>
                 <span className="font-bold text-foreground">₹{avgOrderValue.toLocaleString("en-IN")}</span>
               </div>
@@ -176,7 +176,7 @@ export default async function CustomerDetailPage(props: {
               {customer.email && (
                 <a
                   href={`mailto:${customer.email}`}
-                  className="flex items-center gap-2 text-sm text-[var(--color-body)] hover:text-primary"
+                  className="flex items-center gap-2 text-base text-[var(--color-body)] hover:text-primary"
                 >
                   <Mail size={14} /> {customer.email}
                 </a>
@@ -184,12 +184,12 @@ export default async function CustomerDetailPage(props: {
               {customer.phone && (
                 <a
                   href={`tel:${customer.phone}`}
-                  className="flex items-center gap-2 text-sm text-[var(--color-body)] hover:text-primary"
+                  className="flex items-center gap-2 text-base text-[var(--color-body)] hover:text-primary"
                 >
                   <Phone size={14} /> {customer.phone}
                 </a>
               )}
-              <div className="flex items-center gap-2 text-sm text-[var(--color-body)]">
+              <div className="flex items-center gap-2 text-base text-[var(--color-body)]">
                 <Calendar size={14} /> Joined {formatDate(customer.createdAt)}
               </div>
             </div>
@@ -201,7 +201,7 @@ export default async function CustomerDetailPage(props: {
               <h2 className="font-heading font-semibold text-foreground mb-4">Addresses</h2>
               <div className="space-y-3">
                 {customer.addresses.map((addr) => (
-                  <div key={addr.id} className="text-sm text-[var(--color-body)] p-3 rounded-lg bg-secondary/50">
+                  <div key={addr.id} className="text-base text-[var(--color-body)] p-3 rounded-lg bg-secondary/50">
                     <p className="font-medium text-foreground mb-0.5">{addr.type}</p>
                     <p>{addr.street}</p>
                     <p>{addr.city}, {addr.state} {addr.pincode}</p>

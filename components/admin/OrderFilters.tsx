@@ -50,7 +50,7 @@ export function OrderFilters({ cities }: { cities: string[] }) {
           placeholder="Search order ID, name, email..."
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
-          className="h-9 rounded-lg border border-border bg-card pl-9 pr-3 text-sm outline-none focus:border-primary w-full sm:w-[260px]"
+          className="h-9 rounded-lg border border-border bg-card pl-9 pr-3 text-base outline-none focus:border-primary w-full sm:w-[260px]"
         />
       </form>
 
@@ -60,7 +60,7 @@ export function OrderFilters({ cities }: { cities: string[] }) {
         <select
           value={searchParams.get("status") || "all"}
           onChange={(e) => updateFilter("status", e.target.value)}
-          className="h-9 flex-1 sm:flex-none rounded-lg border border-border bg-card px-3 text-sm outline-none focus:border-primary"
+          className="h-9 flex-1 sm:flex-none rounded-lg border border-border bg-card px-3 text-base outline-none focus:border-primary"
         >
           {statusOptions.map((opt) => (
             <option key={opt.value} value={opt.value}>
@@ -72,7 +72,7 @@ export function OrderFilters({ cities }: { cities: string[] }) {
         <select
           value={searchParams.get("date") || "all"}
           onChange={(e) => updateFilter("date", e.target.value)}
-          className="h-9 flex-1 sm:flex-none rounded-lg border border-border bg-card px-3 text-sm outline-none focus:border-primary"
+          className="h-9 flex-1 sm:flex-none rounded-lg border border-border bg-card px-3 text-base outline-none focus:border-primary"
         >
           {dateOptions.map((opt) => (
             <option key={opt.value} value={opt.value}>
@@ -85,7 +85,7 @@ export function OrderFilters({ cities }: { cities: string[] }) {
           <select
             value={searchParams.get("city") || "all"}
             onChange={(e) => updateFilter("city", e.target.value)}
-            className="h-9 flex-1 sm:flex-none rounded-lg border border-border bg-card px-3 text-sm outline-none focus:border-primary"
+            className="h-9 flex-1 sm:flex-none rounded-lg border border-border bg-card px-3 text-base outline-none focus:border-primary"
           >
             <option value="all">All Cities</option>
             {cities.map((city) => (

@@ -82,10 +82,10 @@ export default async function AdminAnalyticsPage() {
   return (
     <div className="p-4 sm:p-6 lg:p-10">
       <header className="mb-6 sm:mb-8">
-        <h1 className="text-xl md:text-2xl font-bold font-heading text-foreground">
+        <h1 className="text-2xl md:text-3xl font-bold font-heading text-foreground">
           Analytics
         </h1>
-        <p className="text-[var(--color-body)] mt-1 text-xs sm:text-sm">
+        <p className="text-[var(--color-body)] mt-1 text-sm sm:text-base">
           Sales performance and product insights
         </p>
       </header>
@@ -93,24 +93,24 @@ export default async function AdminAnalyticsPage() {
       {/* Summary Cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
         <div className="bg-card rounded-xl border border-border p-3 shadow-[0_2px_8px_rgba(0,0,0,0.04)] min-w-0">
-          <p className="text-xs text-muted-foreground mb-1">Total Revenue</p>
-          <p className="text-base md:text-lg font-bold text-foreground truncate">
+          <p className="text-sm text-muted-foreground mb-1">Total Revenue</p>
+          <p className="text-lg md:text-xl font-bold text-foreground truncate">
             ₹{stats.totalRevenue.toLocaleString("en-IN")}
           </p>
         </div>
         <div className="bg-card rounded-xl border border-border p-3 shadow-[0_2px_8px_rgba(0,0,0,0.04)] min-w-0">
-          <p className="text-xs text-muted-foreground mb-1">Last 30 Days</p>
-          <p className="text-base md:text-lg font-bold text-foreground truncate">
+          <p className="text-sm text-muted-foreground mb-1">Last 30 Days</p>
+          <p className="text-lg md:text-xl font-bold text-foreground truncate">
             ₹{Math.round(stats.last30Revenue).toLocaleString("en-IN")}
           </p>
         </div>
         <div className="bg-card rounded-xl border border-border p-3 shadow-[0_2px_8px_rgba(0,0,0,0.04)] min-w-0">
-          <p className="text-xs text-muted-foreground mb-1">Total Orders</p>
-          <p className="text-base md:text-lg font-bold text-foreground truncate">{stats.totalOrders}</p>
+          <p className="text-sm text-muted-foreground mb-1">Total Orders</p>
+          <p className="text-lg md:text-xl font-bold text-foreground truncate">{stats.totalOrders}</p>
         </div>
         <div className="bg-card rounded-xl border border-border p-3 shadow-[0_2px_8px_rgba(0,0,0,0.04)] min-w-0">
-          <p className="text-xs text-muted-foreground mb-1">Avg Order Value</p>
-          <p className="text-base md:text-lg font-bold text-foreground truncate">
+          <p className="text-sm text-muted-foreground mb-1">Avg Order Value</p>
+          <p className="text-lg md:text-xl font-bold text-foreground truncate">
             ₹{stats.avgOrderValue.toLocaleString("en-IN")}
           </p>
         </div>

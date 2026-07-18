@@ -89,7 +89,7 @@ export function ReviewsTable({ reviews }: { reviews: Review[] }) {
         <select
           value={filter}
           onChange={(e) => setFilter(e.target.value as any)}
-          className="h-9 rounded-lg border border-border bg-card px-3 text-sm outline-none focus:border-primary"
+          className="h-9 rounded-lg border border-border bg-card px-3 text-base outline-none focus:border-primary"
         >
           <option value="all">All Reviews</option>
           <option value="pending">Pending</option>
@@ -160,7 +160,7 @@ export function ReviewsTable({ reviews }: { reviews: Review[] }) {
                   <p className="text-[var(--color-body)] mt-2">{review.comment}</p>
                 )}
 
-                <div className="flex items-center gap-4 mt-3 text-xs text-muted-foreground">
+                <div className="flex items-center gap-4 mt-3 text-sm text-muted-foreground">
                   <span>By {review.user.name || review.user.email || "User"}</span>
                   <span>·</span>
                   <span>{formatDate(review.createdAt)}</span>
@@ -181,7 +181,7 @@ export function ReviewsTable({ reviews }: { reviews: Review[] }) {
       <Dialog open={!!deleteTarget} onOpenChange={(open) => !open && setDeleteTarget(null)}>
         <DialogContent className="sm:max-w-md">
           <DialogTitle>Delete Review</DialogTitle>
-          <p className="text-sm text-[var(--color-body)] mt-2">
+          <p className="text-base text-[var(--color-body)] mt-2">
             Are you sure you want to delete this review from <strong className="text-foreground">{deleteTarget?.user.name || deleteTarget?.user.email || "this user"}</strong>?
           </p>
           <div className="flex justify-end gap-3 mt-6">

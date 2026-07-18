@@ -54,24 +54,24 @@ export function TrainingCard({ program }: { program: TrainingProgram }) {
             sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
             className="object-cover group-hover:scale-105 transition-transform duration-700"
           />
-          <span className={`absolute top-3 left-3 px-2.5 py-1 rounded-full text-white text-xs font-bold uppercase tracking-wide ${levelColor[program.level]}`}>
+          <span className={`absolute top-3 left-3 px-2.5 py-1 rounded-full text-white text-sm font-bold uppercase tracking-wide ${levelColor[program.level]}`}>
             {program.level}
           </span>
         </div>
         <div className="p-4 flex-1 flex flex-col">
-          <h3 className="font-bold text-lg text-foreground mb-1.5 font-heading">{program.title}</h3>
-          <p className="text-sm text-[var(--color-body)] mb-4 line-clamp-2">{program.description}</p>
-          <div className="flex flex-wrap gap-x-4 gap-y-2 text-xs text-muted-foreground mb-3">
+          <h3 className="font-bold text-xl text-foreground mb-1.5 font-heading">{program.title}</h3>
+          <p className="text-base text-[var(--color-body)] mb-4 line-clamp-2">{program.description}</p>
+          <div className="flex flex-wrap gap-x-4 gap-y-2 text-sm text-muted-foreground mb-3">
             <span className="flex items-center gap-1.5"><Calendar size={14} /> {startDate}</span>
             <span className="flex items-center gap-1.5"><Sparkles size={14} /> {program.duration}</span>
             <span className="flex items-center gap-1.5"><Users size={14} /> {program.seatsLeft} seats</span>
           </div>
-          <div className="flex items-center gap-1.5 text-xs text-primary font-medium mb-4">
+          <div className="flex items-center gap-1.5 text-sm text-primary font-medium mb-4">
             <Package size={13} />
             <span>Includes bags + materials + ongoing support</span>
           </div>
           <div className="mt-auto flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <span className="text-sm text-muted-foreground">From <span className="font-semibold text-foreground">₹{program.fee.toLocaleString("en-IN")}</span></span>
+            <span className="text-base text-muted-foreground">From <span className="font-semibold text-foreground">₹{program.fee.toLocaleString("en-IN")}</span></span>
             <Button
               onClick={() => {
                 setOpen(true);
@@ -93,7 +93,7 @@ export function TrainingCard({ program }: { program: TrainingProgram }) {
                 <Sparkles size={26} />
               </div>
               <DialogTitle className="text-center mb-2">You&apos;re on the list!</DialogTitle>
-              <p className="text-sm text-[var(--color-body)]">
+              <p className="text-base text-[var(--color-body)]">
                 Thanks for your interest in <span className="font-semibold">{program.title}</span>. Our team will reach out with payment and batch details.
               </p>
               <Button onClick={() => setOpen(false)} className="mt-6 w-full rounded-full">

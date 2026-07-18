@@ -31,13 +31,13 @@ export function DeliverySchedule() {
                   <slot.icon size={18} strokeWidth={1.75} />
                 </div>
                 <div>
-                  <h3 className="text-sm font-bold text-foreground">{slot.label}</h3>
-                  <p className="text-xs text-[var(--color-body)] mt-0.5">{slot.detail}</p>
+                  <h3 className="text-base font-bold text-foreground">{slot.label}</h3>
+                  <p className="text-sm text-[var(--color-body)] mt-0.5">{slot.detail}</p>
                 </div>
               </div>
             ))}
           </div>
-          <p className="text-center text-[11px] text-muted-foreground mt-2.5">
+          <p className="text-center text-sm text-muted-foreground mt-2.5">
             Mushrooms are picked only after your order &mdash; never sitting in storage.
           </p>
         </FadeIn>

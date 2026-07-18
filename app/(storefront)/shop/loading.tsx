@@ -10,7 +10,7 @@ export default function ShopLoading() {
           <Skeleton className="h-5 w-1/2 mx-auto" />
         </div>
       </div>
-      <section className="py-20 sm:py-28 bg-background">
+      <section className="py-10 sm:py-14 bg-background">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
           <div className="flex flex-wrap items-center justify-center gap-3 mb-12">
             {Array.from({ length: 6 }).map((_, i) => (

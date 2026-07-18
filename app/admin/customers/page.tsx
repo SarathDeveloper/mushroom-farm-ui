@@ -62,10 +62,10 @@ export default async function AdminCustomersPage(props: {
   return (
     <div className="p-4 sm:p-6 lg:p-10">
       <header className="mb-6 sm:mb-8">
-        <h1 className="text-xl md:text-2xl font-bold font-heading text-foreground">
+        <h1 className="text-2xl md:text-3xl font-bold font-heading text-foreground">
           Customers
         </h1>
-        <p className="text-[var(--color-body)] mt-1 text-xs sm:text-sm">
+        <p className="text-[var(--color-body)] mt-1 text-sm sm:text-base">
           {stats.total} customer{stats.total !== 1 ? "s" : ""} · {stats.withOrders} with orders ·{" "}
           ₹{stats.totalRevenue.toLocaleString("en-IN")} total revenue
         </p>
@@ -76,7 +76,7 @@ export default async function AdminCustomersPage(props: {
           <div className="w-16 h-16 rounded-full bg-secondary flex items-center justify-center mb-5">
             <Users size={30} className="text-primary" />
           </div>
-          <h2 className="text-xl font-bold font-heading text-foreground mb-1">No customers yet</h2>
+          <h2 className="text-2xl font-bold font-heading text-foreground mb-1">No customers yet</h2>
           <p className="text-[var(--color-body)] max-w-sm">
             Customers will appear here once they create accounts.
           </p>

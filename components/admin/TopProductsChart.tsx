@@ -29,7 +29,7 @@ export function TopProductsChart({ data }: { data: DataPoint[] }) {
         Top Selling Products
       </h2>
       {data.length === 0 ? (
-        <p className="text-[var(--color-body)] text-sm">No sales data available yet.</p>
+        <p className="text-[var(--color-body)] text-base">No sales data available yet.</p>
       ) : (
         <div className="h-[250px] sm:h-[300px] w-full">
           <ResponsiveContainer width="100%" height="100%">

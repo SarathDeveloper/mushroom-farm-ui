@@ -31,28 +31,32 @@ export function AboutPreview() {
           {/* Top floating authenticity badge */}
           <div className="absolute top-6 left-6 sm:top-8 sm:left-8 bg-white/95 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-primary/20 shadow-md flex items-center gap-2 pointer-events-none">
             <span className="flex h-2 w-2 rounded-full bg-primary" />
-            <span className="text-[10px] font-extrabold tracking-wider uppercase text-primary">
+            <span className="text-xs font-extrabold tracking-wider uppercase text-primary">
               Owner &amp; Head Farmer
             </span>
           </div>
 
           {/* Bottom floating location stamp */}
           <div className="absolute bottom-6 left-6 sm:bottom-8 sm:left-8 bg-[#1A4938]/90 backdrop-blur-md px-4 py-2.5 rounded-xl border border-white/10 shadow-lg flex flex-col pointer-events-none">
-            <span className="text-[9px] font-bold tracking-[0.15em] uppercase text-white/60">ESTABLISHED</span>
-            <span className="text-xs font-extrabold text-white mt-0.5">2017 • Kalvarayan Hills</span>
+            <span className="text-[10px] font-bold tracking-[0.15em] uppercase text-white/60">ESTABLISHED</span>
+            <span className="text-sm font-extrabold text-white mt-0.5">2017 • Kalvarayan Hills</span>
           </div>
         </FadeIn>
 
         <FadeIn
           direction="left"
-          className="flex flex-col justify-center px-4 sm:px-6 lg:px-8 xl:px-24 py-20 lg:py-28"
+          className="flex flex-col items-start justify-center text-left px-4 sm:px-6 lg:px-8 xl:px-24 py-10 lg:py-14"
         >
-          <h2 className="text-xl sm:text-2xl font-extrabold font-heading text-foreground leading-tight tracking-tight">
+          <div className="flex items-center gap-3 mb-4">
+            <span className="text-sm font-bold uppercase tracking-[0.2em] text-primary">Our Story</span>
+            <span className="h-px w-8 sm:w-12 bg-primary/20" />
+          </div>
+          <h2 className="text-2xl sm:text-3xl font-extrabold font-heading text-foreground leading-tight tracking-tight">
             Meet Mathesh
           </h2>
           <div className="w-14 h-0.5 bg-primary mt-5 mb-8" aria-hidden="true" />
 
-          <div className="space-y-5 text-[var(--color-body)] text-sm sm:text-base leading-relaxed max-w-xl">
+          <div className="space-y-5 text-[var(--color-body)] text-base sm:text-lg leading-relaxed max-w-xl">
             <p>
               I started growing mushrooms in 2017 from Kalvarayan Hills with a single shed.
               Over the years, my work earned recognition from the District Collector and the
@@ -71,7 +75,7 @@ export function AboutPreview() {
               asChild
               size="lg"
               variant="outline"
-              className="rounded-full h-12 px-7 border-primary text-primary bg-transparent hover:bg-primary hover:text-white text-sm sm:text-base font-semibold"
+              className="rounded-full h-12 px-7 border-primary text-primary bg-transparent hover:bg-primary hover:text-white text-base sm:text-lg font-semibold"
             >
               <Link href="/about">
                 Read Our Story

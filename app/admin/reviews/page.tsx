@@ -40,10 +40,10 @@ export default async function AdminReviewsPage(props: {
   return (
     <div className="p-4 sm:p-6 lg:p-10">
       <header className="mb-6 sm:mb-8">
-        <h1 className="text-xl md:text-2xl font-bold font-heading text-foreground">
+        <h1 className="text-2xl md:text-3xl font-bold font-heading text-foreground">
           Reviews
         </h1>
-        <p className="text-[var(--color-body)] mt-1 text-xs sm:text-sm">
+        <p className="text-[var(--color-body)] mt-1 text-sm sm:text-base">
           {stats.total} review{stats.total !== 1 ? "s" : ""} · {stats.pending} pending · {stats.approved} approved
         </p>
       </header>
@@ -53,7 +53,7 @@ export default async function AdminReviewsPage(props: {
           <div className="w-16 h-16 rounded-full bg-secondary flex items-center justify-center mb-5">
             <MessageSquare size={30} className="text-primary" />
           </div>
-          <h2 className="text-xl font-bold font-heading text-foreground mb-1">No reviews yet</h2>
+          <h2 className="text-2xl font-bold font-heading text-foreground mb-1">No reviews yet</h2>
           <p className="text-[var(--color-body)] max-w-sm">
             Customer reviews will appear here for moderation.
           </p>

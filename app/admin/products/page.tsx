@@ -71,10 +71,10 @@ export default async function AdminProductsPage(props: {
     <div className="p-4 sm:p-6 lg:p-10">
       <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6 sm:mb-8">
         <div>
-          <h1 className="text-xl md:text-2xl font-bold font-heading text-foreground">
+          <h1 className="text-2xl md:text-3xl font-bold font-heading text-foreground">
             Products
           </h1>
-          <p className="text-[var(--color-body)] mt-1 text-sm">
+          <p className="text-[var(--color-body)] mt-1 text-base">
             {totalCount} product{totalCount !== 1 && "s"} in your catalog.
           </p>
         </div>

@@ -30,15 +30,15 @@ export default function CartPage() {
         image="/gallery/farm/oyster-mushroom-growing.png"
       />
 
-      <section className="py-20 sm:py-28 bg-background">
+      <section className="py-10 sm:py-14 bg-background">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
           {!mounted ? null : items.length === 0 ? (
             <FadeIn className="flex flex-col items-center text-center py-16">
               <div className="w-20 h-20 rounded-full bg-secondary flex items-center justify-center mb-6">
                 <ShoppingBag size={36} className="text-primary" />
               </div>
-              <h2 className="text-xl sm:text-2xl font-bold font-heading text-foreground mb-2">Your cart is empty</h2>
-              <p className="text-[var(--color-body)] mb-8 max-w-sm text-sm sm:text-base">
+              <h2 className="text-2xl sm:text-3xl font-bold font-heading text-foreground mb-2">Your cart is empty</h2>
+              <p className="text-[var(--color-body)] mb-8 max-w-sm text-base sm:text-lg">
                 Looks like you haven&apos;t added any fresh mushrooms yet. Let&apos;s fix that.
               </p>
               <Button asChild size="lg" className="rounded-full px-8">
@@ -55,11 +55,11 @@ export default function CartPage() {
                         <SafeImage src={item.image} alt={item.name} fill sizes="80px" className="object-cover" />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <Link href={`/shop/${item.slug}`} className="font-semibold text-foreground hover:text-primary transition-colors line-clamp-1 text-xs sm:text-sm">
+                        <Link href={`/shop/${item.slug}`} className="font-semibold text-foreground hover:text-primary transition-colors line-clamp-1 text-sm sm:text-base">
                           {item.name}
                         </Link>
-                        <p className="text-xs sm:text-sm text-muted-foreground">{item.weight}</p>
-                        <p className="text-primary font-bold mt-0.5 sm:mt-1 text-xs sm:text-sm">₹{item.price}</p>
+                        <p className="text-sm sm:text-base text-muted-foreground">{item.weight}</p>
+                        <p className="text-primary font-bold mt-0.5 sm:mt-1 text-sm sm:text-base">₹{item.price}</p>
                       </div>
                       <div className="flex items-center border border-border rounded-full bg-background">
                         <button
@@ -69,7 +69,7 @@ export default function CartPage() {
                         >
                           <Minus size={14} />
                         </button>
-                        <span className="w-6 sm:w-8 text-center text-xs font-semibold">{item.quantity}</span>
+                        <span className="w-6 sm:w-8 text-center text-sm font-semibold">{item.quantity}</span>
                         <button
                           onClick={() => setQuantity(item.productId, item.quantity + 1)}
                           aria-label={`Increase quantity of ${item.name}`}
@@ -91,21 +91,21 @@ export default function CartPage() {
 
                 <FadeIn direction="left" className="lg:col-span-1 hidden lg:block">
                   <div className="sticky top-24 rounded-2xl border border-border bg-card p-6 space-y-4">
-                    <h3 className="text-base font-bold font-heading text-foreground">Order Summary</h3>
-                    <div className="flex justify-between text-sm text-[var(--color-body)]">
+                    <h3 className="text-lg font-bold font-heading text-foreground">Order Summary</h3>
+                    <div className="flex justify-between text-base text-[var(--color-body)]">
                       <span>Subtotal</span>
                       <span>₹{subtotal.toFixed(0)}</span>
                     </div>
-                    <div className="flex justify-between text-sm text-[var(--color-body)]">
+                    <div className="flex justify-between text-base text-[var(--color-body)]">
                       <span>Shipping</span>
                       <span>{shipping === 0 ? "Free" : `₹${shipping}`}</span>
                     </div>
                     {shipping > 0 && (
-                      <p className="text-xs text-primary bg-primary/10 rounded-lg px-3 py-2">
+                      <p className="text-sm text-primary bg-primary/10 rounded-lg px-3 py-2">
                         Add ₹{(FREE_SHIPPING_THRESHOLD - subtotal).toFixed(0)} more for free shipping!
                       </p>
                     )}
-                    <div className="border-t border-border pt-4 flex justify-between font-bold text-foreground text-lg">
+                    <div className="border-t border-border pt-4 flex justify-between font-bold text-foreground text-xl">
                       <span>Total</span>
                       <span>₹{total.toFixed(0)}</span>
                     </div>
@@ -114,7 +114,7 @@ export default function CartPage() {
                         Proceed to Checkout <ArrowRight className="ml-2" size={18} />
                       </Link>
                     </Button>
-                    <Link href="/shop" className="block text-center text-xs font-semibold text-muted-foreground hover:text-primary">
+                    <Link href="/shop" className="block text-center text-sm font-semibold text-muted-foreground hover:text-primary">
                       Continue Shopping
                     </Link>
                   </div>
@@ -124,8 +124,8 @@ export default function CartPage() {
               {/* Mobile sticky checkout bar */}
               <div className="fixed bottom-16 left-0 right-0 z-40 lg:hidden bg-card border-t border-border px-4 py-3 shadow-[0_-4px_12px_rgba(0,0,0,0.08)] safe-area-bottom">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-xs text-[var(--color-body)]">Total ({items.length} items)</span>
-                  <span className="font-bold text-foreground text-base">₹{total.toFixed(0)}</span>
+                  <span className="text-sm text-[var(--color-body)]">Total ({items.length} items)</span>
+                  <span className="font-bold text-foreground text-lg">₹{total.toFixed(0)}</span>
                 </div>
                 <Button asChild size="lg" className="w-full rounded-full h-11">
                   <Link href="/checkout">

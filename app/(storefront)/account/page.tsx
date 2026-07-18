@@ -210,13 +210,13 @@ export default function AccountPage() {
     <div className="flex flex-col min-h-screen">
       <PageHero eyebrow="Account" title="My Account" />
 
-      <section className="py-20 sm:py-28 bg-background">
+      <section className="py-10 sm:py-14 bg-background">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl space-y-8">
           {/* Profile Card */}
           <FadeIn>
             <div className="rounded-2xl border border-border bg-card p-6 sm:p-8">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-lg sm:text-xl font-bold font-heading text-foreground">
+                <h2 className="text-xl sm:text-2xl font-bold font-heading text-foreground">
                   Profile Information
                 </h2>
                 {!editMode && (
@@ -266,7 +266,7 @@ export default function AccountPage() {
                         className="h-11"
                         disabled
                       />
-                      <p className="text-xs text-muted-foreground">Phone number cannot be changed.</p>
+                      <p className="text-sm text-muted-foreground">Phone number cannot be changed.</p>
                     </div>
                   </div>
                   <div className="flex gap-3 pt-2">
@@ -293,8 +293,8 @@ export default function AccountPage() {
                       <User size={20} className="text-primary" />
                     </div>
                     <div>
-                      <p className="text-sm font-semibold text-foreground">{profile.name || "—"}</p>
-                      <p className="text-xs text-muted-foreground">Name</p>
+                      <p className="text-base font-semibold text-foreground">{profile.name || "—"}</p>
+                      <p className="text-sm text-muted-foreground">Name</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
@@ -302,8 +302,8 @@ export default function AccountPage() {
                       <Mail size={20} className="text-primary" />
                     </div>
                     <div>
-                      <p className="text-sm font-semibold text-foreground">{profile.email || "—"}</p>
-                      <p className="text-xs text-muted-foreground">Email</p>
+                      <p className="text-base font-semibold text-foreground">{profile.email || "—"}</p>
+                      <p className="text-sm text-muted-foreground">Email</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
@@ -311,18 +311,18 @@ export default function AccountPage() {
                       <Phone size={20} className="text-primary" />
                     </div>
                     <div>
-                      <p className="text-sm font-semibold text-foreground">{profile.phone || "—"}</p>
-                      <p className="text-xs text-muted-foreground">Phone</p>
+                      <p className="text-base font-semibold text-foreground">{profile.phone || "—"}</p>
+                      <p className="text-sm text-muted-foreground">Phone</p>
                     </div>
                   </div>
                   <div className="grid grid-cols-2 gap-4 pt-4 border-t border-border">
                     <div className="text-center p-4 rounded-xl bg-secondary">
-                      <p className="text-xl font-bold text-primary">{profile.totalOrders}</p>
-                      <p className="text-xs text-muted-foreground mt-1">Total Orders</p>
+                      <p className="text-2xl font-bold text-primary">{profile.totalOrders}</p>
+                      <p className="text-sm text-muted-foreground mt-1">Total Orders</p>
                     </div>
                     <div className="text-center p-4 rounded-xl bg-secondary">
-                      <p className="text-sm font-bold text-foreground">{profile.memberSince}</p>
-                      <p className="text-xs text-muted-foreground mt-1">Member Since</p>
+                      <p className="text-base font-bold text-foreground">{profile.memberSince}</p>
+                      <p className="text-sm text-muted-foreground mt-1">Member Since</p>
                     </div>
                   </div>
                 </div>
@@ -334,7 +334,7 @@ export default function AccountPage() {
           <FadeIn>
             <div className="rounded-2xl border border-border bg-card p-6 sm:p-8">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-lg sm:text-xl font-bold font-heading text-foreground">
+                <h2 className="text-xl sm:text-2xl font-bold font-heading text-foreground">
                   Saved Addresses
                 </h2>
                 <Button
@@ -354,7 +354,7 @@ export default function AccountPage() {
 
               {showAddressForm && (
                 <form onSubmit={handleSaveAddress} className="mb-6 p-5 rounded-xl border border-border bg-secondary/50 space-y-4">
-                  <h3 className="text-sm font-bold text-foreground">
+                  <h3 className="text-base font-bold text-foreground">
                     {editingAddress ? "Edit Address" : "New Address"}
                   </h3>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -366,7 +366,7 @@ export default function AccountPage() {
                             key={t}
                             type="button"
                             onClick={() => setAddressForm({ ...addressForm, type: t })}
-                            className={`rounded-full px-4 py-1.5 text-sm font-medium border transition-colors ${
+                            className={`rounded-full px-4 py-1.5 text-base font-medium border transition-colors ${
                               addressForm.type === t
                                 ? "bg-primary text-white border-primary"
                                 : "bg-card text-foreground border-border hover:bg-secondary"
@@ -429,7 +429,7 @@ export default function AccountPage() {
                         onChange={(e) => setAddressForm({ ...addressForm, isDefault: e.target.checked })}
                         className="w-4 h-4 rounded border-border text-primary"
                       />
-                      <Label htmlFor="isDefault" className="text-sm">Set as default</Label>
+                      <Label htmlFor="isDefault" className="text-base">Set as default</Label>
                     </div>
                   </div>
                   <div className="flex gap-3">
@@ -451,8 +451,8 @@ export default function AccountPage() {
               {profile.addresses.length === 0 && !showAddressForm ? (
                 <div className="text-center py-10">
                   <MapPin size={32} className="mx-auto text-muted-foreground mb-3" />
-                  <p className="text-sm text-muted-foreground">No saved addresses yet.</p>
-                  <p className="text-xs text-muted-foreground mt-1">Add an address for faster checkout.</p>
+                  <p className="text-base text-muted-foreground">No saved addresses yet.</p>
+                  <p className="text-sm text-muted-foreground mt-1">Add an address for faster checkout.</p>
                 </div>
               ) : (
                 <div className="space-y-3">
@@ -463,13 +463,13 @@ export default function AccountPage() {
                     >
                       <div className="min-w-0 flex-1">
                         <div className="flex items-center gap-2 mb-1">
-                          <Badge variant="outline" className="text-xs">{addr.type}</Badge>
+                          <Badge variant="outline" className="text-sm">{addr.type}</Badge>
                           {addr.isDefault && (
-                            <Badge variant="default" className="text-xs bg-primary">Default</Badge>
+                            <Badge variant="default" className="text-sm bg-primary">Default</Badge>
                           )}
                         </div>
-                        <p className="text-sm text-foreground">{addr.street}</p>
-                        <p className="text-xs text-muted-foreground">
+                        <p className="text-base text-foreground">{addr.street}</p>
+                        <p className="text-sm text-muted-foreground">
                           {addr.city}, {addr.state} — {addr.pincode}
                         </p>
                       </div>
@@ -516,8 +516,8 @@ export default function AccountPage() {
                   <Package size={22} className="text-primary" />
                 </div>
                 <div>
-                  <p className="text-sm font-bold text-foreground">My Orders</p>
-                  <p className="text-xs text-muted-foreground">Track and manage your orders</p>
+                  <p className="text-base font-bold text-foreground">My Orders</p>
+                  <p className="text-sm text-muted-foreground">Track and manage your orders</p>
                 </div>
               </Link>
               <Link
@@ -528,8 +528,8 @@ export default function AccountPage() {
                   <Star size={22} className="text-primary" />
                 </div>
                 <div>
-                  <p className="text-sm font-bold text-foreground">Wishlist</p>
-                  <p className="text-xs text-muted-foreground">Items you saved for later</p>
+                  <p className="text-base font-bold text-foreground">Wishlist</p>
+                  <p className="text-sm text-muted-foreground">Items you saved for later</p>
                 </div>
               </Link>
             </div>

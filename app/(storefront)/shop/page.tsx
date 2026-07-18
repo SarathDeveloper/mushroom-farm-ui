@@ -104,14 +104,14 @@ export default async function ShopPage(props: {
         image="https://images.unsplash.com/photo-1518977676601-b53f82aba655?q=80&w=2000&auto=format&fit=crop"
       />
 
-      <section className="py-20 sm:py-28 bg-background">
+      <section className="py-10 sm:py-14 bg-background">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
           <FadeIn className="mb-8 -mx-4 sm:mx-0">
             <div className="flex sm:flex-wrap sm:justify-center gap-3 overflow-x-auto scrollbar-hide px-4 sm:px-0 pb-2 sm:pb-0">
               <Link
                 href="/shop"
                 className={cn(
-                  "px-5 py-2.5 rounded-full text-sm font-semibold transition-colors border whitespace-nowrap shrink-0",
+                  "px-5 py-2.5 rounded-full text-base font-semibold transition-colors border whitespace-nowrap shrink-0",
                   !activeCategorySlug || activeCategorySlug === "all"
                     ? "bg-primary text-white border-primary"
                     : "bg-secondary text-secondary-foreground border-border hover:border-primary hover:text-primary"
@@ -124,7 +124,7 @@ export default async function ShopPage(props: {
                   key={category.id}
                   href={`/shop?category=${category.slug}`}
                   className={cn(
-                    "px-5 py-2.5 rounded-full text-sm font-semibold transition-colors border whitespace-nowrap shrink-0",
+                    "px-5 py-2.5 rounded-full text-base font-semibold transition-colors border whitespace-nowrap shrink-0",
                     activeCategorySlug === category.slug
                       ? "bg-primary text-white border-primary"
                       : "bg-secondary text-secondary-foreground border-border hover:border-primary hover:text-primary"
@@ -140,7 +140,7 @@ export default async function ShopPage(props: {
             <ShopControls />
           </Suspense>
 
-          <FadeIn className="mb-8 text-center text-sm text-muted-foreground">
+          <FadeIn className="mb-8 text-center text-base text-muted-foreground">
             Showing {products.length} of {totalCount} product{totalCount !== 1 && "s"}
             {query && (
               <span>

@@ -120,22 +120,24 @@ export default async function Home() {
       {/* FEATURED PRODUCTS */}
       <section className="py-20 sm:py-28 bg-background grain-overlay">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-          <FadeIn className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 sm:mb-12 gap-3 sm:gap-4">
+          <FadeIn className="relative flex flex-col items-center text-center mb-8 sm:mb-12 gap-4">
             <div>
-              <div className="flex items-center gap-3 mb-3">
+              <div className="flex items-center justify-center gap-3 mb-3">
                 <span className="h-px w-6 sm:w-8 bg-border" />
                 <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Fresh From Farm</span>
                 <span className="h-px w-6 sm:w-8 bg-border" />
               </div>
-              <h2 className="text-xl sm:text-2xl font-extrabold text-foreground tracking-tight font-heading">Today&apos;s Fresh Mushrooms</h2>
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-foreground tracking-tight font-heading">Today&apos;s Fresh Mushrooms</h2>
               <p className="text-[var(--color-body)] text-sm mt-1.5">Picked this morning. Ready to buy now.</p>
             </div>
-            <Link href="/shop" className="group inline-flex items-center gap-2 text-primary font-semibold text-base">
-              See All <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
-            </Link>
+            <div className="sm:absolute sm:right-0 sm:bottom-1">
+              <Link href="/shop" className="group inline-flex items-center gap-2 text-primary font-semibold text-base hover:text-primary/80 transition-colors">
+                See All <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
           </FadeIn>
 
-          <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 lg:gap-5">
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-5">
             {featuredProducts.map((product, i) => (
               <FadeIn key={product.id} delay={i * 0.1}>
                 <ProductCard product={product} priority={i === 0} />
@@ -161,22 +163,24 @@ export default async function Home() {
           {/* VALUE-ADDED PRODUCTS */}
           <section className="py-20 sm:py-28 bg-secondary grain-overlay">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-              <FadeIn className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 sm:mb-12 gap-3 sm:gap-4">
+              <FadeIn className="relative flex flex-col items-center text-center mb-8 sm:mb-12 gap-4">
                 <div>
-                  <div className="flex items-center gap-3 mb-3">
+                  <div className="flex items-center justify-center gap-3 mb-3">
                     <span className="h-px w-6 sm:w-8 bg-border" />
                     <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Easy to Cook</span>
                     <span className="h-px w-6 sm:w-8 bg-border" />
                   </div>
-                  <h2 className="text-xl sm:text-2xl font-extrabold text-foreground tracking-tight font-heading">Ready-Made Products</h2>
+                  <h2 className="text-2xl sm:text-3xl font-extrabold text-foreground tracking-tight font-heading">Ready-Made Products</h2>
                   <p className="text-[var(--color-body)] text-sm mt-1.5">Mushroom powder, soup mix, and pickle. Made from our fresh mushrooms.</p>
                 </div>
-                <Link href="/shop?category=value-added" className="group inline-flex items-center gap-2 text-primary font-semibold text-base">
-                  View All <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
-                </Link>
+                <div className="sm:absolute sm:right-0 sm:bottom-1">
+                  <Link href="/shop?category=value-added" className="group inline-flex items-center gap-2 text-primary font-semibold text-base hover:text-primary/80 transition-colors">
+                    View All <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                </div>
               </FadeIn>
 
-              <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 lg:gap-5">
+              <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-5">
                 {valueAddedProducts.map((product, i) => (
                   <FadeIn key={product.id} delay={i * 0.1}>
                     <ProductCard product={product} />
@@ -226,7 +230,7 @@ export default async function Home() {
                 <span className="text-xs font-bold uppercase tracking-[0.2em] text-white/70">For Aspiring Farmers</span>
                 <span className="h-px w-8 bg-white/30" />
               </div>
-              <h2 className="text-xl sm:text-2xl font-extrabold font-heading mb-3 sm:mb-4">
+              <h2 className="text-2xl sm:text-3xl font-extrabold font-heading mb-3 sm:mb-4">
                 Want to Grow Mushrooms & Earn ₹12K–50K/Month?
               </h2>
               <p className="text-white/80 max-w-2xl mx-auto mb-8 text-sm sm:text-base leading-relaxed">
@@ -253,7 +257,7 @@ export default async function Home() {
                 <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Questions</span>
                 <span className="h-px w-6 sm:w-8 bg-border" />
               </div>
-              <h2 className="text-xl sm:text-2xl font-extrabold text-foreground tracking-tight font-heading mb-6 sm:mb-8">Common Questions</h2>
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-foreground tracking-tight font-heading mb-6 sm:mb-8">Common Questions</h2>
               <Accordion className="w-full">
                 <AccordionItem value="item-1">
                   <AccordionTrigger className="text-sm sm:text-base font-medium">Are mushrooms fresh when I get them?</AccordionTrigger>
@@ -292,7 +296,7 @@ export default async function Home() {
               <div className="w-14 h-14 sm:w-16 sm:h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-5 sm:mb-6">
                 <Send size={28} />
               </div>
-              <h2 className="text-lg sm:text-xl font-extrabold mb-3 sm:mb-4 font-heading">Get Our Updates</h2>
+              <h2 className="text-xl sm:text-2xl font-extrabold mb-3 sm:mb-4 font-heading">Get Our Updates</h2>
               <p className="text-white/80 mb-6 sm:mb-8 max-w-sm mx-auto text-sm sm:text-base">
                 Give your email and we will send you special offers and news from our farm.
               </p>
@@ -319,7 +323,7 @@ export default async function Home() {
               <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Why Buy From Us</span>
               <span className="h-px w-6 sm:w-8 bg-border" />
             </div>
-            <h2 className="text-xl sm:text-2xl font-extrabold text-foreground tracking-tight font-heading mb-3 sm:mb-4">Our Promise to You</h2>
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-foreground tracking-tight font-heading mb-3 sm:mb-4">Our Promise to You</h2>
             <p className="text-[var(--color-body)] max-w-2xl mx-auto mb-12 sm:mb-20 text-sm sm:text-base">
               We grow mushrooms the old, natural way but with good quality. Our farm is in the cool hills of Kalvarayan, which is perfect for mushrooms.
             </p>
@@ -335,23 +339,19 @@ export default async function Home() {
                 key={i}
                 delay={i * 0.12}
                 direction="up"
-                className={`flex flex-col items-center text-center p-8 sm:p-10 rounded-2xl shadow-[0_4px_12px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_20px_rgba(0,0,0,0.06)] hover:-translate-y-1.5 transition-all duration-300 ease-out border ${
-                  feature.accent
+                className={`flex flex-col items-center text-center p-8 sm:p-10 rounded-2xl shadow-[0_4px_12px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_20px_rgba(0,0,0,0.06)] hover:-translate-y-1.5 transition-all duration-300 ease-out border ${feature.accent
                     ? "bg-primary text-white border-primary sm:col-span-2 lg:col-span-1 lg:scale-105 lg:shadow-[0_8px_30px_rgba(26,73,56,0.2)]"
                     : "bg-card border-border lg:translate-y-6"
-                }`}
+                  }`}
               >
-                <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-6 ${
-                  feature.accent ? "bg-white/20 text-white" : "bg-primary/10 text-primary"
-                }`}>
+                <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-6 ${feature.accent ? "bg-white/20 text-white" : "bg-primary/10 text-primary"
+                  }`}>
                   <feature.icon size={32} strokeWidth={1.5} />
                 </div>
-                <h3 className={`text-base sm:text-lg font-bold mb-3 font-heading ${
-                  feature.accent ? "text-white" : "text-foreground"
-                }`}>{feature.title}</h3>
-                <p className={`leading-relaxed text-sm ${
-                  feature.accent ? "text-white/85" : "text-[var(--color-body)]"
-                }`}>{feature.desc}</p>
+                <h3 className={`text-base sm:text-lg font-bold mb-3 font-heading ${feature.accent ? "text-white" : "text-foreground"
+                  }`}>{feature.title}</h3>
+                <p className={`leading-relaxed text-sm ${feature.accent ? "text-white/85" : "text-[var(--color-body)]"
+                  }`}>{feature.desc}</p>
               </FadeIn>
             ))}
           </div>

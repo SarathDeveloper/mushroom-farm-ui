@@ -40,15 +40,15 @@ export function WhatsAppWidget() {
             className="absolute bottom-16 right-0 w-72 rounded-2xl bg-card border border-border shadow-[0_20px_60px_rgba(0,0,0,0.15)] overflow-hidden"
           >
             <div className="bg-whatsapp px-4 py-3 text-white">
-              <h3 className="font-bold text-sm">Chat with us</h3>
-              <p className="text-xs text-white/80">Typically replies within minutes</p>
+              <h3 className="font-bold text-base">Chat with us</h3>
+              <p className="text-sm text-white/80">Typically replies within minutes</p>
             </div>
             <div className="p-3 space-y-2">
               {quickMessages.map((msg) => (
                 <button
                   key={msg.label}
                   onClick={() => sendMessage(msg.message)}
-                  className="w-full text-left px-3 py-2.5 rounded-xl text-sm font-medium text-foreground bg-secondary hover:bg-primary/10 hover:text-primary transition-colors"
+                  className="w-full text-left px-3 py-2.5 rounded-xl text-base font-medium text-foreground bg-secondary hover:bg-primary/10 hover:text-primary transition-colors"
                 >
                   {msg.label}
                 </button>
@@ -57,7 +57,7 @@ export function WhatsAppWidget() {
             <div className="px-4 pb-3">
               <button
                 onClick={() => sendMessage("Hi! I have a question about Sri Amman Mushroom Farms.")}
-                className="w-full py-2.5 rounded-xl bg-whatsapp text-white text-sm font-semibold hover:bg-whatsapp-hover transition-colors"
+                className="w-full py-2.5 rounded-xl bg-whatsapp text-white text-base font-semibold hover:bg-whatsapp-hover transition-colors"
               >
                 Start a Conversation
               </button>

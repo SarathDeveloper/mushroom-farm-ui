@@ -112,17 +112,17 @@ export function OrderBulkActions({ orders }: Props) {
                 onChange={() => toggle(order.id)}
                 className="h-4 w-4 rounded border-border text-primary focus:ring-primary"
               />
-              <span className="font-bold text-foreground text-sm flex-1">
+              <span className="font-bold text-foreground text-base flex-1">
                 #{order.id.slice(0, 8).toUpperCase()}
               </span>
-              <Badge variant={statusVariant[order.status] ?? "secondary"} className="text-[10px]">
+              <Badge variant={statusVariant[order.status] ?? "secondary"} className="text-xs">
                 {order.status}
               </Badge>
             </div>
-            <div className="space-y-1.5 text-sm mb-3 pl-7">
+            <div className="space-y-1.5 text-base mb-3 pl-7">
               <p className="text-foreground font-medium">{order.user?.name || "Guest"}</p>
-              <p className="text-xs text-muted-foreground">{order.user?.email || order.user?.phone || ""}</p>
-              <div className="flex items-center gap-3 text-xs text-muted-foreground">
+              <p className="text-sm text-muted-foreground">{order.user?.email || order.user?.phone || ""}</p>
+              <div className="flex items-center gap-3 text-sm text-muted-foreground">
                 <span>{formatDate(order.createdAt)}</span>
                 <span>· {order.orderItems.length} items</span>
               </div>
@@ -130,7 +130,7 @@ export function OrderBulkActions({ orders }: Props) {
             <div className="flex items-center justify-between pt-3 border-t border-border">
               <div className="flex items-center gap-2">
                 <span className="font-bold text-foreground">{formatCurrency(order.totalAmount)}</span>
-                <Badge variant={paymentVariant[order.paymentStatus] ?? "secondary"} className="text-[10px]">
+                <Badge variant={paymentVariant[order.paymentStatus] ?? "secondary"} className="text-xs">
                   {order.paymentStatus}
                 </Badge>
               </div>
@@ -150,7 +150,7 @@ export function OrderBulkActions({ orders }: Props) {
       {/* Desktop table view */}
       <div className="hidden md:block bg-card rounded-2xl border border-border shadow-[0_4px_12px_rgba(0,0,0,0.04)] overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-sm">
+          <table className="w-full text-left text-base">
             <thead>
               <tr className="border-b border-border bg-secondary/50 text-[var(--color-body)]">
                 <th className="px-4 py-4 w-10">
@@ -189,7 +189,7 @@ export function OrderBulkActions({ orders }: Props) {
                   <td className="px-6 py-4">
                     <div>
                       <p className="font-medium text-foreground">{order.user?.name || "Guest"}</p>
-                      <p className="text-xs text-muted-foreground">{order.user?.email || order.user?.phone || ""}</p>
+                      <p className="text-sm text-muted-foreground">{order.user?.email || order.user?.phone || ""}</p>
                     </div>
                   </td>
                   <td className="px-6 py-4 text-[var(--color-body)]">
@@ -229,7 +229,7 @@ export function OrderBulkActions({ orders }: Props) {
       {/* Floating action bar */}
       {selected.size > 0 && (
         <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-card border border-border rounded-xl shadow-lg px-4 sm:px-5 py-3 flex flex-wrap items-center justify-center gap-2 sm:gap-4 max-w-[calc(100vw-2rem)]">
-          <span className="text-sm font-medium text-foreground">
+          <span className="text-base font-medium text-foreground">
             {selected.size} selected
           </span>
           {bulkStatuses.map((s) => (
@@ -237,14 +237,14 @@ export function OrderBulkActions({ orders }: Props) {
               key={s.value}
               onClick={() => handleBulkAction(s.value)}
               disabled={isPending}
-              className="text-xs sm:text-sm px-2.5 sm:px-3 py-1.5 rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-50 transition-colors"
+              className="text-sm sm:text-base px-2.5 sm:px-3 py-1.5 rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-50 transition-colors"
             >
               {s.label}
             </button>
           ))}
           <button
             onClick={() => setSelected(new Set())}
-            className="text-xs sm:text-sm px-2.5 sm:px-3 py-1.5 rounded-lg border border-border hover:bg-secondary transition-colors"
+            className="text-sm sm:text-base px-2.5 sm:px-3 py-1.5 rounded-lg border border-border hover:bg-secondary transition-colors"
           >
             Clear
           </button>

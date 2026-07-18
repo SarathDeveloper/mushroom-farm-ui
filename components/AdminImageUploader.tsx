@@ -12,11 +12,11 @@ export function AdminImageUploader() {
 
   return (
     <div className="mb-8 rounded-2xl border border-border bg-card p-5 shadow-[0_4px_12px_rgba(0,0,0,0.04)]">
-      <h2 className="font-heading text-lg font-semibold text-foreground">Media library</h2>
-      <p className="mt-1 text-sm text-[var(--color-body)]">
+      <h2 className="font-heading text-xl font-semibold text-foreground">Media library</h2>
+      <p className="mt-1 text-base text-[var(--color-body)]">
         Upload product images to Cloudinary. Store the public ID (e.g.{" "}
-        <code className="rounded bg-secondary px-1 py-0.5 text-xs">mushroom-farm/…</code>) in{" "}
-        <code className="rounded bg-secondary px-1 py-0.5 text-xs">Product.images</code>.
+        <code className="rounded bg-secondary px-1 py-0.5 text-sm">mushroom-farm/…</code>) in{" "}
+        <code className="rounded bg-secondary px-1 py-0.5 text-sm">Product.images</code>.
       </p>
 
       <div className="mt-4">
@@ -24,7 +24,7 @@ export function AdminImageUploader() {
       </div>
 
       {ids.length > 0 && (
-        <ul className="mt-4 space-y-1 text-xs text-[var(--color-body)]">
+        <ul className="mt-4 space-y-1 text-sm text-[var(--color-body)]">
           {ids.map((id) => (
             <li key={id}>
               <code className="break-all rounded bg-secondary px-1.5 py-0.5">{id}</code>

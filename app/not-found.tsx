@@ -16,8 +16,8 @@ export default function NotFound() {
             className="object-cover"
           />
         </div>
-        <p className="text-8xl font-bold font-heading text-primary/20 mb-2">404</p>
-        <h1 className="text-3xl font-bold font-heading text-foreground mb-3">This patch hasn&apos;t sprouted yet</h1>
+        <p className="text-9xl font-bold font-heading text-primary/20 mb-2">404</p>
+        <h1 className="text-4xl font-bold font-heading text-foreground mb-3">This patch hasn&apos;t sprouted yet</h1>
         <p className="text-[var(--color-body)] mb-10">
           The page you&apos;re looking for doesn&apos;t exist or may have been moved. Let&apos;s get you back to fresh ground.
         </p>

@@ -70,18 +70,18 @@ export function PreOrderSection() {
   };
 
   return (
-    <section className="py-24 sm:py-32 bg-background grain-overlay">
+    <section className="py-12 sm:py-16 bg-background grain-overlay">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         <FadeIn className="text-center mb-12">
           <div className="flex items-center justify-center gap-3 mb-3">
             <span className="h-px w-6 sm:w-8 bg-border" />
-            <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Book Early</span>
+            <span className="text-sm font-bold uppercase tracking-[0.2em] text-primary">Book Early</span>
             <span className="h-px w-6 sm:w-8 bg-border" />
           </div>
-          <h2 className="text-xl sm:text-2xl font-extrabold text-foreground tracking-tight font-heading">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-foreground tracking-tight font-heading">
             Pre-Order Fresh Mushrooms
           </h2>
-          <p className="text-[var(--color-body)] max-w-2xl mx-auto mt-3 text-sm sm:text-base">
+          <p className="text-[var(--color-body)] max-w-2xl mx-auto mt-3 text-base sm:text-lg">
             Seasonal mushrooms sell out fast. Place your order before harvest and we&apos;ll confirm availability.
           </p>
         </FadeIn>
@@ -89,10 +89,10 @@ export function PreOrderSection() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
           <div className="lg:col-span-1 space-y-8">
             <FadeIn direction="right">
-              <h2 className="text-base sm:text-lg font-bold font-heading text-foreground mb-2">
+              <h2 className="text-lg sm:text-xl font-bold font-heading text-foreground mb-2">
                 Why Pre-Order?
               </h2>
-              <p className="text-[var(--color-body)] mb-8 text-xs sm:text-sm">
+              <p className="text-[var(--color-body)] mb-8 text-sm sm:text-base">
                 Seasonal and specialty mushrooms move quickly. Pre-ordering ensures you get the
                 harvest you want without last-minute stockouts.
               </p>
@@ -103,8 +103,8 @@ export function PreOrderSection() {
                       <b.icon size={22} strokeWidth={1.75} />
                     </div>
                     <div>
-                      <h3 className="font-bold text-foreground mb-1 text-sm">{b.title}</h3>
-                      <p className="text-sm text-[var(--color-body)]">{b.desc}</p>
+                      <h3 className="font-bold text-foreground mb-1 text-base">{b.title}</h3>
+                      <p className="text-base text-[var(--color-body)]">{b.desc}</p>
                     </div>
                   </div>
                 ))}
@@ -118,10 +118,10 @@ export function PreOrderSection() {
                 <div className="w-16 h-16 rounded-full bg-[var(--color-success)]/15 text-[var(--color-success)] flex items-center justify-center mb-6">
                   <MailCheck size={32} />
                 </div>
-                <h3 className="text-base sm:text-lg font-bold font-heading text-foreground mb-2">
+                <h3 className="text-lg sm:text-xl font-bold font-heading text-foreground mb-2">
                   Pre-Order Received!
                 </h3>
-                <p className="text-[var(--color-body)] max-w-sm mb-6 text-xs sm:text-sm">
+                <p className="text-[var(--color-body)] max-w-sm mb-6 text-sm sm:text-base">
                   Thank you. Our team will confirm availability and contact you within 24 hours
                   about the next steps.
                 </p>
@@ -141,7 +141,7 @@ export function PreOrderSection() {
                 onSubmit={handleSubmit}
                 className="bg-card rounded-2xl p-6 sm:p-8 border border-border space-y-5"
               >
-                <h2 className="text-base sm:text-lg font-bold font-heading text-foreground">
+                <h2 className="text-lg sm:text-xl font-bold font-heading text-foreground">
                   Place a Pre-Order
                 </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -232,12 +232,12 @@ export function PreOrderSection() {
                       onChange={(e) => handleChange("notes", e.target.value)}
                       placeholder="Pickup preference, packaging notes, or anything else..."
                       rows={4}
-                      className="w-full rounded-xl border border-border bg-card px-3.5 py-2 text-sm outline-none focus-visible:border-primary focus-visible:ring-3 focus-visible:ring-primary/20 resize-none"
+                      className="w-full rounded-xl border border-border bg-card px-3.5 py-2 text-base outline-none focus-visible:border-primary focus-visible:ring-3 focus-visible:ring-primary/20 resize-none"
                     />
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <div className="flex items-center gap-2 text-base text-muted-foreground">
                   <CheckCircle2 size={16} className="text-primary shrink-0" />
                   Pre-orders are confirmed by our team before payment.
                 </div>

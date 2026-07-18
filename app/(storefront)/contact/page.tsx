@@ -34,10 +34,10 @@ export default function ContactPage() {
             <FadeIn direction="right" className="space-y-6">
               {/* Reach us directly */}
               <div className="rounded-2xl border border-border bg-card p-6 sm:p-8">
-                <h2 className="text-lg font-bold font-heading text-foreground mb-1">
+                <h2 className="text-xl font-bold font-heading text-foreground mb-1">
                   Call or Message Us
                 </h2>
-                <p className="text-sm text-muted-foreground mb-5">
+                <p className="text-base text-muted-foreground mb-5">
                   Want to talk now? Pick how you want to reach us.
                 </p>
 
@@ -47,7 +47,7 @@ export default function ContactPage() {
                     href={`https://wa.me/${WHATSAPP_NUMBER}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 rounded-full bg-whatsapp px-5 py-2.5 text-sm font-semibold text-white hover:bg-whatsapp-hover transition-colors"
+                    className="inline-flex items-center gap-2 rounded-full bg-whatsapp px-5 py-2.5 text-base font-semibold text-white hover:bg-whatsapp-hover transition-colors"
                   >
                     <WhatsAppIcon className="size-4" />
                     WhatsApp
@@ -56,7 +56,7 @@ export default function ContactPage() {
                   {/* Phone */}
                   <a
                     href={`tel:${PHONE.replace(/\s/g, "")}`}
-                    className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-5 py-2.5 text-sm font-medium text-foreground hover:bg-secondary transition-colors"
+                    className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-5 py-2.5 text-base font-medium text-foreground hover:bg-secondary transition-colors"
                   >
                     <Phone size={15} />
                     {PHONE}
@@ -65,13 +65,13 @@ export default function ContactPage() {
                   {/* Email */}
                   <a
                     href={`mailto:${EMAIL}`}
-                    className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-5 py-2.5 text-sm font-medium text-foreground hover:bg-secondary transition-colors break-all"
+                    className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-5 py-2.5 text-base font-medium text-foreground hover:bg-secondary transition-colors break-all"
                   >
                     <Mail size={15} className="shrink-0" />
                     {EMAIL}
                   </a>
                 </div>
-              <div className="flex flex-wrap gap-x-4 gap-y-1 mt-3 text-sm text-muted-foreground">
+              <div className="flex flex-wrap gap-x-4 gap-y-1 mt-3 text-base text-muted-foreground">
                 {ADDITIONAL_PHONES.map((phone) => (
                   <a key={phone} href={`tel:${phone.replace(/\s/g, "")}`} className="hover:text-foreground transition-colors">
                     {phone}
@@ -79,7 +79,7 @@ export default function ContactPage() {
                 ))}
               </div>
 
-                <p className="text-xs text-muted-foreground mt-4">
+                <p className="text-sm text-muted-foreground mt-4">
                   We usually reply within 24 hours
                 </p>
               </div>
@@ -87,14 +87,14 @@ export default function ContactPage() {
               {/* Visit us */}
               <div className="rounded-2xl border border-border bg-card p-6 sm:p-8">
                 <div className="flex items-start justify-between mb-4">
-                  <h2 className="text-lg font-bold font-heading text-foreground">
+                  <h2 className="text-xl font-bold font-heading text-foreground">
                     Come Visit Us
                   </h2>
                   <a
                     href={MAPS_LINK}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline"
+                    className="inline-flex items-center gap-1.5 text-base font-medium text-primary hover:underline"
                   >
                     See on Google Maps
                     <ExternalLink size={14} />
@@ -104,10 +104,10 @@ export default function ContactPage() {
                 <div className="flex items-start gap-2.5 mb-5">
                   <MapPin size={18} className="text-primary shrink-0 mt-0.5" />
                   <div>
-                    <p className="font-semibold text-sm text-foreground">
+                    <p className="font-semibold text-base text-foreground">
                       Sari Amman Oyster Mushroom Farm
                     </p>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-base text-muted-foreground">
                       {ADDRESS_LINE.replace("Sari Amman Oyster Mushroom Farm, ", "")}
                     </p>
                   </div>

@@ -55,18 +55,18 @@ const journeySteps = [
 
 export function TrainingJourneySection() {
   return (
-    <section className="py-20 sm:py-28 bg-background grain-overlay">
+    <section className="py-10 sm:py-14 bg-background grain-overlay">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         <FadeIn className="text-center mb-12">
           <div className="flex items-center justify-center gap-3 mb-3">
             <span className="h-px w-6 sm:w-8 bg-border" />
-            <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Full Support</span>
+            <span className="text-sm font-bold uppercase tracking-[0.2em] text-primary">Full Support</span>
             <span className="h-px w-6 sm:w-8 bg-border" />
           </div>
-          <h2 className="text-xl sm:text-2xl font-extrabold text-foreground tracking-tight font-heading mb-3 sm:mb-4">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-foreground tracking-tight font-heading mb-3 sm:mb-4">
             How We Help You — Step by Step
           </h2>
-          <p className="text-[var(--color-body)] max-w-2xl mx-auto text-sm sm:text-base">
+          <p className="text-[var(--color-body)] max-w-2xl mx-auto text-base sm:text-lg">
             This is not just a training. It is a full support system — from your first form to your first sale.
           </p>
         </FadeIn>
@@ -79,15 +79,15 @@ export function TrainingJourneySection() {
                   <div className="w-14 h-14 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
                     <s.icon size={26} strokeWidth={1.75} />
                   </div>
-                  <span className="text-xs font-bold text-primary uppercase tracking-wider">
+                  <span className="text-sm font-bold text-primary uppercase tracking-wider">
                     Step {s.step}
                   </span>
                 </div>
-                <h3 className="font-bold text-foreground text-base sm:text-lg mb-2 font-heading">
+                <h3 className="font-bold text-foreground text-lg sm:text-xl mb-2 font-heading">
                   {s.title}
                 </h3>
-                <p className="text-sm text-[var(--color-body)] mb-4 flex-1 leading-relaxed">{s.desc}</p>
-                <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-primary bg-primary/10 px-2.5 py-1 rounded-full w-fit">
+                <p className="text-base text-[var(--color-body)] mb-4 flex-1 leading-relaxed">{s.desc}</p>
+                <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary bg-primary/10 px-2.5 py-1 rounded-full w-fit">
                   <Users size={12} /> {s.who}
                 </span>
               </div>

@@ -117,9 +117,9 @@ export function SearchDialog() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search mushrooms, recipes, pages..."
-              className="h-14 border-none shadow-none focus-visible:ring-0 px-0 text-base"
+              className="h-14 border-none shadow-none focus-visible:ring-0 px-0 text-lg"
             />
-            <kbd className="hidden sm:inline-block text-[10px] font-semibold text-muted-foreground border border-border rounded px-1.5 py-0.5">
+            <kbd className="hidden sm:inline-block text-xs font-semibold text-muted-foreground border border-border rounded px-1.5 py-0.5">
               ESC
             </kbd>
           </div>
@@ -127,7 +127,7 @@ export function SearchDialog() {
             {!query.trim() ? (
               <div className="p-4 space-y-5">
                 <div>
-                  <h4 className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                  <h4 className="text-sm font-bold text-muted-foreground uppercase tracking-wider mb-2 flex items-center gap-1.5">
                     <TrendingUp size={12} /> Popular Searches
                   </h4>
                   <div className="flex flex-wrap gap-2">
@@ -135,7 +135,7 @@ export function SearchDialog() {
                       <button
                         key={term}
                         onClick={() => handlePopularSearch(term)}
-                        className="px-3 py-1.5 rounded-full bg-secondary text-sm font-medium text-foreground hover:bg-[#E8F2EC] hover:text-[#2B7A5D] transition-colors"
+                        className="px-3 py-1.5 rounded-full bg-secondary text-base font-medium text-foreground hover:bg-[#E8F2EC] hover:text-[#2B7A5D] transition-colors"
                       >
                         {term}
                       </button>
@@ -144,7 +144,7 @@ export function SearchDialog() {
                 </div>
 
                 <div>
-                  <h4 className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                  <h4 className="text-sm font-bold text-muted-foreground uppercase tracking-wider mb-2 flex items-center gap-1.5">
                     <Clock size={12} /> Quick Links
                   </h4>
                   <div className="space-y-1">
@@ -154,7 +154,7 @@ export function SearchDialog() {
                         onClick={() => goTo(link.href)}
                         className="w-full flex items-center justify-between p-2.5 rounded-xl hover:bg-secondary/50 text-left transition-colors group"
                       >
-                        <span className="text-sm font-medium text-foreground">{link.label}</span>
+                        <span className="text-base font-medium text-foreground">{link.label}</span>
                         <ArrowRight size={14} className="text-border group-hover:text-[#2B7A5D] transition-colors" />
                       </button>
                     ))}
@@ -165,7 +165,7 @@ export function SearchDialog() {
               <div className="p-2">
                 {results.length > 0 && (
                   <div className="mb-2">
-                    <h4 className="text-xs font-bold text-muted-foreground uppercase tracking-wider px-2.5 py-1.5">
+                    <h4 className="text-sm font-bold text-muted-foreground uppercase tracking-wider px-2.5 py-1.5">
                       Products ({results.length})
                     </h4>
                     {results.map((product) => (
@@ -178,9 +178,9 @@ export function SearchDialog() {
                           <SafeImage src={product.image} alt={product.name} fill sizes="48px" className="object-cover" />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className="font-semibold text-sm text-foreground truncate">{product.name}</p>
+                          <p className="font-semibold text-base text-foreground truncate">{product.name}</p>
                         </div>
-                        <span className="text-xs font-semibold text-[#2B7A5D] shrink-0">₹{product.price}</span>
+                        <span className="text-sm font-semibold text-[#2B7A5D] shrink-0">₹{product.price}</span>
                       </button>
                     ))}
                   </div>
@@ -188,10 +188,10 @@ export function SearchDialog() {
 
                 {hasSearched && !isSearching && results.length === 0 && (
                   <div className="text-center py-10">
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-base text-muted-foreground">
                       No results for &ldquo;{query}&rdquo;
                     </p>
-                    <p className="text-xs text-muted-foreground mt-1">
+                    <p className="text-sm text-muted-foreground mt-1">
                       Try searching for &ldquo;oyster&rdquo;, &ldquo;milky&rdquo;, or &ldquo;shiitake&rdquo;
                     </p>
                   </div>

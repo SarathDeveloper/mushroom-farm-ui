@@ -18,6 +18,14 @@ const productLinks = [
   { href: "/training", label: "Farm Training" },
 ];
 
+const supportLinks = [
+  { href: "/track-order", label: "Track Order" },
+  { href: "/shipping-policy", label: "Shipping Policy" },
+  { href: "/refund-policy", label: "Refund Policy" },
+  { href: "/privacy", label: "Privacy Policy" },
+  { href: "/terms", label: "Terms of Service" },
+];
+
 const phoneNumbers = [
   { value: "+91 93855 26105", href: "tel:+919385526105" },
   { value: "+91 89031 56142", href: "tel:+918903156142" },
@@ -47,11 +55,11 @@ export default function Footer() {
   return (
     <footer className="bg-[#0a0a0a] text-white pt-16 sm:pt-20 pb-20 md:pb-10">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-        <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-4 lg:gap-10">
+        <div className="flex flex-col sm:flex-row sm:flex-wrap lg:flex-nowrap gap-12 lg:gap-8 xl:gap-12 justify-between">
           {/* Brand */}
-          <div className="space-y-5 max-w-sm">
+          <div className="space-y-5 w-full sm:w-[calc(50%-1.5rem)] lg:w-auto lg:max-w-[300px]">
             <Link href="/" className="inline-flex flex-col gap-3 group">
-              <div className="relative h-20 w-20 overflow-hidden rounded-full ring-2 ring-white/10 transition-transform duration-300 group-hover:scale-105">
+              <div className="relative h-20 w-20 overflow-hidden rounded-full transition-transform duration-300 group-hover:scale-105">
                 <Image
                   src="/gallery/brand-logo.png"
                   alt="Sri Amman Mushroom Farms"
@@ -61,10 +69,10 @@ export default function Footer() {
                 />
               </div>
               <span className="leading-none flex flex-col">
-                <span className="block font-display text-xl sm:text-2xl font-extrabold tracking-[0.01em] text-white transition-colors duration-300 group-hover:text-white/90">
+                <span className="block font-display text-2xl sm:text-3xl font-extrabold tracking-[0.01em] text-white transition-colors duration-300 group-hover:text-white/90">
                   Sri Amman
                 </span>
-                <span className="block font-sans text-[10px] sm:text-[11px] font-semibold tracking-[0.22em] uppercase text-white/60 mt-1.5">
+                <span className="block font-sans text-xs sm:text-sm font-semibold tracking-[0.22em] uppercase text-white/60 mt-1.5">
                   Mushroom Farms
                 </span>
                 <svg className="w-8 h-2 text-white/30 mt-2 transition-all duration-300 group-hover:w-12 group-hover:text-[#2B7A5D]" viewBox="0 0 32 6" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -72,24 +80,24 @@ export default function Footer() {
                 </svg>
               </span>
             </Link>
-            <p className="text-sm leading-relaxed text-white/75">
+            <p className="text-base leading-relaxed text-white/75">
               Fresh mushrooms from Kalvarayan Hills, Vellimalai. Buy fresh,
               book early, or learn farming with us.
             </p>
-            <p className="text-xs text-white/45">
+            <p className="text-sm text-white/45">
               Grown with care — Fresh and healthy
             </p>
             <Link
               href="/contact"
-              className="inline-flex items-center justify-center rounded-full bg-white px-6 py-2.5 text-sm font-medium text-black transition-opacity hover:opacity-90"
+              className="inline-flex items-center justify-center rounded-full bg-white px-6 py-2.5 text-base font-medium text-black transition-opacity hover:opacity-90"
             >
               Contact Us
             </Link>
           </div>
 
           {/* Navigation */}
-          <div>
-            <h3 className="mb-5 text-xs font-semibold tracking-[0.18em] uppercase text-white/45">
+          <div className="w-full sm:w-[calc(50%-1.5rem)] lg:w-auto shrink-0">
+            <h3 className="mb-5 text-base font-semibold tracking-[0.18em] uppercase text-white/45">
               Navigation
             </h3>
             <ul className="space-y-3.5">
@@ -97,7 +105,7 @@ export default function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-white/90 transition-colors hover:text-white"
+                    className="text-base text-white/90 transition-colors hover:text-white"
                   >
                     {link.label}
                   </Link>
@@ -107,8 +115,8 @@ export default function Footer() {
           </div>
 
           {/* Products */}
-          <div>
-            <h3 className="mb-5 text-xs font-semibold tracking-[0.18em] uppercase text-white/45">
+          <div className="w-full sm:w-[calc(50%-1.5rem)] lg:w-auto shrink-0">
+            <h3 className="mb-5 text-base font-semibold tracking-[0.18em] uppercase text-white/45">
               Products
             </h3>
             <ul className="space-y-3.5">
@@ -116,7 +124,26 @@ export default function Footer() {
                 <li key={link.href + link.label}>
                   <Link
                     href={link.href}
-                    className="text-sm text-white/90 transition-colors hover:text-white"
+                    className="text-base text-white/90 transition-colors hover:text-white"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Support */}
+          <div className="w-full sm:w-[calc(50%-1.5rem)] lg:w-auto shrink-0">
+            <h3 className="mb-5 text-base font-semibold tracking-[0.18em] uppercase text-white/45">
+              Support
+            </h3>
+            <ul className="space-y-3.5">
+              {supportLinks.map((link) => (
+                <li key={link.href + link.label}>
+                  <Link
+                    href={link.href}
+                    className="text-base text-white/90 transition-colors hover:text-white"
                   >
                     {link.label}
                   </Link>
@@ -126,8 +153,8 @@ export default function Footer() {
           </div>
 
           {/* Get in Touch */}
-          <div>
-            <h3 className="mb-5 text-xs font-semibold tracking-[0.18em] uppercase text-white/45">
+          <div className="w-full sm:w-[calc(50%-1.5rem)] lg:w-auto lg:max-w-[340px]">
+            <h3 className="mb-5 text-base font-semibold tracking-[0.18em] uppercase text-white/45">
               Get in Touch
             </h3>
             <ul className="space-y-5">
@@ -136,10 +163,10 @@ export default function Footer() {
                   <Phone size={15} strokeWidth={1.75} />
                 </span>
                 <div className="min-w-0">
-                  <p className="mb-0.5 text-[10px] font-semibold tracking-[0.16em] uppercase text-white/40">
+                  <p className="mb-0.5 text-xs font-semibold tracking-[0.16em] uppercase text-white/40">
                     Call Us
                   </p>
-                  <div className="flex flex-wrap items-center gap-x-1.5 text-sm leading-relaxed text-white/90">
+                  <div className="flex flex-wrap items-center gap-x-1.5 text-base leading-relaxed text-white/90">
                     {phoneNumbers.map((phone, i) => (
                       <span key={phone.href} className="inline-flex items-center gap-x-1.5">
                         {i > 0 && <span className="text-white/35 select-none" aria-hidden>/</span>}
@@ -157,7 +184,7 @@ export default function Footer() {
               {contactItems.map((item) => {
                 const Icon = item.icon;
                 const value = (
-                  <span className="whitespace-pre-line text-sm leading-relaxed text-white/90">
+                  <span className="whitespace-pre-line text-base leading-relaxed text-white/90">
                     {item.value}
                   </span>
                 );
@@ -167,7 +194,7 @@ export default function Footer() {
                       <Icon size={15} strokeWidth={1.75} />
                     </span>
                     <div className="min-w-0">
-                      <p className="mb-0.5 text-[10px] font-semibold tracking-[0.16em] uppercase text-white/40">
+                      <p className="mb-0.5 text-xs font-semibold tracking-[0.16em] uppercase text-white/40">
                         {item.label}
                       </p>
                       {"href" in item && item.href ? (
@@ -222,28 +249,11 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-16 border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between text-xs text-white/45 gap-4">
-          <p>
+        <div className="mt-16 border-t border-white/10 pt-8 flex items-center justify-center text-sm text-white/45">
+          <p className="text-center">
             &copy; {new Date().getFullYear()} Sri Amman Mushroom Farms. All rights
             reserved. FSSAI Lic: 22424356000315
           </p>
-          <div className="flex flex-wrap gap-x-5 gap-y-2">
-            <Link href="/privacy" className="hover:text-white transition-colors">
-              Privacy Policy
-            </Link>
-            <Link href="/terms" className="hover:text-white transition-colors">
-              Terms of Service
-            </Link>
-            <Link href="/refund-policy" className="hover:text-white transition-colors">
-              Refund Policy
-            </Link>
-            <Link href="/shipping-policy" className="hover:text-white transition-colors">
-              Shipping Policy
-            </Link>
-            <Link href="/track-order" className="hover:text-white transition-colors">
-              Track Order
-            </Link>
-          </div>
         </div>
       </div>
     </footer>

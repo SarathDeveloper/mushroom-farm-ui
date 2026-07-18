@@ -54,18 +54,18 @@ export default async function TrainingPage() {
       <TrainingJourneySection />
 
       {/* ─── SECTION 3: WHO HELPS YOU ─── */}
-      <section className="py-20 sm:py-28 bg-secondary">
+      <section className="py-10 sm:py-14 bg-secondary">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
           <FadeIn className="text-center mb-12">
             <div className="flex items-center justify-center gap-3 mb-3">
               <span className="h-px w-6 sm:w-8 bg-border" />
-              <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Your Team</span>
+              <span className="text-sm font-bold uppercase tracking-[0.2em] text-primary">Your Team</span>
               <span className="h-px w-6 sm:w-8 bg-border" />
             </div>
-            <h2 className="text-xl sm:text-2xl font-extrabold text-foreground tracking-tight font-heading mb-3 sm:mb-4">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-foreground tracking-tight font-heading mb-3 sm:mb-4">
               Who Helps You Succeed
             </h2>
-            <p className="text-[var(--color-body)] max-w-xl mx-auto text-sm sm:text-base">
+            <p className="text-[var(--color-body)] max-w-xl mx-auto text-base sm:text-lg">
               You are not alone. These people support you at every stage.
             </p>
           </FadeIn>
@@ -83,9 +83,9 @@ export default async function TrainingPage() {
                   />
                 </div>
                 <div className="p-5 sm:p-6 flex-1 flex flex-col">
-                  <h3 className="font-bold text-base sm:text-lg text-foreground font-heading mb-1">Mathesh</h3>
-                  <p className="text-xs text-primary font-semibold uppercase tracking-wider mb-3">Owner & Head Farmer</p>
-                  <ul className="text-sm text-[var(--color-body)] space-y-2 flex-1">
+                  <h3 className="font-bold text-lg sm:text-xl text-foreground font-heading mb-1">Mathesh</h3>
+                  <p className="text-sm text-primary font-semibold uppercase tracking-wider mb-3">Owner & Head Farmer</p>
+                  <ul className="text-base text-[var(--color-body)] space-y-2 flex-1">
                     <li className="flex items-start gap-2"><CheckCircle2 size={14} className="text-primary mt-0.5 shrink-0" /> Helps with setup & registration</li>
                     <li className="flex items-start gap-2"><CheckCircle2 size={14} className="text-primary mt-0.5 shrink-0" /> Gives you spawn bags & materials</li>
                     <li className="flex items-start gap-2"><CheckCircle2 size={14} className="text-primary mt-0.5 shrink-0" /> Routes customer orders to you</li>
@@ -101,9 +101,9 @@ export default async function TrainingPage() {
                   <Landmark size={56} strokeWidth={1} className="text-primary/30" />
                 </div>
                 <div className="p-5 sm:p-6 flex-1 flex flex-col">
-                  <h3 className="font-bold text-base sm:text-lg text-foreground font-heading mb-1">District Horticulture Office</h3>
-                  <p className="text-xs text-primary font-semibold uppercase tracking-wider mb-3">Government Support</p>
-                  <ul className="text-sm text-[var(--color-body)] space-y-2 flex-1">
+                  <h3 className="font-bold text-lg sm:text-xl text-foreground font-heading mb-1">District Horticulture Office</h3>
+                  <p className="text-sm text-primary font-semibold uppercase tracking-wider mb-3">Government Support</p>
+                  <ul className="text-base text-[var(--color-body)] space-y-2 flex-1">
                     <li className="flex items-start gap-2"><CheckCircle2 size={14} className="text-primary mt-0.5 shrink-0" /> Guidance for checking current subsidy schemes</li>
                     <li className="flex items-start gap-2"><CheckCircle2 size={14} className="text-primary mt-0.5 shrink-0" /> Help understanding project-size requirements</li>
                     <li className="flex items-start gap-2"><CheckCircle2 size={14} className="text-primary mt-0.5 shrink-0" /> Bank loan guidance & schemes</li>
@@ -119,9 +119,9 @@ export default async function TrainingPage() {
                   <Users size={56} strokeWidth={1} className="text-primary/30" />
                 </div>
                 <div className="p-5 sm:p-6 flex-1 flex flex-col">
-                  <h3 className="font-bold text-base sm:text-lg text-foreground font-heading mb-1">Farmer Network</h3>
-                  <p className="text-xs text-primary font-semibold uppercase tracking-wider mb-3">Peer Community</p>
-                  <ul className="text-sm text-[var(--color-body)] space-y-2 flex-1">
+                  <h3 className="font-bold text-lg sm:text-xl text-foreground font-heading mb-1">Farmer Network</h3>
+                  <p className="text-sm text-primary font-semibold uppercase tracking-wider mb-3">Peer Community</p>
+                  <ul className="text-base text-[var(--color-body)] space-y-2 flex-1">
                     <li className="flex items-start gap-2"><CheckCircle2 size={14} className="text-primary mt-0.5 shrink-0" /> WhatsApp group for instant help</li>
                     <li className="flex items-start gap-2"><CheckCircle2 size={14} className="text-primary mt-0.5 shrink-0" /> Share tips & solve problems together</li>
                     <li className="flex items-start gap-2"><CheckCircle2 size={14} className="text-primary mt-0.5 shrink-0" /> Buy materials in bulk (save money)</li>
@@ -138,18 +138,18 @@ export default async function TrainingPage() {
       <TrainingOrderFlowSection />
 
       {/* ─── SECTION 5: GOVERNMENT SUBSIDY ─── */}
-      <section className="py-20 sm:py-28 bg-secondary">
+      <section className="py-10 sm:py-14 bg-secondary">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
             <FadeIn direction="right">
               <div className="space-y-5">
-                <span className="inline-flex items-center px-3 py-1.5 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider">
+                <span className="inline-flex items-center px-3 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-bold uppercase tracking-wider">
                   <Award size={14} className="mr-1.5" /> Support with government scheme applications
                 </span>
-                <h2 className="text-xl sm:text-2xl font-extrabold text-foreground tracking-tight font-heading">
+                <h2 className="text-2xl sm:text-3xl font-extrabold text-foreground tracking-tight font-heading">
                   Explore Government Subsidy Options
                 </h2>
-                <p className="text-[var(--color-body)] text-sm sm:text-base leading-relaxed">
+                <p className="text-[var(--color-body)] text-base sm:text-lg leading-relaxed">
                   Government schemes and subsidy amounts can change and depend on eligibility, location, project size, and approval. We help you understand the application process and prepare the required documents.
                 </p>
               </div>
@@ -157,16 +157,16 @@ export default async function TrainingPage() {
 
             <FadeIn direction="left">
               <div className="bg-card rounded-2xl border border-border p-6 sm:p-8">
-                <h3 className="font-bold text-foreground font-heading text-base sm:text-lg mb-5">
+                <h3 className="font-bold text-foreground font-heading text-lg sm:text-xl mb-5">
                   How to Get Subsidy
                 </h3>
                 <ol className="space-y-4">
                   {subsidySteps.map((step, i) => (
                     <li key={i} className="flex items-start gap-3">
-                      <span className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
+                      <span className="w-7 h-7 rounded-full bg-primary text-white text-sm font-bold flex items-center justify-center shrink-0 mt-0.5">
                         {i + 1}
                       </span>
-                      <span className="text-sm text-[var(--color-body)] leading-relaxed pt-1">
+                      <span className="text-base text-[var(--color-body)] leading-relaxed pt-1">
                         {step}
                       </span>
                     </li>
@@ -179,7 +179,7 @@ export default async function TrainingPage() {
       </section>
 
       {/* ─── SECTION 6: TRUST NUMBERS ─── */}
-      <section className="py-16 sm:py-20 bg-primary text-white">
+      <section className="py-8 sm:py-12 bg-primary text-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
           <FadeIn>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 sm:gap-8">
@@ -188,8 +188,8 @@ export default async function TrainingPage() {
                   <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center mx-auto mb-3">
                     <s.icon size={24} strokeWidth={1.75} />
                   </div>
-                  <p className="text-xl sm:text-2xl font-extrabold font-heading">{s.value}</p>
-                  <p className="text-xs sm:text-sm text-white/70 mt-1">{s.label}</p>
+                  <p className="text-2xl sm:text-3xl font-extrabold font-heading">{s.value}</p>
+                  <p className="text-sm sm:text-base text-white/70 mt-1">{s.label}</p>
                 </div>
               ))}
             </div>
@@ -198,20 +198,20 @@ export default async function TrainingPage() {
       </section>
 
       {/* ─── SECTION 7: CONTACT / REGISTER CTA ─── */}
-      <section className="py-20 sm:py-28 bg-background grain-overlay">
+      <section className="py-10 sm:py-14 bg-background grain-overlay">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
             <FadeIn direction="right">
               <div className="space-y-5">
                 <div className="flex items-center gap-3 mb-3">
                   <span className="h-px w-6 sm:w-8 bg-border" />
-                  <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Get Started</span>
+                  <span className="text-sm font-bold uppercase tracking-[0.2em] text-primary">Get Started</span>
                   <span className="h-px w-6 sm:w-8 bg-border" />
                 </div>
-                <h2 className="text-xl sm:text-2xl font-extrabold text-foreground tracking-tight font-heading">
+                <h2 className="text-2xl sm:text-3xl font-extrabold text-foreground tracking-tight font-heading">
                   Ready to Start? Talk to Mathesh.
                 </h2>
-                <p className="text-[var(--color-body)] text-sm sm:text-base leading-relaxed">
+                <p className="text-[var(--color-body)] text-base sm:text-lg leading-relaxed">
                   Whether you want to learn mushroom farming, need bags and materials, or want to join our farmer network — reach out. We will guide you through every step.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-3 pt-2">

@@ -66,7 +66,7 @@ export function ProductCard({
 
         <span
           className={cn(
-            "absolute top-2 right-2 sm:top-3 sm:right-3 px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-[11px] font-semibold text-white shadow-sm",
+            "absolute top-2 right-2 sm:top-3 sm:right-3 px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded-full text-xs sm:text-sm font-semibold text-white shadow-sm",
             stock.tone === "in" && "bg-primary",
             stock.tone === "low" && "bg-[#E5B06D]",
             stock.tone === "out" && "bg-[#E56D6D]"
@@ -99,25 +99,25 @@ export function ProductCard({
       <div className="p-2.5 sm:p-4 flex-1 flex flex-col gap-1.5 sm:gap-2">
         <div className="flex items-start justify-between gap-2 sm:gap-3">
           <Link href={`/shop/${product.slug}`} className="min-w-0">
-            <h3 className="font-bold text-sm sm:text-[15px] leading-snug text-foreground line-clamp-2 font-heading hover:text-primary transition-colors">
+            <h3 className="font-bold text-base sm:text-lg leading-snug text-foreground line-clamp-2 font-heading hover:text-primary transition-colors">
               {product.name}
             </h3>
           </Link>
           <div className="flex items-center gap-0.5 sm:gap-1 shrink-0 pt-0.5">
             <Star size={12} className="fill-[#c4a96a] text-[#c4a96a] sm:hidden" />
             <Star size={13} className="fill-[#c4a96a] text-[#c4a96a] hidden sm:block" />
-            <span className="text-[11px] sm:text-xs font-medium text-muted-foreground tabular-nums">
+            <span className="text-sm sm:text-sm font-medium text-muted-foreground tabular-nums">
               {product.rating.toFixed(1)}
             </span>
           </div>
         </div>
 
-        <p className="hidden sm:block text-sm text-muted-foreground leading-relaxed line-clamp-2">
+        <p className="hidden sm:block text-base text-muted-foreground leading-relaxed line-clamp-2">
           {product.description}
         </p>
 
         {product.shelfLifeDays != null && product.shelfLifeDays > 0 && (
-          <div className="hidden sm:flex items-center gap-1.5 text-[11px] font-medium text-amber-700">
+          <div className="hidden sm:flex items-center gap-1.5 text-sm font-medium text-amber-700">
             <Clock size={12} className="shrink-0" />
             Best within {product.shelfLifeDays} day{product.shelfLifeDays > 1 ? "s" : ""}
           </div>
@@ -128,7 +128,7 @@ export function ProductCard({
             {tags.map((tag) => (
               <span
                 key={tag}
-                className="inline-flex items-center rounded-full bg-primary/10 px-2.5 py-0.5 text-[11px] font-medium text-primary border border-primary/10"
+                className="inline-flex items-center rounded-full bg-primary/10 px-2.5 py-0.5 text-sm font-medium text-primary border border-primary/10"
               >
                 {tag}
               </span>
@@ -137,15 +137,15 @@ export function ProductCard({
         )}
 
         <div className="mt-auto pt-0.5 sm:pt-1 flex flex-wrap items-baseline gap-1 sm:gap-1.5">
-          <span className="text-base sm:text-lg font-extrabold text-primary tabular-nums">
+          <span className="text-lg sm:text-xl font-extrabold text-primary tabular-nums">
             ₹{product.price.toLocaleString("en-IN")}
           </span>
           {product.compareAtPrice && (
-            <span className="text-[11px] sm:text-xs text-muted-foreground line-through tabular-nums">
+            <span className="text-sm sm:text-sm text-muted-foreground line-through tabular-nums">
               ₹{product.compareAtPrice.toLocaleString("en-IN")}
             </span>
           )}
-          <span className="text-[11px] sm:text-sm text-muted-foreground">
+          <span className="text-sm sm:text-base text-muted-foreground">
             / {product.weight}
           </span>
         </div>
@@ -161,7 +161,7 @@ export function ProductCard({
             >
               <Minus size={14} />
             </button>
-            <span className="w-7 text-center text-sm font-semibold tabular-nums">
+            <span className="w-7 text-center text-base font-semibold tabular-nums">
               {qty}
             </span>
             <button
@@ -181,7 +181,7 @@ export function ProductCard({
             onClick={handleAddToCart}
             disabled={outOfStock}
             aria-label={`Add ${product.name} to cart`}
-            className="flex-1 min-w-0 h-8 sm:h-9 rounded-full bg-primary hover:bg-primary/90 text-white text-xs sm:text-sm font-semibold gap-1 sm:gap-1.5 disabled:opacity-50 px-2"
+            className="flex-1 min-w-0 h-8 sm:h-9 rounded-full bg-primary hover:bg-primary/90 text-white text-sm sm:text-base font-semibold gap-1 sm:gap-1.5 disabled:opacity-50 px-2"
           >
             <ShoppingCart size={14} className="sm:hidden" />
             <ShoppingCart size={15} className="hidden sm:block" />

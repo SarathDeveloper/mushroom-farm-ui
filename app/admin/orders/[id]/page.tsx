@@ -59,16 +59,16 @@ export default async function OrderDetailPage(props: {
       <header className="mb-6 sm:mb-8">
         <Link
           href="/admin/orders"
-          className="inline-flex items-center gap-1.5 text-sm text-[var(--color-body)] hover:text-primary mb-3 sm:mb-4"
+          className="inline-flex items-center gap-1.5 text-base text-[var(--color-body)] hover:text-primary mb-3 sm:mb-4"
         >
           <ArrowLeft size={16} /> Back to orders
         </Link>
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
           <div>
-            <h1 className="text-xl md:text-2xl font-bold font-heading text-foreground">
+            <h1 className="text-2xl md:text-3xl font-bold font-heading text-foreground">
               Order #{order.id.slice(0, 8).toUpperCase()}
             </h1>
-            <p className="text-[var(--color-body)] mt-1 text-xs sm:text-sm">
+            <p className="text-[var(--color-body)] mt-1 text-sm sm:text-base">
               Placed on {formatDate(order.createdAt)}
             </p>
           </div>
@@ -105,7 +105,7 @@ export default async function OrderDetailPage(props: {
                     >
                       {item.product.name}
                     </Link>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-base text-muted-foreground">
                       {item.product.weight} × {item.quantity}
                     </p>
                   </div>
@@ -113,7 +113,7 @@ export default async function OrderDetailPage(props: {
                     <p className="font-semibold text-foreground">
                       ₹{(item.price * item.quantity).toLocaleString("en-IN")}
                     </p>
-                    <p className="text-xs text-muted-foreground">
+                    <p className="text-sm text-muted-foreground">
                       ₹{item.price} each
                     </p>
                   </div>
@@ -123,12 +123,12 @@ export default async function OrderDetailPage(props: {
             <div className="p-5 bg-secondary/30 border-t border-border">
               <div className="flex justify-between items-center">
                 <span className="font-semibold text-foreground">Total</span>
-                <span className="text-xl font-bold text-primary">
+                <span className="text-2xl font-bold text-primary">
                   ₹{order.totalAmount.toLocaleString("en-IN")}
                 </span>
               </div>
               {order.couponCode && (
-                <p className="text-sm text-muted-foreground mt-1">
+                <p className="text-base text-muted-foreground mt-1">
                   Coupon applied: <span className="font-medium">{order.couponCode}</span>
                 </p>
               )}
@@ -150,13 +150,13 @@ export default async function OrderDetailPage(props: {
             </div>
             {addr.deliverySlot && (
               <div className="mt-4 pt-4 border-t border-border">
-                <p className="text-sm text-muted-foreground">Delivery Slot</p>
+                <p className="text-base text-muted-foreground">Delivery Slot</p>
                 <p className="font-medium text-foreground">{addr.deliverySlot}</p>
               </div>
             )}
             {addr.notes && (
               <div className="mt-4 pt-4 border-t border-border">
-                <p className="text-sm text-muted-foreground">Notes</p>
+                <p className="text-base text-muted-foreground">Notes</p>
                 <p className="text-foreground">{addr.notes}</p>
               </div>
             )}
@@ -170,11 +170,11 @@ export default async function OrderDetailPage(props: {
             <h2 className="font-heading font-semibold text-foreground mb-4">Order Status</h2>
             <div className="space-y-4">
               <div>
-                <p className="text-sm text-muted-foreground mb-2">Status</p>
+                <p className="text-base text-muted-foreground mb-2">Status</p>
                 <OrderStatusSelect orderId={order.id} currentStatus={order.status} />
               </div>
               <div>
-                <p className="text-sm text-muted-foreground mb-2">Payment</p>
+                <p className="text-base text-muted-foreground mb-2">Payment</p>
                 <PaymentStatusSelect orderId={order.id} currentStatus={order.paymentStatus} />
               </div>
             </div>
@@ -188,7 +188,7 @@ export default async function OrderDetailPage(props: {
               {order.user?.email && (
                 <a
                   href={`mailto:${order.user.email}`}
-                  className="flex items-center gap-2 text-sm text-[var(--color-body)] hover:text-primary"
+                  className="flex items-center gap-2 text-base text-[var(--color-body)] hover:text-primary"
                 >
                   <Mail size={14} /> {order.user.email}
                 </a>
@@ -196,7 +196,7 @@ export default async function OrderDetailPage(props: {
               {order.user?.phone && (
                 <a
                   href={`tel:${order.user.phone}`}
-                  className="flex items-center gap-2 text-sm text-[var(--color-body)] hover:text-primary"
+                  className="flex items-center gap-2 text-base text-[var(--color-body)] hover:text-primary"
                 >
                   <Phone size={14} /> {order.user.phone}
                 </a>
@@ -204,7 +204,7 @@ export default async function OrderDetailPage(props: {
               {addr.phone && !order.user?.phone && (
                 <a
                   href={`tel:${addr.phone}`}
-                  className="flex items-center gap-2 text-sm text-[var(--color-body)] hover:text-primary"
+                  className="flex items-center gap-2 text-base text-[var(--color-body)] hover:text-primary"
                 >
                   <Phone size={14} /> {addr.phone}
                 </a>
@@ -217,17 +217,17 @@ export default async function OrderDetailPage(props: {
             <h2 className="font-heading font-semibold text-foreground flex items-center gap-2 mb-4">
               <CreditCard size={18} /> Payment Info
             </h2>
-            <div className="space-y-2 text-sm">
+            <div className="space-y-2 text-base">
               {order.razorpayOrderId && (
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Razorpay Order</span>
-                  <span className="font-mono text-xs text-foreground">{order.razorpayOrderId}</span>
+                  <span className="font-mono text-sm text-foreground">{order.razorpayOrderId}</span>
                 </div>
               )}
               {order.paymentId && (
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Payment ID</span>
-                  <span className="font-mono text-xs text-foreground">{order.paymentId}</span>
+                  <span className="font-mono text-sm text-foreground">{order.paymentId}</span>
                 </div>
               )}
             </div>
@@ -238,7 +238,7 @@ export default async function OrderDetailPage(props: {
             <h2 className="font-heading font-semibold text-foreground flex items-center gap-2 mb-4">
               <Calendar size={18} /> Timeline
             </h2>
-            <div className="space-y-2 text-sm">
+            <div className="space-y-2 text-base">
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Created</span>
                 <span className="text-foreground">{formatDate(order.createdAt)}</span>

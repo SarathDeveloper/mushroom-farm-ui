@@ -160,7 +160,7 @@ export function CategoriesTable({ categories }: { categories: Category[] }) {
           <div className="w-16 h-16 rounded-full bg-secondary flex items-center justify-center mb-5">
             <FolderTree size={30} className="text-primary" />
           </div>
-          <h2 className="text-xl font-bold font-heading text-foreground mb-1">No categories yet</h2>
+          <h2 className="text-2xl font-bold font-heading text-foreground mb-1">No categories yet</h2>
           <p className="text-[var(--color-body)] max-w-sm">
             Create categories to organize your products.
           </p>
@@ -188,9 +188,9 @@ export function CategoriesTable({ categories }: { categories: Category[] }) {
                   </div>
                 )}
                 <div className="flex-1 min-w-0">
-                  <p className="font-semibold text-foreground text-sm truncate">{cat.name}</p>
+                  <p className="font-semibold text-foreground text-base truncate">{cat.name}</p>
                   {cat.description && (
-                    <p className="text-xs text-muted-foreground line-clamp-1">{cat.description}</p>
+                    <p className="text-sm text-muted-foreground line-clamp-1">{cat.description}</p>
                   )}
                 </div>
                 <div className="flex items-center gap-2 shrink-0">
@@ -205,7 +205,7 @@ export function CategoriesTable({ categories }: { categories: Category[] }) {
                 </div>
               </div>
               <div className="flex items-center justify-between pt-3 border-t border-border">
-                <span className="text-xs text-muted-foreground font-mono">{cat.slug}</span>
+                <span className="text-sm text-muted-foreground font-mono">{cat.slug}</span>
                 <div className="flex items-center gap-2">
                   <Button
                     variant="outline"
@@ -234,7 +234,7 @@ export function CategoriesTable({ categories }: { categories: Category[] }) {
         {/* Desktop table view */}
         <div className="hidden md:block bg-card rounded-2xl border border-border shadow-[0_4px_12px_rgba(0,0,0,0.04)] overflow-hidden">
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm">
+            <table className="w-full text-left text-base">
               <thead>
                 <tr className="border-b border-border bg-secondary/50 text-[var(--color-body)]">
                   <th className="font-semibold px-6 py-4 w-10">#</th>
@@ -269,19 +269,19 @@ export function CategoriesTable({ categories }: { categories: Category[] }) {
                         <div>
                           <span className="font-semibold text-foreground">{cat.name}</span>
                           {cat.description && (
-                            <p className="text-xs text-muted-foreground line-clamp-1">{cat.description}</p>
+                            <p className="text-sm text-muted-foreground line-clamp-1">{cat.description}</p>
                           )}
                         </div>
                       </div>
                     </td>
-                    <td className="px-6 py-4 text-muted-foreground font-mono text-xs">{cat.slug}</td>
+                    <td className="px-6 py-4 text-muted-foreground font-mono text-sm">{cat.slug}</td>
                     <td className="px-6 py-4 text-center">
                       {cat.showOnHomepage ? (
                         <Badge variant="outline" className="gap-1 text-primary border-primary/30">
                           <Home size={10} /> Visible
                         </Badge>
                       ) : (
-                        <span className="text-xs text-muted-foreground">—</span>
+                        <span className="text-sm text-muted-foreground">—</span>
                       )}
                     </td>
                     <td className="px-6 py-4 text-center">
@@ -376,8 +376,8 @@ export function CategoriesTable({ categories }: { categories: Category[] }) {
 
             <div className="flex items-center justify-between rounded-lg border border-border p-3">
               <div className="space-y-0.5">
-                <Label htmlFor="showOnHomepage" className="text-sm font-medium cursor-pointer">Show on Homepage</Label>
-                <p className="text-xs text-muted-foreground">Display this category in the &quot;Shop by Category&quot; section</p>
+                <Label htmlFor="showOnHomepage" className="text-base font-medium cursor-pointer">Show on Homepage</Label>
+                <p className="text-sm text-muted-foreground">Display this category in the &quot;Shop by Category&quot; section</p>
               </div>
               <button
                 id="showOnHomepage"
@@ -433,7 +433,7 @@ export function CategoriesTable({ categories }: { categories: Category[] }) {
       <Dialog open={!!deleteTarget} onOpenChange={(open) => !open && setDeleteTarget(null)}>
         <DialogContent className="sm:max-w-md">
           <DialogTitle>Delete Category</DialogTitle>
-          <p className="text-sm text-[var(--color-body)] mt-2">
+          <p className="text-base text-[var(--color-body)] mt-2">
             Are you sure you want to delete <strong className="text-foreground">{deleteTarget?.name}</strong>?
             This action cannot be undone.
           </p>

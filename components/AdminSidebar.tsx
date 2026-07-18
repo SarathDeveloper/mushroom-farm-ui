@@ -71,7 +71,7 @@ export function AdminSidebar() {
               key={link.href}
               href={link.href}
               className={cn(
-                "flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium transition-colors",
+                "flex items-center gap-3 rounded-xl px-4 py-2.5 text-base font-medium transition-colors",
                 isActive
                   ? "bg-white/15 text-white"
                   : "text-white/70 hover:bg-white/10 hover:text-white"
@@ -87,13 +87,13 @@ export function AdminSidebar() {
       <div className="p-4 border-t border-white/10 space-y-1">
         <Link
           href="/"
-          className="flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white transition-colors"
+          className="flex items-center gap-3 rounded-xl px-4 py-2.5 text-base font-medium text-white/70 hover:bg-white/10 hover:text-white transition-colors"
         >
           <Store size={18} strokeWidth={1.75} /> Back to Store
         </Link>
         <button
           onClick={() => signOut({ callbackUrl: "/" })}
-          className="w-full flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white transition-colors"
+          className="w-full flex items-center gap-3 rounded-xl px-4 py-2.5 text-base font-medium text-white/70 hover:bg-white/10 hover:text-white transition-colors"
         >
           <LogOut size={18} strokeWidth={1.75} /> Sign Out
         </button>
@@ -116,7 +116,7 @@ export function AdminSidebar() {
             />
           </div>
           <span className="leading-none flex flex-col justify-center">
-            <span className="block font-display text-[13px] font-extrabold tracking-[0.01em] text-white">
+            <span className="block font-display text-base font-extrabold tracking-[0.01em] text-white">
               Sri Amman
             </span>
             <span className="block font-sans text-[8px] font-semibold tracking-[0.16em] uppercase text-white/60 mt-0.5">
@@ -166,7 +166,7 @@ export function AdminSidebar() {
               />
             </div>
             <span className="leading-none flex flex-col justify-center">
-              <span className="block font-display text-sm font-extrabold tracking-[0.01em] text-white">
+              <span className="block font-display text-base font-extrabold tracking-[0.01em] text-white">
                 Sri Amman
               </span>
               <span className="block font-sans text-[8px] font-semibold tracking-[0.18em] uppercase text-white/60 mt-0.5">
@@ -205,10 +205,10 @@ export function AdminSidebar() {
               />
             </div>
             <span className="leading-none flex flex-col justify-center">
-              <span className="block font-display text-base font-extrabold tracking-[0.01em] text-white">
+              <span className="block font-display text-lg font-extrabold tracking-[0.01em] text-white">
                 Sri Amman
               </span>
-              <span className="block font-sans text-[9px] font-semibold tracking-[0.18em] uppercase text-white/60 mt-0.5">
+              <span className="block font-sans text-[10px] font-semibold tracking-[0.18em] uppercase text-white/60 mt-0.5">
                 Mushroom Farms
               </span>
               <svg className="w-7 h-1.5 text-white/30 mt-1 transition-all duration-300 group-hover:w-11 group-hover:text-[#2B7A5D]" viewBox="0 0 32 6" fill="none" xmlns="http://www.w3.org/2000/svg">

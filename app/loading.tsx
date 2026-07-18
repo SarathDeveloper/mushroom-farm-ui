@@ -12,7 +12,7 @@ export default function RootLoading() {
           className="object-cover"
         />
       </div>
-      <p className="text-sm text-muted-foreground">Loading fresh content...</p>
+      <p className="text-base text-muted-foreground">Loading fresh content...</p>
     </div>
   );
 }

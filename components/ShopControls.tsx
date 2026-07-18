@@ -50,7 +50,7 @@ export function ShopControls() {
       <select
         value={currentSort}
         onChange={(e) => updateParams("sort", e.target.value)}
-        className="h-11 rounded-xl border border-border bg-card px-3.5 text-sm outline-none focus-visible:border-primary focus-visible:ring-3 focus-visible:ring-primary/20"
+        className="h-11 rounded-xl border border-border bg-card px-3.5 text-base outline-none focus-visible:border-primary focus-visible:ring-3 focus-visible:ring-primary/20"
       >
         {sortOptions.map((opt) => (
           <option key={opt.value} value={opt.value}>

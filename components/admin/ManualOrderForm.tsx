@@ -121,7 +121,7 @@ export function ManualOrderForm({
           <div className="flex items-center justify-between p-3 rounded-lg bg-secondary/50">
             <div>
               <p className="font-semibold text-foreground">{selectedCustomer.name || selectedCustomer.email || selectedCustomer.phone}</p>
-              <p className="text-xs text-muted-foreground">
+              <p className="text-sm text-muted-foreground">
                 {selectedCustomer.email || ""} {selectedCustomer.phone && `${selectedCustomer.email ? "· " : ""}${selectedCustomer.phone}`}
               </p>
             </div>
@@ -148,10 +148,10 @@ export function ManualOrderForm({
                       setSelectedCustomer(c);
                       setCustomerSearch("");
                     }}
-                    className="w-full text-left px-4 py-2.5 hover:bg-secondary/50 transition-colors text-sm"
+                    className="w-full text-left px-4 py-2.5 hover:bg-secondary/50 transition-colors text-base"
                   >
                     <p className="font-medium text-foreground">{c.name || c.email || c.phone}</p>
-                    <p className="text-xs text-muted-foreground">
+                    <p className="text-sm text-muted-foreground">
                       {c.email || ""} {c.phone && `${c.email ? "· " : ""}${c.phone}`}
                     </p>
                   </button>
@@ -180,11 +180,11 @@ export function ManualOrderForm({
                   key={p.id}
                   type="button"
                   onClick={() => addProduct(p)}
-                  className="w-full text-left px-4 py-2.5 hover:bg-secondary/50 transition-colors text-sm flex items-center justify-between"
+                  className="w-full text-left px-4 py-2.5 hover:bg-secondary/50 transition-colors text-base flex items-center justify-between"
                 >
                   <div>
                     <p className="font-medium text-foreground">{p.name}</p>
-                    <p className="text-xs text-muted-foreground">{p.weight} · Stock: {p.stock}</p>
+                    <p className="text-sm text-muted-foreground">{p.weight} · Stock: {p.stock}</p>
                   </div>
                   <span className="font-semibold text-foreground">₹{p.price}</span>
                 </button>
@@ -199,8 +199,8 @@ export function ManualOrderForm({
               <div key={item.productId} className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 p-3 rounded-lg bg-secondary/50">
                 <div className="flex items-center gap-3 flex-1 min-w-0">
                   <div className="flex-1 min-w-0">
-                    <p className="font-medium text-foreground text-sm truncate">{item.name}</p>
-                    <p className="text-xs text-muted-foreground">₹{item.price} each</p>
+                    <p className="font-medium text-foreground text-base truncate">{item.name}</p>
+                    <p className="text-sm text-muted-foreground">₹{item.price} each</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-2 sm:gap-3">
@@ -212,7 +212,7 @@ export function ManualOrderForm({
                     >
                       <Minus size={12} />
                     </button>
-                    <span className="w-8 text-center font-medium text-sm">{item.quantity}</span>
+                    <span className="w-8 text-center font-medium text-base">{item.quantity}</span>
                     <button
                       type="button"
                       onClick={() => updateQuantity(item.productId, 1)}
@@ -221,7 +221,7 @@ export function ManualOrderForm({
                       <Plus size={12} />
                     </button>
                   </div>
-                  <span className="font-semibold text-foreground text-sm w-20 text-right ml-auto sm:ml-0">
+                  <span className="font-semibold text-foreground text-base w-20 text-right ml-auto sm:ml-0">
                     ₹{(item.price * item.quantity).toLocaleString("en-IN")}
                   </span>
                   <button
@@ -236,11 +236,11 @@ export function ManualOrderForm({
             ))}
             <div className="flex justify-between items-center pt-3 border-t border-border">
               <span className="font-semibold text-foreground">Total</span>
-              <span className="text-lg font-bold text-primary">₹{total.toLocaleString("en-IN")}</span>
+              <span className="text-xl font-bold text-primary">₹{total.toLocaleString("en-IN")}</span>
             </div>
           </div>
         ) : (
-          <p className="text-muted-foreground text-sm">No products added yet.</p>
+          <p className="text-muted-foreground text-base">No products added yet.</p>
         )}
       </section>
 
@@ -284,7 +284,7 @@ export function ManualOrderForm({
         <select
           value={paymentStatus}
           onChange={(e) => setPaymentStatus(e.target.value)}
-          className="h-9 rounded-lg border border-border bg-background px-3 text-sm outline-none focus:border-primary"
+          className="h-9 rounded-lg border border-border bg-background px-3 text-base outline-none focus:border-primary"
         >
           <option value="PENDING">Pending (COD / Pay Later)</option>
           <option value="COMPLETED">Completed (Already Paid)</option>
@@ -292,7 +292,7 @@ export function ManualOrderForm({
       </section>
 
       {/* Submit */}
-      <Button type="submit" disabled={isPending} className="w-full h-11 text-base">
+      <Button type="submit" disabled={isPending} className="w-full h-11 text-lg">
         {isPending ? "Creating Order..." : "Create Order"}
       </Button>
     </form>

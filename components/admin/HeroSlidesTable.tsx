@@ -187,7 +187,7 @@ export function HeroSlidesTable({ slides }: { slides: HeroSlide[] }) {
           <div className="w-16 h-16 rounded-full bg-secondary flex items-center justify-center mb-5">
             <Presentation size={30} className="text-primary" />
           </div>
-          <h2 className="text-xl font-bold font-heading text-foreground mb-1">No hero slides yet</h2>
+          <h2 className="text-2xl font-bold font-heading text-foreground mb-1">No hero slides yet</h2>
           <p className="text-[var(--color-body)] max-w-sm">
             Create slides to showcase on your homepage hero carousel.
           </p>
@@ -218,21 +218,21 @@ export function HeroSlidesTable({ slides }: { slides: HeroSlide[] }) {
                   </Badge>
                 </div>
                 <div className="absolute top-2 left-2">
-                  <span className="bg-black/60 text-white text-xs px-2 py-0.5 rounded font-mono">
+                  <span className="bg-black/60 text-white text-sm px-2 py-0.5 rounded font-mono">
                     #{slide.sortOrder}
                   </span>
                 </div>
               </div>
               <div className="p-4">
-                <p className="font-semibold text-foreground text-sm line-clamp-1 mb-1">
+                <p className="font-semibold text-foreground text-base line-clamp-1 mb-1">
                   {slide.headline.replace(/\n/g, " ")}
                 </p>
-                <p className="text-xs text-muted-foreground line-clamp-1 mb-1">{slide.subtitle}</p>
+                <p className="text-sm text-muted-foreground line-clamp-1 mb-1">{slide.subtitle}</p>
                 {slide.badge && (
-                  <p className="text-xs text-muted-foreground">Badge: {slide.badge}</p>
+                  <p className="text-sm text-muted-foreground">Badge: {slide.badge}</p>
                 )}
                 <div className="flex items-center justify-between pt-3 mt-3 border-t border-border">
-                  <span className="text-xs text-muted-foreground">
+                  <span className="text-sm text-muted-foreground">
                     {slide.primaryCtaLabel && <>{slide.primaryCtaLabel} &rarr; {slide.primaryCtaHref}</>}
                   </span>
                   <div className="flex items-center gap-2">
@@ -262,7 +262,7 @@ export function HeroSlidesTable({ slides }: { slides: HeroSlide[] }) {
         {/* Desktop table view */}
         <div className="hidden md:block bg-card rounded-2xl border border-border shadow-[0_4px_12px_rgba(0,0,0,0.04)] overflow-hidden">
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm">
+            <table className="w-full text-left text-base">
               <thead>
                 <tr className="border-b border-border bg-secondary/50 text-[var(--color-body)]">
                   <th className="font-semibold px-6 py-4 w-10">#</th>
@@ -298,13 +298,13 @@ export function HeroSlidesTable({ slides }: { slides: HeroSlide[] }) {
                           <span className="font-semibold text-foreground line-clamp-1">
                             {slide.headline.replace(/\n/g, " ")}
                           </span>
-                          <p className="text-xs text-muted-foreground line-clamp-1">{slide.subtitle}</p>
+                          <p className="text-sm text-muted-foreground line-clamp-1">{slide.subtitle}</p>
                         </div>
                       </div>
                     </td>
-                    <td className="px-6 py-4 text-muted-foreground text-xs">{slide.badge}</td>
+                    <td className="px-6 py-4 text-muted-foreground text-sm">{slide.badge}</td>
                     <td className="px-6 py-4">
-                      <span className="text-xs text-muted-foreground">
+                      <span className="text-sm text-muted-foreground">
                         {slide.primaryCtaLabel} &rarr; <code className="font-mono">{slide.primaryCtaHref}</code>
                       </span>
                     </td>
@@ -377,7 +377,7 @@ export function HeroSlidesTable({ slides }: { slides: HeroSlide[] }) {
                 value={formData.headline}
                 onChange={(e) => update("headline", e.target.value)}
               />
-              <p className="text-xs text-muted-foreground">Use a new line to break the heading across two lines.</p>
+              <p className="text-sm text-muted-foreground">Use a new line to break the heading across two lines.</p>
             </div>
 
             {/* Subtitle */}
@@ -495,7 +495,7 @@ export function HeroSlidesTable({ slides }: { slides: HeroSlide[] }) {
       <Dialog open={!!deleteTarget} onOpenChange={(open) => !open && setDeleteTarget(null)}>
         <DialogContent className="sm:max-w-md">
           <DialogTitle>Delete Slide</DialogTitle>
-          <p className="text-sm text-[var(--color-body)] mt-2">
+          <p className="text-base text-[var(--color-body)] mt-2">
             Are you sure you want to delete the slide{" "}
             <strong className="text-foreground">
               &ldquo;{deleteTarget?.headline.replace(/\n/g, " ")}&rdquo;

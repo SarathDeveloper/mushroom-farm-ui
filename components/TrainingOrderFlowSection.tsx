@@ -18,18 +18,18 @@ const orderFlow = [
 
 export function TrainingOrderFlowSection() {
   return (
-    <section className="py-20 sm:py-28 bg-background grain-overlay">
+    <section className="py-10 sm:py-14 bg-background grain-overlay">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
         <FadeIn className="text-center mb-12">
           <div className="flex items-center justify-center gap-3 mb-3">
             <span className="h-px w-6 sm:w-8 bg-border" />
-            <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Guaranteed Orders</span>
+            <span className="text-sm font-bold uppercase tracking-[0.2em] text-primary">Guaranteed Orders</span>
             <span className="h-px w-6 sm:w-8 bg-border" />
           </div>
-          <h2 className="text-xl sm:text-2xl font-extrabold text-foreground tracking-tight font-heading mb-3 sm:mb-4">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-foreground tracking-tight font-heading mb-3 sm:mb-4">
             How You Get Orders
           </h2>
-          <p className="text-[var(--color-body)] max-w-xl mx-auto text-sm sm:text-base">
+          <p className="text-[var(--color-body)] max-w-xl mx-auto text-base sm:text-lg">
             You don&apos;t search for customers. Mathesh routes orders directly to you.
           </p>
         </FadeIn>
@@ -44,7 +44,7 @@ export function TrainingOrderFlowSection() {
                     <div className="w-14 h-14 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
                       <item.icon size={26} strokeWidth={1.75} />
                     </div>
-                    <span className="text-xs font-semibold text-foreground max-w-[100px]">
+                    <span className="text-sm font-semibold text-foreground max-w-[100px]">
                       {item.label}
                     </span>
                   </div>
@@ -63,7 +63,7 @@ export function TrainingOrderFlowSection() {
                     <div className="w-11 h-11 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
                       <item.icon size={20} strokeWidth={1.75} />
                     </div>
-                    <span className="text-sm font-semibold text-foreground">
+                    <span className="text-base font-semibold text-foreground">
                       {item.label}
                     </span>
                   </div>
@@ -75,7 +75,7 @@ export function TrainingOrderFlowSection() {
             </div>
 
             <div className="mt-8 pt-6 border-t border-border/60 text-center">
-              <p className="text-sm text-[var(--color-body)] font-medium leading-relaxed">
+              <p className="text-base text-[var(--color-body)] font-medium leading-relaxed">
                 <span className="text-primary font-bold">No risk.</span> You grow mushrooms — we make sure someone buys them.
               </p>
             </div>
