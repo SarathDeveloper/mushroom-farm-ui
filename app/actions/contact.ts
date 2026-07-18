@@ -20,11 +20,11 @@ export async function submitInquiry(prevState: any, formData: FormData) {
       name: formData.get("name") as string,
       email: formData.get("email") as string,
       phone: formData.get("phone") as string,
-      location: formData.get("location") as string,
-      company: formData.get("company") as string,
+      location: (formData.get("location") as string) || undefined,
+      company: (formData.get("company") as string) || undefined,
       inquiryType: formData.get("inquiryType") as string,
       preferredContact: formData.get("preferredContact") as string,
-      message: formData.get("message") as string,
+      message: (formData.get("message") as string) || undefined,
     };
 
     const validatedData = inquirySchema.parse(rawData);

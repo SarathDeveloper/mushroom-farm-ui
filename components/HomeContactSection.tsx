@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
+import { submitInquiry } from "@/app/actions/contact";
 
 const PHONE = "+91 93855 26105";
 const ADDITIONAL_PHONES = ["+91 89031 56142", "+91 63833 61207"];
@@ -35,7 +36,6 @@ const initialForm = {
 const inquiryTypes = [
   "Products",
   "Training",
-  "Pre-Order",
   "Farm Visit",
   "Wholesale",
   "Other",
@@ -49,14 +49,30 @@ export function HomeContactSection() {
   const set = (field: keyof typeof initialForm, value: string) =>
     setForm((prev) => ({ ...prev, [field]: value }));
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
+
+    const formData = new FormData();
+    formData.append("name", form.name);
+    formData.append("email", form.email);
+    formData.append("phone", form.mobile);
+    formData.append("location", "");
+    formData.append("company", "");
+    formData.append("inquiryType", form.inquiryType);
+    formData.append("preferredContact", form.preferredContact);
+    formData.append("message", form.message);
+
+    const result = await submitInquiry(null, formData);
+
+    setLoading(false);
+
+    if (result.success) {
       setSubmitted(true);
       toast.success("Message sent! We'll get back to you within 24 hours.");
-    }, 800);
+    } else {
+      toast.error(result.message || "Failed to send message.");
+    }
   };
 
   return (
@@ -250,6 +266,7 @@ export function HomeContactSection() {
                     <Input
                       id="home-mobile"
                       type="tel"
+                      required
                       value={form.mobile}
                       onChange={(e) => set("mobile", e.target.value)}
                       placeholder="Mobile Number"
@@ -262,6 +279,7 @@ export function HomeContactSection() {
                     <Label htmlFor="home-inquiry-type">What do you need?</Label>
                   <select
                     id="home-inquiry-type"
+                    required
                     value={form.inquiryType}
                     onChange={(e) => set("inquiryType", e.target.value)}
                     className="h-11 w-full rounded-xl border border-border bg-card px-3.5 py-2 text-sm outline-none focus-visible:border-primary focus-visible:ring-3 focus-visible:ring-primary/20 text-foreground appearance-none"

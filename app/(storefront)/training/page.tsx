@@ -236,7 +236,7 @@ export default async function TrainingPage() {
             </FadeIn>
 
             <FadeIn direction="left">
-              <ContactForm showCompany showEmail showMessage />
+              <ContactForm defaultInquiryType="Training" showCompany showEmail showMessage />
             </FadeIn>
           </div>
         </div>

@@ -160,9 +160,16 @@ export async function sendOtpSms(
 ): Promise<{ delivered: boolean; mode: "sms" | "dev" }> {
   const message = `Your Sri Amman Mushroom Farms verification code is ${otp}. Valid for 10 minutes.`;
 
-  const result = await sendTwilioSms(phone, message);
-  if (result.delivered) {
-    return { delivered: true, mode: "sms" };
+  try {
+    const result = await sendTwilioSms(phone, message);
+    if (result.delivered) {
+      return { delivered: true, mode: "sms" };
+    }
+  } catch (err) {
+    if (IS_PRODUCTION) {
+      throw err;
+    }
+    console.warn(`[OTP-DEV] SMS send failed, falling back to dev mode:`, (err as Error).message);
   }
 
   if (IS_PRODUCTION) {

@@ -100,7 +100,7 @@ export function PreOrdersTable({ orders }: { orders: PreOrder[] }) {
             </div>
             <div className="text-sm text-foreground">{order.product} · {order.quantity}</div>
             <div className="flex items-center gap-3 text-xs text-muted-foreground mt-1">
-              <span>Preferred: {order.preferredDate}</span>
+              <span>Preferred: {formatDate(order.preferredDate)}</span>
               <span>· {order.location}</span>
             </div>
             <div className="flex items-center justify-between mt-3 pt-3 border-t border-border">
@@ -156,7 +156,7 @@ export function PreOrdersTable({ orders }: { orders: PreOrder[] }) {
                   </td>
                   <td className="px-6 py-4 text-foreground">{order.product}</td>
                   <td className="px-6 py-4 text-muted-foreground">{order.quantity}</td>
-                  <td className="px-6 py-4 text-[var(--color-body)]">{order.preferredDate}</td>
+                  <td className="px-6 py-4 text-[var(--color-body)]">{formatDate(order.preferredDate)}</td>
                   <td className="px-6 py-4 text-[var(--color-body)]">{order.location}</td>
                   <td className="px-6 py-4 text-muted-foreground">{formatDate(order.createdAt)}</td>
                   <td className="px-6 py-4">
@@ -235,7 +235,7 @@ export function PreOrdersTable({ orders }: { orders: PreOrder[] }) {
                 </div>
                 <div>
                   <p className="text-xs text-muted-foreground">Preferred Date</p>
-                  <p className="font-medium">{viewTarget.preferredDate}</p>
+                  <p className="font-medium">{formatDate(viewTarget.preferredDate)}</p>
                 </div>
                 <div>
                   <p className="text-xs text-muted-foreground">Location</p>

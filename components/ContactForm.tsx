@@ -11,7 +11,6 @@ import { submitInquiry } from "@/app/actions/contact";
 export const INQUIRY_TYPES = [
   "Products",
   "Training",
-  "Pre-Order",
   "Farm Visit",
   "Wholesale",
   "Other",
