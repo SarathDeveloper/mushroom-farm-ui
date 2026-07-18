@@ -227,12 +227,18 @@ export default function Footer() {
             &copy; {new Date().getFullYear()} Sri Amman Mushroom Farms. All rights
             reserved. FSSAI Lic: 22424356000315
           </p>
-          <div className="flex gap-5">
+          <div className="flex flex-wrap gap-x-5 gap-y-2">
             <Link href="/privacy" className="hover:text-white transition-colors">
               Privacy Policy
             </Link>
             <Link href="/terms" className="hover:text-white transition-colors">
               Terms of Service
+            </Link>
+            <Link href="/refund-policy" className="hover:text-white transition-colors">
+              Refund Policy
+            </Link>
+            <Link href="/shipping-policy" className="hover:text-white transition-colors">
+              Shipping Policy
             </Link>
             <Link href="/track-order" className="hover:text-white transition-colors">
               Track Order
