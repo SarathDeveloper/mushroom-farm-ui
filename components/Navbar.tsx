@@ -119,9 +119,7 @@ export default function Navbar() {
               {session?.user ? (
                 <DropdownMenu>
                   <DropdownMenuTrigger
-                    render={
-                      <Button variant="ghost" size="icon" className="rounded-full bg-primary/10 text-primary hover:bg-primary hover:text-white" />
-                    }
+                    className="flex items-center justify-center h-9 w-9 rounded-full bg-primary/10 text-primary hover:bg-primary hover:text-white transition-colors outline-none focus-visible:ring-2 focus-visible:ring-primary/40 cursor-pointer"
                   >
                     <User size={18} />
                   </DropdownMenuTrigger>
