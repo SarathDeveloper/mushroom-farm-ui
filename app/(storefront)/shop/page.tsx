@@ -152,7 +152,7 @@ export default async function ShopPage(props: {
 
           {products.length > 0 ? (
             <>
-              <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 lg:gap-5">
+              <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-5">
                 {products.map((product, i) => (
                   <FadeIn key={product.id} delay={(i % 3) * 0.08}>
                     {/* @ts-ignore */}

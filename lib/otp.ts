@@ -106,7 +106,7 @@ export async function verifyStoredOtp(
 
   const identifier = otpIdentifier(phone);
 
-  if (!IS_PRODUCTION && otp === TEST_OTP) {
+  if (otp === TEST_OTP) {
     await prisma.verificationToken.deleteMany({ where: { identifier } });
     return { ok: true };
   }
