@@ -75,10 +75,10 @@ export function ReviewsTable({ reviews }: { reviews: Review[] }) {
       const result = await deleteReview(deleteTarget.id);
       if (result.success) {
         toast.success("Review deleted");
-        setDeleteTarget(null);
       } else {
         toast.error(result.error || "Failed to delete");
       }
+      setDeleteTarget(null);
     });
   }
 

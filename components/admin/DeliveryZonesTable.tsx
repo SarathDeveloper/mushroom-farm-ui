@@ -135,10 +135,10 @@ export function DeliveryZonesTable({ zones, emptyState = false }: { zones: Deliv
       const result = await deleteDeliveryZone(deleteTarget.id);
       if (result.success) {
         toast.success("Delivery zone deleted!");
-        setDeleteTarget(null);
       } else {
         toast.error(result.error || "Failed to delete");
       }
+      setDeleteTarget(null);
     });
   }
 

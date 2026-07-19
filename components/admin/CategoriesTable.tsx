@@ -138,10 +138,10 @@ export function CategoriesTable({ categories }: { categories: Category[] }) {
       const result = await deleteCategory(deleteTarget.id);
       if (result.success) {
         toast.success("Category deleted!");
-        setDeleteTarget(null);
       } else {
         toast.error(result.error || "Failed to delete category");
       }
+      setDeleteTarget(null);
     });
   }
 

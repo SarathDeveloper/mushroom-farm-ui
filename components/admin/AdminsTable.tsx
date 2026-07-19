@@ -148,10 +148,10 @@ export function AdminsTable({
       const result = await deleteAdmin(deleteTarget.id);
       if (result.success) {
         toast.success("Admin deleted!");
-        setDeleteTarget(null);
       } else {
         toast.error(result.error || "Failed to delete admin");
       }
+      setDeleteTarget(null);
     });
   }
 

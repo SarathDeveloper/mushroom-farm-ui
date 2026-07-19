@@ -200,10 +200,10 @@ export function TrainingTable({ programs }: { programs: Training[] }) {
       const result = await deleteTraining(deleteTarget.id);
       if (result.success) {
         toast.success("Program deleted!");
-        setDeleteTarget(null);
       } else {
         toast.error(result.error || "Failed to delete");
       }
+      setDeleteTarget(null);
     });
   }
 

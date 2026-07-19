@@ -62,10 +62,10 @@ export function PreOrdersTable({ orders }: { orders: PreOrder[] }) {
       const result = await deletePreOrder(deleteTarget.id);
       if (result.success) {
         toast.success("Pre-order deleted");
-        setDeleteTarget(null);
       } else {
         toast.error(result.error || "Failed to delete");
       }
+      setDeleteTarget(null);
     });
   }
 

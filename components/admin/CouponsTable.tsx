@@ -159,10 +159,10 @@ export function CouponsTable({ coupons }: { coupons: Coupon[] }) {
       const result = await deleteCoupon(deleteTarget.id);
       if (result.success) {
         toast.success("Coupon deleted!");
-        setDeleteTarget(null);
       } else {
         toast.error(result.error || "Failed to delete");
       }
+      setDeleteTarget(null);
     });
   }
 

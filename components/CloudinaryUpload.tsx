@@ -145,12 +145,16 @@ export function CloudinaryUpload({
           maxFileSize: 5_000_000,
         }}
         onSuccess={handleSuccess}
-        onError={(error) => {
+        onError={(error, result) => {
           setPending(false);
-          const msg =
-            error && typeof error === "object" && "statusText" in error
-              ? String((error as { statusText: string }).statusText)
-              : "Upload failed. Please try again.";
+          console.error("Cloudinary Widget Error:", error, result);
+          let msg = "Upload failed. Please try again.";
+          if (typeof error === "string") {
+            msg = error;
+          } else if (error && typeof error === "object") {
+            // @ts-ignore - The error type from next-cloudinary is broad
+            msg = error.statusText || error.message || error.error?.message || JSON.stringify(error);
+          }
           toast.error(msg);
         }}
         onQueuesStart={() => setPending(true)}

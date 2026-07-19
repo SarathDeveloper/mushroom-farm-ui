@@ -153,10 +153,10 @@ export function ProductsTable({ products }: { products: Product[] }) {
       const result = await deleteProduct(deleteTarget.id);
       if (result.success) {
         toast.success(`"${deleteTarget.name}" deleted.`);
-        setDeleteTarget(null);
       } else {
         toast.error(result.error || "Failed to delete product.");
       }
+      setDeleteTarget(null);
     });
   }
 

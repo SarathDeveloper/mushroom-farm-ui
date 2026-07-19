@@ -161,10 +161,10 @@ export function HeroSlidesTable({ slides }: { slides: HeroSlide[] }) {
       const result = await deleteHeroSlide(deleteTarget.id);
       if (result.success) {
         toast.success("Slide deleted!");
-        setDeleteTarget(null);
       } else {
         toast.error(result.error || "Failed to delete slide");
       }
+      setDeleteTarget(null);
     });
   }
 
