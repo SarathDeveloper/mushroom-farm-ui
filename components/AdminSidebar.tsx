@@ -20,6 +20,7 @@ import {
   Presentation,
   BarChart3,
   ShieldCheck,
+  Truck,
   Menu,
   X,
 } from "lucide-react";
@@ -36,6 +37,7 @@ const links = [
   { href: "/admin/pre-orders", label: "Pre Orders", icon: CalendarCheck },
   { href: "/admin/training", label: "Training", icon: GraduationCap },
   { href: "/admin/coupons", label: "Coupons", icon: Ticket },
+  { href: "/admin/delivery-zones", label: "Delivery Zones", icon: Truck },
   { href: "/admin/reviews", label: "Reviews", icon: MessageSquare },
   { href: "/admin/hero-slides", label: "Hero Slides", icon: Presentation },
   { href: "/admin/admins", label: "Admin Users", icon: ShieldCheck },

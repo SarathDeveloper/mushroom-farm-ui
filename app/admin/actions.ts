@@ -818,3 +818,64 @@ export async function createManualOrder(data: {
     return { success: false, error: "Failed to create order." };
   }
 }
+
+// ==========================================
+// Delivery Zones
+// ==========================================
+
+export async function createDeliveryZone(data: {
+  name: string;
+  pincodes: string[];
+  charge: number;
+  minOrderValue: number | null;
+  isActive: boolean;
+}) {
+  try {
+    await requireAdmin();
+    const zone = await prisma.deliveryZone.create({ data });
+    revalidatePath("/admin/delivery-zones");
+    revalidatePath("/checkout");
+    return { success: true, data: zone };
+  } catch (error) {
+    if (error instanceof Error && error.message === "Unauthorized") return { success: false, error: "Unauthorized" };
+    console.error("createDeliveryZone error:", error);
+    return { success: false, error: "Failed to create delivery zone." };
+  }
+}
+
+export async function updateDeliveryZone(
+  id: string,
+  data: {
+    name?: string;
+    pincodes?: string[];
+    charge?: number;
+    minOrderValue?: number | null;
+    isActive?: boolean;
+  }
+) {
+  try {
+    await requireAdmin();
+    const zone = await prisma.deliveryZone.update({ where: { id }, data });
+    revalidatePath("/admin/delivery-zones");
+    revalidatePath("/checkout");
+    return { success: true, data: zone };
+  } catch (error) {
+    if (error instanceof Error && error.message === "Unauthorized") return { success: false, error: "Unauthorized" };
+    console.error("updateDeliveryZone error:", error);
+    return { success: false, error: "Failed to update delivery zone." };
+  }
+}
+
+export async function deleteDeliveryZone(id: string) {
+  try {
+    await requireAdmin();
+    await prisma.deliveryZone.delete({ where: { id } });
+    revalidatePath("/admin/delivery-zones");
+    revalidatePath("/checkout");
+    return { success: true };
+  } catch (error) {
+    if (error instanceof Error && error.message === "Unauthorized") return { success: false, error: "Unauthorized" };
+    console.error("deleteDeliveryZone error:", error);
+    return { success: false, error: "Failed to delete delivery zone." };
+  }
+}

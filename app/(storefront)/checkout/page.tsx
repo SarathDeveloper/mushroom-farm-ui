@@ -77,6 +77,8 @@ export default function CheckoutPage() {
   const [couponError, setCouponError] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("cod");
+  const [deliveryCharge, setDeliveryCharge] = useState(49);
+  const [minOrderValue, setMinOrderValue] = useState<number | null>(500);
 
   const [fullName, setFullName] = useState("");
   const [phone, setPhone] = useState("");
@@ -115,6 +117,25 @@ export default function CheckoutPage() {
     }, 1000);
     return () => window.clearInterval(timer);
   }, [otpCooldown]);
+
+  useEffect(() => {
+    async function fetchDeliveryCharge() {
+      try {
+        const res = await fetch(`/api/delivery-charge?pincode=${pincode}`);
+        if (res.ok) {
+          const data = await res.json();
+          setDeliveryCharge(data.charge);
+          setMinOrderValue(data.minOrderValue);
+        }
+      } catch (error) {
+        console.error("Failed to fetch delivery charge", error);
+      }
+    }
+    
+    if (pincode.length === 6 || pincode.length === 0) {
+      fetchDeliveryCharge();
+    }
+  }, [pincode]);
 
   const handlePhoneChange = (value: string) => {
     const next = normalizeIndianMobile(value);
@@ -261,7 +282,7 @@ export default function CheckoutPage() {
     );
   };
 
-  const shipping = subtotal >= 500 || subtotal === 0 ? 0 : 49;
+  const shipping = subtotal === 0 || (minOrderValue !== null && subtotal >= minOrderValue) ? 0 : deliveryCharge;
   const discount = appliedCoupon?.discount ?? 0;
   const gst = 0;
   const total = subtotal + shipping + gst - discount;

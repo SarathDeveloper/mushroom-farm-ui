@@ -7,6 +7,9 @@ export const metadata = {
   title: "Customers · Admin",
 };
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export default async function AdminCustomersPage(props: {
   searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {

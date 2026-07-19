@@ -17,6 +17,9 @@ import { prisma } from "@/lib/prisma";
 import { Badge } from "@/components/ui/badge";
 import { SafeImage } from "@/components/SafeImage";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 async function getDashboardData() {
   const now = new Date();
   const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());

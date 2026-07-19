@@ -245,22 +245,22 @@ export function HomeHero({ slides }: { slides?: HeroSlideData[] }) {
                       )}
                       style={{ transitionDelay: isActive ? "800ms" : "0ms" }}
                     >
-                      <div className="flex flex-wrap justify-center items-center gap-6 sm:gap-10">
-                        <div>
-                          <p className="text-2xl sm:text-3xl font-bold text-white mb-0.5">100%</p>
-                          <p className="text-xs sm:text-sm text-white/70 uppercase tracking-wider">Naturally Grown</p>
+                      <div className="grid grid-cols-2 sm:flex sm:flex-wrap justify-center items-center gap-y-4 gap-x-2 sm:gap-10">
+                        <div className="text-center">
+                          <p className="text-xl sm:text-3xl font-bold text-white mb-0.5">100%</p>
+                          <p className="text-[10px] sm:text-sm text-white/70 uppercase tracking-wider">Naturally Grown</p>
                         </div>
-                        <div>
-                          <p className="text-2xl sm:text-3xl font-bold text-white mb-0.5">Fresh</p>
-                          <p className="text-xs sm:text-sm text-white/70 uppercase tracking-wider">Same Day Delivery</p>
+                        <div className="text-center">
+                          <p className="text-xl sm:text-3xl font-bold text-white mb-0.5">Fresh</p>
+                          <p className="text-[10px] sm:text-sm text-white/70 uppercase tracking-wider">Same Day Delivery</p>
                         </div>
-                        <div>
-                          <p className="text-2xl sm:text-3xl font-bold text-white mb-0.5">FSSAI</p>
-                          <p className="text-xs sm:text-sm text-white/70 uppercase tracking-wider">Certified Safe</p>
+                        <div className="text-center">
+                          <p className="text-xl sm:text-3xl font-bold text-white mb-0.5">FSSAI</p>
+                          <p className="text-[10px] sm:text-sm text-white/70 uppercase tracking-wider">Certified Safe</p>
                         </div>
-                        <div>
-                          <p className="text-2xl sm:text-3xl font-bold text-white mb-0.5">Expert</p>
-                          <p className="text-xs sm:text-sm text-white/70 uppercase tracking-wider">Farm Training</p>
+                        <div className="text-center">
+                          <p className="text-xl sm:text-3xl font-bold text-white mb-0.5">Expert</p>
+                          <p className="text-[10px] sm:text-sm text-white/70 uppercase tracking-wider">Farm Training</p>
                         </div>
                       </div>
                     </div>
