@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import { Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { formatCurrency } from "@/lib/utils";
+import Providers from "@/components/Providers";
 
 const effra = localFont({
   src: [
@@ -89,7 +90,9 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col font-sans overflow-x-hidden w-full">
-        {children}
+        <Providers>
+          {children}
+        </Providers>
       </body>
     </html>
   );
