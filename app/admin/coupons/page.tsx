@@ -51,6 +51,7 @@ export default async function AdminCouponsPage(props: {
           <p className="text-[var(--color-body)] max-w-sm mb-6">
             Create discount codes for festivals, first-order discounts, and promotions.
           </p>
+          <CouponsTable coupons={[]} emptyState />
         </div>
       ) : (
         <>

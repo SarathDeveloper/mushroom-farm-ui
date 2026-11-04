@@ -104,6 +104,7 @@ Create a `.env` in the project root (do not commit secrets):
 | `DATABASE_URL` | PostgreSQL connection string |
 | `NEXTAUTH_SECRET` | NextAuth JWT/session secret |
 | `NEXTAUTH_URL` | App URL (e.g. `http://localhost:3000`) |
+| `NEXT_PUBLIC_ORDERS_ENABLED` | `true` turns on cart, checkout, Razorpay and customer accounts. Unset/anything else = catalogue + enquiry mode (default). Needs a rebuild to change. |
 | `RAZORPAY_KEY_ID` | Razorpay key id (server) |
 | `RAZORPAY_KEY_SECRET` | Razorpay secret (server) |
 | `NEXT_PUBLIC_RAZORPAY_KEY_ID` | Razorpay key id (client checkout) |

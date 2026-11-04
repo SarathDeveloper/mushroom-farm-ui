@@ -16,6 +16,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useCartStore, useWishlistStore } from "@/lib/store";
+import { ORDERS_ENABLED } from "@/lib/features";
 import { useHasMounted } from "@/lib/useHasMounted";
 import { cn } from "@/lib/utils";
 
@@ -106,14 +107,16 @@ export default function Navbar() {
               )}
             </Link>
 
-            <Link href="/cart" aria-label="View cart" className="relative flex items-center justify-center w-10 h-10 text-muted-foreground hover:text-primary transition-colors">
-              <ShoppingCart size={20} />
-              {mounted && cartCount > 0 && (
-                <span className="absolute right-1 top-1 flex h-4 w-4 items-center justify-center rounded-full bg-[#F76B46] text-xs font-bold text-white">
-                  {cartCount}
-                </span>
-              )}
-            </Link>
+            {ORDERS_ENABLED && (
+              <Link href="/cart" aria-label="View cart" className="relative flex items-center justify-center w-10 h-10 text-muted-foreground hover:text-primary transition-colors">
+                <ShoppingCart size={20} />
+                {mounted && cartCount > 0 && (
+                  <span className="absolute right-1 top-1 flex h-4 w-4 items-center justify-center rounded-full bg-[#F76B46] text-xs font-bold text-white">
+                    {cartCount}
+                  </span>
+                )}
+              </Link>
+            )}
 
             <div className="hidden md:flex">
               {session?.user ? (
@@ -131,12 +134,16 @@ export default function Navbar() {
                         <Leaf size={14} /> Admin Dashboard
                       </DropdownMenuItem>
                     )}
-                    <DropdownMenuItem render={<Link href="/account" />}>
-                      <User size={14} /> My Profile
-                    </DropdownMenuItem>
-                    <DropdownMenuItem render={<Link href="/orders" />}>
-                      <Package size={14} /> My Orders
-                    </DropdownMenuItem>
+                    {ORDERS_ENABLED && (
+                      <>
+                        <DropdownMenuItem render={<Link href="/account" />}>
+                          <User size={14} /> My Profile
+                        </DropdownMenuItem>
+                        <DropdownMenuItem render={<Link href="/orders" />}>
+                          <Package size={14} /> My Orders
+                        </DropdownMenuItem>
+                      </>
+                    )}
                     <DropdownMenuItem variant="destructive" onClick={() => signOut()}>
                       <LogOut size={14} /> Sign Out
                     </DropdownMenuItem>
@@ -144,7 +151,7 @@ export default function Navbar() {
                 </DropdownMenu>
               ) : (
                 <Button asChild className="bg-primary hover:bg-primary/90 text-white font-medium">
-                  <Link href="/login">Sign In</Link>
+                  {ORDERS_ENABLED ? <Link href="/login">Sign In</Link> : <Link href="/contact">Enquire Now</Link>}
                 </Button>
               )}
             </div>

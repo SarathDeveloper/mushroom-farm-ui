@@ -3,6 +3,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { prisma } from "./prisma";
 import bcrypt from "bcryptjs";
+import { normalizeIndianMobile } from "./phone";
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
@@ -18,9 +19,12 @@ export const authOptions: NextAuthOptions = {
           throw new Error("Invalid credentials");
         }
 
-        const user = await prisma.user.findUnique({
+        // Accounts store the bare 10 digits, but older ones (e.g. from
+        // create-admin.ts) used +91…, so accept either form.
+        const phone = normalizeIndianMobile(credentials.phone);
+        const user = await prisma.user.findFirst({
           where: {
-            phone: credentials.phone,
+            phone: { in: [phone, `+91${phone}`, credentials.phone.trim()] },
           },
         });
 
@@ -57,6 +61,22 @@ export const authOptions: NextAuthOptions = {
       if (user) {
         token.role = user.role;
         token.id = user.id;
+        return token;
+      }
+
+      // Re-read role and status so deactivated, demoted or deleted users lose
+      // access straight away instead of when their JWT expires.
+      if (token.id) {
+        const current = await prisma.user.findUnique({
+          where: { id: token.id },
+          select: { role: true, isActive: true },
+        });
+        if (!current || !current.isActive) {
+          token.id = "";
+          token.role = "";
+        } else {
+          token.role = current.role;
+        }
       }
       return token;
     },

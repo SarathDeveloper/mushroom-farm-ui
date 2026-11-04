@@ -9,7 +9,8 @@ const RESEND_COOLDOWN_MS = 45 * 1000;
 const MAX_ATTEMPTS = 5;
 
 const IS_PRODUCTION = process.env.NODE_ENV === "production";
-const TEST_OTP = "1234";
+// Dev-only shortcut; never accepted in production builds.
+const TEST_OTP = IS_PRODUCTION ? null : "1234";
 
 function otpIdentifier(phone: string) {
   return `phone-otp:${phone}`;
@@ -106,7 +107,7 @@ export async function verifyStoredOtp(
 
   const identifier = otpIdentifier(phone);
 
-  if (otp === TEST_OTP) {
+  if (TEST_OTP && otp === TEST_OTP) {
     await prisma.verificationToken.deleteMany({ where: { identifier } });
     return { ok: true };
   }
@@ -137,16 +138,22 @@ export async function verifyStoredOtp(
     };
   }
 
+  // Count the attempt before comparing. The compare-and-swap on the token
+  // means parallel guesses can't all reuse the same attempt number.
+  const counted = await prisma.verificationToken.updateMany({
+    where: { identifier, token: record.token },
+    data: { token: `${hash}:${attempts + 1}` },
+  });
+  if (counted.count === 0) {
+    return { ok: false, message: "Please wait a moment and try again." };
+  }
+
   const expected = hashOtp(phone, otp);
   const match =
     hash.length === expected.length &&
     timingSafeEqual(Buffer.from(hash), Buffer.from(expected));
 
   if (!match) {
-    await prisma.verificationToken.updateMany({
-      where: { identifier, token: record.token },
-      data: { token: `${hash}:${attempts + 1}` },
-    });
     return { ok: false, message: "Incorrect OTP. Please try again." };
   }
 

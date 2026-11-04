@@ -11,6 +11,7 @@ import { FadeIn } from "@/components/FadeIn";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { ORDERS_ENABLED } from "@/lib/features";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -99,12 +100,14 @@ export default function LoginPage() {
             </Button>
           </form>
 
-          <p className="text-center text-base text-[var(--color-body)] mt-6">
-            New here?{" "}
-            <Link href="/register" className="font-semibold text-primary hover:underline">
-              Create an account
-            </Link>
-          </p>
+          {ORDERS_ENABLED && (
+            <p className="text-center text-base text-[var(--color-body)] mt-6">
+              New here?{" "}
+              <Link href="/register" className="font-semibold text-primary hover:underline">
+                Create an account
+              </Link>
+            </p>
+          )}
         </div>
       </FadeIn>
     </div>
