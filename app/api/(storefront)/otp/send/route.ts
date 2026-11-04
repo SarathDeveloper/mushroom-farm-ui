@@ -6,6 +6,7 @@ import { authOptions } from "@/lib/auth";
 import { indianMobileError, normalizeIndianMobile } from "@/lib/phone";
 import { createAndStoreOtp, sendOtpSms } from "@/lib/otp";
 import { errorResponse } from "@/lib/api-utils";
+import { ORDERS_ENABLED } from "@/lib/features";
 import { withRateLimit, apiLimits } from "@/lib/rate-limit";
 
 const schema = z.object({
@@ -13,6 +14,8 @@ const schema = z.object({
 });
 
 export async function POST(request: Request) {
+  if (!ORDERS_ENABLED) return errorResponse("Not found.", 404);
+
   return withRateLimit(
     request,
     async () => {

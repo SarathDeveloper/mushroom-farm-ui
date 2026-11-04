@@ -34,7 +34,7 @@ const fallbackSlides: HeroSlideData[] = [
     headline: "Fresh Mushrooms\nFrom Our Farm",
     subtitle:
       "We grow oyster, shiitake & button mushrooms. Pick today, deliver today. Direct from Kalvarayan Hills to your home.",
-    primaryCtaLabel: "Buy Now",
+    primaryCtaLabel: "View Products",
     primaryCtaHref: "/shop",
     secondaryCtaLabel: "Book Early",
     secondaryCtaHref: "/pre-order",

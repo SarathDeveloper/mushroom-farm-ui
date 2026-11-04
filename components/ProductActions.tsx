@@ -8,6 +8,8 @@ import { useCartStore, useWishlistStore } from "@/lib/store";
 import { Button } from "@/components/ui/button";
 import { SubscriptionToggle } from "@/components/SubscriptionToggle";
 import { cn } from "@/lib/utils";
+import { ORDERS_ENABLED } from "@/lib/features";
+import { EnquireButton } from "@/components/ProductEnquiryDialog";
 
 export function ProductActions({ product }: { product: Product }) {
   const [qty, setQty] = useState(1);
@@ -17,7 +19,7 @@ export function ProductActions({ product }: { product: Product }) {
 
   return (
     <div className="space-y-4">
-      <SubscriptionToggle productName={product.name} />
+      {ORDERS_ENABLED && <SubscriptionToggle productName={product.name} />}
 
       <div className="flex flex-col sm:flex-row gap-3">
         <div className="flex items-center rounded-lg border border-border bg-secondary/60 h-11 w-fit">
@@ -30,7 +32,7 @@ export function ProductActions({ product }: { product: Product }) {
           </button>
           <span className="w-8 text-center font-semibold tabular-nums">{qty}</span>
           <button
-            onClick={() => setQty((q) => Math.min(product.stock, q + 1))}
+            onClick={() => setQty((q) => Math.min(ORDERS_ENABLED ? product.stock : 999, q + 1))}
             aria-label="Increase quantity"
             className="w-9 h-full flex items-center justify-center text-muted-foreground hover:text-foreground"
           >
@@ -40,18 +42,26 @@ export function ProductActions({ product }: { product: Product }) {
             {product.weight}
           </span>
         </div>
-        <Button
-          onClick={() => {
-            addItem(product, qty);
-            toast.success(`${qty} × ${product.name} added to cart`);
-            setQty(1);
-          }}
-          size="lg"
-          className="flex-1 rounded-lg h-11 bg-[#1A4938] hover:bg-[#14392c]"
-        >
-          <ShoppingCart size={18} className="mr-2" />
-          Add to Cart
-        </Button>
+        {ORDERS_ENABLED ? (
+          <Button
+            onClick={() => {
+              addItem(product, qty);
+              toast.success(`${qty} × ${product.name} added to cart`);
+              setQty(1);
+            }}
+            size="lg"
+            className="flex-1 rounded-lg h-11 bg-[#1A4938] hover:bg-[#14392c]"
+          >
+            <ShoppingCart size={18} className="mr-2" />
+            Add to Cart
+          </Button>
+        ) : (
+          <EnquireButton
+            product={product}
+            quantity={qty}
+            className="flex-1 rounded-lg h-11 bg-[#1A4938] hover:bg-[#14392c]"
+          />
+        )}
         <Button
           onClick={() => {
             toggleWish(product.id);

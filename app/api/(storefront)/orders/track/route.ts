@@ -1,8 +1,11 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { errorResponse } from "@/lib/api-utils";
+import { ORDERS_ENABLED } from "@/lib/features";
 
 export async function GET(request: Request) {
+  if (!ORDERS_ENABLED) return errorResponse("Not found.", 404);
+
   const { searchParams } = new URL(request.url);
   const id = searchParams.get("id")?.trim();
 

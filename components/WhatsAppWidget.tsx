@@ -5,14 +5,15 @@ import { usePathname } from "next/navigation";
 import { X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
-
-const WHATSAPP_NUMBER = "916380687811";
+import { ORDERS_ENABLED, whatsappLink } from "@/lib/features";
 
 const quickMessages = [
   { label: "Order Mushrooms", message: "Hi! I'd like to place an order for fresh mushrooms." },
   { label: "Pre-Order Enquiry", message: "Hi! I'd like to pre-order fresh mushrooms." },
   { label: "Training Info", message: "Hi! I'd like to know about your mushroom farming training programs." },
-  { label: "Track My Order", message: "Hi! I'd like to track my order. My order ID is: " },
+  ...(ORDERS_ENABLED
+    ? [{ label: "Track My Order", message: "Hi! I'd like to track my order. My order ID is: " }]
+    : []),
 ];
 
 export function WhatsAppWidget() {
@@ -21,10 +22,7 @@ export function WhatsAppWidget() {
   const isCartPage = pathname === "/cart";
 
   const sendMessage = (message: string) => {
-    window.open(
-      `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`,
-      "_blank"
-    );
+    window.open(whatsappLink(message), "_blank");
     setOpen(false);
   };
 

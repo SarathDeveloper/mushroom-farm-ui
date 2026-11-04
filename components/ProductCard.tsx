@@ -3,10 +3,12 @@
 import { useState } from "react";
 import Link from "next/link";
 import { SafeImage } from "@/components/SafeImage";
-import { Heart, Star, ShoppingCart, Minus, Plus, Clock } from "lucide-react";
+import { Heart, Star, ShoppingCart, Minus, Plus, Clock, MessageSquareText } from "lucide-react";
 import toast from "react-hot-toast";
 import type { Product } from "@/lib/data";
 import { useCartStore, useWishlistStore } from "@/lib/store";
+import { ORDERS_ENABLED } from "@/lib/features";
+import { EnquireButton } from "@/components/ProductEnquiryDialog";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -177,17 +179,29 @@ export function ProductCard({
             </button>
           </div>
 
-          <Button
-            onClick={handleAddToCart}
-            disabled={outOfStock}
-            aria-label={`Add ${product.name} to cart`}
-            className="flex-1 min-w-0 h-8 sm:h-9 rounded-full bg-primary hover:bg-primary/90 text-white text-sm sm:text-base font-semibold gap-1 sm:gap-1.5 disabled:opacity-50 px-2"
-          >
-            <ShoppingCart size={14} className="sm:hidden" />
-            <ShoppingCart size={15} className="hidden sm:block" />
-            <span className="hidden sm:inline">Add to Cart</span>
-            <span className="sm:hidden">Add</span>
-          </Button>
+          {ORDERS_ENABLED ? (
+            <Button
+              onClick={handleAddToCart}
+              disabled={outOfStock}
+              aria-label={`Add ${product.name} to cart`}
+              className="flex-1 min-w-0 h-8 sm:h-9 rounded-full bg-primary hover:bg-primary/90 text-white text-sm sm:text-base font-semibold gap-1 sm:gap-1.5 disabled:opacity-50 px-2"
+            >
+              <ShoppingCart size={14} className="sm:hidden" />
+              <ShoppingCart size={15} className="hidden sm:block" />
+              <span className="hidden sm:inline">Add to Cart</span>
+              <span className="sm:hidden">Add</span>
+            </Button>
+          ) : (
+            <EnquireButton
+              product={product}
+              quantity={qty}
+              size="sm"
+              className="flex-1 min-w-0 h-8 sm:h-9 rounded-full bg-primary hover:bg-primary/90 text-white text-sm sm:text-base font-semibold gap-1 sm:gap-1.5 px-2"
+            >
+              <MessageSquareText size={15} />
+              Enquire
+            </EnquireButton>
+          )}
         </div>
       </div>
     </div>

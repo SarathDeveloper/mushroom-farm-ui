@@ -8,6 +8,7 @@ import { INDIAN_MOBILE_REGEX } from "@/lib/phone";
 import { getRazorpay } from "@/lib/razorpay";
 import { getDeliveryRule, resolveCoupon, shippingFor } from "@/lib/order-pricing";
 import { errorResponse } from "@/lib/api-utils";
+import { ORDERS_ENABLED } from "@/lib/features";
 import { notifyOrderConfirmation } from "@/lib/notifications";
 
 class OutOfStockError extends Error {
@@ -35,6 +36,8 @@ const createOrderSchema = z.object({
 });
 
 export async function POST(request: Request) {
+  if (!ORDERS_ENABLED) return errorResponse("Not found.", 404);
+
   const session = await getServerSession(authOptions);
   if (!session?.user?.id) {
     return errorResponse("Unauthorized", 401);

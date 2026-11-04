@@ -64,6 +64,19 @@ const nextConfig: NextConfig = {
     imageSizes: [16, 32, 48, 64, 96, 128, 256],
     minimumCacheTTL: 60 * 60 * 24,
   },
+  // With online ordering off (see lib/features.ts) the customer order and
+  // account pages aren't reachable. /login stays for admins.
+  async redirects() {
+    if (process.env.NEXT_PUBLIC_ORDERS_ENABLED === "true") return [];
+    return [
+      { source: "/cart", destination: "/shop", permanent: false },
+      { source: "/checkout", destination: "/shop", permanent: false },
+      { source: "/orders", destination: "/contact", permanent: false },
+      { source: "/track-order", destination: "/contact", permanent: false },
+      { source: "/account", destination: "/", permanent: false },
+      { source: "/register", destination: "/contact", permanent: false },
+    ];
+  },
   async headers() {
     return [
       {

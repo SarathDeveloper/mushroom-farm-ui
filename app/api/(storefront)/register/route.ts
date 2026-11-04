@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { errorResponse } from "@/lib/api-utils";
+import { ORDERS_ENABLED } from "@/lib/features";
 import { indianMobileError, normalizeIndianMobile } from "@/lib/phone";
 import { withRateLimit, apiLimits } from "@/lib/rate-limit";
 
@@ -14,6 +15,8 @@ const registerSchema = z.object({
 });
 
 export async function POST(request: Request) {
+  if (!ORDERS_ENABLED) return errorResponse("Not found.", 404);
+
   return withRateLimit(request, () => handleRegister(request), {
     limit: apiLimits.auth,
     identifier: "register",

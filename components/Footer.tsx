@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
 import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
+import { ORDERS_ENABLED } from "@/lib/features";
 
 const navigationLinks = [
   { href: "/", label: "Home" },
@@ -19,7 +20,7 @@ const productLinks = [
 ];
 
 const supportLinks = [
-  { href: "/track-order", label: "Track Order" },
+  ...(ORDERS_ENABLED ? [{ href: "/track-order", label: "Track Order" }] : []),
   { href: "/shipping-policy", label: "Shipping Policy" },
   { href: "/refund-policy", label: "Refund Policy" },
   { href: "/privacy", label: "Privacy Policy" },

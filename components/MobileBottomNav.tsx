@@ -3,10 +3,11 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
-import { Home, ShoppingBag, ShoppingCart, User } from "lucide-react";
+import { Heart, Home, MessageSquareText, ShoppingBag, ShoppingCart, User } from "lucide-react";
 import { useCartStore } from "@/lib/store";
 import { useHasMounted } from "@/lib/useHasMounted";
 import { cn } from "@/lib/utils";
+import { ORDERS_ENABLED } from "@/lib/features";
 
 const baseTabs = [
   { href: "/", icon: Home, label: "Home" },
@@ -19,14 +20,21 @@ export function MobileBottomNav() {
   const { data: session } = useSession();
   const mounted = useHasMounted();
   const cartCount = useCartStore((s) => s.totalItems());
-  const tabs = [
-    ...baseTabs,
-    {
-      href: session?.user ? "/account" : "/login",
-      icon: User,
-      label: session?.user ? "Account" : "Account",
-    },
-  ];
+  const tabs = ORDERS_ENABLED
+    ? [
+        ...baseTabs,
+        {
+          href: session?.user ? "/account" : "/login",
+          icon: User,
+          label: "Account",
+        },
+      ]
+    : [
+        baseTabs[0],
+        baseTabs[1],
+        { href: "/wishlist", icon: Heart, label: "Wishlist" },
+        { href: "/contact", icon: MessageSquareText, label: "Enquire" },
+      ];
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-card/95 backdrop-blur-lg border-t border-border safe-area-bottom">

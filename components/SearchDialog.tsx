@@ -7,13 +7,14 @@ import { Search, ArrowRight, TrendingUp, Clock, Loader2 } from "lucide-react";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { searchProducts } from "@/app/admin/products/actions";
+import { ORDERS_ENABLED } from "@/lib/features";
 
 const popularSearches = ["Oyster", "Milky Mushroom", "Shiitake", "Combo Pack", "Fresh"];
 
 const quickLinks = [
   { label: "Pre-Order Mushrooms", href: "/pre-order" },
   { label: "Compare Nutrition", href: "/compare" },
-  { label: "Track Order", href: "/track-order" },
+  ...(ORDERS_ENABLED ? [{ label: "Track Order", href: "/track-order" }] : []),
   { label: "Training Programs", href: "/training" },
 ];
 
