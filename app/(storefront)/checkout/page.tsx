@@ -49,15 +49,6 @@ type PaymentMethod = "cod" | "online";
 
 const STEPS = ["Address", "Payment", "Confirm"] as const;
 
-const validCoupons: Record<
-  string,
-  { discount: number; isPercent: boolean; minOrder: number }
-> = {
-  FRESH10: { discount: 10, isPercent: true, minOrder: 200 },
-  WELCOME50: { discount: 50, isPercent: false, minOrder: 300 },
-  MUSHROOM15: { discount: 15, isPercent: true, minOrder: 500 },
-};
-
 export default function CheckoutPage() {
   const mounted = useHasMounted();
   const router = useRouter();
@@ -70,11 +61,16 @@ export default function CheckoutPage() {
   const [submitting, setSubmitting] = useState(false);
   const [orderId, setOrderId] = useState<string | null>(null);
   const [couponCode, setCouponCode] = useState("");
-  const [appliedCoupon, setAppliedCoupon] = useState<{
+  const [checkedCoupon, setCheckedCoupon] = useState<{
     code: string;
     discount: number;
+    subtotal: number;
   } | null>(null);
   const [couponError, setCouponError] = useState("");
+  const [checkingCoupon, setCheckingCoupon] = useState(false);
+  // Total the server actually charged, so the success screen doesn't show the
+  // recalculated (empty-cart) total after the cart is cleared.
+  const [placedTotal, setPlacedTotal] = useState<number | null>(null);
   const [errorMsg, setErrorMsg] = useState("");
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("cod");
   const [deliveryCharge, setDeliveryCharge] = useState(49);
@@ -283,6 +279,8 @@ export default function CheckoutPage() {
   };
 
   const shipping = subtotal === 0 || (minOrderValue !== null && subtotal >= minOrderValue) ? 0 : deliveryCharge;
+  // A discount checked against an older cart no longer applies.
+  const appliedCoupon = checkedCoupon?.subtotal === subtotal ? checkedCoupon : null;
   const discount = appliedCoupon?.discount ?? 0;
   const gst = 0;
   const total = subtotal + shipping + gst - discount;
@@ -293,26 +291,35 @@ export default function CheckoutPage() {
     .filter((d): d is number => d != null && d > 0);
   const minShelfLife = shelfDays.length > 0 ? Math.min(...shelfDays) : null;
 
-  const applyCoupon = () => {
+  const applyCoupon = async () => {
     setCouponError("");
     const code = couponCode.toUpperCase().trim();
-    const coupon = validCoupons[code];
-    if (!coupon) {
-      setCouponError("Oops! That doesn't look like a valid coupon code.");
-      return;
+    if (!code) return;
+    setCheckingCoupon(true);
+    try {
+      const res = await fetch("/api/coupons/validate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          code,
+          items: items.map((i) => ({ productId: i.productId, quantity: i.quantity })),
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setCouponError(data.message ?? "Oops! That doesn't look like a valid coupon code.");
+        return;
+      }
+      setCheckedCoupon({ code: data.code, discount: data.discount, subtotal });
+    } catch {
+      setCouponError("Couldn't check that coupon. Please try again.");
+    } finally {
+      setCheckingCoupon(false);
     }
-    if (subtotal < coupon.minOrder) {
-      setCouponError(`You need to spend ${formatCurrency(coupon.minOrder)} to use this coupon.`);
-      return;
-    }
-    const discountAmt = coupon.isPercent
-      ? Math.round((subtotal * coupon.discount) / 100)
-      : coupon.discount;
-    setAppliedCoupon({ code, discount: discountAmt });
   };
 
   const removeCoupon = () => {
-    setAppliedCoupon(null);
+    setCheckedCoupon(null);
     setCouponCode("");
     setCouponError("");
   };
@@ -431,6 +438,7 @@ export default function CheckoutPage() {
       }
 
       if (paymentMethod === "cod") {
+        setPlacedTotal(data.total);
         clear();
         setOrderId(data.orderId);
         setSubmitting(false);
@@ -476,7 +484,7 @@ export default function CheckoutPage() {
           </p>
           {paymentMethod === "cod" && (
             <p className="text-sm text-[hsl(var(--foreground))] mb-8">
-              Please keep ${formatCurrency(total)} ready for cash on delivery.
+              Please keep {formatCurrency(placedTotal ?? total)} ready for cash on delivery.
             </p>
           )}
           {paymentMethod !== "cod" && <div className="mb-8" />}
@@ -1065,6 +1073,7 @@ export default function CheckoutPage() {
                         />
                         <Button
                           onClick={applyCoupon}
+                          disabled={checkingCoupon}
                           size="sm"
                           variant="outline"
                           className="h-9 px-3 text-sm shrink-0"

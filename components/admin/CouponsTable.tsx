@@ -76,7 +76,7 @@ function CopyButton({ text }: { text: string }) {
   );
 }
 
-export function CouponsTable({ coupons }: { coupons: Coupon[] }) {
+export function CouponsTable({ coupons, emptyState = false }: { coupons: Coupon[]; emptyState?: boolean }) {
   const [editTarget, setEditTarget] = useState<Coupon | null>(null);
   const [deleteTarget, setDeleteTarget] = useState<Coupon | null>(null);
   const [showCreate, setShowCreate] = useState(false);
@@ -170,175 +170,179 @@ export function CouponsTable({ coupons }: { coupons: Coupon[] }) {
 
   return (
     <>
-      <div className="flex justify-end mb-6">
+      <div className={`flex justify-end mb-6 ${emptyState ? "mt-4 w-full justify-center" : ""}`}>
         <Button className="gap-2" onClick={openCreate}>
           <Plus size={18} /> Add Coupon
         </Button>
       </div>
 
-      {/* Mobile card view */}
-      <div className="space-y-3 md:hidden">
-        {coupons.map((coupon) => {
-          const isExpired = new Date(coupon.expiryDate) <= now;
-          return (
-            <div
-              key={coupon.id}
-              className={`bg-card rounded-xl border border-border p-4 shadow-[0_2px_8px_rgba(0,0,0,0.04)] ${!coupon.isActive || isExpired ? "opacity-60" : ""}`}
-            >
-              <div className="flex items-center justify-between mb-3">
-                <div className="flex items-center gap-2">
-                  <span className="font-mono font-bold text-foreground bg-secondary px-2 py-1 rounded text-base">
-                    {coupon.code}
-                  </span>
-                  <CopyButton text={coupon.code} />
-                </div>
-                {isExpired ? (
-                  <Badge variant="destructive">Expired</Badge>
-                ) : coupon.isActive ? (
-                  <Badge variant="success">Active</Badge>
-                ) : (
-                  <Badge variant="secondary">Inactive</Badge>
-                )}
-              </div>
-              <div className="space-y-1.5 text-base mb-3">
-                <p className="font-semibold text-primary">
-                  {coupon.isPercentage ? (
-                    <>
-                      {coupon.discountValue}% off
-                      {coupon.maxDiscount && (
-                        <span className="text-sm text-muted-foreground ml-1">
-                          (max ₹{coupon.maxDiscount})
-                        </span>
-                      )}
-                    </>
+      {!emptyState && (
+        <>
+        {/* Mobile card view */}
+        <div className="space-y-3 md:hidden">
+          {coupons.map((coupon) => {
+            const isExpired = new Date(coupon.expiryDate) <= now;
+            return (
+              <div
+                key={coupon.id}
+                className={`bg-card rounded-xl border border-border p-4 shadow-[0_2px_8px_rgba(0,0,0,0.04)] ${!coupon.isActive || isExpired ? "opacity-60" : ""}`}
+              >
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center gap-2">
+                    <span className="font-mono font-bold text-foreground bg-secondary px-2 py-1 rounded text-base">
+                      {coupon.code}
+                    </span>
+                    <CopyButton text={coupon.code} />
+                  </div>
+                  {isExpired ? (
+                    <Badge variant="destructive">Expired</Badge>
+                  ) : coupon.isActive ? (
+                    <Badge variant="success">Active</Badge>
                   ) : (
-                    <>₹{coupon.discountValue} off</>
+                    <Badge variant="secondary">Inactive</Badge>
                   )}
-                </p>
-                <p className="text-sm text-muted-foreground">
-                  {coupon.minOrderValue ? `Min order: ₹${coupon.minOrderValue}` : "No minimum order"}
-                </p>
-              </div>
-              <div className="flex items-center justify-between pt-3 border-t border-border">
-                <span className="text-sm text-muted-foreground">
-                  Expires: {formatDate(coupon.expiryDate)}
-                </span>
-                <div className="flex items-center gap-2">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="h-8 w-8 p-0"
-                    onClick={() => openEdit(coupon)}
-                  >
-                    <Pencil size={14} />
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="h-8 w-8 p-0 text-destructive hover:text-destructive"
-                    onClick={() => setDeleteTarget(coupon)}
-                  >
-                    <Trash2 size={14} />
-                  </Button>
+                </div>
+                <div className="space-y-1.5 text-base mb-3">
+                  <p className="font-semibold text-primary">
+                    {coupon.isPercentage ? (
+                      <>
+                        {coupon.discountValue}% off
+                        {coupon.maxDiscount && (
+                          <span className="text-sm text-muted-foreground ml-1">
+                            (max ₹{coupon.maxDiscount})
+                          </span>
+                        )}
+                      </>
+                    ) : (
+                      <>₹{coupon.discountValue} off</>
+                    )}
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    {coupon.minOrderValue ? `Min order: ₹${coupon.minOrderValue}` : "No minimum order"}
+                  </p>
+                </div>
+                <div className="flex items-center justify-between pt-3 border-t border-border">
+                  <span className="text-sm text-muted-foreground">
+                    Expires: {formatDate(coupon.expiryDate)}
+                  </span>
+                  <div className="flex items-center gap-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="h-8 w-8 p-0"
+                      onClick={() => openEdit(coupon)}
+                    >
+                      <Pencil size={14} />
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="h-8 w-8 p-0 text-destructive hover:text-destructive"
+                      onClick={() => setDeleteTarget(coupon)}
+                    >
+                      <Trash2 size={14} />
+                    </Button>
+                  </div>
                 </div>
               </div>
-            </div>
-          );
-        })}
-      </div>
-
-      {/* Desktop table view */}
-      <div className="hidden md:block bg-card rounded-2xl border border-border shadow-[0_4px_12px_rgba(0,0,0,0.04)] overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-base">
-            <thead>
-              <tr className="border-b border-border bg-secondary/50 text-[var(--color-body)]">
-                <th className="font-semibold px-6 py-4">Code</th>
-                <th className="font-semibold px-6 py-4">Discount</th>
-                <th className="font-semibold px-6 py-4">Conditions</th>
-                <th className="font-semibold px-6 py-4">Expiry</th>
-                <th className="font-semibold px-6 py-4">Status</th>
-                <th className="font-semibold px-6 py-4 text-right">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-border">
-              {coupons.map((coupon) => {
-                const isExpired = new Date(coupon.expiryDate) <= now;
-                return (
-                  <tr
-                    key={coupon.id}
-                    className={`hover:bg-secondary/30 transition-colors ${!coupon.isActive || isExpired ? "opacity-60" : ""}`}
-                  >
-                    <td className="px-6 py-4">
-                      <div className="flex items-center">
-                        <span className="font-mono font-bold text-foreground bg-secondary px-2 py-1 rounded">
-                          {coupon.code}
-                        </span>
-                        <CopyButton text={coupon.code} />
-                      </div>
-                    </td>
-                    <td className="px-6 py-4">
-                      <div className="flex items-center gap-1 font-semibold text-primary">
-                        {coupon.isPercentage ? (
-                          <>
-                            {coupon.discountValue}%
-                            {coupon.maxDiscount && (
-                              <span className="text-sm text-muted-foreground ml-1">
-                                (max ₹{coupon.maxDiscount})
-                              </span>
-                            )}
-                          </>
-                        ) : (
-                          <>₹{coupon.discountValue}</>
-                        )}
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 text-muted-foreground">
-                      {coupon.minOrderValue ? (
-                        <>Min order: ₹{coupon.minOrderValue}</>
-                      ) : (
-                        "—"
-                      )}
-                    </td>
-                    <td className="px-6 py-4 text-muted-foreground">
-                      {formatDate(coupon.expiryDate)}
-                    </td>
-                    <td className="px-6 py-4">
-                      {isExpired ? (
-                        <Badge variant="destructive">Expired</Badge>
-                      ) : coupon.isActive ? (
-                        <Badge variant="success">Active</Badge>
-                      ) : (
-                        <Badge variant="secondary">Inactive</Badge>
-                      )}
-                    </td>
-                    <td className="px-6 py-4">
-                      <div className="flex items-center justify-end gap-2">
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          className="h-8 w-8 p-0"
-                          onClick={() => openEdit(coupon)}
-                        >
-                          <Pencil size={14} />
-                        </Button>
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          className="h-8 w-8 p-0 text-destructive hover:text-destructive"
-                          onClick={() => setDeleteTarget(coupon)}
-                        >
-                          <Trash2 size={14} />
-                        </Button>
-                      </div>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+            );
+          })}
         </div>
-      </div>
+
+        {/* Desktop table view */}
+        <div className="hidden md:block bg-card rounded-2xl border border-border shadow-[0_4px_12px_rgba(0,0,0,0.04)] overflow-hidden">
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-base">
+              <thead>
+                <tr className="border-b border-border bg-secondary/50 text-[var(--color-body)]">
+                  <th className="font-semibold px-6 py-4">Code</th>
+                  <th className="font-semibold px-6 py-4">Discount</th>
+                  <th className="font-semibold px-6 py-4">Conditions</th>
+                  <th className="font-semibold px-6 py-4">Expiry</th>
+                  <th className="font-semibold px-6 py-4">Status</th>
+                  <th className="font-semibold px-6 py-4 text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-border">
+                {coupons.map((coupon) => {
+                  const isExpired = new Date(coupon.expiryDate) <= now;
+                  return (
+                    <tr
+                      key={coupon.id}
+                      className={`hover:bg-secondary/30 transition-colors ${!coupon.isActive || isExpired ? "opacity-60" : ""}`}
+                    >
+                      <td className="px-6 py-4">
+                        <div className="flex items-center">
+                          <span className="font-mono font-bold text-foreground bg-secondary px-2 py-1 rounded">
+                            {coupon.code}
+                          </span>
+                          <CopyButton text={coupon.code} />
+                        </div>
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="flex items-center gap-1 font-semibold text-primary">
+                          {coupon.isPercentage ? (
+                            <>
+                              {coupon.discountValue}%
+                              {coupon.maxDiscount && (
+                                <span className="text-sm text-muted-foreground ml-1">
+                                  (max ₹{coupon.maxDiscount})
+                                </span>
+                              )}
+                            </>
+                          ) : (
+                            <>₹{coupon.discountValue}</>
+                          )}
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 text-muted-foreground">
+                        {coupon.minOrderValue ? (
+                          <>Min order: ₹{coupon.minOrderValue}</>
+                        ) : (
+                          "—"
+                        )}
+                      </td>
+                      <td className="px-6 py-4 text-muted-foreground">
+                        {formatDate(coupon.expiryDate)}
+                      </td>
+                      <td className="px-6 py-4">
+                        {isExpired ? (
+                          <Badge variant="destructive">Expired</Badge>
+                        ) : coupon.isActive ? (
+                          <Badge variant="success">Active</Badge>
+                        ) : (
+                          <Badge variant="secondary">Inactive</Badge>
+                        )}
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="flex items-center justify-end gap-2">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="h-8 w-8 p-0"
+                            onClick={() => openEdit(coupon)}
+                          >
+                            <Pencil size={14} />
+                          </Button>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="h-8 w-8 p-0 text-destructive hover:text-destructive"
+                            onClick={() => setDeleteTarget(coupon)}
+                          >
+                            <Trash2 size={14} />
+                          </Button>
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        </>
+      )}
 
       {/* Create/Edit Dialog */}
       <Dialog open={dialogOpen} onOpenChange={(open) => {

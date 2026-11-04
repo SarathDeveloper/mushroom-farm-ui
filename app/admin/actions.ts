@@ -29,15 +29,48 @@ async function requireAdmin() {
 // ORDER MANAGEMENT
 // =====================
 
+/**
+ * Stock is reserved when an order is created, so cancelling gives it back and
+ * un-cancelling takes it again. The status guard keeps this to one adjustment
+ * per transition even if two admins click at once.
+ */
+async function setOrderStatusWithStock(orderId: string, status: OrderStatus) {
+  await prisma.$transaction(async (tx) => {
+    const current = await tx.order.findUnique({
+      where: { id: orderId },
+      select: { status: true, orderItems: { select: { productId: true, quantity: true } } },
+    });
+    if (!current) throw new Error("Order not found");
+
+    const cancelling = status === "CANCELLED" && current.status !== "CANCELLED";
+    const reopening = status !== "CANCELLED" && current.status === "CANCELLED";
+
+    const changed = await tx.order.updateMany({
+      where: { id: orderId, status: current.status },
+      data: { status },
+    });
+    if (changed.count === 0 || (!cancelling && !reopening)) return;
+
+    for (const item of current.orderItems) {
+      await tx.product.update({
+        where: { id: item.productId },
+        data: {
+          stock: cancelling ? { increment: item.quantity } : { decrement: item.quantity },
+        },
+      });
+    }
+  });
+}
+
 export async function updateOrderStatus(
   orderId: string,
   status: OrderStatus
 ): Promise<ActionResult> {
   try {
     await requireAdmin();
-    const order = await prisma.order.update({
+    await setOrderStatusWithStock(orderId, status);
+    const order = await prisma.order.findUniqueOrThrow({
       where: { id: orderId },
-      data: { status },
       select: { id: true, status: true, userId: true, shippingAddress: true, orderItems: { select: { productId: true, product: { select: { name: true } } } } },
     });
     const contact = parseShippingContact(order.shippingAddress);
@@ -82,10 +115,9 @@ export async function bulkUpdateOrderStatus(
 ): Promise<ActionResult> {
   try {
     await requireAdmin();
-    await prisma.order.updateMany({
-      where: { id: { in: orderIds } },
-      data: { status },
-    });
+    for (const orderId of orderIds) {
+      await setOrderStatusWithStock(orderId, status);
+    }
     const orders = await prisma.order.findMany({
       where: { id: { in: orderIds } },
       select: { id: true, status: true, shippingAddress: true },

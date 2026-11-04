@@ -3,6 +3,8 @@ import bcrypt from "bcryptjs";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { errorResponse } from "@/lib/api-utils";
+import { indianMobileError, normalizeIndianMobile } from "@/lib/phone";
+import { withRateLimit, apiLimits } from "@/lib/rate-limit";
 
 const registerSchema = z.object({
   name: z.string().min(2, "Name is too short"),
@@ -12,6 +14,13 @@ const registerSchema = z.object({
 });
 
 export async function POST(request: Request) {
+  return withRateLimit(request, () => handleRegister(request), {
+    limit: apiLimits.auth,
+    identifier: "register",
+  });
+}
+
+async function handleRegister(request: Request) {
   let body: unknown;
   try {
     body = await request.json();
@@ -21,12 +30,21 @@ export async function POST(request: Request) {
 
   const parsed = registerSchema.safeParse(body);
   if (!parsed.success) {
-    return errorResponse(parsed.error.issues[0]?.message ?? "Invalid input.", 400);  }
+    return errorResponse(parsed.error.issues[0]?.message ?? "Invalid input.", 400);
+  }
 
-  const { name, email, phone, password } = parsed.data;
+  const { name, email, password } = parsed.data;
+  // Store the bare 10 digits so it matches what login and checkout send.
+  const phone = normalizeIndianMobile(parsed.data.phone);
+  const phoneErr = indianMobileError(phone);
+  if (phoneErr) {
+    return errorResponse(phoneErr, 400);
+  }
 
   try {
-    const existingByPhone = await prisma.user.findUnique({ where: { phone } });
+    const existingByPhone = await prisma.user.findFirst({
+      where: { phone: { in: [phone, `+91${phone}`] } },
+    });
     if (existingByPhone) {
       return errorResponse("An account with this phone number already exists.", 409);
     }

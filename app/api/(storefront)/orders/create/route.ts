@@ -5,9 +5,16 @@ import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { verifyPhoneVerificationToken } from "@/lib/otp";
 import { INDIAN_MOBILE_REGEX } from "@/lib/phone";
-import { getRazorpay, computeOrderTotals, VALID_COUPONS } from "@/lib/razorpay";
+import { getRazorpay } from "@/lib/razorpay";
+import { getDeliveryRule, resolveCoupon, shippingFor } from "@/lib/order-pricing";
 import { errorResponse } from "@/lib/api-utils";
 import { notifyOrderConfirmation } from "@/lib/notifications";
+
+class OutOfStockError extends Error {
+  constructor(public productName: string) {
+    super(`Out of stock: ${productName}`);
+  }
+}
 
 const cartLineSchema = z.object({
   productId: z.string().uuid(),
@@ -51,17 +58,9 @@ export async function POST(request: Request) {
     return errorResponse("Please verify your mobile number with OTP before placing the order.", 400);
   }
 
-  // Validate coupon code if provided
-  if (couponCode) {
-    const normalized = couponCode.toUpperCase().trim();
-    if (!VALID_COUPONS[normalized]) {
-      return errorResponse("Invalid coupon code", 400);
-    }
-  }
-
   const productIds = items.map((i) => i.productId);
   const products = await prisma.product.findMany({
-    where: { id: { in: productIds } },
+    where: { id: { in: productIds }, isActive: true },
     select: { id: true, price: true, stock: true, name: true },
   });
 
@@ -83,7 +82,19 @@ export async function POST(request: Request) {
     return sum + product.price * item.quantity;
   }, 0);
 
-  const { shipping, discount, total } = computeOrderTotals(itemSubtotal, couponCode);
+  let discount = 0;
+  let appliedCoupon: string | null = null;
+  if (couponCode?.trim()) {
+    const coupon = await resolveCoupon(couponCode, itemSubtotal);
+    if (!coupon.ok) {
+      return errorResponse(coupon.message, 400);
+    }
+    discount = coupon.discount;
+    appliedCoupon = coupon.code;
+  }
+
+  const shipping = shippingFor(itemSubtotal, await getDeliveryRule(addressFields.pincode));
+  const total = Math.max(0, itemSubtotal + shipping - discount);
 
   const shippingAddress = JSON.stringify({
     ...addressFields,
@@ -94,23 +105,38 @@ export async function POST(request: Request) {
   try {
     const isCod = paymentMethod === "cod";
 
-    const order = await prisma.order.create({
-      data: {
-        userId: session.user.id,
-        totalAmount: total,
-        shippingAddress,
-        couponCode: couponCode?.toUpperCase().trim() ?? null,
-        status: isCod ? "PROCESSING" : "PENDING",
-        paymentStatus: "PENDING",
-        paymentId: isCod ? "COD" : null,
-        orderItems: {
-          create: items.map((item) => ({
-            productId: item.productId,
-            quantity: item.quantity,
-            price: productMap.get(item.productId)!.price,
-          })),
+    // Reserve stock together with the order so two buyers can't both take the
+    // last unit. Online orders release it again if Razorpay setup fails, and
+    // admins release it by cancelling the order.
+    const order = await prisma.$transaction(async (tx) => {
+      for (const item of items) {
+        const reserved = await tx.product.updateMany({
+          where: { id: item.productId, stock: { gte: item.quantity } },
+          data: { stock: { decrement: item.quantity } },
+        });
+        if (reserved.count === 0) {
+          throw new OutOfStockError(productMap.get(item.productId)!.name);
+        }
+      }
+
+      return tx.order.create({
+        data: {
+          userId: session.user.id,
+          totalAmount: total,
+          shippingAddress,
+          couponCode: appliedCoupon,
+          status: isCod ? "PROCESSING" : "PENDING",
+          paymentStatus: "PENDING",
+          paymentId: isCod ? "COD" : null,
+          orderItems: {
+            create: items.map((item) => ({
+              productId: item.productId,
+              quantity: item.quantity,
+              price: productMap.get(item.productId)!.price,
+            })),
+          },
         },
-      },
+      });
     });
 
     if (isCod) {
@@ -133,11 +159,28 @@ export async function POST(request: Request) {
       });
     }
 
-    const razorpayOrder = await getRazorpay().orders.create({
-      amount: Math.round(total * 100),
-      currency: "INR",
-      receipt: order.id,
-    });
+    let razorpayOrder;
+    try {
+      razorpayOrder = await getRazorpay().orders.create({
+        amount: Math.round(total * 100),
+        currency: "INR",
+        receipt: order.id,
+      });
+    } catch (error) {
+      await prisma.$transaction([
+        prisma.order.update({
+          where: { id: order.id },
+          data: { status: "CANCELLED", paymentStatus: "FAILED" },
+        }),
+        ...items.map((item) =>
+          prisma.product.update({
+            where: { id: item.productId },
+            data: { stock: { increment: item.quantity } },
+          }),
+        ),
+      ]);
+      throw error;
+    }
 
     await prisma.order.update({
       where: { id: order.id },
@@ -157,6 +200,9 @@ export async function POST(request: Request) {
       total,
     });
   } catch (error) {
+    if (error instanceof OutOfStockError) {
+      return errorResponse(`${error.productName} just sold out. Please update your cart.`, 409);
+    }
     console.error("Order creation error:", error);
     return errorResponse("Failed to create order. Please try again.", 500);
   }
